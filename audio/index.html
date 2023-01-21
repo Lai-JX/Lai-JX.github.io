@@ -18,20 +18,22 @@
   <meta name="author" content="Jiaxin Lai">
   <meta name="keywords" content="个人">
   
-    <meta name="description" content="课程笔记、日常随笔">
+    <meta name="description" content="看大烟花啦！              * {             margin: 0;             padding: 0;         }          body {             width: 100%;             height: 100vh;             color: rgb(0, 189">
 <meta property="og:type" content="website">
-<meta property="og:title" content="标签">
-<meta property="og:url" content="https://lai-jx.github.io/tags/index.html">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="https://lai-jx.github.io/audio/index.html">
 <meta property="og:site_name" content="LJX的博客">
-<meta property="og:description" content="课程笔记、日常随笔">
+<meta property="og:description" content="看大烟花啦！              * {             margin: 0;             padding: 0;         }          body {             width: 100%;             height: 100vh;             color: rgb(0, 189">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-01-21T15:03:53.794Z">
+<meta property="article:modified_time" content="2022-12-31T12:02:29.546Z">
 <meta property="article:author" content="Jiaxin Lai">
 <meta property="article:tag" content="个人">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>标签 - LJX的博客</title>
+  <title>page.title - LJX的博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -102,7 +104,7 @@
   <header>
     
 
-<div class="header-inner" style="height: 80vh;">
+<div class="header-inner" style="height: 60vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -220,17 +222,13 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="标签"></span>
+            <span id="subtitle" data-typed-text="page.title"></span>
           
         </div>
 
         
       </div>
 
-      
-        <div class="scroll-down-bar">
-          <i class="iconfont icon-arrowdown"></i>
-        </div>
       
     </div>
   </div>
@@ -251,9 +249,301 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
-<div class="text-center tagcloud">
-  <a href="/tags/labs/" style="font-size: 15px; color: #bbe">labs</a> <a href="/tags/life/" style="font-size: 30px; color: #337ab7">life</a>
+<article class="page-content">
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <title>看大烟花啦！</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            width: 100%;
+            height: 100vh;
+            color: rgb(0, 189, 247);
+            overflow: hidden;
+
+        }
+
+        #ctn {
+            background: black;
+        }
+
+        h1 {
+            font-size: 60px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            text-shadow: 0 0 10px deeppink, 0 0 20px deeppink, 0 0 30px deeppink, 0 0 40px deeppink, 0 0 100px deeppink;
+            background: none;
+            text-align: center;
+            /* opacity: 0; */
+        }
+
+        @media screen and (max-width: 500px) {
+            div {
+                transform: rotateZ(90deg);
+            }
+
+            h1 {
+                top: 50%;
+                left: 50%;
+                width: auto;
+                font-size: 25px;
+                transform: translate(-50%, -50%) rotateZ(90deg);
+            }
+        }
+    </style>
+</head>
+<body id="body">
+<div>
+    <canvas id="ctn" width="500px" height="500px"></canvas>
 </div>
+
+<h1>祝超级无敌帅气的学妹宋夏冠男元旦快乐！</h1>
+</body>
+<script type="module">
+    function rotateSpeed(n = 40, speed = 1) {
+        let arr = [];
+        let pi = Math.PI / 180;
+        for (let i = 0; i <= 360; i += 360 / (n - 1)) {
+            let x1 = speed * Math.cos(i * pi);
+            let y1 = speed * Math.sin(i * pi);
+            arr.push({
+                x: x1 / (n - 1), y: y1 / (n - 1)
+            });
+        }
+        return arr;
+    }
+
+    function Arc(ctx, x, y, r, color) {
+        return {
+            ctx,
+            life: Math.random() * (500 - 50) + 50,
+            data: {
+                x, y, r,
+                color,
+            },
+            draw() {
+                this.ctx.save();
+                this.ctx.beginPath();
+                this.ctx.shadowBlur = 10;
+                this.ctx.shadowColor = `rgba(${this.data.color[0]},${this.data.color[1]},${this.data.color[2]},${this.data.color[3]})`;
+                this.ctx.fillStyle = `rgba(${this.data.color[0]},${this.data.color[1]},${this.data.color[2]},${this.data.color[3]})`;
+                this.ctx.arc(this.data.x, this.data.y, this.data.r, 0, 360 * (Math.PI / 180));
+                this.ctx.fill();
+                this.ctx.closePath();
+                ctx.restore();
+            }
+        }
+    }
+
+    function Rect(ctx, x, y, w, h, color) {
+        return {
+            ctx,
+            data: {
+                x, y, w, h,
+                color,
+            },
+            draw() {
+                this.ctx.beginPath();
+
+                this.ctx.fillStyle = `rgba(${this.data.color[0]},${this.data.color[1]},${this.data.color[2]},${this.data.color[3]})`;
+                this.ctx.rect(this.data.x, this.data.y, this.data.w, this.data.h);
+                this.ctx.fill();
+                this.ctx.closePath();
+            }
+        }
+    }
+
+    function Fire(ctx) {
+        let obj = {
+            list: [],
+            isAudio: true,
+            isShuAudio: true,
+            audio: (() => {
+                let a = new Audio();
+                a.src = "./12316.mp3";
+                a.onload = () => this.isAudio = true;
+                return a;
+            })(),
+            x: 0,
+            y: 0,
+            ctx,
+            status: 0,
+            colorList: [
+                [255, 0, 191],
+                [189, 0, 247],
+                [0, 140, 255],
+                [21, 255, 0],
+                [255, 230, 0],
+                [247, 0, 0]
+            ],
+            init(x, y) {
+                this.x = x;
+                this.y = y;
+                this.create();
+            },
+            create() {
+                let arc = Arc(this.ctx,
+
+                    Math.random() * w
+                    , Math.random() * 2 * h + h, 2, [...this.colorList[Math.floor(Math.random() * this.colorList.length)], 1]);
+                arc.speed = {
+                    x: 0,
+                    y: -(Math.random() * 5 + 5),
+                }
+                this.list.push(arc);
+            },
+            update() {
+                for (let i = this.list.length - 1; i >= 0; i--) {
+                    this.list[i].draw();
+                }
+
+                if (!this.status) {
+                    this.fireShu();
+                } else {
+                    this.paticle();
+                }
+            },
+            fireShu() {
+                let time = (new Date()).getTime();
+                let arc = this.list[0];
+                if (arc.data.y < arc.life) {
+                    this.status = 1;
+                    let x = arc.data.x, y = arc.data.y, color = arc.data.color;
+                    this.list = [];
+
+                    if (this.isAudio) {
+                        this.audio.pause();
+
+                        this.audio.currentTime = 0.6;
+                        this.audio.play();
+                    }
+
+                    this.createPaticle(x, y, color);
+                    return;
+                }
+                arc.data.color[0] = Math.max(arc.data.color[0] - 1, 0);
+                arc.data.color[1] = Math.max(arc.data.color[1] - 1, 0);
+                arc.data.color[2] = Math.max(arc.data.color[2] - 1, 0);
+                arc.data.x += arc.speed.x;
+                arc.data.y += arc.speed.y;
+            },
+
+            paticle() {
+                for (let i = this.list.length - 1; i >= 0; i--) {
+                    let arc = this.list[i];
+                    if (arc.data.r <= 0) {
+                        this.list.splice(i, 1);
+                        continue;
+                    }
+                    arc.data.color[0] = Math.max(arc.data.color[0] - 5, arc.color[0]);
+                    arc.data.color[1] = Math.max(arc.data.color[1] - 5, arc.color[1]);
+                    arc.data.color[2] = Math.max(arc.data.color[2] - 5, arc.color[2]);
+                    // arc.data.color[3] = Math.max(arc.data.color[3]-0.01,0);
+                    arc.data.r = Math.max(arc.data.r - 0.05, 0);
+                    arc.data.x += arc.speed.x;
+                    arc.data.y += arc.speed.y;
+                    arc.speed.y += arc.speed.s;
+                    arc.speed.s = arc.speed.s * 1.07;
+                    arc.speed.x = arc.speed.x * 0.98;
+                    arc.speed.y = arc.speed.y * 0.98;
+                }
+
+                if (this.list.length == 0) {
+                    this.status = 0;
+                    this.create();
+                }
+            },
+
+            createPaticle(x, y, color2) {
+                this.list = [];
+
+                let color1 = [...this.colorList[Math.floor(Math.random() * this.colorList.length)], 1]
+
+                let arr = rotateSpeed(25, 120);
+                for (let i = 0; i < 25; i++) {
+                    let color = color1;
+
+                    let arc = Arc(this.ctx, x, y, 3, [color[0] + 255, color[1] + 255, color[2] + 255, 1]);
+                    arc.speed = {
+                        x: arr[i].x,
+                        y: arr[i].y,
+                        s: 0.01
+                    }
+                    arc.color = color;
+                    this.list.push(arc);
+                }
+
+                for (let i = 0; i < 30; i++) {
+                    let color = color2;
+
+                    let arc = Arc(this.ctx, x, y, 3, [color[0] + 255, color[1] + 255, color[2] + 255, 1]);
+                    arc.speed = {
+                        x: Math.random() * 6 - 3,
+                        y: Math.random() * 6 - 3,
+                        s: 0.01
+                    }
+                    arc.color = color;
+                    this.list.push(arc);
+                }
+
+            }
+        }
+
+        obj.init();
+        return obj;
+
+    }
+
+    let ctx = ctn.getContext("2d");
+
+    let w = body.clientWidth, h = body.clientHeight;
+    if (w < 500) {
+        let t = w;
+        w = h;
+        h = t;
+        // console.log(w,h);
+    }
+    ctn.setAttribute("width", w + "px");
+    ctn.setAttribute("height", h + "px");
+
+    let fireList = [];
+    // 烟花数量
+    for (let i = 0; i < 10; i++) {
+        fireList.push(Fire(ctx, 300, 300));
+    }
+
+    let clearRect = Rect(ctx, 0, 0, w, h, [0, 0, 0, 0.25])
+
+    function ani() {
+        window.requestAnimationFrame(ani);
+        clearRect.draw();
+        fireList.forEach(fire => {
+            fire.update();
+
+        });
+
+    }
+
+    window.requestAnimationFrame(ani);
+</script>
+</html>
+
+  
+
+</article>
+
+
 
               </div>
             </div>
