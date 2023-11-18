@@ -1,0 +1,904 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/ljx.jpg">
+  <link rel="icon" href="/img/ljx.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jiaxin Lai">
+  <meta name="keywords" content="个人">
+  
+    <meta name="description" content="K8s  本文章用作个人记录备忘，可能会有不完善的地方  配置  参考:  在 Linux 系统中安装并设置 kubectl | Kubernetes Ubuntu22 k8s 1.27.1 安装及集群搭建教学（2023.5.16 k8s 最新版本教学，只看这一篇就够了哦！保姆级教程！不行你来找我！）_缘昔的博客-CSDN博客   1. 虚拟机 使用两台22.04 LTS的ubuntu serve">
+<meta property="og:type" content="article">
+<meta property="og:title" content="k8s">
+<meta property="og:url" content="https://lai-jx.github.io/2023/11/18/k8s/index.html">
+<meta property="og:site_name" content="LJX的博客">
+<meta property="og:description" content="K8s  本文章用作个人记录备忘，可能会有不完善的地方  配置  参考:  在 Linux 系统中安装并设置 kubectl | Kubernetes Ubuntu22 k8s 1.27.1 安装及集群搭建教学（2023.5.16 k8s 最新版本教学，只看这一篇就够了哦！保姆级教程！不行你来找我！）_缘昔的博客-CSDN博客   1. 虚拟机 使用两台22.04 LTS的ubuntu serve">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-11-18T05:23:37.000Z">
+<meta property="article:modified_time" content="2023-11-18T05:28:11.086Z">
+<meta property="article:author" content="Jiaxin Lai">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>k8s - LJX的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"lai-jx.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"tZBW2fQtUumAkCEJYeIJO61m-gzGzoHsz","app_key":"hG5UEcEbTizgregyCQDGNn72","server_url":"https://tzbw2fqt.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>LJX</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="k8s"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Jiaxin Lai
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-11-18 13:23" pubdate>
+          2023年11月18日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          11k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          88 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">k8s</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1>K8s</h1>
+<blockquote>
+<p>本文章用作个人记录备忘，可能会有不完善的地方</p>
+</blockquote>
+<h2 id="配置">配置</h2>
+<blockquote>
+<p>参考:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://v1-27.docs.kubernetes.io/zh-cn/docs/tasks/tools/install-kubectl-linux/">在 Linux 系统中安装并设置 kubectl | Kubernetes</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_58648684/article/details/130699568">Ubuntu22 k8s 1.27.1 安装及集群搭建教学（2023.5.16 k8s 最新版本教学，只看这一篇就够了哦！保姆级教程！不行你来找我！）_缘昔的博客-CSDN博客</a></li>
+</ul>
+</blockquote>
+<h3 id="1-虚拟机">1. 虚拟机</h3>
+<p>使用两台22.04 LTS的ubuntu server虚拟机</p>
+<ul>
+<li>镜像：<a target="_blank" rel="noopener" href="https://ubuntu.com/download/server#downloads">Get Ubuntu Server | Download | Ubuntu</a></li>
+<li>安装参考：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/mefj/p/14964416.html">Ubuntu 20.04 live server版安装(详细版) - 运维密码 - 博客园 (cnblogs.com)</a>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/ubuntu">https://mirrors.tuna.tsinghua.edu.cn/ubuntu</a></li>
+</ul>
+</li>
+</ul>
+<p>虚拟机配置</p>
+<ul>
+<li>以下三个配置在不同主机应该不同
+<ul>
+<li>ip：192.168.139.131，基于22端口进行ssh连接</li>
+<li>mac：00:0c:29:68:c9:29</li>
+<li>product_uuid：d39c4d56-ecf6-5683-efe9-4b22f968c929</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-安装docker、容器运行时、k8s">2. 安装docker、容器运行时、k8s</h3>
+<h4 id="（1）docker">（1）docker</h4>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">安装并配置docker</span><br>curl -fsSL https://test.docker.com -o test-docker.sh<br>sudo sh test-docker.sh<br>sudo gpasswd -a $USER docker<br>newgrp docker<br><br>sudo vim /etc/docker/daemon.json	# 见下面<br>systemctl daemon-reload<br>systemctl restart docker<br></code></pre></td></tr></table></figure>
+<p>daemon.json可以修改为如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;registry-mirrors&quot;</span> <span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-string">&quot;https://jkfdsf2u.mirror.aliyuncs.com&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-string">&quot;https://registry.docker-cn.com&quot;</span><br>  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;exec-opts&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;native.cgroupdriver=systemd&quot;</span><span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+<h4 id="（2）容器运行时">（2）容器运行时</h4>
+<p>1.24以下版本的k8s可以忽略这一部分</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs shell">cat &lt;&lt;EOF | sudo tee /etc/modules-load.d/k8s.conf<br>overlay<br>br_netfilter<br>EOF<br><br>sudo modprobe overlay<br>sudo modprobe br_netfilter<br><br>cat &lt;&lt;EOF | sudo tee /etc/sysctl.d/k8s.conf<br>net.bridge.bridge-nf-call-iptables  = 1<br>net.bridge.bridge-nf-call-ip6tables = 1<br>net.ipv4.ip_forward                 = 1<br>EOF<br><br>sudo sysctl --system<br><br>lsmod | grep br_netfilter<br>lsmod | grep overlay<br><br>sysctl net.bridge.bridge-nf-call-iptables net.bridge.bridge-nf-call-ip6tables net.ipv4.ip_forward<br><br><br>sudo apt install -y curl gnupg2 software-properties-common apt-transport-https ca-certificates<br>sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmour -o /etc/apt/trusted.gpg.d/docker.gpg<br>sudo add-apt-repository &quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&quot;<br><br>sudo apt update<br>sudo apt install -y containerd.io<br><br>containerd config default | sudo tee /etc/containerd/config.toml &gt;/dev/null 2&gt;&amp;1<br>sudo sed -i &#x27;s/SystemdCgroup \= false/SystemdCgroup \= true/g&#x27; /etc/containerd/config.toml<br>sudo systemctl restart containerd<br>sudo systemctl enable containerd<br><br></code></pre></td></tr></table></figure>
+<h4 id="（3）安装k8s">（3）安装k8s</h4>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">安装kubelet</span><br>sudo swapoff -a			# 关闭交换区<br>sudo vim /etc/fstab		# 注释 /swap，永久关闭交换区<br>sudo apt-get update<br>sudo apt-get install -y apt-transport-https ca-certificates curl<br>curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-archive-keyring.gpg<br>echo &quot;deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main&quot; | sudo tee /etc/apt/sources.list.d/kubernetes.list<br><br>sudo apt-get update<br><span class="hljs-meta prompt_"># </span><span class="language-bash">查看可安装版本</span><br>apt-cache madison kubelet<br><br>sudo apt-get install -y kubelet=1.23.17-00 kubeadm=1.23.17-00 kubectl=1.23.17-00<br>sudo apt-mark hold kubelet kubeadm kubectl	# 保持当前版本<br>su<br>sudo passwd root							# 设置root密码，第一次使用su命令是需要<br>su<br></code></pre></td></tr></table></figure>
+<h2 id="运行">运行</h2>
+<h3 id="1-启动及准备工作">1. 启动及准备工作</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">容器运行时，1.24及以上版本可能要注意</span><br>sudo rm /etc/containerd/config.toml<br><span class="hljs-meta prompt_"># </span><span class="language-bash">生成 containerd 的默认配置文件</span><br>containerd config default &gt; /etc/containerd/config.toml <br><span class="hljs-meta prompt_"># </span><span class="language-bash">统一换源操作</span><br>sed -i &quot;s#registry.k8s.io/pause#registry.aliyuncs.com/google_containers/pause#g&quot; /etc/containerd/config.toml<br><span class="hljs-meta prompt_"># </span><span class="language-bash">重新加载配置文件</span><br>systemctl daemon-reload <br><span class="hljs-meta prompt_"># </span><span class="language-bash">重启所有有关6443端口的服务</span> <br>systemctl restart containerd.service <br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">1.24以下版本，从这里开始</span><br>systemctl restart docker<br>systemctl restart kubelet<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">启动</span><br>sudo kubeadm init \<br>--image-repository registry.aliyuncs.com/google_containers  \<br>--apiserver-advertise-address=192.168.139.134 \<br> --v=6 --pod-network-cidr=10.244.0.0/16<br><span class="hljs-meta prompt_"># </span><span class="language-bash">sudo kubeadm init --image-repository registry.aliyuncs.com/google_containers  --apiserver-advertise-address=192.168.1.104  --v=6 --pod-network-cidr=10.244.0.0/16</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">记得复制类似以下命令，方便加入节点</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">kubeadm <span class="hljs-built_in">join</span> 192.168.139.131:6443 --token 0mr7mn.mo88cy54sbi9hv73         --discovery-token-ca-cert-hash sha256:5ba9db40e62e67f88fe58bb03130f033cbb81e3f704c1ec89525dd66a49febf8</span><br><br></code></pre></td></tr></table></figure>
+<p>各个节点都需要，只不过工作节点是复制主结点的。不然会报错：localhost:8080 was refused</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">1. 创建文件夹</span><br>mkdir -p $HOME/.kube<br><span class="hljs-meta prompt_"># </span><span class="language-bash">2.1 主节点</span><br>sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config<br><span class="hljs-meta prompt_"># </span><span class="language-bash">2.2 从节点</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">sudo scp /home/node1/.kube/config node3@192.168.139.133:/home/node3/.kube/</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">sudo scp /home/jxlai/.kube/config jxlai@192.168.1.107:/home/jxlai/.kube/</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;123456&#x27;</span> | sudo scp /home/node1/.kube/config node2@192.168.139.132:/home/node2/.kube/</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">3. 授予权限</span><br>sudo chown $(id -u):$(id -g) $HOME/.kube/config<br>export KUBECONFIG=$HOME/.kube/config<br><span class="hljs-meta prompt_"># </span><span class="language-bash">4. 跨主机通信</span><br>wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml<br>kubectl apply -f kube-flannel.yml<br><span class="hljs-meta prompt_"># </span><span class="language-bash">或</span><br>kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml<br><span class="hljs-meta prompt_"># </span><span class="language-bash">5. 设置网络</span><br><br></code></pre></td></tr></table></figure>
+<h3 id="2-加入从节点">2. 加入从节点</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo kubeadm join 192.168.139.134:6443 --token wu1gxi.e368u8niv19lyjnc  \<br>        --discovery-token-ca-cert-hash sha256:f364ff33facc186f213addc4901fa66d7fa994cb614cc6e8943652f5726df871<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">查看token</span><br>kubeadm token list<br><span class="hljs-meta prompt_"># </span><span class="language-bash">查看discovery-token-ca-cert-hash</span><br>openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2&gt;/dev/null | openssl dgst -sha256 -hex | sed &#x27;s/^.* //&#x27;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">隔太久时必须重新生成token</span><br>kubeadm token create --ttl 0 --print-join-command<br></code></pre></td></tr></table></figure>
+<h3 id="3-重置">3. 重置</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">echo y | sudo kubeadm reset # --cert-dir string<br><span class="hljs-meta prompt_"># </span><span class="language-bash">sudo <span class="hljs-built_in">rm</span> -rf /etc/cni/net.d</span><br>sudo rm -r ~/.kube<br>mkdir -p $HOME/.kube<br></code></pre></td></tr></table></figure>
+<h3 id="4-其它">4. 其它</h3>
+<ul>
+<li>查看日志：<code>journalctl -xeu kubelet</code></li>
+<li>查看pod：<code>kubectl get pod -n kube-system</code></li>
+<li>查看node：<code>kubectl get nodes</code></li>
+<li>查看端口：<code>ss -lntu</code></li>
+</ul>
+<h3 id="5-可能遇到的问题">5. 可能遇到的问题</h3>
+<ul>
+<li>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34857250/article/details/82562514?spm=1001.2101.3001.6650.7&amp;utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-7-82562514-blog-124097390.235%5Ev38%5Epc_relevant_default_base&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-7-82562514-blog-124097390.235%5Ev38%5Epc_relevant_default_base&amp;utm_relevant_index=8">k8s 集群部署问题整理-CSDN博客</a></p>
+</li>
+<li>
+<p>从节点加入时卡在：[preflight] Running pre-flight checks</p>
+<ul>
+<li>可能是时区不一致</li>
+<li>也可能是需要重新生成token
+<ul>
+<li><code>kubeadm token create --ttl 0 --print-join-command</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>su无效：</p>
+<ul>
+<li>运行<code>sudo passwd root</code>重新设置一下密码即可</li>
+</ul>
+</li>
+<li>
+<p>coredns-6d8c4cb4d-99g8n一直没建好</p>
+<ul>
+<li>
+<p>有容器为evict：</p>
+<ul>
+<li>资源利用率超过85%。（可用 df -h 看一下磁盘占用率）</li>
+</ul>
+</li>
+<li>
+<p>“/run/flannel/subnet.env: no such file or directory“：</p>
+<ul>
+<li>启动时没设置 <code>--pod-network-cidr=10.244.0.0/16</code></li>
+<li>注意上面指定的网段不要跟自己真实的内网网段产生冲突，否则会造成机器之间无法ping通的问题</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>failed to find plugin “xxx“ in path [/opt/cni/bin]]</p>
+<ul>
+<li>在https://<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=github&amp;spm=1001.2101.3001.7020">github</a>.com/containernetworking/plugins/releases里面找到对应的版本，下载后解压到/opt/cni/bin之后重启kubectl即可（版本好像不能超过1）</li>
+<li>我是两台机器，一台正常，一台报上述错误，将一台/opt/cni/bin下的文件复制到另一台就好了</li>
+</ul>
+</li>
+<li>
+<p>一直循环unhealth</p>
+<p>短时间内一直循环是正常的，太久的话可能是如下问题</p>
+<ul>
+<li>
+<p>cgroup不一致或端口没开放</p>
+</li>
+<li>
+<p>第一次使用时出现：“Failed to run kubelet” err=“failed to run Kubelet: misconfiguration: kubelet cgroup driver: “cgroupfs” is different from docker cgroup driver: “systemd””</p>
+<ul>
+<li>如果已经确认cgroup对应上了，则根据[完全卸载ubuntu上的k8s - CSDN文库](<a target="_blank" rel="noopener" href="https://wenku.csdn.net/answer/trsjf3ftv4#:~:text=%E5%AE%8C%E5%85%A8%E5%8D%B8%E8%BD%BDubuntu%E4%B8%8A%E7%9A%84k8s">https://wenku.csdn.net/answer/trsjf3ftv4#:~:text=完全卸载ubuntu上的k8s</a> 1 停止 Kubernetes 服务： sudo systemctl stop,6 删除相关的配置目录和文件： … 7 清理 iptables 规则： )卸载k8s后，重新下载就行了（其实都没有卸载干净，因为下载时一下就完成了，可能是purge命令将某些配置文件删干净了）</li>
+</ul>
+</li>
+<li>
+<p>交换区没关导致，kubelet服务没启动（sudo vim /etc/fstab	# ubuntu22.04貌似注释了没用）</p>
+<ul>
+<li>sudo swapoff -a</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Canger_/article/details/128812589">k8s遇 The connection to the server :6443 was refused_6443端口-CSDN博客</a></p>
+<ul>
+<li>
+<p>可能是硬件与系统时间不一致（个人认为，这种情况可能性较小，下述仅作记录）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs shell">date                                                               #确认系统时间<br>hwclock                                                            #确认硬件<br><span class="hljs-meta prompt_">#</span><span class="language-bash">如果此时系统时间和硬件时间同步，但明显不是服务器重启之前的时间。请继续往下看。否则就不是本情况，请查看其他案例。</span><br><br>date -s &quot;2022-12-08 12:00:00&quot;                                      #首先进行系统时间的修改，此处为举例：系统时间修改为2022年12月8日 中午12点整<br>hwclock --hctosys                                                  #然后用硬件时钟同步系统时钟<br>timedatectl |awk -F&quot;:&quot; &#x27;/synchronized/&#123;print $2&#125;&#x27;                  #检查ntp时间同步是否就绪，一般等待20-30分钟左右后会显示yes<br>kubectl get node                                                   #检查是否还会报错  <br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">5、时间同步</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">查看时区，时间</span><br>date<br><span class="hljs-meta prompt_">#</span><span class="language-bash">先查看时区是否正常，不正确则替换为上海时区</span><br>timedatectl set-timezone Asia/Shanghai<br><span class="hljs-meta prompt_">#</span><span class="language-bash">安装ntpdate，联网同步时间</span><br>sudo apt-get install ntpdate<br>sudo export PATH=$PATH:/sbin:/usr/sbin<br>sudo ntpdate cn.pool.ntp.org<br><span class="hljs-meta prompt_"># </span><span class="language-bash">或者手动调整</span><br>date -s &quot;2022-12-08 12:00:00&quot;  <br><span class="hljs-meta prompt_"># </span><span class="language-bash">系统时间和硬件时间同步</span><br>hwclock --hctosys <br><br></code></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="卸载">卸载</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs shell">systemctl stop kubelet<br>systemctl stop etcd<br>systemctl stop docker<br>kubeadm reset -f<br>modprobe -r ipip<br>lsmod<br>rm -rf /home/node1/.kube/		# 注意更改<br>rm -rf /etc/kubernetes/<br>rm -rf /etc/systemd/system/kubelet.service.d<br>rm -rf /etc/systemd/system/kubelet.service<br>rm -rf /usr/bin/kube*<br>rm -rf /etc/cni<br>rm -rf /opt/cni<br>rm -rf /var/lib/etcd<br>rm -rf /var/etcd<br>sudo apt-mark unhold kubelet kubeadm kubectl<br>sudo apt-get purge kubelet kubeadm kubectl<br><br></code></pre></td></tr></table></figure>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_39589455/article/details/129160682">最纯净-Ubuntu系统下如何卸载kubernetes(k8s)-2023最新_ubuntu卸载k8s-CSDN博客</a></li>
+<li>卸载k8s：<a target="_blank" rel="noopener" href="https://blog.csdn.net/LONG_Yi_1994/article/details/127139637">https://blog.csdn.net/LONG_Yi_1994/article/details/127139637</a></li>
+<li><a target="_blank" rel="noopener" href="https://wenku.csdn.net/answer/trsjf3ftv4#:~:text=%E5%AE%8C%E5%85%A8%E5%8D%B8%E8%BD%BDubuntu%E4%B8%8A%E7%9A%84k8s">完全卸载ubuntu上的k8s - CSDN文库</a></li>
+</ul>
+<h2 id="虚拟机克隆">虚拟机克隆</h2>
+<blockquote>
+<p>基于VMware克隆Ubuntu22.04虚拟机</p>
+</blockquote>
+<ol>
+<li>
+<p>右键虚拟机-管理-克隆</p>
+</li>
+<li>
+<p>选择选项后克隆</p>
+</li>
+<li>
+<p>解决mac地址一样的问题：虚拟机设置-网络适配器-高级-生成</p>
+</li>
+<li>
+<p>解决ip地址一样的问题（ubuntu）：<code>sudo vim /etc/netplan/00-installer-config.yaml</code>，设置对应网卡</p>
+<ol>
+<li>
+<pre><code class="language-yaml"># This is the network config written by 'subiquity'
+
+network:
+  version: 2
+  ethernets:
+    ens33:
+      dhcp4: no
+      addresses: [192.168.139.135/24]
+      routes:
+        - to: default
+          via: 192.168.139.2			# 网关务必设置好，我就是这里浪费了大量时间
+      nameservers:
+        addresses:
+          - 8.8.8.8
+          - 114.114.114.114
+
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs awk"><br>   <span class="hljs-number">2</span>. `sudo netplan apply`<br><br><span class="hljs-number">5</span>. 修改主机名<br><br>   - `sudo vim <span class="hljs-regexp">/etc/</span>hostname`<br>   - `sudo vim <span class="hljs-regexp">/etc/</span>hosts`<br><br><span class="hljs-number">6</span>. 修改用户名（这里直接新建一个）<br><br>   ```shell<br>   <span class="hljs-comment"># 添加用户</span><br>   sudo adduser node2<br>   <span class="hljs-comment"># 设置密码</span><br>   sudo passwd node2<br>   <span class="hljs-comment"># 查看原用户所属的组</span><br>   id node1	<span class="hljs-comment"># uid=1000(node1) gid=1000(node1) groups=1000(node1),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),110(lxd),999(docker)</span><br>   <br>   <br>   <span class="hljs-comment"># 加入各组，以获得各种权限</span><br>   sudo gpasswd -a node2 adm<br>   sudo gpasswd -a node2 cdrom<br>   sudo gpasswd -a node2 sudo<br>   sudo gpasswd -a node2 dip<br>   sudo gpasswd -a node2 plugdev<br>   sudo gpasswd -a node2 lxd<br>   sudo gpasswd -a node2 docker<br>   <span class="hljs-comment"># 把文件迁移过去</span><br>   sudo mv <span class="hljs-regexp">/home/</span>node1<span class="hljs-regexp">/* /</span>home<span class="hljs-regexp">/node2/</span><br>   <span class="hljs-comment"># 删除原用户</span><br>   sudo deluser node1<br></code></pre></td></tr></table></figure>
+
+
+
+</code></pre>
+</li>
+</ol>
+</li>
+<li>
+<p>配置/etc/hosts</p>
+</li>
+<li>
+<p><code>systemctl restart docker</code><br>
+<code>systemctl restart kubelet</code></p>
+</li>
+</ol>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-comment"># 安装并配置docker</span><br>curl -fsSL https:<span class="hljs-regexp">//</span>test.docker.com -o test-docker.sh<br>sudo sh test-docker.sh<br>sudo gpasswd -a <span class="hljs-variable">$USER</span> docker<br>newgrp docker<br><br>sudo <span class="hljs-regexp">/etc/</span>docker/daemon.json<br>sudo vim <span class="hljs-regexp">/etc/</span>docker/daemon.json<br>systemctl restart docker<br><br><br><span class="hljs-comment"># 安装容器运行时</span><br>cat &lt;&lt;EOF | sudo tee <span class="hljs-regexp">/etc/m</span>odules-load.d/k8s.conf<br>overlay<br>br_netfilter<br>EOF<br><br>sudo modprobe overlay<br>sudo modprobe br_netfilter<br><br>cat &lt;&lt;EOF | sudo tee <span class="hljs-regexp">/etc/</span>sysctl.d/k8s.conf<br>net.bridge.bridge-nf-call-iptables  = <span class="hljs-number">1</span><br>net.bridge.bridge-nf-call-ip6tables = <span class="hljs-number">1</span><br>net.ipv4.ip_forward                 = <span class="hljs-number">1</span><br>EOF<br><br>sudo sysctl --system<br><br>lsmod | grep br_netfilter<br>lsmod | grep overlay<br><br>sysctl net.bridge.bridge-nf-call-iptables net.bridge.bridge-nf-call-ip6tables net.ipv4.ip_forward<br><br><br>sudo apt install -y curl gnupg2 software-properties-common apt-transport-https ca-certificates<br>sudo curl -fsSL https:<span class="hljs-regexp">//</span>download.docker.com<span class="hljs-regexp">/linux/u</span>buntu<span class="hljs-regexp">/gpg | sudo gpg --dearmour -o /</span>etc<span class="hljs-regexp">/apt/</span>trusted.gpg.d/docker.gpg<br>sudo add-apt-repository <span class="hljs-string">&quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&quot;</span><br>sudo apt update<br>sudo apt install -y containerd.io<br>containerd config default | sudo tee <span class="hljs-regexp">/etc/</span>containerd<span class="hljs-regexp">/config.toml &gt;/</span>dev/null <span class="hljs-number">2</span>&gt;&amp;<span class="hljs-number">1</span><br>sudo sed -i <span class="hljs-string">&#x27;s/SystemdCgroup \= false/SystemdCgroup \= true/g&#x27;</span> <span class="hljs-regexp">/etc/</span>containerd/config.toml<br>sudo systemctl restart containerd<br>sudo systemctl enable containerd<br><br><span class="hljs-comment"># 安装kubelet</span><br>sudo swapoff -a			<span class="hljs-comment"># 关闭交换区</span><br>sudo vim <span class="hljs-regexp">/etc/</span>fstab<br>sudo apt-get update<br>sudo apt-get install -y apt-transport-https ca-certificates curl<br>curl -fsSL https:<span class="hljs-regexp">//</span>packages.cloud.google.com<span class="hljs-regexp">/apt/</span>doc<span class="hljs-regexp">/apt-key.gpg | sudo gpg --dearmor -o /</span>etc<span class="hljs-regexp">/apt/</span>keyrings/kubernetes-archive-keyring.gpg<br>echo <span class="hljs-string">&quot;deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main&quot;</span> | sudo tee <span class="hljs-regexp">/etc/</span>apt<span class="hljs-regexp">/sources.list.d/</span>kubernetes.list<br>sudo apt-get update<br>sudo apt-get install -y kubelet=<span class="hljs-number">1.27</span>.<span class="hljs-number">1</span>-<span class="hljs-number">00</span> kubeadm=<span class="hljs-number">1.27</span>.<span class="hljs-number">1</span>-<span class="hljs-number">00</span> kubectl=<span class="hljs-number">1.27</span>.<span class="hljs-number">1</span>-<span class="hljs-number">00</span><br>sudo apt-mark hold kubelet kubeadm kubectl<br>su<br>sudo passwd root<br>su<br><br><span class="hljs-comment"># 运行</span><br>sudo kubeadm init --image-repository registry.aliyuncs.com/google_containers  --apiserver-advertise-address=<span class="hljs-number">192.168</span>.<span class="hljs-number">139.134</span> --v=<span class="hljs-number">6</span><br>kubectl get nodes<br>mkdir -p <span class="hljs-variable">$HOME</span>/.kube<br>sudo cp -i <span class="hljs-regexp">/etc/</span>kubernetes<span class="hljs-regexp">/admin.conf $HOME/</span>.kube/config<br>sudo chown $(id -u):$(id -g) <span class="hljs-variable">$HOME</span><span class="hljs-regexp">/.kube/</span>config<br><br>wget https:<span class="hljs-regexp">//</span>raw.githubusercontent.com<span class="hljs-regexp">/coreos/</span>flannel<span class="hljs-regexp">/master/</span>Documentation/kube-flannel.yml<br>kubectl apply -f kube-flannel.yml<br>kubectl get nodes<br>kubectl get pod -n kube-system<br><br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/linux/">#linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>k8s</div>
+      <div>https://lai-jx.github.io/2023/11/18/k8s/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jiaxin Lai</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年11月18日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/11/07/proxy/" title="在linux终端下使用代理（Clash+Proxychains4）">
+                        <span class="hidden-mobile">在linux终端下使用代理（Clash+Proxychains4）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.14.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.14.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://waline-blog-lai-jx.vercel.app/","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
