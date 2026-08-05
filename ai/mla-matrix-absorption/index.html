@@ -1,0 +1,2248 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="算法复习、AI 原理与持续整理的技术笔记">
+      
+      
+        <meta name="author" content="LJX">
+      
+      
+        <link rel="canonical" href="https://lai-jx.github.io/ai/mla-matrix-absorption/">
+      
+      
+        <link rel="prev" href="../../algorithms/chapter-13/">
+      
+      
+        <link rel="next" href="../../about/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>MLA 矩阵吸收 - LJX 知识库</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#mla" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="LJX 知识库" class="md-header__button md-logo" aria-label="LJX 知识库" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19.07 14.88 2.05 2.05L15.06 23H13v-2.06zm1.97-1.75c.14 0 .27.06.38.17l1.28 1.28c.22.21.22.56 0 .77l-1 1-2.05-2.05 1-1c.11-.11.25-.17.39-.17M17 4v6l-2-2-2 2V4H9v16h2v2H7c-1.05 0-2-.95-2-2v-1H3v-2h2v-4H3v-2h2V7H3V5h2V4a2 2 0 0 1 2-2h12c1.05 0 2 .95 2 2v6l-2 2V4zM5 5v2h2V5zm0 6v2h2v-2zm0 6v2h2v-2z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LJX 知识库
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              MLA 矩阵吸收
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange"  aria-label="切换至深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换至深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="orange"  aria-label="切换至浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换至浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Lai-JX/Lai-JX.github.io" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Lai-JX/Lai-JX.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../algorithms/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  算法题库
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+    
+  
+  AI 原理
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="LJX 知识库" class="md-nav__button md-logo" aria-label="LJX 知识库" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19.07 14.88 2.05 2.05L15.06 23H13v-2.06zm1.97-1.75c.14 0 .27.06.38.17l1.28 1.28c.22.21.22.56 0 .77l-1 1-2.05-2.05 1-1c.11-.11.25-.17.39-.17M17 4v6l-2-2-2 2V4H9v16h2v2H7c-1.05 0-2-.95-2-2v-1H3v-2h2v-4H3v-2h2V7H3V5h2V4a2 2 0 0 1 2-2h12c1.05 0 2 .95 2 2v6l-2 2V4zM5 5v2h2V5zm0 6v2h2v-2zm0 6v2h2v-2z"/></svg>
+
+    </a>
+    LJX 知识库
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Lai-JX/Lai-JX.github.io" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Lai-JX/Lai-JX.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../algorithms/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    算法题库
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    算法题库
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数组
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    链表
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    哈希表
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    字符串
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    栈与队列
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    二叉树
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    回溯算法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    贪心算法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    动态规划
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    单调栈
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    图论
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hot 100
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-13/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    其他
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI 原理
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    AI 原理
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MLA 矩阵吸收
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MLA 矩阵吸收
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0. 先记住一句话
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-mla" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 为什么需要 MLA
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-mla" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. MLA 先做了什么压缩
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. MLA 先做了什么压缩">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 行向量与列向量约定
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-kv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 低秩 KV 联合压缩
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-k-k-q" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. K 吸收：把历史 K 的工作移到当前 Q
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. K 吸收：把历史 K 的工作移到当前 Q">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-content-score" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 原来的 content score
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 它节省了什么
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-q" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 “吸收到 Q”有两种实现含义
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-v-latent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. V 吸收：先在 latent 空间加权，再展开
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-rope-k" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. RoPE 为什么不能照搬 K 吸收
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 一次解码的完整数据流
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 接近实现的伪代码
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 一个极小的数值例子
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 一个极小的数值例子">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#k" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        先展开 K
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#k-q" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        把 K 投影吸收到 Q
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Cache 和计算量怎样变化
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Cache 和计算量怎样变化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 Cache 大小
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 代价不是“所有方面都更少”
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 常见误解与实现陷阱
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. 常见误解与实现陷阱">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误解 1：吸收是一种新的训练算法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-latentkv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误解 2：既然只缓存 latent，K、V 就不存在了
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误解 3：可以把任意算子都吸收
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误解 4：矩阵乘法可交换
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实现陷阱
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 建议的理解顺序
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 参考资料
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        附录：符号速查
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0. 先记住一句话
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-mla" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 为什么需要 MLA
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-mla" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. MLA 先做了什么压缩
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. MLA 先做了什么压缩">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 行向量与列向量约定
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-kv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 低秩 KV 联合压缩
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-k-k-q" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. K 吸收：把历史 K 的工作移到当前 Q
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. K 吸收：把历史 K 的工作移到当前 Q">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-content-score" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 原来的 content score
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 它节省了什么
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-q" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 “吸收到 Q”有两种实现含义
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-v-latent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. V 吸收：先在 latent 空间加权，再展开
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-rope-k" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. RoPE 为什么不能照搬 K 吸收
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 一次解码的完整数据流
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 接近实现的伪代码
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 一个极小的数值例子
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 一个极小的数值例子">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#k" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        先展开 K
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#k-q" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        把 K 投影吸收到 Q
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Cache 和计算量怎样变化
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Cache 和计算量怎样变化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 Cache 大小
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 代价不是“所有方面都更少”
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 常见误解与实现陷阱
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. 常见误解与实现陷阱">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误解 1：吸收是一种新的训练算法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-latentkv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误解 2：既然只缓存 latent，K、V 就不存在了
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误解 3：可以把任意算子都吸收
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误解 4：矩阵乘法可交换
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实现陷阱
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 建议的理解顺序
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 参考资料
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        附录：符号速查
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="mla">MLA 的矩阵吸收算法：从直觉到公式与伪代码<a class="headerlink" href="#mla" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>本文中的 MLA 指 DeepSeek-V2 提出的 <strong>Multi-Head Latent Attention（多头潜在注意力）</strong>；“吸收”指推理时的 <strong>weight absorption / matrix absorption（权重或矩阵吸收）</strong>。</p>
+<p>阅读目标：理解 MLA 为什么只缓存一个低维 latent，K 投影怎样被移到 Q 一侧，V 投影怎样被移到输出一侧，以及 RoPE 为什么必须单独处理。</p>
+</blockquote>
+<hr />
+<h2 id="0">0. 先记住一句话<a class="headerlink" href="#0" title="Permanent link">&para;</a></h2>
+<p>MLA 先把每个历史 token 的 K 和 V 共同压缩成一个小向量 <code>c</code>，推理时不再把 <code>c</code> 还原成完整 K、V，而是利用矩阵乘法结合律：</p>
+<ul>
+<li>把 <strong>K 的上投影矩阵</strong>移到当前 token 的 Q 上；</li>
+<li>先用注意力权重对历史 <code>c</code> 求和，再做 <strong>V 的上投影</strong>；</li>
+<li>因而 KV Cache 中只需保存低维 <code>c</code>，以及一个很小的 RoPE key。</li>
+</ul>
+<p>这是一种<strong>完全等价的线性代数改写</strong>，不是近似算法，也不是重新训练或改变注意力权重。</p>
+<hr />
+<h2 id="1-mla">1. 为什么需要 MLA<a class="headerlink" href="#1-mla" title="Permanent link">&para;</a></h2>
+<p>自回归生成第 <code>t</code> 个 token 时，需要让当前 query 访问前面所有 token 的 key 和 value。普通多头注意力（MHA）会缓存每层、每个历史 token、每个头的完整 K 和 V。</p>
+<p>设：</p>
+<ul>
+<li><code>H</code>：注意力头数；</li>
+<li><code>d_k</code>：每个头的 key 维度；</li>
+<li><code>d_v</code>：每个头的 value 维度；</li>
+<li><code>T</code>：已经缓存的 token 数；</li>
+<li><code>L</code>：层数。</li>
+</ul>
+<p>忽略 batch 和数据类型后，普通 MHA 的 KV Cache 元素量约为：</p>
+<div class="arithmatex">\[
+T L H(d_k+d_v).
+\]</div>
+<p>长上下文或大 batch 下，解码经常受显存容量和显存带宽限制，而不是纯算力限制。MLA 的核心目标就是减少每次解码需要保存和读取的历史状态。</p>
+<hr />
+<h2 id="2-mla">2. MLA 先做了什么压缩<a class="headerlink" href="#2-mla" title="Permanent link">&para;</a></h2>
+<h3 id="21">2.1 行向量与列向量约定<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
+<p>数学论文通常把单个样本写成<strong>列向量</strong>。一个从 <code>d</code> 维到 <code>r</code> 维的线性映射写为：</p>
+<div class="arithmatex">\[
+\underbrace{y}_{r\times 1}
+=\underbrace{W}_{r\times d}
+\underbrace{x}_{d\times 1}.
+\]</div>
+<p>PyTorch 通常把 batch、序列等维度放在前面，把特征放在最后一维。此时可将每个样本看成<strong>行向量</strong>，同一个线性映射写为：</p>
+<div class="arithmatex">\[
+\underbrace{y^T}_{1\times r}
+=\underbrace{x^T}_{1\times d}
+\underbrace{W^T}_{d\times r}.
+\]</div>
+<p>因此 <code>nn.Linear(d, r)</code> 保存的 <code>weight</code> 形状是 <code>[r, d]</code>，其中每一行是一个输出特征的权重；前向计算相当于 <code>x @ weight.T</code>。也可以另行定义一个 <span class="arithmatex">\(\widetilde W=W^T\in\mathbb{R}^{d\times r}\)</span>，再写成 <span class="arithmatex">\(y^T=x^T\widetilde W\)</span>。</p>
+<p>列向量公式和行向量公式可通过对等式整体转置来转换。利用 <span class="arithmatex">\((AB)^T=B^TA^T\)</span>：</p>
+<div class="arithmatex">\[
+\boxed{
+y=Wx
+\quad\Longleftrightarrow\quad
+y^T=x^TW^T
+}
+\]</div>
+<p>阅读本文时可以采用以下规则，避免混淆：</p>
+<ul>
+<li>论文和后续数学推导默认使用列向量，写成 <span class="arithmatex">\(c=Wh\)</span>；</li>
+<li>PyTorch 张量通常把特征放在最后一维，可将每个 token 看成行向量，写成 <code>c = h @ W.T</code>；</li>
+<li>二者表示同一个线性映射，只要在一次推导中保持约定一致即可。</li>
+</ul>
+<h3 id="22-kv">2.2 低秩 KV 联合压缩<a class="headerlink" href="#22-kv" title="Permanent link">&para;</a></h3>
+<p>下面的数学推导统一使用<strong>列向量</strong>，并暂时忽略 RoPE。</p>
+<p>对第 <code>j</code> 个 token 的隐藏状态 <span class="arithmatex">\(h_j\in\mathbb{R}^{d\times 1}\)</span>，MLA 先做一次 KV 联合下投影：</p>
+<div class="arithmatex">\[
+\underbrace{c_j}_{r\times 1}
+=\underbrace{W^{DKV}}_{r\times d}
+\underbrace{h_j}_{d\times 1}.
+\]</div>
+<p>其中 <code>r</code> 是 KV latent 的维度，远小于所有头的完整 K、V 总维度。在 PyTorch 中，对应计算为 <code>c_j = h_j @ W_DKV.T</code>，其中 <code>W_DKV.shape == [r, d]</code>。</p>
+<p>对第 <code>i</code> 个头，再分别把同一个 <span class="arithmatex">\(c_j\)</span> 上投影为 key 和 value：</p>
+<div class="arithmatex">\[
+k_{j,i}=W_i^{UK}c_j,\qquad W_i^{UK}\in\mathbb{R}^{d_k\times r},
+\]</div>
+<div class="arithmatex">\[
+v_{j,i}=W_i^{UV}c_j,\qquad W_i^{UV}\in\mathbb{R}^{d_v\times r}.
+\]</div>
+<p>直观上，<span class="arithmatex">\(c_j\)</span> 是 K、V 的一份“共同压缩底稿”，不同注意力头用各自的上投影矩阵读取它。</p>
+<p>如果只做到这里，虽然可以在 Cache 中只保存 <span class="arithmatex">\(c_j\)</span>，但每生成一个 token 都要把全部历史 <span class="arithmatex">\(c_1,\ldots,c_T\)</span> 重新展开成 K、V，计算量会很大。“吸收”就是为了避免这次全量展开。</p>
+<hr />
+<h2 id="3-k-k-q">3. K 吸收：把历史 K 的工作移到当前 Q<a class="headerlink" href="#3-k-k-q" title="Permanent link">&para;</a></h2>
+<h3 id="31-content-score">3.1 原来的 content score<a class="headerlink" href="#31-content-score" title="Permanent link">&para;</a></h3>
+<p>第 <code>i</code> 个头的当前 query 是 <span class="arithmatex">\(q_i\in\mathbb{R}^{d_k}\)</span>。它和第 <code>j</code> 个历史 key 的内容分数为：</p>
+<div class="arithmatex">\[
+s_{i,j}^{content}=q_i^T k_{j,i}
+=q_i^T W_i^{UK}c_j.
+\]</div>
+<p>根据矩阵乘法结合律：</p>
+<div class="arithmatex">\[
+q_i^T W_i^{UK}c_j
+=\left((W_i^{UK})^Tq_i\right)^T c_j.
+\]</div>
+<p>定义吸收后的 query：</p>
+<div class="arithmatex">\[
+\widehat q_i=(W_i^{UK})^Tq_i,\qquad \widehat q_i\in\mathbb{R}^{r}.
+\]</div>
+<p>于是：</p>
+<div class="arithmatex">\[
+s_{i,j}^{content}=\widehat q_i^T c_j.
+\]</div>
+<h3 id="32">3.2 它节省了什么<a class="headerlink" href="#32" title="Permanent link">&para;</a></h3>
+<p>未吸收时，对每次解码都可能需要：</p>
+<div class="arithmatex">\[
+c_j\xrightarrow{W_i^{UK}}k_{j,i},\qquad j=1,\ldots,T.
+\]</div>
+<p>吸收后，只需对<strong>当前 token 的每个 query</strong>做一次变换：</p>
+<div class="arithmatex">\[
+q_i\xrightarrow{(W_i^{UK})^T}\widehat q_i,
+\]</div>
+<p>然后让 <span class="arithmatex">\(\widehat q_i\)</span> 直接和 Cache 中所有 <span class="arithmatex">\(c_j\)</span> 做点积。历史 token 不再被逐头展开成 key。</p>
+<h3 id="33-q">3.3 “吸收到 Q”有两种实现含义<a class="headerlink" href="#33-q" title="Permanent link">&para;</a></h3>
+<p>如果 <span class="arithmatex">\(q_i=W_i^Qh_t\)</span> 且中间没有非线性运算，可以预先合并权重：</p>
+<div class="arithmatex">\[
+\widehat W_i^Q=(W_i^{UK})^TW_i^Q,
+\qquad \widehat q_i=\widehat W_i^Qh_t.
+\]</div>
+<p>如果 Q 本身也采用低秩投影，例如：</p>
+<div class="arithmatex">\[
+c_t^Q=W^{DQ}h_t,\qquad q_i=W_i^{UQ}c_t^Q,
+\]</div>
+<p>则可以只合并两个上投影：</p>
+<div class="arithmatex">\[
+\widehat W_i^{UQ}=(W_i^{UK})^TW_i^{UQ}.
+\]</div>
+<p>工程实现也可以不真正生成一份合并后的权重，而是在运行时先算 <span class="arithmatex">\(q_i\)</span>，再乘 <span class="arithmatex">\(W_i^{UK}\)</span>。两者数学含义相同；后者更方便复用、量化和切分原权重。</p>
+<hr />
+<h2 id="4-v-latent">4. V 吸收：先在 latent 空间加权，再展开<a class="headerlink" href="#4-v-latent" title="Permanent link">&para;</a></h2>
+<p>设 softmax 后第 <code>i</code> 个头对历史位置 <code>j</code> 的注意力权重是 <span class="arithmatex">\(a_{i,j}\)</span>。原来的头输出为：</p>
+<div class="arithmatex">\[
+o_i=\sum_{j=1}^{T}a_{i,j}v_{j,i}
+=\sum_{j=1}^{T}a_{i,j}W_i^{UV}c_j.
+\]</div>
+<p>线性映射对加权和可分配：</p>
+<div class="arithmatex">\[
+o_i
+=W_i^{UV}\left(\sum_{j=1}^{T}a_{i,j}c_j\right).
+\]</div>
+<p>先在 latent 空间计算：</p>
+<div class="arithmatex">\[
+z_i=\sum_{j=1}^{T}a_{i,j}c_j,\qquad z_i\in\mathbb{R}^{r},
+\]</div>
+<p>再只对当前头的聚合结果展开一次：</p>
+<div class="arithmatex">\[
+o_i=W_i^{UV}z_i.
+\]</div>
+<p>这避免了先为全部历史 token、全部头生成 <span class="arithmatex">\(v_{j,i}\)</span>。</p>
+<p>若输出投影 <span class="arithmatex">\(W^O\)</span> 按头分块为 <span class="arithmatex">\(W_i^O\in\mathbb{R}^{d\times d_v}\)</span>，最终输出为：</p>
+<div class="arithmatex">\[
+u=\sum_{i=1}^{H}W_i^Oo_i
+=\sum_{i=1}^{H}\underbrace{(W_i^OW_i^{UV})}_{B_i}z_i.
+\]</div>
+<p>因此还可以预先形成：</p>
+<div class="arithmatex">\[
+B_i=W_i^OW_i^{UV}\in\mathbb{R}^{d\times r},
+\]</div>
+<p>也就是把 V 上投影吸收到输出投影。实际内核也可能保留“两次较小矩阵乘”，而不显式保存 <span class="arithmatex">\(B_i\)</span>。</p>
+<blockquote>
+<p>注意：这里没有把矩阵“穿过 softmax”。算法先得到与原式完全相同的 logits，再做同一个 softmax；只有 softmax 之后的线性加权和被重新结合。</p>
+</blockquote>
+<hr />
+<h2 id="5-rope-k">5. RoPE 为什么不能照搬 K 吸收<a class="headerlink" href="#5-rope-k" title="Permanent link">&para;</a></h2>
+<p>如果直接给压缩 key 的上投影结果施加 RoPE，那么 key 变为：</p>
+<div class="arithmatex">\[
+k_{j,i}=R_jW_i^{UK}c_j,
+\]</div>
+<p>其中 <span class="arithmatex">\(R_j\)</span> 是与历史位置 <code>j</code> 有关的旋转矩阵。分数中会出现：</p>
+<div class="arithmatex">\[
+q_i^TR_jW_i^{UK}c_j.
+\]</div>
+<p>由于 <span class="arithmatex">\(R_j\)</span> 随位置变化并夹在 Q 与 <span class="arithmatex">\(W_i^{UK}\)</span> 之间，无法构造一个对所有历史位置都通用的吸收后 query。矩阵乘法有结合律，但通常<strong>没有交换律</strong>，不能随意把 <span class="arithmatex">\(R_j\)</span> 与 <span class="arithmatex">\(W_i^{UK}\)</span> 调换。</p>
+<p>DeepSeek 的办法是 <strong>Decoupled RoPE（解耦 RoPE）</strong>：把 Q、K 分成内容分支和位置分支。</p>
+<div class="arithmatex">\[
+q_i=[q_i^{C};q_i^{R}],\qquad
+k_{j,i}=[k_{j,i}^{C};k_j^{R}].
+\]</div>
+<ul>
+<li>内容 key：<span class="arithmatex">\(k_{j,i}^{C}=W_i^{UK}c_j\)</span>，不施加 RoPE，可以吸收；</li>
+<li>位置 key：<span class="arithmatex">\(k_j^{R}=\operatorname{RoPE}(W^{KR}h_j)\)</span>，在各头间共享，单独缓存；</li>
+<li>位置 query：<span class="arithmatex">\(q_i^{R}\)</span> 施加 RoPE，但它只和 <span class="arithmatex">\(k_j^{R}\)</span> 点积。</li>
+</ul>
+<p>完整 logit（省略 mask）为：</p>
+<div class="arithmatex">\[
+s_{i,j}
+=\frac{
+\underbrace{\widehat q_i^{T}c_j}_{内容分支}
++\underbrace{(q_i^{R})^Tk_j^{R}}_{位置分支}
+}{\sqrt{d_k+d_R}}.
+\]</div>
+<p>因此每个历史 token、每层只需缓存：</p>
+<div class="arithmatex">\[
+\boxed{c_j\in\mathbb{R}^{r}\quad+\quad k_j^R\in\mathbb{R}^{d_R}}.
+\]</div>
+<p>位置 key 不按头复制，是 MLA Cache 很小的另一个重要原因。</p>
+<hr />
+<h2 id="6">6. 一次解码的完整数据流<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>当前隐藏状态 h_t
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>   │
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>   ├─&gt; 当前 q_nope ──乘 K 上投影──&gt; q_abs ─────┐
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>   │                                             │ 与历史 c_cache 点积
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>   ├─&gt; 当前 q_rope ─────施加 RoPE───────────────┤ 与历史 pe_cache 点积
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>   │                                             ▼
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>   ├─&gt; 当前 c_t ─────────────────────────────&gt; logits → mask → softmax = A
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>   │          │                                  │
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>   │          └────────追加到 c_cache             │ A @ c_cache
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>   │                                             ▼
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>   └─&gt; 当前 k_rope ──追加到 pe_cache        每个头的 latent context z_i
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>                                                  │
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>                                             V 上投影 / 输出吸收
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>                                                  ▼
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>                                              当前层输出
+</span></code></pre></div>
+<p>关键的不对称性是：历史信息始终保留在共享 latent 空间；只有当前 query 和 softmax 后的当前 context 按头展开。</p>
+<hr />
+<h2 id="7">7. 接近实现的伪代码<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<p>下面使用张量库常见的<strong>行向量</strong>布局。维度约定：</p>
+<ul>
+<li><code>H</code>：头数；<code>T</code>：缓存长度；</li>
+<li><code>r</code>：KV latent 维度；</li>
+<li><code>d_c</code>：每头非位置 Q/K 维度；</li>
+<li><code>d_R</code>：RoPE 维度；<code>d_v</code>：每头 V 维度。</li>
+</ul>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">mla_decode</span><span class="p">(</span><span class="n">x_t</span><span class="p">,</span> <span class="n">c_cache</span><span class="p">,</span> <span class="n">pe_cache</span><span class="p">):</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="c1"># 1. 只为当前 token 生成 query 的两个分支</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="n">q_nope</span> <span class="o">=</span> <span class="n">make_q_nope</span><span class="p">(</span><span class="n">x_t</span><span class="p">)</span>          <span class="c1"># [H, d_c]</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="n">q_rope</span> <span class="o">=</span> <span class="n">rope</span><span class="p">(</span><span class="n">make_q_rope</span><span class="p">(</span><span class="n">x_t</span><span class="p">))</span>    <span class="c1"># [H, d_R]</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="c1"># 2. 为当前 token 生成需要缓存的两小块状态</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    <span class="n">c_t</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">make_kv_latent</span><span class="p">(</span><span class="n">x_t</span><span class="p">))</span>     <span class="c1"># [r]</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    <span class="n">k_rope_t</span> <span class="o">=</span> <span class="n">rope</span><span class="p">(</span><span class="n">make_k_rope</span><span class="p">(</span><span class="n">x_t</span><span class="p">))</span>  <span class="c1"># [d_R]，各头共享</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="n">c_cache</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c_t</span><span class="p">)</span>                 <span class="c1"># [T, r]</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="n">pe_cache</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k_rope_t</span><span class="p">)</span>           <span class="c1"># [T, d_R]</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    <span class="c1"># 3. K 吸收：W_k_up[h] 的布局视为 [d_c, r]</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>    <span class="n">q_abs</span> <span class="o">=</span> <span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;hd,hdr-&gt;hr&quot;</span><span class="p">,</span> <span class="n">q_nope</span><span class="p">,</span> <span class="n">W_k_up</span><span class="p">)</span>  <span class="c1"># [H, r]</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>    <span class="c1"># 4. 内容与位置两个分支分别打分</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>    <span class="n">score_content</span> <span class="o">=</span> <span class="n">q_abs</span> <span class="o">@</span> <span class="n">c_cache</span><span class="o">.</span><span class="n">T</span>               <span class="c1"># [H, T]</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>    <span class="n">score_position</span> <span class="o">=</span> <span class="n">q_rope</span> <span class="o">@</span> <span class="n">pe_cache</span><span class="o">.</span><span class="n">T</span>            <span class="c1"># [H, T]</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>    <span class="n">logits</span> <span class="o">=</span> <span class="p">(</span><span class="n">score_content</span> <span class="o">+</span> <span class="n">score_position</span><span class="p">)</span> <span class="o">/</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">d_c</span> <span class="o">+</span> <span class="n">d_R</span><span class="p">)</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>    <span class="n">A</span> <span class="o">=</span> <span class="n">softmax</span><span class="p">(</span><span class="n">apply_causal_mask</span><span class="p">(</span><span class="n">logits</span><span class="p">),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>   <span class="c1"># [H, T]</span>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>    <span class="c1"># 5. V 吸收：先在 latent 空间按头聚合</span>
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>    <span class="n">z</span> <span class="o">=</span> <span class="n">A</span> <span class="o">@</span> <span class="n">c_cache</span>                                  <span class="c1"># [H, r]</span>
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>    <span class="c1"># 方案 A：先做 V 上投影，再做普通输出投影</span>
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>    <span class="n">head_out</span> <span class="o">=</span> <span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;hr,hvr-&gt;hv&quot;</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">W_v_up</span><span class="p">)</span>      <span class="c1"># [H, d_v]</span>
+</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>    <span class="n">y_t</span> <span class="o">=</span> <span class="n">output_projection</span><span class="p">(</span><span class="n">head_out</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">H</span> <span class="o">*</span> <span class="n">d_v</span><span class="p">))</span>
+</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>
+</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>    <span class="c1"># 方案 B：若预先计算 B[h] = W_o[h] @ W_v_up[h]</span>
+</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>    <span class="c1"># y_t = sum_h B[h] @ z[h]</span>
+</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a>
+</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a>    <span class="k">return</span> <span class="n">y_t</span>
+</span></code></pre></div>
+<p>官方 DeepSeek-V3 参考实现的非朴素分支正是这个顺序：先将 <code>q_nope</code> 乘 K 上投影、缓存 <code>kv</code> latent 和位置 key、对 latent Cache 计算 logits、用注意力权重聚合 latent、最后才做 V 上投影和输出投影。</p>
+<hr />
+<h2 id="8">8. 一个极小的数值例子<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<p>只看一个头和 K 吸收。设：</p>
+<div class="arithmatex">\[
+c=\begin{bmatrix}1\\2\end{bmatrix},\quad
+W^{UK}=\begin{bmatrix}2&amp;0\\1&amp;-1\end{bmatrix},\quad
+q=\begin{bmatrix}4\\-2\end{bmatrix}.
+\]</div>
+<h3 id="k">先展开 K<a class="headerlink" href="#k" title="Permanent link">&para;</a></h3>
+<div class="arithmatex">\[
+k=W^{UK}c
+=\begin{bmatrix}2\\-1\end{bmatrix},
+\]</div>
+<div class="arithmatex">\[
+q^Tk=4\times2+(-2)\times(-1)=10.
+\]</div>
+<h3 id="k-q">把 K 投影吸收到 Q<a class="headerlink" href="#k-q" title="Permanent link">&para;</a></h3>
+<div class="arithmatex">\[
+\widehat q=(W^{UK})^Tq
+=\begin{bmatrix}6\\2\end{bmatrix},
+\]</div>
+<div class="arithmatex">\[
+\widehat q^Tc=6\times1+2\times2=10.
+\]</div>
+<p>两条路径得到完全相同的 score。差别只是：前者要为每个历史 token 生成 K；后者只变换当前 Q，然后直接读取历史 latent。</p>
+<p>V 侧同理。若两个历史 latent 的权重分别为 <code>0.25</code>、<code>0.75</code>，则：</p>
+<div class="arithmatex">\[
+0.25W^{UV}c_1+0.75W^{UV}c_2
+=W^{UV}(0.25c_1+0.75c_2).
+\]</div>
+<p>所以只需把两个小 latent 加权成一个，再展开一次。</p>
+<hr />
+<h2 id="9-cache">9. Cache 和计算量怎样变化<a class="headerlink" href="#9-cache" title="Permanent link">&para;</a></h2>
+<h3 id="91-cache">9.1 Cache 大小<a class="headerlink" href="#91-cache" title="Permanent link">&para;</a></h3>
+<p>如果朴素实现缓存各头完整 K、V，每个 token、每层约为：</p>
+<div class="arithmatex">\[
+H(d_c+d_R+d_v).
+\]</div>
+<p>吸收式 MLA 每个 token、每层约为：</p>
+<div class="arithmatex">\[
+r+d_R.
+\]</div>
+<p>两者的理论元素量比值为：</p>
+<div class="arithmatex">\[
+\frac{H(d_c+d_R+d_v)}{r+d_R}.
+\]</div>
+<p>DeepSeek-V2 论文用另一组统一符号给出的结论是：MHA 为 <span class="arithmatex">\(2Hd_hL\)</span>，MLA 为 <span class="arithmatex">\((d_c+d_h^R)L\)</span>；在论文配置中 <span class="arithmatex">\(d_c=4d_h\)</span>、<span class="arithmatex">\(d_h^R=d_h/2\)</span>，所以 MLA 每层每 token 只保存约 <span class="arithmatex">\(4.5d_h\)</span> 个元素，而不是随头数线性增长的 <span class="arithmatex">\(2Hd_h\)</span> 个元素。</p>
+<h3 id="92">9.2 代价不是“所有方面都更少”<a class="headerlink" href="#92" title="Permanent link">&para;</a></h3>
+<p>吸收后，content score 的点积维度从每头 <code>d_c</code> 变成 latent 维度 <code>r</code>；当 <code>r &gt; d_c</code> 时，某些矩阵乘法的 FLOPs 可能上升。它的主要收益是：</p>
+<ul>
+<li>大幅减少 KV Cache 容量；</li>
+<li>大幅减少每个解码步从显存读取的历史数据；</li>
+<li>不再为所有历史 token 重建逐头 K、V；</li>
+<li>允许更长上下文或更大 batch。</li>
+</ul>
+<p>所以 MLA 尤其适合通常受显存带宽制约的逐 token 解码。实际速度仍取决于序列长度、batch、GPU、量化方式、张量并行策略和内核实现。Prefill 阶段一次处理很多 query，可能采用与 decode 不同的执行路径。</p>
+<hr />
+<h2 id="10">10. 常见误解与实现陷阱<a class="headerlink" href="#10" title="Permanent link">&para;</a></h2>
+<h3 id="1">误解 1：吸收是一种新的训练算法<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
+<p>不是。它主要是推理阶段对同一计算图的代数重排。MLA 的低秩联合压缩需要在模型训练时学到，但“吸收式执行”本身不改变模型函数。</p>
+<h3 id="2-latentkv">误解 2：既然只缓存 latent，K、V 就不存在了<a class="headerlink" href="#2-latentkv" title="Permanent link">&para;</a></h3>
+<p>从数学定义看 K、V 仍然存在；只是推理程序不必把所有历史 K、V 显式物化。它们的线性作用被转移到了计算图的两端。</p>
+<h3 id="3">误解 3：可以把任意算子都吸收<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
+<p>只有相邻的线性变换才能直接合并或重新结合。若中间夹有位置相关旋转、激活函数、归一化、截断或其他非线性操作，就不能直接跨过去。MLA 通过解耦 RoPE，专门保留了一条可吸收的内容分支。</p>
+<h3 id="4">误解 4：矩阵乘法可交换<a class="headerlink" href="#4" title="Permanent link">&para;</a></h3>
+<p>吸收利用的是结合律：</p>
+<div class="arithmatex">\[
+(AB)C=A(BC),
+\]</div>
+<p>而不是交换律。一般情况下 <span class="arithmatex">\(AB\ne BA\)</span>。</p>
+<h3 id="_1">实现陷阱<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>转置和布局</strong>：论文多用列向量，PyTorch 常用行向量；<code>W</code> 的转置方向最容易写错。</li>
+<li><strong>缩放因子</strong>：softmax scale 对应完整 Q/K 头维度，即内容维度加 RoPE 维度，而不是吸收后的 latent 维度。</li>
+<li><strong>Cache 内容</strong>：如果 KV 下投影后有 RMSNorm，通常应缓存归一化后的 latent；要与训练图保持一致。</li>
+<li><strong>位置 key 的共享维</strong>：解耦 RoPE key 通常不按头重复缓存。</li>
+<li><strong>量化误差</strong>：数学上等价不代表低精度下逐 bit 一致；是否预先合并权重会改变舍入和量化尺度。</li>
+<li><strong>内核性能</strong>：显式生成融合权重未必更快；权重布局、张量并行和专用 kernel 可能更偏好运行时的两步乘法。</li>
+</ul>
+<hr />
+<h2 id="11">11. 建议的理解顺序<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
+<ol>
+<li>先只看 <span class="arithmatex">\(q^TW^{UK}c=((W^{UK})^Tq)^Tc\)</span>，彻底理解 K 吸收。</li>
+<li>再看 <span class="arithmatex">\(\sum_j a_jW^{UV}c_j=W^{UV}\sum_j a_jc_j\)</span>，理解 V 吸收。</li>
+<li>记住 Cache 中保存的是共享 latent，而不是每头 K/V。</li>
+<li>最后加入 RoPE：内容分支可以吸收，位置分支单独计算和缓存。</li>
+<li>对照伪代码，找到 <code>q_abs @ c_cache.T</code> 和 <code>A @ c_cache</code> 这两个核心矩阵乘法。</li>
+</ol>
+<p>如果只想掌握本质，到这里已经足够：</p>
+<div class="arithmatex">\[
+\boxed{
+\text{K 吸收：移动投影到 Q；}\qquad
+\text{V 吸收：先聚合 latent，再展开。}
+}
+\]</div>
+<hr />
+<h2 id="12">12. 参考资料<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
+<ol>
+<li>DeepSeek-AI, <a href="https://arxiv.org/abs/2405.04434">DeepSeek-V2: A Strong, Economical, and Efficient Mixture-of-Experts Language Model</a>。MLA 的原始论文；重点参见第 2.1 节，尤其是公式 9–19、解耦 RoPE 和 KV Cache 对比。</li>
+<li>DeepSeek-AI, <a href="https://arxiv.org/abs/2412.19437">DeepSeek-V3 Technical Report</a>。DeepSeek-V3 延续 MLA 架构。</li>
+<li>DeepSeek-AI, <a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/model.py">DeepSeek-V3 官方 MLA 参考实现</a>。<code>MLA.forward</code> 同时给出朴素 K/V Cache 路径和 latent Cache 的吸收式路径，可直接对照两种计算顺序。</li>
+<li>DeepSeek-AI, <a href="https://github.com/deepseek-ai/FlashMLA">FlashMLA</a>。面向 GPU 的高效 MLA kernel 实现。</li>
+</ol>
+<hr />
+<h2 id="_2">附录：符号速查<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+<th>典型形状</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(h_j\)</span></td>
+<td>第 <code>j</code> 个 token 的层输入</td>
+<td><span class="arithmatex">\(d\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(c_j\)</span></td>
+<td>K/V 共享压缩 latent</td>
+<td><span class="arithmatex">\(r\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(W^{DKV}\)</span></td>
+<td>K/V 联合下投影</td>
+<td><span class="arithmatex">\(r\times d\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(W_i^{UK}\)</span></td>
+<td>第 <code>i</code> 头的 K 上投影</td>
+<td><span class="arithmatex">\(d_c\times r\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(W_i^{UV}\)</span></td>
+<td>第 <code>i</code> 头的 V 上投影</td>
+<td><span class="arithmatex">\(d_v\times r\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(q_i^C\)</span></td>
+<td>第 <code>i</code> 头的非位置 query</td>
+<td><span class="arithmatex">\(d_c\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\widehat q_i\)</span></td>
+<td>K 吸收后的 query</td>
+<td><span class="arithmatex">\(r\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(q_i^R\)</span></td>
+<td>第 <code>i</code> 头的 RoPE query</td>
+<td><span class="arithmatex">\(d_R\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(k_j^R\)</span></td>
+<td>各头共享的 RoPE key</td>
+<td><span class="arithmatex">\(d_R\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(a_{i,j}\)</span></td>
+<td>softmax 后的注意力权重</td>
+<td>标量</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(z_i\)</span></td>
+<td>注意力权重聚合后的 latent</td>
+<td><span class="arithmatex">\(r\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(W_i^O\)</span></td>
+<td>第 <code>i</code> 头对应的输出投影分块</td>
+<td><span class="arithmatex">\(d\times d_v\)</span></td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 LJX
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/Lai-JX" target="_blank" rel="noopener" title="Lai-JX on GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.tracking", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
