@@ -1638,6 +1638,56 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#402-k" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        402. 移掉 K 位数字
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="402. 移掉 K 位数字">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_39" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        快速复习
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_40" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        详细题解
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Python 实现
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2838,6 +2888,56 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#402-k" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        402. 移掉 K 位数字
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="402. 移掉 K 位数字">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_39" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        快速复习
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_40" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        详细题解
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Python 实现
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2873,13 +2973,11 @@
 <p>小饼干先喂饱小胃口：先遍历饼干，再遍历胃口 2. 摆动序列</p>
 <h3 id="_3">详细题解<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
 <p><strong>小饼干先喂饱小胃口：先遍历饼干，再遍历胃口</strong></p>
-<div class="language-text highlight"><pre><span></span><code>```python
-for i in range(len(s)):
-    if index &lt; len(g) and s[i] &gt;= g[index]:
-        index += 1
-return index
-```
-</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="k">if</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">g</span><span class="p">)</span> <span class="ow">and</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">g</span><span class="p">[</span><span class="n">index</span><span class="p">]:</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>        <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">return</span> <span class="n">index</span>
+</span></code></pre></div>
 <ol>
 <li><strong>摆动序列</strong></li>
 </ol>
@@ -3157,6 +3255,8 @@ return index
 <li><strong>局部最优：优先按身高高的people的k来插入。插入操作过后的people满足队列属性</strong></li>
 <li><strong>全局最优：最后都做完插入操作，整个队列满足题目队列属性</strong></li>
 </ul>
+</li>
+</ul>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">reconstructQueue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">people</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
 </span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>        <span class="n">people</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
@@ -3165,11 +3265,9 @@ return index
 </span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>            <span class="n">que</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">p</span><span class="p">)</span>
 </span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>        <span class="k">return</span> <span class="n">que</span>
 </span></code></pre></div>
-</li>
-<li>
-<p><strong>用最少数量的箭引爆气球</strong></p>
-</li>
-</ul>
+<ol>
+<li><strong>用最少数量的箭引爆气球</strong></li>
+</ol>
 <h3 id="python_9">Python 实现<a class="headerlink" href="#python_9" title="Permanent link">&para;</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
 </span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">lemonadeChange</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bills</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
@@ -3217,17 +3315,15 @@ return index
 <p>在按照身高从大到小排序后：</p>
 <div class="language-text highlight"><pre><span></span><code>- **局部最优：优先按身高高的people的k来插入。插入操作过后的people满足队列属性**
 - **全局最优：最后都做完插入操作，整个队列满足题目队列属性**
-
-```python
-class Solution:
-    def reconstructQueue(self, people: List[List[int]]) -&gt; List[List[int]]:
-        people.sort(key=lambda x: (-x[0],x[1]))
-        que = []
-        for p in people:
-            que.insert(p[1],p)
-        return que
-```
 </code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">reconstructQueue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">people</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>        <span class="n">people</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>        <span class="n">que</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">people</span><span class="p">:</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>            <span class="n">que</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">p</span><span class="p">)</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>        <span class="k">return</span> <span class="n">que</span>
+</span></code></pre></div>
 <h3 id="python_10">Python 实现<a class="headerlink" href="#python_10" title="Permanent link">&para;</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
 </span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">reconstructQueue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">people</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
@@ -3350,27 +3446,25 @@ class Solution:
 <p>和我们刚刚讲过的452. 用最少数量的箭引爆气球 (opens new window)和 435. 无重叠区间 (opens new window)都是一个套路；16. 单调递增的数字</p>
 <h3 id="_31">详细题解<a class="headerlink" href="#_31" title="Permanent link">&para;</a></h3>
 <p>和我们刚刚讲过的<a href="https://programmercarl.com/0452.%E7%94%A8%E6%9C%80%E5%B0%91%E6%95%B0%E9%87%8F%E7%9A%84%E7%AE%AD%E5%BC%95%E7%88%86%E6%B0%94%E7%90%83.html"><strong>452. 用最少数量的箭引爆气球 (opens new window)</strong></a>和 <a href="https://programmercarl.com/0435.%E6%97%A0%E9%87%8D%E5%8F%A0%E5%8C%BA%E9%97%B4.html"><strong>435. 无重叠区间 (opens new window)</strong></a>都是一个套路。</p>
-<div class="language-text highlight"><pre><span></span><code>```python
-class Solution:
-    def merge(self, intervals):
-        result = []
-        if len(intervals) == 0:
-            return result  # 区间集合为空直接返回
-
-        intervals.sort(key=lambda x: x[0])  # 按照区间的左边界进行排序
-
-        result.append(intervals[0])  # 第一个区间可以直接放入结果集中
-
-        for i in range(1, len(intervals)):
-            if result[-1][1] &gt;= intervals[i][0]:  # 发现重叠区间
-                # 合并区间，只需要更新结果集最后一个区间的右边界，因为根据排序，左边界已经是最小的
-                result[-1][1] = max(result[-1][1], intervals[i][1])
-            else:
-                result.append(intervals[i])  # 区间不重叠
-
-        return result
-```
-</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">intervals</span><span class="p">):</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>            <span class="k">return</span> <span class="n">result</span>  <span class="c1"># 区间集合为空直接返回</span>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>        <span class="n">intervals</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># 按照区间的左边界进行排序</span>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">intervals</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># 第一个区间可以直接放入结果集中</span>
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">intervals</span><span class="p">)):</span>
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>            <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">intervals</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>  <span class="c1"># 发现重叠区间</span>
+</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a>                <span class="c1"># 合并区间，只需要更新结果集最后一个区间的右边界，因为根据排序，左边界已经是最小的</span>
+</span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>                <span class="n">result</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">intervals</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+</span><span id="__span-17-15"><a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="__span-17-16"><a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a>                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">intervals</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>  <span class="c1"># 区间不重叠</span>
+</span><span id="__span-17-17"><a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a>
+</span><span id="__span-17-18"><a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a>        <span class="k">return</span> <span class="n">result</span>
+</span></code></pre></div>
 <ol>
 <li><strong>单调递增的数字</strong></li>
 </ol>
@@ -3428,25 +3522,24 @@ class Solution:
 <h3 id="_34">快速复习<a class="headerlink" href="#_34" title="Permanent link">&para;</a></h3>
 <p>必须给出交换论证或覆盖范围不变量；不能只凭直觉使用贪心。</p>
 <h3 id="_35">详细题解<a class="headerlink" href="#_35" title="Permanent link">&para;</a></h3>
-<p>```
-    节点分为三个状态：
-    0：无覆盖
-    1：有摄像头
-    2：有覆盖</p>
-<div class="language-text highlight"><pre><span></span><code>四种情况：
-if left == 0 or right == 0:
-    self.result += 1
-    return 1
-
-if left == 2 and right == 2:
-    return 0
-
-if left == 1 or right == 1:
-    return 2
-
-root==0，需再加一个摄像头
-```
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>    节点分为三个状态：
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>    0：无覆盖
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>    1：有摄像头
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>    2：有覆盖
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>    四种情况：
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>    if left == 0 or right == 0:
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>        self.result += 1
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>        return 1
+</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a>
+</span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a>    if left == 2 and right == 2:
+</span><span id="__span-20-12"><a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a>        return 0
+</span><span id="__span-20-13"><a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a>
+</span><span id="__span-20-14"><a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a>    if left == 1 or right == 1:
+</span><span id="__span-20-15"><a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a>        return 2
+</span><span id="__span-20-16"><a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a>
+</span><span id="__span-20-17"><a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a>    root==0，需再加一个摄像头
+</span></code></pre></div>
 <ul>
 <li>新增题目</li>
 </ul>
@@ -3454,51 +3547,50 @@ root==0，需再加一个摄像头
 <p><strong>补充思路：</strong> 寻找可证明的局部最优选择，并说明该选择不会破坏后续最优解；区间题通常先排序。</p>
 </blockquote>
 <h3 id="python_16">Python 实现<a class="headerlink" href="#python_16" title="Permanent link">&para;</a></h3>
-<p>~~~python
-class Solution:
-         # Greedy Algo:
-        # 从下往上安装摄像头：跳过leaves这样安装数量最少，局部最优 -&gt; 全局最优
-        # 先给leaves的父节点安装，然后每隔两层节点安装一个摄像头，直到Head
-        # 0: 该节点未覆盖
-        # 1: 该节点有摄像头
-        # 2: 该节点有覆盖
-    def minCameraCover(self, root: TreeNode) -&gt; int:
-        # 定义递归函数
-        result = [0]  # 用于记录摄像头的安装数量
-        if self.traversal(root, result) == 0:
-            result[0] += 1</p>
-<div class="language-text highlight"><pre><span></span><code>    return result[0]
-
-
-def traversal(self, cur: TreeNode, result: List[int]) -&gt; int:
-    if not cur:
-        return 2
-
-    left = self.traversal(cur.left, result)
-    right = self.traversal(cur.right, result)
-
-    # 情况1: 左右节点都有覆盖
-    if left == 2 and right == 2:
-        return 0
-
-    # 情况2:
-    # left == 0 &amp;&amp; right == 0 左右节点无覆盖
-    # left == 1 &amp;&amp; right == 0 左节点有摄像头，右节点无覆盖
-    # left == 0 &amp;&amp; right == 1 左节点无覆盖，右节点有摄像头
-    # left == 0 &amp;&amp; right == 2 左节点无覆盖，右节点覆盖
-    # left == 2 &amp;&amp; right == 0 左节点覆盖，右节点无覆盖
-    if left == 0 or right == 0:
-        result[0] += 1
-        return 1
-
-    # 情况3:
-    # left == 1 &amp;&amp; right == 2 左节点有摄像头，右节点有覆盖
-    # left == 2 &amp;&amp; right == 1 左节点有覆盖，右节点有摄像头
-    # left == 1 &amp;&amp; right == 1 左右节点都有摄像头
-    if left == 1 or right == 1:
-        return 2
-</code></pre></div>
-<p>~~~</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>         <span class="c1"># Greedy Algo:</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>        <span class="c1"># 从下往上安装摄像头：跳过leaves这样安装数量最少，局部最优 -&gt; 全局最优</span>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>        <span class="c1"># 先给leaves的父节点安装，然后每隔两层节点安装一个摄像头，直到Head</span>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>        <span class="c1"># 0: 该节点未覆盖</span>
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>        <span class="c1"># 1: 该节点有摄像头</span>
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>        <span class="c1"># 2: 该节点有覆盖</span>
+</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">minCameraCover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="n">TreeNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>        <span class="c1"># 定义递归函数</span>
+</span><span id="__span-21-10"><a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>        <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># 用于记录摄像头的安装数量</span>
+</span><span id="__span-21-11"><a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">traversal</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span id="__span-21-12"><a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a>            <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span id="__span-21-13"><a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a>
+</span><span id="__span-21-14"><a id="__codelineno-21-14" name="__codelineno-21-14" href="#__codelineno-21-14"></a>        <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="__span-21-15"><a id="__codelineno-21-15" name="__codelineno-21-15" href="#__codelineno-21-15"></a>
+</span><span id="__span-21-16"><a id="__codelineno-21-16" name="__codelineno-21-16" href="#__codelineno-21-16"></a>
+</span><span id="__span-21-17"><a id="__codelineno-21-17" name="__codelineno-21-17" href="#__codelineno-21-17"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">traversal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cur</span><span class="p">:</span> <span class="n">TreeNode</span><span class="p">,</span> <span class="n">result</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span><span id="__span-21-18"><a id="__codelineno-21-18" name="__codelineno-21-18" href="#__codelineno-21-18"></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">cur</span><span class="p">:</span>
+</span><span id="__span-21-19"><a id="__codelineno-21-19" name="__codelineno-21-19" href="#__codelineno-21-19"></a>            <span class="k">return</span> <span class="mi">2</span>
+</span><span id="__span-21-20"><a id="__codelineno-21-20" name="__codelineno-21-20" href="#__codelineno-21-20"></a>
+</span><span id="__span-21-21"><a id="__codelineno-21-21" name="__codelineno-21-21" href="#__codelineno-21-21"></a>        <span class="n">left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">traversal</span><span class="p">(</span><span class="n">cur</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+</span><span id="__span-21-22"><a id="__codelineno-21-22" name="__codelineno-21-22" href="#__codelineno-21-22"></a>        <span class="n">right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">traversal</span><span class="p">(</span><span class="n">cur</span><span class="o">.</span><span class="n">right</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+</span><span id="__span-21-23"><a id="__codelineno-21-23" name="__codelineno-21-23" href="#__codelineno-21-23"></a>
+</span><span id="__span-21-24"><a id="__codelineno-21-24" name="__codelineno-21-24" href="#__codelineno-21-24"></a>        <span class="c1"># 情况1: 左右节点都有覆盖</span>
+</span><span id="__span-21-25"><a id="__codelineno-21-25" name="__codelineno-21-25" href="#__codelineno-21-25"></a>        <span class="k">if</span> <span class="n">left</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">right</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+</span><span id="__span-21-26"><a id="__codelineno-21-26" name="__codelineno-21-26" href="#__codelineno-21-26"></a>            <span class="k">return</span> <span class="mi">0</span>
+</span><span id="__span-21-27"><a id="__codelineno-21-27" name="__codelineno-21-27" href="#__codelineno-21-27"></a>
+</span><span id="__span-21-28"><a id="__codelineno-21-28" name="__codelineno-21-28" href="#__codelineno-21-28"></a>        <span class="c1"># 情况2:</span>
+</span><span id="__span-21-29"><a id="__codelineno-21-29" name="__codelineno-21-29" href="#__codelineno-21-29"></a>        <span class="c1"># left == 0 &amp;&amp; right == 0 左右节点无覆盖</span>
+</span><span id="__span-21-30"><a id="__codelineno-21-30" name="__codelineno-21-30" href="#__codelineno-21-30"></a>        <span class="c1"># left == 1 &amp;&amp; right == 0 左节点有摄像头，右节点无覆盖</span>
+</span><span id="__span-21-31"><a id="__codelineno-21-31" name="__codelineno-21-31" href="#__codelineno-21-31"></a>        <span class="c1"># left == 0 &amp;&amp; right == 1 左节点无覆盖，右节点有摄像头</span>
+</span><span id="__span-21-32"><a id="__codelineno-21-32" name="__codelineno-21-32" href="#__codelineno-21-32"></a>        <span class="c1"># left == 0 &amp;&amp; right == 2 左节点无覆盖，右节点覆盖</span>
+</span><span id="__span-21-33"><a id="__codelineno-21-33" name="__codelineno-21-33" href="#__codelineno-21-33"></a>        <span class="c1"># left == 2 &amp;&amp; right == 0 左节点覆盖，右节点无覆盖</span>
+</span><span id="__span-21-34"><a id="__codelineno-21-34" name="__codelineno-21-34" href="#__codelineno-21-34"></a>        <span class="k">if</span> <span class="n">left</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">right</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span id="__span-21-35"><a id="__codelineno-21-35" name="__codelineno-21-35" href="#__codelineno-21-35"></a>            <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span id="__span-21-36"><a id="__codelineno-21-36" name="__codelineno-21-36" href="#__codelineno-21-36"></a>            <span class="k">return</span> <span class="mi">1</span>
+</span><span id="__span-21-37"><a id="__codelineno-21-37" name="__codelineno-21-37" href="#__codelineno-21-37"></a>
+</span><span id="__span-21-38"><a id="__codelineno-21-38" name="__codelineno-21-38" href="#__codelineno-21-38"></a>        <span class="c1"># 情况3:</span>
+</span><span id="__span-21-39"><a id="__codelineno-21-39" name="__codelineno-21-39" href="#__codelineno-21-39"></a>        <span class="c1"># left == 1 &amp;&amp; right == 2 左节点有摄像头，右节点有覆盖</span>
+</span><span id="__span-21-40"><a id="__codelineno-21-40" name="__codelineno-21-40" href="#__codelineno-21-40"></a>        <span class="c1"># left == 2 &amp;&amp; right == 1 左节点有覆盖，右节点有摄像头</span>
+</span><span id="__span-21-41"><a id="__codelineno-21-41" name="__codelineno-21-41" href="#__codelineno-21-41"></a>        <span class="c1"># left == 1 &amp;&amp; right == 1 左右节点都有摄像头</span>
+</span><span id="__span-21-42"><a id="__codelineno-21-42" name="__codelineno-21-42" href="#__codelineno-21-42"></a>        <span class="k">if</span> <span class="n">left</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">right</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+</span><span id="__span-21-43"><a id="__codelineno-21-43" name="__codelineno-21-43" href="#__codelineno-21-43"></a>            <span class="k">return</span> <span class="mi">2</span>
+</span></code></pre></div>
 <h2 id="_36">小红闯关<a class="headerlink" href="#_36" title="Permanent link">&para;</a></h2>
 <div class="study-card-meta">
 <p><span class="difficulty difficulty--unknown">Unknown</span>
@@ -3512,22 +3604,23 @@ def traversal(self, cur: TreeNode, result: List[int]) -&gt; int:
 <p><strong>补充思路：</strong> 寻找可证明的局部最优选择，并说明该选择不会破坏后续最优解；区间题通常先排序。</p>
 </blockquote>
 <h3 id="python_17">Python 实现<a class="headerlink" href="#python_17" title="Permanent link">&para;</a></h3>
-<p>~~~python</p>
-<h1 id="acm-n-k">ACM 模式：n 个关卡，每通过 k 个关卡获得一次跳关机会<a class="headerlink" href="#acm-n-k" title="Permanent link">&para;</a></h1>
-<p>import heapq</p>
-<p>def solve():
-    n, k = map(int, input().split())
-    times = list(map(int, input().split()))
-    total = sum(times)
-    available = []
-    for i in range(n - 1, -1, -1):
-        if (i + 1) % k == 0 and available:
-            total += heapq.heappop(available)  # 堆中保存负数，相当于减去最大耗时
-        heapq.heappush(available, -times[i])
-    print(total)</p>
-<p>if <strong>name</strong> == "<strong>main</strong>":
-    solve()
-~~~</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1"># ACM 模式：n 个关卡，每通过 k 个关卡获得一次跳关机会</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">heapq</span>
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="k">def</span><span class="w"> </span><span class="nf">solve</span><span class="p">():</span>
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>    <span class="n">n</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>    <span class="n">times</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>    <span class="n">total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">times</span><span class="p">)</span>
+</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>    <span class="n">available</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+</span><span id="__span-22-10"><a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>        <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">available</span><span class="p">:</span>
+</span><span id="__span-22-11"><a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>            <span class="n">total</span> <span class="o">+=</span> <span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">available</span><span class="p">)</span>  <span class="c1"># 堆中保存负数，相当于减去最大耗时</span>
+</span><span id="__span-22-12"><a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a>        <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">available</span><span class="p">,</span> <span class="o">-</span><span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</span><span id="__span-22-13"><a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">total</span><span class="p">)</span>
+</span><span id="__span-22-14"><a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a>
+</span><span id="__span-22-15"><a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+</span><span id="__span-22-16"><a id="__codelineno-22-16" name="__codelineno-22-16" href="#__codelineno-22-16"></a>    <span class="n">solve</span><span class="p">()</span>
+</span></code></pre></div>
 <h2 id="402-k">402. 移掉 K 位数字<a class="headerlink" href="#402-k" title="Permanent link">&para;</a></h2>
 <div class="study-card-meta">
 <p><span class="difficulty difficulty--medium">Medium</span>
@@ -3541,20 +3634,19 @@ def traversal(self, cur: TreeNode, result: List[int]) -&gt; int:
 <p><strong>补充思路：</strong> 寻找可证明的局部最优选择，并说明该选择不会破坏后续最优解；区间题通常先排序。</p>
 </blockquote>
 <h3 id="python_18">Python 实现<a class="headerlink" href="#python_18" title="Permanent link">&para;</a></h3>
-<p>~~~python
-class Solution:
-    def removeKdigits(self, num, k):
-        stack = []
-        for digit in num:
-            while k and stack and stack[-1] &gt; digit:
-                stack.pop()
-                k -= 1
-            stack.append(digit)
-        if k:
-            stack = stack[:-k]
-        answer = ''.join(stack).lstrip('0')
-        return answer or '0'
-~~~</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">removeKdigits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>        <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>        <span class="k">for</span> <span class="n">digit</span> <span class="ow">in</span> <span class="n">num</span><span class="p">:</span>
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>            <span class="k">while</span> <span class="n">k</span> <span class="ow">and</span> <span class="n">stack</span> <span class="ow">and</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">digit</span><span class="p">:</span>
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>                <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>                <span class="n">k</span> <span class="o">-=</span> <span class="mi">1</span>
+</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>            <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">digit</span><span class="p">)</span>
+</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>        <span class="k">if</span> <span class="n">k</span><span class="p">:</span>
+</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>            <span class="n">stack</span> <span class="o">=</span> <span class="n">stack</span><span class="p">[:</span><span class="o">-</span><span class="n">k</span><span class="p">]</span>
+</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>        <span class="n">answer</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">stack</span><span class="p">)</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;0&#39;</span><span class="p">)</span>
+</span><span id="__span-23-12"><a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a>        <span class="k">return</span> <span class="n">answer</span> <span class="ow">or</span> <span class="s1">&#39;0&#39;</span>
+</span></code></pre></div>
 
 
 

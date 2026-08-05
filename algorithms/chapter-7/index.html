@@ -2472,21 +2472,19 @@
 </div>
 <p class="missing-asset">原笔记中的配图未随 Markdown 源文件保存。</p>
 
-<div class="language-text highlight"><pre><span></span><code>```python
-void backtracking(参数) {
-    if (终止条件) {
-        存放结果;
-        return;
-    }
-
-    for (选择：本层集合中元素（树中节点孩子的数量就是集合的大小）) {
-        处理节点;
-        backtracking(路径，选择列表); // 递归
-        回溯，撤销处理结果
-    }
-}
-```
-</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">void</span> <span class="n">backtracking</span><span class="p">(</span><span class="n">参数</span><span class="p">)</span> <span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="k">if</span> <span class="p">(</span><span class="n">终止条件</span><span class="p">)</span> <span class="p">{</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>        <span class="n">存放结果</span><span class="p">;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>        <span class="k">return</span><span class="p">;</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="p">}</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="k">for</span> <span class="p">(</span><span class="n">选择</span><span class="err">：</span><span class="n">本层集合中元素</span><span class="err">（</span><span class="n">树中节点孩子的数量就是集合的大小</span><span class="err">）</span><span class="p">)</span> <span class="p">{</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>        <span class="n">处理节点</span><span class="p">;</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        <span class="n">backtracking</span><span class="p">(</span><span class="n">路径</span><span class="err">，</span><span class="n">选择列表</span><span class="p">);</span> <span class="o">//</span> <span class="n">递归</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>        <span class="n">回溯</span><span class="err">，</span><span class="n">撤销处理结果</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="p">}</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="p">}</span>
+</span></code></pre></div>
 <p>如果把 子集问题、组合问题、分割问题都抽象为一棵树的话，<strong>那么组合问题和分割问题都是收集树的叶子节点，而子集问题是找树的所有节点！</strong></p>
 <p><strong>7.1 组合</strong></p>
 <p>如果用于记录当前组合的数据结构是list，那么在赋值时需要复制一遍，<code>self.res.append(self.path[:])</code> ，而不能直接赋值，不然会动态变化</p>
@@ -2608,13 +2606,11 @@ void backtracking(参数) {
 
 <div class="language-text highlight"><pre><span></span><code>    - candidates需先遍历
     - 组合的话可以不用used数组
-
-        ```cpp
-        if (i &gt; startIndex &amp;&amp; candidates[i] == candidates[i - 1]) {
-            continue;
-        }
-        ```
 </code></pre></div>
+<div class="language-cpp highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">startIndex</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">candidates</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">candidates</span><span class="p">[</span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">])</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="k">continue</span><span class="p">;</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="p">}</span>
+</span></code></pre></div>
 <ol>
 <li><strong>电话号码的字母组合</strong></li>
 </ol>
@@ -3058,35 +3054,32 @@ void backtracking(参数) {
 
 - 代码
     - 用python传统方法会超时
-
-        ```python
-        class Solution:
-            def isVaild(self, row, col, val, board) -&gt; bool:
-                for i in range(9):
-                    if board[row][i] == val or board[i][col] == val:
-                        return False
-
-                start_row = row - (row % 3)
-                start_col = col - (col % 3)
-                for i in range(start_row, start_row+3):
-                    for j in range(start_col, start_col+3):
-                        if board[i][j] == val:
-                            return False
-                return True 
-            def backtracking(self, board):
-                for i in range(9):
-                    for j in range(9):
-                        if board[i][j] != &quot;.&quot;:
-                            continue
-                        for k in range(1,10):
-                            if self.isVaild(i,j,str(k),board):
-                                board[i][j] = str(k)
-                                if self.backtracking(board):
-                                    return True
-                                board[i][j] = &quot;.&quot;
-
-        ```
 </code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">isVaild</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">board</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">):</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>            <span class="k">if</span> <span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">val</span> <span class="ow">or</span> <span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="n">val</span><span class="p">:</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>                <span class="k">return</span> <span class="kc">False</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>        <span class="n">start_row</span> <span class="o">=</span> <span class="n">row</span> <span class="o">-</span> <span class="p">(</span><span class="n">row</span> <span class="o">%</span> <span class="mi">3</span><span class="p">)</span>
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>        <span class="n">start_col</span> <span class="o">=</span> <span class="n">col</span> <span class="o">-</span> <span class="p">(</span><span class="n">col</span> <span class="o">%</span> <span class="mi">3</span><span class="p">)</span>
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start_row</span><span class="p">,</span> <span class="n">start_row</span><span class="o">+</span><span class="mi">3</span><span class="p">):</span>
+</span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start_col</span><span class="p">,</span> <span class="n">start_col</span><span class="o">+</span><span class="mi">3</span><span class="p">):</span>
+</span><span id="__span-15-11"><a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>                <span class="k">if</span> <span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="n">val</span><span class="p">:</span>
+</span><span id="__span-15-12"><a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>                    <span class="k">return</span> <span class="kc">False</span>
+</span><span id="__span-15-13"><a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>        <span class="k">return</span> <span class="kc">True</span> 
+</span><span id="__span-15-14"><a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">backtracking</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">board</span><span class="p">):</span>
+</span><span id="__span-15-15"><a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">):</span>
+</span><span id="__span-15-16"><a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a>            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">):</span>
+</span><span id="__span-15-17"><a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a>                <span class="k">if</span> <span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;.&quot;</span><span class="p">:</span>
+</span><span id="__span-15-18"><a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a>                    <span class="k">continue</span>
+</span><span id="__span-15-19"><a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a>                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">):</span>
+</span><span id="__span-15-20"><a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a>                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isVaild</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">),</span><span class="n">board</span><span class="p">):</span>
+</span><span id="__span-15-21"><a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a>                        <span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+</span><span id="__span-15-22"><a id="__codelineno-15-22" name="__codelineno-15-22" href="#__codelineno-15-22"></a>                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">backtracking</span><span class="p">(</span><span class="n">board</span><span class="p">):</span>
+</span><span id="__span-15-23"><a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a>                            <span class="k">return</span> <span class="kc">True</span>
+</span><span id="__span-15-24"><a id="__codelineno-15-24" name="__codelineno-15-24" href="#__codelineno-15-24"></a>                        <span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span>
+</span></code></pre></div>
 <h3 id="python_13">Python 实现<a class="headerlink" href="#python_13" title="Permanent link">&para;</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
 </span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">solveSudoku</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">board</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>

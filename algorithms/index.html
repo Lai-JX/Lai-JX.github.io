@@ -1147,19 +1147,18 @@
 </tr>
 </tbody>
 </table>
-<div class="language-text highlight"><pre><span></span><code>```python
-stack = []
-# push
-stack.append(val)
-# pop
-stack.pop()
-# top
-stack[-1]
-```
+</li>
+</ul>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1"># push</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># pop</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1"># top</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code>- 队列（collections下）
 </code></pre></div>
-<ul>
-<li>
-<p>队列（collections下）</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">que</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1"># push</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">que</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
@@ -1171,10 +1170,10 @@ stack[-1]
 </span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="c1"># 删除队尾</span>
 </span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="n">que</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
 </span></code></pre></div>
-</li>
-<li>
-<p>heapq</p>
-<p>heapq里面没有直接提供建立大根堆的方法，可以采取如下方法：每次push时给元素加一个负号（即取相反数），此时最小值变最大值，反之亦然，那么实际上的最大值就可以处于堆顶了，返回时再取负即可</p>
+<div class="language-text highlight"><pre><span></span><code>- heapq
+
+    heapq里面没有直接提供建立大根堆的方法，可以采取如下方法：每次push时给元素加一个负号（即取相反数），此时最小值变最大值，反之亦然，那么实际上的最大值就可以处于堆顶了，返回时再取负即可
+</code></pre></div>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">pri_que</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1">#小顶堆</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1"># 添加</span>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">pri_que</span><span class="p">,</span> <span class="p">(</span><span class="n">freq</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
@@ -1183,25 +1182,22 @@ stack[-1]
 </span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1"># 堆顶元素</span>
 </span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">pri_que</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </span></code></pre></div>
-</li>
-<li>
-<p><code>defaultdict</code>（collections下）</p>
-<p>可自动创建默认value值</p>
-</li>
-<li>
-<p>排序时指定对比函数</p>
+<div class="language-text highlight"><pre><span></span><code>- `defaultdict`（collections下）
+
+    可自动创建默认value值
+
+- 排序时指定对比函数
+    - **Python 2**: `list.sort(cmp=compare)`
+    - **Python 3**: `list.sort(key=cmp_to_key(compare))`
+        - `functools`
+</code></pre></div>
 <ul>
-<li><strong>Python 2</strong>: <code>list.sort(cmp=compare)</code></li>
-<li><strong>Python 3</strong>: <code>list.sort(key=cmp_to_key(compare))</code><ul>
-<li><code>functools</code></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>ACM输入输出模式</li>
+<li>ACM输入输出模式<ul>
 <li>一次读取一行：a = input().split()</li>
-<li>
-<p>一次读取<strong>所有输入，</strong>直到文件结束（EOF）：sys.stdin.read()</p>
+<li>一次读取<strong>所有输入，</strong>直到文件结束（EOF）：sys.stdin.read()</li>
+</ul>
+</li>
+</ul>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nb">input</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">read</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
@@ -1236,9 +1232,7 @@ stack[-1]
 </span><span id="__span-3-32"><a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
 </span><span id="__span-3-33"><a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a>    <span class="n">main</span><span class="p">()</span>
 </span></code></pre></div>
-</li>
-</ul>
-</li>
+<ul>
 <li>
 <p>排序</p>
 <p><a href="https://www.runoob.com/w3cnote/ten-sorting-algorithm.html">https://www.runoob.com/w3cnote/ten-sorting-algorithm.html</a></p>

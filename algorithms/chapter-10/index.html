@@ -1685,29 +1685,27 @@
 <p>单调栈结算横向凹槽：弹出槽底后，用左右边界较小高度计算水高。</p>
 <h3 id="_9">详细题解<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
 <ul>
-<li>
-<p>方法1：求出每列雨水的高度（min(maxleft,maxright)-height[i]）,然后求和</p>
-<ul>
-<li>
-<p>方法2：单调栈</p>
-<ul>
+<li>方法1：求出每列雨水的高度（min(maxleft,maxright)-height[i]）,然后求和<ul>
+<li>方法2：单调栈<ul>
 <li>当相等时需要替换</li>
 <li>每次只需要弹出一个</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">w</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="n">left</span> <span class="o">-</span><span class="mi">1</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">h</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">height</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">height</span><span class="p">[</span><span class="n">left</span><span class="p">])</span> <span class="o">-</span> <span class="n">height</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span>
 </span></code></pre></div>
-</li>
-</ul>
-</li>
+<ol>
 <li>
 <p><strong>柱状图中最大的矩形</strong></p>
 <p>和<strong><em>*接雨水</em></strong>* 类似，需要在头尾加上0，避免遗漏边界情况</p>
+</li>
+</ol>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">w</span> <span class="o">=</span> <span class="n">right</span><span class="o">-</span><span class="n">left</span><span class="o">-</span><span class="mi">1</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">h</span> <span class="o">=</span> <span class="n">heights</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span>
 </span></code></pre></div>
-</li>
-</ul>
 <h3 id="python_3">Python 实现<a class="headerlink" href="#python_3" title="Permanent link">&para;</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">trap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
@@ -1736,11 +1734,9 @@
 <p>和接雨水 类似，需要在头尾加上0，避免遗漏边界情况</p>
 <h3 id="_11">详细题解<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
 <p>和<strong><em>*接雨水</em></strong>* 类似，需要在头尾加上0，避免遗漏边界情况</p>
-<div class="language-text highlight"><pre><span></span><code>```python
-w = right-left-1
-h = heights[mid]
-```
-</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">w</span> <span class="o">=</span> <span class="n">right</span><span class="o">-</span><span class="n">left</span><span class="o">-</span><span class="mi">1</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">h</span> <span class="o">=</span> <span class="n">heights</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span>
+</span></code></pre></div>
 <blockquote>
 <p><strong>补充思路：</strong> 栈中保存仍未找到答案的下标，并维持对应值单调；当前元素负责结算被破坏的栈顶。</p>
 </blockquote>

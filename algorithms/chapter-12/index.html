@@ -2861,10 +2861,10 @@
 <p>递归只向父节点返回单边最大贡献，全局答案可同时接左右两边。</p>
 <h3 id="_12">详细题解<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
 <ul>
-<li>
-<p>只有子节点贡献值大于0，才纳入考虑</p>
-<ul>
+<li>只有子节点贡献值大于0，才纳入考虑<ul>
 <li>返回的是<strong>节点贡献值</strong></li>
+</ul>
+</li>
 </ul>
 <div class="language-jsx highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kd">class</span><span class="w"> </span><span class="nx">Solution</span><span class="o">:</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="nx">def</span><span class="w"> </span><span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">)</span><span class="o">:</span>
@@ -2892,8 +2892,6 @@
 </span><span id="__span-6-24"><a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a><span class="w">        </span><span class="nx">maxGain</span><span class="p">(</span><span class="nx">root</span><span class="p">)</span>
 </span><span id="__span-6-25"><a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">self</span><span class="p">.</span><span class="nx">maxSum</span>
 </span></code></pre></div>
-</li>
-</ul>
 <blockquote>
 <p><strong>补充思路：</strong> 先识别题型模型，再把状态、指针或数据结构的不变量说清楚。</p>
 </blockquote>
@@ -3115,19 +3113,18 @@
 <h3 id="_25">快速复习<a class="headerlink" href="#_25" title="Permanent link">&para;</a></h3>
 <p>Boyer-Moore 抵消法：不同元素两两抵消，超过一半的候选最终不会被完全抵消。</p>
 <h3 id="_26">详细题解<a class="headerlink" href="#_26" title="Permanent link">&para;</a></h3>
-<p>```python
-    class Solution:
-        def majorityElement(self, nums: List[int]) -&gt; int:
-            count = 0
-            candidate = None</p>
-<div class="language-text highlight"><pre><span></span><code>        for num in nums:
-            if count == 0:
-                candidate = num
-            count += (1 if num == candidate else -1)
-
-        return candidate
-```
-</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>    <span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>        <span class="k">def</span><span class="w"> </span><span class="nf">majorityElement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>            <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>            <span class="n">candidate</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>            <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">:</span>
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>                <span class="k">if</span> <span class="n">count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>                    <span class="n">candidate</span> <span class="o">=</span> <span class="n">num</span>
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>                <span class="n">count</span> <span class="o">+=</span> <span class="p">(</span><span class="mi">1</span> <span class="k">if</span> <span class="n">num</span> <span class="o">==</span> <span class="n">candidate</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>
+</span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>            <span class="k">return</span> <span class="n">candidate</span>
+</span></code></pre></div>
 <ul>
 <li>下一个排列</li>
 </ul>
@@ -3135,17 +3132,16 @@
 <p><strong>补充思路：</strong> 先识别题型模型，再把状态、指针或数据结构的不变量说清楚。</p>
 </blockquote>
 <h3 id="python_12">Python 实现<a class="headerlink" href="#python_12" title="Permanent link">&para;</a></h3>
-<p>~~~python
-class Solution:
-    def majorityElement(self, nums):
-        candidate = None
-        count = 0
-        for value in nums:
-            if count == 0:
-                candidate = value
-            count += 1 if value == candidate else -1
-        return candidate
-~~~</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">majorityElement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">):</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>        <span class="n">candidate</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">:</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>            <span class="k">if</span> <span class="n">count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>                <span class="n">candidate</span> <span class="o">=</span> <span class="n">value</span>
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="n">candidate</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>        <span class="k">return</span> <span class="n">candidate</span>
+</span></code></pre></div>
 <h2 id="31">31. 下一个排列<a class="headerlink" href="#31" title="Permanent link">&para;</a></h2>
 <div class="study-card-meta">
 <p><span class="difficulty difficulty--medium">Medium</span>
@@ -3161,34 +3157,34 @@ class Solution:
 <p><strong>补充思路：</strong> 先识别题型模型，再把状态、指针或数据结构的不变量说清楚。</p>
 </blockquote>
 <h3 id="python_13">Python 实现<a class="headerlink" href="#python_13" title="Permanent link">&para;</a></h3>
-<p>~~~python
-class Solution:
-    def nextPermutation(self, nums: List[int]) -&gt; None:
-        """
-        Do not return anything, modify nums in-place instead.
-        """
-        length = len(nums)
-        for i in range(length - 2, -1, -1): # 从倒数第二个开始
-            if nums[i]&gt;=nums[i+1]: continue # 剪枝去重
-            for j in range(length - 1, i, -1):
-                if nums[j] &gt; nums[i]:
-                    nums[j], nums[i] = nums[i], nums[j]
-                    self.reverse(nums, i + 1, length - 1)
-                    return<br />
-        self.reverse(nums, 0, length - 1)</p>
-<div class="language-text highlight"><pre><span></span><code>def reverse(self, nums: List[int], left: int, right: int) -&gt; None:
-    while left &lt; right:
-        nums[left], nums[right] = nums[right], nums[left]
-        left += 1
-        right -= 1
-</code></pre></div>
-<p>"""
-265 / 265 个通过测试用例
-状态：通过
-执行用时: 36 ms
-内存消耗: 14.9 MB
-"""
-~~~</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">nextPermutation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="sd">        Do not return anything, modify nums in-place instead.</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>        <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span> <span class="c1"># 从倒数第二个开始</span>
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>            <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&gt;=</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]:</span> <span class="k">continue</span> <span class="c1"># 剪枝去重</span>
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>                <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>                    <span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">reverse</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>                    <span class="k">return</span>  
+</span><span id="__span-16-14"><a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">reverse</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-16-15"><a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a>
+</span><span id="__span-16-16"><a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">reverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">left</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">right</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-16-17"><a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a>        <span class="k">while</span> <span class="n">left</span> <span class="o">&lt;</span> <span class="n">right</span><span class="p">:</span>
+</span><span id="__span-16-18"><a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a>            <span class="n">nums</span><span class="p">[</span><span class="n">left</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">right</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">right</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">left</span><span class="p">]</span>
+</span><span id="__span-16-19"><a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a>            <span class="n">left</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span id="__span-16-20"><a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a>            <span class="n">right</span> <span class="o">-=</span> <span class="mi">1</span>
+</span><span id="__span-16-21"><a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a>
+</span><span id="__span-16-22"><a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-16-23"><a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a><span class="sd">265 / 265 个通过测试用例</span>
+</span><span id="__span-16-24"><a id="__codelineno-16-24" name="__codelineno-16-24" href="#__codelineno-16-24"></a><span class="sd">状态：通过</span>
+</span><span id="__span-16-25"><a id="__codelineno-16-25" name="__codelineno-16-25" href="#__codelineno-16-25"></a><span class="sd">执行用时: 36 ms</span>
+</span><span id="__span-16-26"><a id="__codelineno-16-26" name="__codelineno-16-26" href="#__codelineno-16-26"></a><span class="sd">内存消耗: 14.9 MB</span>
+</span><span id="__span-16-27"><a id="__codelineno-16-27" name="__codelineno-16-27" href="#__codelineno-16-27"></a><span class="sd">&quot;&quot;&quot;</span>
+</span></code></pre></div>
 <h2 id="287">287. 寻找重复数<a class="headerlink" href="#287" title="Permanent link">&para;</a></h2>
 <div class="study-card-meta">
 <p><span class="difficulty difficulty--medium">Medium</span>
@@ -3198,49 +3194,47 @@ class Solution:
 <h3 id="_29">快速复习<a class="headerlink" href="#_29" title="Permanent link">&para;</a></h3>
 <p>把下标到数值看作链表指针，重复值对应环入口，用 Floyd 快慢指针定位。</p>
 <h3 id="_30">详细题解<a class="headerlink" href="#_30" title="Permanent link">&para;</a></h3>
-<p>```python
-    class Solution:
-        def findDuplicate(self, nums: List[int]) -&gt; int:
-            n = len(nums)
-            ans = 0
-            for i in range(n):
-                idx = abs(nums[i])-1
-                if nums[idx] &lt; 0:           # 第二次找到该位置
-                    ans = idx
-                    break
-                nums[idx] = -1*nums[idx]    # 标记出现一次</p>
-<div class="language-text highlight"><pre><span></span><code>        # 恢复原数组
-        count = 0
-        for i in range(n):
-            idx = abs(nums[i])-1
-            if ans == idx:
-                count += 1
-                if count == 2:
-                    break
-            nums[idx] = -1*nums[idx]    # 恢复
-
-        return ans+1
-```
-</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>    <span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>        <span class="k">def</span><span class="w"> </span><span class="nf">findDuplicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>            <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>            <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>                <span class="n">idx</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">-</span><span class="mi">1</span>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>                <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>           <span class="c1"># 第二次找到该位置</span>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>                    <span class="n">ans</span> <span class="o">=</span> <span class="n">idx</span>
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>                    <span class="k">break</span>
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>                <span class="n">nums</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="n">nums</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>    <span class="c1"># 标记出现一次</span>
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>            <span class="c1"># 恢复原数组</span>
+</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a>            <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</span><span id="__span-17-15"><a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a>                <span class="n">idx</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">-</span><span class="mi">1</span>
+</span><span id="__span-17-16"><a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a>                <span class="k">if</span> <span class="n">ans</span> <span class="o">==</span> <span class="n">idx</span><span class="p">:</span>
+</span><span id="__span-17-17"><a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a>                    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span id="__span-17-18"><a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a>                    <span class="k">if</span> <span class="n">count</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+</span><span id="__span-17-19"><a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a>                        <span class="k">break</span>
+</span><span id="__span-17-20"><a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a>                <span class="n">nums</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="n">nums</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>    <span class="c1"># 恢复</span>
+</span><span id="__span-17-21"><a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a>
+</span><span id="__span-17-22"><a id="__codelineno-17-22" name="__codelineno-17-22" href="#__codelineno-17-22"></a>            <span class="k">return</span> <span class="n">ans</span><span class="o">+</span><span class="mi">1</span>
+</span></code></pre></div>
 <blockquote>
 <p><strong>补充思路：</strong> 先识别题型模型，再把状态、指针或数据结构的不变量说清楚。</p>
 </blockquote>
 <h3 id="python_14">Python 实现<a class="headerlink" href="#python_14" title="Permanent link">&para;</a></h3>
-<p>~~~python
-class Solution:
-    def findDuplicate(self, nums):
-        slow = fast = nums[0]
-        while True:
-            slow = nums[slow]
-            fast = nums[nums[fast]]
-            if slow == fast:
-                break
-        finder = nums[0]
-        while finder != slow:
-            finder = nums[finder]
-            slow = nums[slow]
-        return finder
-~~~</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">findDuplicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">):</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>        <span class="n">slow</span> <span class="o">=</span> <span class="n">fast</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>            <span class="n">slow</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">slow</span><span class="p">]</span>
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>            <span class="n">fast</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">nums</span><span class="p">[</span><span class="n">fast</span><span class="p">]]</span>
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>            <span class="k">if</span> <span class="n">slow</span> <span class="o">==</span> <span class="n">fast</span><span class="p">:</span>
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>                <span class="k">break</span>
+</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>        <span class="n">finder</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>        <span class="k">while</span> <span class="n">finder</span> <span class="o">!=</span> <span class="n">slow</span><span class="p">:</span>
+</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>            <span class="n">finder</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">finder</span><span class="p">]</span>
+</span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>            <span class="n">slow</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">slow</span><span class="p">]</span>
+</span><span id="__span-18-13"><a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>        <span class="k">return</span> <span class="n">finder</span>
+</span></code></pre></div>
 <h2 id="442">442. 数组中重复的数据<a class="headerlink" href="#442" title="Permanent link">&para;</a></h2>
 <div class="study-card-meta">
 <p><span class="difficulty difficulty--medium">Medium</span>
@@ -3254,18 +3248,17 @@ class Solution:
 <p><strong>补充思路：</strong> 先识别题型模型，再把状态、指针或数据结构的不变量说清楚。</p>
 </blockquote>
 <h3 id="python_15">Python 实现<a class="headerlink" href="#python_15" title="Permanent link">&para;</a></h3>
-<p>~~~python
-class Solution:
-    def findDuplicates(self, nums):
-        answer = []
-        for value in nums:
-            index = abs(value) - 1
-            if nums[index] &lt; 0:
-                answer.append(index + 1)
-            else:
-                nums[index] = -nums[index]
-        return answer
-~~~</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">findDuplicates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">):</span>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>        <span class="n">answer</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">:</span>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>            <span class="n">index</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>            <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>                <span class="n">answer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>                <span class="n">nums</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">nums</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+</span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>        <span class="k">return</span> <span class="n">answer</span>
+</span></code></pre></div>
 
 
 
