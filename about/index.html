@@ -269,7 +269,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../ai/mla-matrix-absorption/" class="md-tabs__link">
+        <a href="../ai/" class="md-tabs__link">
           
   
   
@@ -850,6 +850,10 @@
     
       
         
+          
+        
+      
+        
       
     
     
@@ -867,8 +871,9 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
-            
+          <div class="md-nav__link md-nav__container">
+            <a href="../ai/" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -882,8 +887,14 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
@@ -895,6 +906,8 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
             
               
                 
@@ -910,7 +923,7 @@
   <span class="md-ellipsis">
     
   
-    MLA 矩阵吸收
+    MLA 的矩阵吸收算法：从直觉到公式与伪代码
   
 
     
@@ -1134,11 +1147,12 @@
 <h2 id="_4">后续扩展<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <p>新增普通文章时：</p>
 <ol>
-<li>将 Markdown 放入 <code>site-source/content</code> 的合适子目录。</li>
-<li>在 <code>site-source/mkdocs.yml</code> 的 <code>nav</code> 中添加导航项。</li>
+<li>执行 <code>./content.sh new-module &lt;英文标识&gt; "模块标题"</code> 创建模块。</li>
+<li>执行 <code>./content.sh new-page &lt;模块标识&gt; &lt;页面标识&gt; "页面标题"</code> 创建页面。</li>
+<li>使用 <code>./content.sh add-image</code> 导入图片并取得正确的 Markdown 引用。</li>
 <li>执行 <code>./publish.sh --push</code> 构建并发布。</li>
 </ol>
-<p>算法题库无需手动拆页；在 <code>做题完整版.md</code> 中新增专题标记后，构建器会自动生成对应专题文件。新增专题时还需在 <code>mkdocs.yml</code> 中加入它的导航名称。</p>
+<p>模块、页面、多级目录和算法专题都会被自动加入导航，无需修改 <code>mkdocs.yml</code>。算法题库也无需手动拆页；在 <code>做题完整版.md</code> 中新增专题标记后，构建器会自动生成对应专题文件。</p>
 
 
 
