@@ -1,0 +1,2800 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="算法复习、AI 原理与持续整理的技术笔记">
+      
+      
+        <meta name="author" content="LJX">
+      
+      
+        <link rel="canonical" href="https://lai-jx.github.io/ai/gate-mla/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../mla-matrix-absorption/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Kimi K3 的 Gated MLA：从公式、维度到矩阵吸收 - LJX 知识库</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#kimi-k3-gated-mla" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="LJX 知识库" class="md-header__button md-logo" aria-label="LJX 知识库" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19.07 14.88 2.05 2.05L15.06 23H13v-2.06zm1.97-1.75c.14 0 .27.06.38.17l1.28 1.28c.22.21.22.56 0 .77l-1 1-2.05-2.05 1-1c.11-.11.25-.17.39-.17M17 4v6l-2-2-2 2V4H9v16h2v2H7c-1.05 0-2-.95-2-2v-1H3v-2h2v-4H3v-2h2V7H3V5h2V4a2 2 0 0 1 2-2h12c1.05 0 2 .95 2 2v6l-2 2V4zM5 5v2h2V5zm0 6v2h2v-2zm0 6v2h2v-2z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LJX 知识库
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Kimi K3 的 Gated MLA：从公式、维度到矩阵吸收
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange"  aria-label="切换至深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换至深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="orange"  aria-label="切换至浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换至浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Lai-JX/Lai-JX.github.io" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Lai-JX/Lai-JX.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../algorithms/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  算法题库
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../hot-100/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Hot 100
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  AI 原理
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="LJX 知识库" class="md-nav__button md-logo" aria-label="LJX 知识库" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19.07 14.88 2.05 2.05L15.06 23H13v-2.06zm1.97-1.75c.14 0 .27.06.38.17l1.28 1.28c.22.21.22.56 0 .77l-1 1-2.05-2.05 1-1c.11-.11.25-.17.39-.17M17 4v6l-2-2-2 2V4H9v16h2v2H7c-1.05 0-2-.95-2-2v-1H3v-2h2v-4H3v-2h2V7H3V5h2V4a2 2 0 0 1 2-2h12c1.05 0 2 .95 2 2v6l-2 2V4zM5 5v2h2V5zm0 6v2h2v-2zm0 6v2h2v-2z"/></svg>
+
+    </a>
+    LJX 知识库
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Lai-JX/Lai-JX.github.io" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Lai-JX/Lai-JX.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../algorithms/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    算法题库
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    算法题库
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数组
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    链表
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    哈希表
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    字符串
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    栈与队列
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    二叉树
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    回溯算法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    贪心算法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    动态规划
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    单调栈
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    图论
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hot 100
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-13/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    其他
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../hot-100/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hot 100
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Hot 100
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI 原理
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    AI 原理
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kimi K3 的 Gated MLA：从公式、维度到矩阵吸收
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kimi K3 的 Gated MLA：从公式、维度到矩阵吸收
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0. 先记住一句话
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 行向量和维度约定
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 行向量和维度约定">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kimi-k3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kimi K3 的实际维度
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-mla-gated-mla" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 从普通 MLA 到 Gated MLA
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 从普通 MLA 到 Gated MLA">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-mla" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 普通 MLA
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 加入逐通道 gate
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Gate 具体加在哪里
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Gate 控制的是什么
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 为什么这种 gate 可能有效
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 为什么这种 gate 可能有效">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 增加输入相关的非线性交互
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 给“从哪里读”和“是否接收”分工
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-attention-sink" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 与 attention sink 的关系
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-gated-mla" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Gated MLA 与矩阵吸收的关系
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Gated MLA 与矩阵吸收的关系">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-k" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 K 吸收不受影响
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-v-latent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 V 的 latent 聚合仍然成立
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-v" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 但 V 上投影不能再与输出投影静态合并
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Gate 自己能否被吸收到输出投影
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-kv-cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 是否增加 KV Cache
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 是否增加 KV Cache">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kimi-k3-nope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kimi K3 的 NoPE
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 参数量与计算代价
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 参数量与计算代价">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一个训练实现细节
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-kda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 为什么与 KDA 混合
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-pytorch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 接近官方实现的 PyTorch 伪代码
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-mla-kimi-k3-gated-mla" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 普通 MLA 与 Kimi K3 Gated MLA 对比
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 常见误解
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. 常见误解">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1gate-token" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误解 1：Gate 控制关注哪些历史 token
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2gate-d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误解 2：Gate 作用于模型隐藏维度 \(d\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3full-rank" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误解 3：Full-rank 表示矩阵一定满秩
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误解 4：Gate 可以和输出投影离线合并
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5gated-mla-v" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误解 5：Gated MLA 完全不影响 V 吸收
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6nope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误解 6：NoPE 就是不具备位置信息
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. 核心理解
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. 参考资料
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        附录：符号速查
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mla-matrix-absorption/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MLA 的矩阵吸收算法：从直觉到公式与伪代码
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0. 先记住一句话
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 行向量和维度约定
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 行向量和维度约定">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kimi-k3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kimi K3 的实际维度
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-mla-gated-mla" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 从普通 MLA 到 Gated MLA
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 从普通 MLA 到 Gated MLA">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-mla" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 普通 MLA
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 加入逐通道 gate
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Gate 具体加在哪里
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Gate 控制的是什么
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 为什么这种 gate 可能有效
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 为什么这种 gate 可能有效">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 增加输入相关的非线性交互
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 给“从哪里读”和“是否接收”分工
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-attention-sink" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 与 attention sink 的关系
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-gated-mla" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Gated MLA 与矩阵吸收的关系
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Gated MLA 与矩阵吸收的关系">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-k" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 K 吸收不受影响
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-v-latent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 V 的 latent 聚合仍然成立
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-v" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 但 V 上投影不能再与输出投影静态合并
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Gate 自己能否被吸收到输出投影
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-kv-cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 是否增加 KV Cache
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 是否增加 KV Cache">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kimi-k3-nope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kimi K3 的 NoPE
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 参数量与计算代价
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 参数量与计算代价">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一个训练实现细节
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-kda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 为什么与 KDA 混合
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-pytorch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 接近官方实现的 PyTorch 伪代码
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-mla-kimi-k3-gated-mla" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 普通 MLA 与 Kimi K3 Gated MLA 对比
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 常见误解
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. 常见误解">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1gate-token" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误解 1：Gate 控制关注哪些历史 token
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2gate-d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误解 2：Gate 作用于模型隐藏维度 \(d\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3full-rank" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误解 3：Full-rank 表示矩阵一定满秩
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误解 4：Gate 可以和输出投影离线合并
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5gated-mla-v" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误解 5：Gated MLA 完全不影响 V 吸收
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6nope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误解 6：NoPE 就是不具备位置信息
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. 核心理解
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. 参考资料
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        附录：符号速查
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="kimi-k3-gated-mla">Kimi K3 的 Gated MLA：从公式、维度到矩阵吸收<a class="headerlink" href="#kimi-k3-gated-mla" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>本文介绍 Kimi K3 技术报告中的 <strong>Gated MLA</strong>。它保留 MLA 的低维 KV 表示，在注意力输出投影之前增加一个由当前 token 控制的逐通道 sigmoid gate。</p>
+<p>本文统一使用<strong>行向量</strong>：token 特征位于最后一维，线性映射写成 <span class="arithmatex">\(y=xW\)</span>。公式中的矩阵采用 <code>[in, out]</code> 形状；PyTorch 的 <code>nn.Linear.weight</code> 保存其转置，即 <code>[out, in]</code>。</p>
+</blockquote>
+<hr />
+<h2 id="0">0. 先记住一句话<a class="headerlink" href="#0" title="Permanent link">&para;</a></h2>
+<p>Gated MLA 的核心公式是：</p>
+<div class="arithmatex">\[
+\boxed{
+y_t=
+\left[
+\sigma(x_tW^G)\odot\widetilde o_t
+\right]W^O
+}
+\]</div>
+<p>可以把它记成：</p>
+<div class="arithmatex">\[
+\boxed{
+\text{MLA 决定“读出什么”，Gate 决定“让哪些输出通道通过”。}
+}
+\]</div>
+<p>Gate 不直接修改注意力 logits 或 softmax 权重，而是调制 softmax attention 已经读出的结果。</p>
+<hr />
+<h2 id="1">1. 行向量和维度约定<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>设：</p>
+<ul>
+<li><span class="arithmatex">\(d\)</span>：模型隐藏维度；</li>
+<li><span class="arithmatex">\(H\)</span>：注意力头数；</li>
+<li><span class="arithmatex">\(d_v\)</span>：每个头的 value 输出维度；</li>
+<li><span class="arithmatex">\(m=Hd_v\)</span>：全部头拼接后的维度；</li>
+<li><span class="arithmatex">\(x_t\in\mathbb{R}^{1\times d}\)</span>：当前 token 的层输入；</li>
+<li><span class="arithmatex">\(\widetilde o_t\in\mathbb{R}^{1\times m}\)</span>：多头注意力结果拼接后、输出投影前的向量；</li>
+<li><span class="arithmatex">\(g_t\in(0,1)^{1\times m}\)</span>：逐通道 gate；</li>
+<li><span class="arithmatex">\(y_t\in\mathbb{R}^{1\times d}\)</span>：注意力模块输出。</li>
+</ul>
+<p>在本文的行向量约定下：</p>
+<div class="arithmatex">\[
+\underbrace{g_t}_{1\times m}
+=\sigma\left(
+\underbrace{x_t}_{1\times d}
+\underbrace{W^G}_{d\times m}
+\right),
+\]</div>
+<div class="arithmatex">\[
+\underbrace{y_t}_{1\times d}
+=
+\left(
+\underbrace{g_t}_{1\times m}
+\odot
+\underbrace{\widetilde o_t}_{1\times m}
+\right)
+\underbrace{W^O}_{m\times d}.
+\]</div>
+<p>对应 PyTorch：</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">g_proj</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># g_proj.weight: [m, d]</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">o_proj</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># o_proj.weight: [d, m]</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">gate</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">g_proj</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>             <span class="c1"># 等价于 sigmoid(x @ W_G)</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">y</span> <span class="o">=</span> <span class="n">o_proj</span><span class="p">(</span><span class="n">gate</span> <span class="o">*</span> <span class="n">attn_output</span><span class="p">)</span>        <span class="c1"># 等价于 (gate ⊙ attn_output) @ W_O</span>
+</span></code></pre></div>
+<h3 id="kimi-k3">Kimi K3 的实际维度<a class="headerlink" href="#kimi-k3" title="Permanent link">&para;</a></h3>
+<p>官方配置给出：</p>
+<div class="arithmatex">\[
+d=7168,\qquad H=96,\qquad d_v=128,
+\]</div>
+<p>所以：</p>
+<div class="arithmatex">\[
+m=Hd_v=96\times128=12288.
+\]</div>
+<p>因此 Kimi K3 Gated MLA 中：</p>
+<div class="arithmatex">\[
+W^G\in\mathbb{R}^{7168\times12288},
+\qquad
+W^O\in\mathbb{R}^{12288\times7168}.
+\]</div>
+<p>这说明 gate 的通道数不一定等于模型隐藏维度 <span class="arithmatex">\(d\)</span>。它对应的是<strong>输出投影之前的全部 head-value 通道</strong>。</p>
+<hr />
+<h2 id="2-mla-gated-mla">2. 从普通 MLA 到 Gated MLA<a class="headerlink" href="#2-mla-gated-mla" title="Permanent link">&para;</a></h2>
+<h3 id="21-mla">2.1 普通 MLA<a class="headerlink" href="#21-mla" title="Permanent link">&para;</a></h3>
+<p>先把每个头的注意力过程抽象为：</p>
+<div class="arithmatex">\[
+P_{t,i}=\operatorname{Softmax}
+\left(
+\frac{q_{t,i}K_i^T}{\sqrt{d_k}}+M_t
+\right),
+\]</div>
+<div class="arithmatex">\[
+o_{t,i}=P_{t,i}V_i
+\in\mathbb{R}^{1\times d_v},
+\]</div>
+<p>其中 <span class="arithmatex">\(M_t\)</span> 是 causal mask。把所有头的输出横向拼接：</p>
+<div class="arithmatex">\[
+\widetilde o_t=
+\operatorname{Concat}(o_{t,1},\ldots,o_{t,H})
+\in\mathbb{R}^{1\times m}.
+\]</div>
+<p>普通 MLA 的输出为：</p>
+<div class="arithmatex">\[
+y_t=\widetilde o_tW^O.
+\]</div>
+<h3 id="22-gate">2.2 加入逐通道 gate<a class="headerlink" href="#22-gate" title="Permanent link">&para;</a></h3>
+<p>Kimi K3 增加一条由当前输入产生的门控分支：</p>
+<div class="arithmatex">\[
+g_t=\sigma(x_tW^G).
+\]</div>
+<p>再在输出投影之前逐元素相乘：</p>
+<div class="arithmatex">\[
+\widetilde o_t^{\,gated}=g_t\odot\widetilde o_t,
+\]</div>
+<div class="arithmatex">\[
+y_t=\widetilde o_t^{\,gated}W^O.
+\]</div>
+<p>Gate 具有三个特征：</p>
+<ul>
+<li><strong>input-dependent</strong>：不同 token 的 <span class="arithmatex">\(x_t\)</span> 不同，因此 gate 不同；</li>
+<li><strong>channel-wise</strong>：每个输出通道有独立门值，而不是整层共用一个标量；</li>
+<li><strong>full-rank parameterization</strong>：使用一个从 <span class="arithmatex">\(d\)</span> 到 <span class="arithmatex">\(m\)</span> 的直接投影，而不是两个矩阵组成的低秩瓶颈。</li>
+</ul>
+<p>这里的 “full-rank” 指完整尺寸的直接参数化，并不保证训练后矩阵在数值意义上一定达到最大秩。</p>
+<hr />
+<h2 id="3-gate">3. Gate 具体加在哪里<a class="headerlink" href="#3-gate" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>                         ┌─&gt; gate = sigmoid(x_t @ W_G) ───────────┐
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>当前输入 x_t ────────────┤                                        │
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>                         └─&gt; Q/K/V → softmax attention ─&gt; o_tilde ├─&gt; 按通道相乘
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>                                                                  │
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>                                                                  ▼
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>                                                        output projection W_O
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>                                                                  │
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>                                                                  ▼
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>                                                                 y_t
+</span></code></pre></div>
+<p>准确位置是：</p>
+<div class="arithmatex">\[
+\boxed{
+\text{SDPA/MLA 输出之后，output projection 之前。}
+}
+\]</div>
+<p>它不是直接加在以下位置：</p>
+<ul>
+<li>Q、K 或 V 投影上；</li>
+<li><span class="arithmatex">\(QK^T\)</span> logits 上；</li>
+<li>softmax attention probability 上；</li>
+<li>KV latent 或 KV Cache 上；</li>
+<li>output projection 之后。</li>
+</ul>
+<p>因此：</p>
+<div class="arithmatex">\[
+P_t=\operatorname{Softmax}
+\left(
+\frac{Q_tK^T}{\sqrt{d_k}}+M_t
+\right)
+\]</div>
+<p>本身没有被 gate 逐元素修改。Gate 调制的是 <span class="arithmatex">\(P_tV\)</span> 产生的通道。</p>
+<hr />
+<h2 id="4-gate">4. Gate 控制的是什么<a class="headerlink" href="#4-gate" title="Permanent link">&para;</a></h2>
+<p>假设某个 token 的部分 gate 为：</p>
+<div class="arithmatex">\[
+g_t=egin{bmatrix}
+0.02&amp;0.95&amp;0.60&amp;0.01&amp;\cdots
+\end{bmatrix}.
+\]</div>
+<p>那么 <span class="arithmatex">\(g_t\odot\widetilde o_t\)</span> 表示：</p>
+<ul>
+<li>第一个通道被强烈衰减；</li>
+<li>第二个通道基本保留；</li>
+<li>第三个通道部分保留；</li>
+<li>第四个通道被强烈衰减。</li>
+</ul>
+<p>它并不是只做一个二元决定：</p>
+<blockquote>
+<p>当前 token 是否使用 MLA？</p>
+</blockquote>
+<p>更准确的理解是：</p>
+<blockquote>
+<p>当前 token 从全局上下文中读出的每个 head-value 通道，分别允许通过多少？</p>
+</blockquote>
+<p>因为 sigmoid 的输出位于 <span class="arithmatex">\((0,1)\)</span>，有限输入下它通常执行连续衰减，而不是严格产生 0/1 开关。</p>
+<hr />
+<h2 id="5-gate">5. 为什么这种 gate 可能有效<a class="headerlink" href="#5-gate" title="Permanent link">&para;</a></h2>
+<h3 id="51">5.1 增加输入相关的非线性交互<a class="headerlink" href="#51" title="Permanent link">&para;</a></h3>
+<p>没有 gate 时，在注意力概率 <span class="arithmatex">\(P_t\)</span> 已经确定后，从 value 到输出的主要路径是线性组合：</p>
+<div class="arithmatex">\[
+\widetilde o_t=P_tV,
+\qquad
+y_t=\widetilde o_tW^O.
+\]</div>
+<p>加入 gate 后：</p>
+<div class="arithmatex">\[
+y_t=
+\left[
+\sigma(x_tW^G)\odot(P_tV)
+\right]W^O.
+\]</div>
+<p>当前输入 <span class="arithmatex">\(x_t\)</span> 与 attention 读取结果之间出现了乘法交互，因此整个映射不再只是固定的线性 value/output 链。</p>
+<h3 id="52">5.2 给“从哪里读”和“是否接收”分工<a class="headerlink" href="#52" title="Permanent link">&para;</a></h3>
+<p>Softmax 必须满足：</p>
+<div class="arithmatex">\[
+\sum_j P_{t,j}=1.
+\]</div>
+<p>即使某次读取对部分输出通道帮助很小，softmax 仍会把概率质量分配到某些历史位置。输出 gate 增加了一条独立控制路径：</p>
+<ul>
+<li>softmax attention 决定<strong>从哪些位置读取</strong>；</li>
+<li>output gate 决定<strong>读出的哪些通道进入后续网络</strong>。</li>
+</ul>
+<h3 id="53-attention-sink">5.3 与 attention sink 的关系<a class="headerlink" href="#53-attention-sink" title="Permanent link">&para;</a></h3>
+<p>《Gated Attention for Large Language Models》对多种 gated softmax-attention 结构进行了系统实验，发现 SDPA 后的 sigmoid gate 能改善训练稳定性和长上下文外推，并缓解 attention sink。该工作将收益主要归因于非线性和 query-dependent sparse gating。</p>
+<p>需要区分两件事：</p>
+<ul>
+<li>Gate 不会在当前前向计算中直接改写已经得到的 <span class="arithmatex">\(P_t\)</span>；</li>
+<li>但训练时整个网络会共同适配，实验证据表明门控模型最终学到的 attention sink 行为可以减弱。</li>
+</ul>
+<p>Kimi K3 技术报告引用了这一门控机制，但不能把通用 Gated Attention 论文中的所有消融结果都当作 Kimi K3 自身的独立 gate 消融。</p>
+<hr />
+<h2 id="6-gated-mla">6. Gated MLA 与矩阵吸收的关系<a class="headerlink" href="#6-gated-mla" title="Permanent link">&para;</a></h2>
+<p>这一部分沿用<a href="../mla-matrix-absorption/">《MLA 矩阵吸收算法详解》</a>中的行向量约定。</p>
+<h3 id="61-k">6.1 K 吸收不受影响<a class="headerlink" href="#61-k" title="Permanent link">&para;</a></h3>
+<p>MLA 把第 <code>j</code> 个历史 token 压缩成：</p>
+<div class="arithmatex">\[
+c_j=h_jW^{DKV},
+\qquad c_j\in\mathbb{R}^{1\times r}.
+\]</div>
+<p>第 <code>i</code> 个头的内容 key 为：</p>
+<div class="arithmatex">\[
+k_{j,i}=c_jW_i^{UK},
+\qquad W_i^{UK}\in\mathbb{R}^{r\times d_k}.
+\]</div>
+<p>注意力 score 可以改写为：</p>
+<div class="arithmatex">\[
+q_{t,i}k_{j,i}^T
+=q_{t,i}(c_jW_i^{UK})^T
+=\underbrace{q_{t,i}(W_i^{UK})^T}_{\widehat q_{t,i}}c_j^T.
+\]</div>
+<p>Gate 位于 attention 输出端，不进入 score 公式，所以 K 吸收完全不受影响。</p>
+<h3 id="62-v-latent">6.2 V 的 latent 聚合仍然成立<a class="headerlink" href="#62-v-latent" title="Permanent link">&para;</a></h3>
+<p>第 <code>i</code> 个头原本需要：</p>
+<div class="arithmatex">\[
+o_{t,i}
+=\sum_jP_{t,i,j}v_{j,i}
+=\sum_jP_{t,i,j}c_jW_i^{UV}.
+\]</div>
+<p>利用分配律：</p>
+<div class="arithmatex">\[
+o_{t,i}
+=\left(\sum_jP_{t,i,j}c_j\right)W_i^{UV}
+=z_{t,i}W_i^{UV},
+\]</div>
+<p>其中：</p>
+<div class="arithmatex">\[
+z_{t,i}=\sum_jP_{t,i,j}c_j
+\in\mathbb{R}^{1\times r}.
+\]</div>
+<p>因此仍然可以先用注意力权重聚合历史 latent，再只为当前 token 展开一次 value。无需为全部历史 token 物化或缓存完整 V。</p>
+<h3 id="63-v">6.3 但 V 上投影不能再与输出投影静态合并<a class="headerlink" href="#63-v" title="Permanent link">&para;</a></h3>
+<p>这是容易忽略的区别。</p>
+<p>没有 gate 时，把 <span class="arithmatex">\(W^O\)</span> 按头分为 <span class="arithmatex">\(W_i^O\in\mathbb{R}^{d_v\times d}\)</span>，可以写成：</p>
+<div class="arithmatex">\[
+y_t
+=\sum_i z_{t,i}W_i^{UV}W_i^O.
+\]</div>
+<p>于是能够预先计算静态矩阵：</p>
+<div class="arithmatex">\[
+B_i=W_i^{UV}W_i^O.
+\]</div>
+<p>加入 gate 后，把 <span class="arithmatex">\(g_t\)</span> 按头切成 <span class="arithmatex">\(g_{t,i}\in(0,1)^{1\times d_v}\)</span>：</p>
+<div class="arithmatex">\[
+y_t
+=\sum_i
+\left[
+(z_{t,i}W_i^{UV})\odot g_{t,i}
+\right]W_i^O.
+\]</div>
+<p>使用对角矩阵表示逐元素乘法：</p>
+<div class="arithmatex">\[
+y_t
+=\sum_i
+z_{t,i}W_i^{UV}
+\operatorname{Diag}(g_{t,i})
+W_i^O.
+\]</div>
+<p>由于 <span class="arithmatex">\(\operatorname{Diag}(g_{t,i})\)</span> 对每个 token 都不同，它夹在 <span class="arithmatex">\(W_i^{UV}\)</span> 与 <span class="arithmatex">\(W_i^O\)</span> 之间，因此不能提前形成固定的 <span class="arithmatex">\(W_i^{UV}W_i^O\)</span>。</p>
+<p>结论是：</p>
+<table>
+<thead>
+<tr>
+<th>MLA 优化</th>
+<th>Gated MLA 中是否仍成立</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>只缓存低维 KV latent</td>
+<td>是</td>
+</tr>
+<tr>
+<td>K 上投影吸收到当前 Q</td>
+<td>是</td>
+</tr>
+<tr>
+<td>先聚合 latent，再展开当前 V</td>
+<td>是</td>
+</tr>
+<tr>
+<td>不物化全部历史 K/V</td>
+<td>是</td>
+</tr>
+<tr>
+<td>将 <span class="arithmatex">\(W_i^{UV}\)</span> 与 <span class="arithmatex">\(W_i^O\)</span> 静态合并</td>
+<td>否，动态 gate 位于两者之间</td>
+</tr>
+</tbody>
+</table>
+<p>所以“Gated MLA 不影响 MLA 吸收”并不够精确。更准确的说法是：</p>
+<div class="arithmatex">\[
+\boxed{
+\text{K 吸收和 latent 聚合保留；V-up 与 output projection 的静态融合被 gate 阻断。}
+}
+\]</div>
+<hr />
+<h2 id="7-gate">7. Gate 自己能否被吸收到输出投影<a class="headerlink" href="#7-gate" title="Permanent link">&para;</a></h2>
+<p>行向量公式为：</p>
+<div class="arithmatex">\[
+y_t=(g_t\odot\widetilde o_t)W^O
+=\widetilde o_t\operatorname{Diag}(g_t)W^O.
+\]</div>
+<p>形式上可以定义：</p>
+<div class="arithmatex">\[
+W_{t}^{O\prime}=\operatorname{Diag}(g_t)W^O.
+\]</div>
+<p>但：</p>
+<div class="arithmatex">\[
+g_t=\sigma(x_tW^G)
+\]</div>
+<p>随 token 改变，所以 <span class="arithmatex">\(W_t^{O\prime}\)</span> 也是动态矩阵。若每个 token 都显式生成它，成本通常远高于直接逐元素相乘，因此不能像静态模型权重那样离线吸收。</p>
+<p>Gate 通常也不能移动到输出投影之后，因为一般有：</p>
+<div class="arithmatex">\[
+(g_t\odot\widetilde o_t)W^O
+\ne
+g_t\odot(\widetilde o_tW^O),
+\]</div>
+<p>而且左右两侧的通道维度甚至可能不同：左侧 gate 是 <span class="arithmatex">\(m\)</span> 维，投影结果是 <span class="arithmatex">\(d\)</span> 维。</p>
+<p>实际执行顺序仍然是：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>attention output
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    → sigmoid gate
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    → elementwise multiply
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    → output projection
+</span></code></pre></div>
+<p>Sigmoid 和逐元素乘法可以融合进 kernel，但 <span class="arithmatex">\(x_tW^G\)</span> 的投影计算仍然存在。</p>
+<hr />
+<h2 id="8-kv-cache">8. 是否增加 KV Cache<a class="headerlink" href="#8-kv-cache" title="Permanent link">&para;</a></h2>
+<p>Gate 只依赖当前 token 的 <span class="arithmatex">\(x_t\)</span>，并只服务于当前 attention 输出：</p>
+<div class="arithmatex">\[
+g_t=\sigma(x_tW^G).
+\]</div>
+<p>生成下一个 token 时不需要再次使用过去的 <span class="arithmatex">\(g_t\)</span>，所以 gate 不需要写入 KV Cache。</p>
+<p>因此：</p>
+<div class="arithmatex">\[
+\boxed{
+\text{Gated MLA 的 gate 不改变 MLA Cache 的渐近大小。}
+}
+\]</div>
+<p>它既不会进一步压缩 KV latent，也不会因为逐通道门控而增加随序列长度增长的缓存。</p>
+<h3 id="kimi-k3-nope">Kimi K3 的 NoPE<a class="headerlink" href="#kimi-k3-nope" title="Permanent link">&para;</a></h3>
+<p>Kimi K3 的所有 MLA 层使用 NoPE：Q、K 不施加显式位置编码。其设计分工是：</p>
+<ul>
+<li>KDA 层提供位置敏感、近期敏感的序列混合；</li>
+<li>MLA 层提供不受局部窗口限制的全局内容交互；</li>
+<li>NoPE 避免扩展上下文时重新调整 RoPE base 或 YaRN 参数。</li>
+</ul>
+<p>需要注意，<strong>NoPE 和 output gate 是两个独立设计</strong>：</p>
+<div class="arithmatex">\[
+\boxed{
+\text{Gated MLA：在输出端增加 gate；}
+\qquad
+\text{NoPE MLA：Q/K 不施加位置编码。}
+}
+\]</div>
+<p>官方参考代码仍保留名为 <code>qk_rope_head_dim</code>、<code>q_rot</code>、<code>k_rot</code> 的兼容性字段和分支，但断言 <code>use_nope</code>，并将 <code>rotary_emb</code> 设为 <code>None</code>；这些名称不代表实际执行了旋转。</p>
+<hr />
+<h2 id="9">9. 参数量与计算代价<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
+<p>Gate 矩阵为：</p>
+<div class="arithmatex">\[
+W^G\in\mathbb{R}^{d\times m}.
+\]</div>
+<p>忽略 bias 后，每个 Gated MLA 层新增：</p>
+<div class="arithmatex">\[
+dm
+\]</div>
+<p>个参数，并为每个 token 增加一次 <span class="arithmatex">\(x_tW^G\)</span> 投影，以及 sigmoid 和逐元素乘法。</p>
+<p>对 Kimi K3：</p>
+<div class="arithmatex">\[
+d=7168,\qquad m=12288,
+\]</div>
+<p>所以每个 Gated MLA 层的 gate 投影包含：</p>
+<div class="arithmatex">\[
+7168\times12288
+=88{,}080{,}384
+\]</div>
+<p>个参数，约为 8810 万。24 个 Gated MLA 层合计约 21.1 亿 gate 参数。</p>
+<p>Gate 投影的单 token 计算复杂度为：</p>
+<div class="arithmatex">\[
+O(dm),
+\]</div>
+<p>它不依赖历史长度 <span class="arithmatex">\(T\)</span>。因此 gate 会增加固定的逐 token 投影成本，但不会改变 MLA attention 关于序列长度的复杂度，也不会破坏其 KV Cache 压缩优势。</p>
+<h3 id="_1">一个训练实现细节<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<p>Kimi K3 技术报告还说明，为修正 flash attention 中的有偏舍入误差，训练时将 attention output 保持为 FP32。这样会使输出 tile 的片上占用翻倍，因此团队重新设计了训练 kernel 的缓冲区重叠方式。这个 FP32 选择是数值与 kernel 实现问题，不是 gate 数学定义的一部分。</p>
+<hr />
+<h2 id="10-kda">10. 为什么与 KDA 混合<a class="headerlink" href="#10-kda" title="Permanent link">&para;</a></h2>
+<p>Kimi K3 使用层级混合注意力。每个常规 block 包含：</p>
+<div class="arithmatex">\[
+\boxed{
+3\text{ 个 KDA 层}+1\text{ 个 Gated MLA 层}
+}
+\]</div>
+<p>并在 backbone 末尾额外放置一个 Gated MLA 层，确保最后一层执行全局 attention。官方模型共有：</p>
+<ul>
+<li>69 个 KDA 层；</li>
+<li>24 个 Gated MLA 层；</li>
+<li>合计 93 个 attention 层。</li>
+</ul>
+<p>两类层的作用可以粗略理解为：</p>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>历史状态</th>
+<th>主要作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>KDA</td>
+<td>固定大小的递归状态</td>
+<td>以线性复杂度持续混合长序列信息</td>
+</tr>
+<tr>
+<td>Gated MLA</td>
+<td>随序列增长的压缩 latent Cache</td>
+<td>周期性执行完整的全局 token-to-token attention</td>
+</tr>
+<tr>
+<td>Output gate</td>
+<td>当前 token 的临时激活</td>
+<td>调制全局读取结果的各个输出通道</td>
+</tr>
+</tbody>
+</table>
+<p>典型周期为：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>KDA → KDA → KDA → Gated MLA
+</span></code></pre></div>
+<p>需要注意：Gated MLA 仍然是全局 softmax attention；MLA 压缩的是 KV Cache，并没有把 attention 的序列复杂度变成线性。</p>
+<hr />
+<h2 id="11-pytorch">11. 接近官方实现的 PyTorch 伪代码<a class="headerlink" href="#11-pytorch" title="Permanent link">&para;</a></h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">GatedMLA</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">d_v</span><span class="p">):</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span> <span class="o">=</span> <span class="n">num_heads</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">d_v</span> <span class="o">=</span> <span class="n">d_v</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>        <span class="n">m</span> <span class="o">=</span> <span class="n">num_heads</span> <span class="o">*</span> <span class="n">d_v</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>        <span class="c1"># 省略 MLA 的 Q/K/V 与 latent 投影</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">g_proj</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">o_proj</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">cache</span><span class="p">):</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>        <span class="c1"># MLA/SDPA 输出，尚未执行 output projection</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>        <span class="n">head_output</span> <span class="o">=</span> <span class="n">mla_attention</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">cache</span><span class="p">)</span>       <span class="c1"># [B, T, H, d_v]</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>        <span class="n">attn_output</span> <span class="o">=</span> <span class="n">head_output</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>          <span class="c1"># [B, T, H*d_v]</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>            <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>        <span class="p">)</span>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>        <span class="n">gate</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">g_proj</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>        <span class="c1"># [B, T, H*d_v]</span>
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>        <span class="n">gated_output</span> <span class="o">=</span> <span class="n">attn_output</span> <span class="o">*</span> <span class="n">gate</span>           <span class="c1"># 逐通道门控</span>
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">o_proj</span><span class="p">(</span><span class="n">gated_output</span><span class="p">)</span>                <span class="c1"># [B, T, d]</span>
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>        <span class="k">return</span> <span class="n">y</span>
+</span></code></pre></div>
+<p>官方 Kimi K3 参考实现对应的关键代码顺序是：</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">attn_output</span> <span class="o">=</span> <span class="n">attn_output</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_length</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">g</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g_proj</span><span class="p">(</span><span class="n">hidden_states</span><span class="p">)</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">()</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">attn_output</span> <span class="o">=</span> <span class="n">attn_output</span> <span class="o">*</span> <span class="n">g</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">attn_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">o_proj</span><span class="p">(</span><span class="n">attn_output</span><span class="p">)</span>
+</span></code></pre></div>
+<p>其中：</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">projection_size</span> <span class="o">=</span> <span class="n">num_heads</span> <span class="o">*</span> <span class="n">v_head_dim</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">g_proj</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">projection_size</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">o_proj</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">projection_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span></code></pre></div>
+<hr />
+<h2 id="12-mla-kimi-k3-gated-mla">12. 普通 MLA 与 Kimi K3 Gated MLA 对比<a class="headerlink" href="#12-mla-kimi-k3-gated-mla" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>普通 MLA</th>
+<th>Kimi K3 Gated MLA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>KV 联合压缩</td>
+<td>有</td>
+<td>有</td>
+</tr>
+<tr>
+<td>KV Cache</td>
+<td>低维 latent</td>
+<td>基本相同，gate 不入 Cache</td>
+</tr>
+<tr>
+<td>Attention 权重</td>
+<td>softmax</td>
+<td>softmax，本次前向不被 gate 直接修改</td>
+</tr>
+<tr>
+<td>输出公式</td>
+<td><span class="arithmatex">\(y_t=\widetilde o_tW^O\)</span></td>
+<td><span class="arithmatex">\(y_t=[\sigma(x_tW^G)\odot\widetilde o_t]W^O\)</span></td>
+</tr>
+<tr>
+<td>Gate 粒度</td>
+<td>无</td>
+<td>token-dependent、channel-wise</td>
+</tr>
+<tr>
+<td>Gate 参数化</td>
+<td>无</td>
+<td>从 <span class="arithmatex">\(d\)</span> 到 <span class="arithmatex">\(Hd_v\)</span> 的直接 full-rank 投影</td>
+</tr>
+<tr>
+<td>K 吸收</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>latent 上的 V 聚合</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(W^{UV}\)</span> 与 <span class="arithmatex">\(W^O\)</span> 静态融合</td>
+<td>支持</td>
+<td>被动态 gate 阻断</td>
+</tr>
+<tr>
+<td>位置编码</td>
+<td>取决于模型</td>
+<td>Kimi K3 中为 NoPE</td>
+</tr>
+<tr>
+<td>额外计算</td>
+<td>无 gate 成本</td>
+<td>一次 gate 投影、sigmoid 和逐元素乘法</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="13">13. 常见误解<a class="headerlink" href="#13" title="Permanent link">&para;</a></h2>
+<h3 id="1gate-token">误解 1：Gate 控制关注哪些历史 token<a class="headerlink" href="#1gate-token" title="Permanent link">&para;</a></h3>
+<p>不是直接控制。历史位置选择仍由 softmax attention 完成；gate 控制的是读取结果的输出通道。</p>
+<h3 id="2gate-d">误解 2：Gate 作用于模型隐藏维度 <span class="arithmatex">\(d\)</span><a class="headerlink" href="#2gate-d" title="Permanent link">&para;</a></h3>
+<p>不一定。Kimi K3 中 gate 作用于输出投影前的 <span class="arithmatex">\(Hd_v=12288\)</span> 个通道，而模型隐藏维度是 <span class="arithmatex">\(7168\)</span>。</p>
+<h3 id="3full-rank">误解 3：Full-rank 表示矩阵一定满秩<a class="headerlink" href="#3full-rank" title="Permanent link">&para;</a></h3>
+<p>这里主要指不使用低秩瓶颈的直接投影参数化，不是对训练后数值秩的保证。</p>
+<h3 id="4gate">误解 4：Gate 可以和输出投影离线合并<a class="headerlink" href="#4gate" title="Permanent link">&para;</a></h3>
+<p>不可以。Gate 是由当前 <span class="arithmatex">\(x_t\)</span> 动态产生的激活，不是固定权重。</p>
+<h3 id="5gated-mla-v">误解 5：Gated MLA 完全不影响 V 吸收<a class="headerlink" href="#5gated-mla-v" title="Permanent link">&para;</a></h3>
+<p>需要分两层理解：先聚合 latent 再展开当前 V 仍然成立，但 gate 会阻止 V 上投影与 output projection 的静态矩阵融合。</p>
+<h3 id="6nope">误解 6：NoPE 就是不具备位置信息<a class="headerlink" href="#6nope" title="Permanent link">&para;</a></h3>
+<p>NoPE 只表示 MLA 的 Q/K 不显式应用位置编码。整个 Kimi K3 网络仍通过相邻的 KDA 层获得位置敏感和近期敏感的信息混合。</p>
+<hr />
+<h2 id="14">14. 核心理解<a class="headerlink" href="#14" title="Permanent link">&para;</a></h2>
+<p>完整路径可以压缩成：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>历史 latent Cache C
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>        │
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>当前 Q ─┴─&gt; 吸收式 score → softmax P → P @ C
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>                                      │
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>                                      ▼
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>                              当前 latent context
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>                                      │ V 上投影
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>                                      ▼
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>                             多头输出 o_tilde
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>                                      │
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>当前 x_t ─&gt; sigmoid(x_t @ W_G) ───────┤ 逐通道相乘
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>                                      ▼
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>                              output projection
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>                                      │
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>                                      ▼
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>                                     y_t
+</span></code></pre></div>
+<p>最简洁的结论是：</p>
+<div class="arithmatex">\[
+\boxed{
+\begin{aligned}
+&amp;\text{MLA 用 latent Cache 高效地执行全局读取；}\\
+&amp;\text{Gate 用当前 token 动态筛选读出的通道；}\\
+&amp;\text{Cache 优势保留，但 V-up 与输出矩阵不能跨 gate 静态合并。}
+\end{aligned}
+}
+\]</div>
+<hr />
+<h2 id="15">15. 参考资料<a class="headerlink" href="#15" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Kimi Team, <a href="https://arxiv.org/abs/2607.24653">Kimi K3: Open Frontier Intelligence</a>。重点参见 §2.1、公式 7：NoPE Gated MLA、逐通道 full-rank output gate，以及混合注意力结构。</li>
+<li>Moonshot AI, <a href="https://github.com/MoonshotAI/Kimi-K3">Kimi K3 官方仓库</a>。包含技术报告和模型概要。</li>
+<li>Moonshot AI, <a href="https://huggingface.co/moonshotai/Kimi-K3/blob/main/modeling_kimi_linear.py">Kimi K3 官方模型实现</a>。<code>KimiMLAAttention</code> 展示 <code>g_proj → sigmoid → elementwise multiply → o_proj</code> 的实际顺序和维度。</li>
+<li>Qiu et al., <a href="https://arxiv.org/abs/2505.06708">Gated Attention for Large Language Models: Non-linearity, Sparsity, and Attention-Sink-Free</a>。系统研究 SDPA 后 sigmoid gate 的非线性、稀疏性和 attention-sink 行为。</li>
+<li>DeepSeek-AI, <a href="https://arxiv.org/abs/2405.04434">DeepSeek-V2</a>。MLA 及低秩 KV 联合压缩的原始来源。</li>
+</ol>
+<hr />
+<h2 id="_2">附录：符号速查<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+<th>行向量约定下的形状</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(x_t\)</span></td>
+<td>当前 token 的输入</td>
+<td><span class="arithmatex">\(1\times d\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(c_j\)</span></td>
+<td>第 <code>j</code> 个历史 token 的 KV latent</td>
+<td><span class="arithmatex">\(1\times r\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(W^{DKV}\)</span></td>
+<td>KV 下投影的有效矩阵</td>
+<td><span class="arithmatex">\(d\times r\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(W_i^{UK}\)</span></td>
+<td>第 <code>i</code> 头的 K 上投影</td>
+<td><span class="arithmatex">\(r\times d_k\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(W_i^{UV}\)</span></td>
+<td>第 <code>i</code> 头的 V 上投影</td>
+<td><span class="arithmatex">\(r\times d_v\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(P_{t,i}\)</span></td>
+<td>第 <code>i</code> 头的 attention probability</td>
+<td><span class="arithmatex">\(1\times T\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(z_{t,i}\)</span></td>
+<td>第 <code>i</code> 头聚合后的 latent</td>
+<td><span class="arithmatex">\(1\times r\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(o_{t,i}\)</span></td>
+<td>第 <code>i</code> 头的输出</td>
+<td><span class="arithmatex">\(1\times d_v\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\widetilde o_t\)</span></td>
+<td>全部头拼接、output projection 前的输出</td>
+<td><span class="arithmatex">\(1\times m\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(g_t\)</span></td>
+<td>当前 token 的逐通道 gate</td>
+<td><span class="arithmatex">\(1\times m\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(W^G\)</span></td>
+<td>Gate 的有效投影矩阵</td>
+<td><span class="arithmatex">\(d\times m\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(W_i^O\)</span></td>
+<td>第 <code>i</code> 头对应的 output projection 分块</td>
+<td><span class="arithmatex">\(d_v\times d\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(W^O\)</span></td>
+<td>完整 output projection 的有效矩阵</td>
+<td><span class="arithmatex">\(m\times d\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(y_t\)</span></td>
+<td>注意力模块输出</td>
+<td><span class="arithmatex">\(1\times d\)</span></td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 LJX
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/Lai-JX" target="_blank" rel="noopener" title="Lai-JX on GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.tracking", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
