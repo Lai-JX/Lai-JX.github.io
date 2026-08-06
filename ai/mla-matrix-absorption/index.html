@@ -267,6 +267,28 @@
   
   
   
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../hot-100/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Hot 100
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
     
   
   
@@ -846,6 +868,75 @@
       
   
   
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../hot-100/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hot 100
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Hot 100
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
     
   
   
@@ -875,7 +966,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
           <div class="md-nav__link md-nav__container">
@@ -897,14 +988,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_3">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1020,7 +1111,7 @@
   <a href="#21" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2.1 行向量与列向量约定
+        2.1 本文的行向量约定
       
     </span>
   </a>
@@ -1427,7 +1518,7 @@
   <a href="#21" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2.1 行向量与列向量约定
+        2.1 本文的行向量约定
       
     </span>
   </a>
@@ -1776,127 +1867,131 @@ T L H(d_k+d_v).
 <p>长上下文或大 batch 下，解码经常受显存容量和显存带宽限制，而不是纯算力限制。MLA 的核心目标就是减少每次解码需要保存和读取的历史状态。</p>
 <hr />
 <h2 id="2-mla">2. MLA 先做了什么压缩<a class="headerlink" href="#2-mla" title="Permanent link">&para;</a></h2>
-<h3 id="21">2.1 行向量与列向量约定<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
-<p>数学论文通常把单个样本写成<strong>列向量</strong>。一个从 <code>d</code> 维到 <code>r</code> 维的线性映射写为：</p>
+<h3 id="21">2.1 本文的行向量约定<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
+<p>本文统一把 token 表示成<strong>行向量</strong>，也就是把特征放在最后一维。一个从 <code>d</code> 维到 <code>r</code> 维的线性映射写为：</p>
 <div class="arithmatex">\[
-\underbrace{y}_{r\times 1}
-=\underbrace{W}_{r\times d}
-\underbrace{x}_{d\times 1}.
+\underbrace{y}_{1\times r}
+=\underbrace{x}_{1\times d}
+\underbrace{W}_{d\times r}.
 \]</div>
-<p>PyTorch 通常把 batch、序列等维度放在前面，把特征放在最后一维。此时可将每个样本看成<strong>行向量</strong>，同一个线性映射写为：</p>
-<div class="arithmatex">\[
-\underbrace{y^T}_{1\times r}
-=\underbrace{x^T}_{1\times d}
-\underbrace{W^T}_{d\times r}.
-\]</div>
-<p>因此 <code>nn.Linear(d, r)</code> 保存的 <code>weight</code> 形状是 <code>[r, d]</code>，其中每一行是一个输出特征的权重；前向计算相当于 <code>x @ weight.T</code>。也可以另行定义一个 <span class="arithmatex">\(\widetilde W=W^T\in\mathbb{R}^{d\times r}\)</span>，再写成 <span class="arithmatex">\(y^T=x^T\widetilde W\)</span>。</p>
-<p>列向量公式和行向量公式可通过对等式整体转置来转换。利用 <span class="arithmatex">\((AB)^T=B^TA^T\)</span>：</p>
+<p>这和 PyTorch 张量的布局一致。例如输入形状通常是 <code>[batch, seq_len, d]</code>，线性层作用于最后一维。不过，<code>nn.Linear(d, r)</code> 为了让每一行对应一个输出特征，会把参数保存为转置后的形状：</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">weight</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="n">d</span><span class="p">]</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">@</span> <span class="n">weight</span><span class="o">.</span><span class="n">T</span>       <span class="c1"># weight.T 的形状是 [d, r]</span>
+</span></code></pre></div>
+<p>因此，本文公式里的 <span class="arithmatex">\(W\in\mathbb{R}^{d\times r}\)</span> 表示“从输入到输出、放在乘号右侧”的有效矩阵；对应的 PyTorch <code>weight</code> 保存的是 <span class="arithmatex">\(W^T\in\mathbb{R}^{r\times d}\)</span>。</p>
+<p>如果要和使用列向量的论文对照，可以对等式整体转置。利用 <span class="arithmatex">\((AB)^T=B^TA^T\)</span>：</p>
 <div class="arithmatex">\[
 \boxed{
-y=Wx
+y=xW
 \quad\Longleftrightarrow\quad
-y^T=x^TW^T
+y^T=W^Tx^T
 }
 \]</div>
 <p>阅读本文时可以采用以下规则，避免混淆：</p>
 <ul>
-<li>论文和后续数学推导默认使用列向量，写成 <span class="arithmatex">\(c=Wh\)</span>；</li>
-<li>PyTorch 张量通常把特征放在最后一维，可将每个 token 看成行向量，写成 <code>c = h @ W.T</code>；</li>
-<li>二者表示同一个线性映射，只要在一次推导中保持约定一致即可。</li>
+<li>本文全部推导使用行向量，线性映射写成 <span class="arithmatex">\(y=xW\)</span>；</li>
+<li>本文标记的矩阵形状按有效乘法方向书写，即 <span class="arithmatex">\(W\)</span> 为 <code>[in, out]</code>；</li>
+<li>对照 PyTorch 时，将本文的 <span class="arithmatex">\(W\)</span> 替换为 <code>module.weight.T</code>；</li>
+<li>对照列向量论文时，将向量和整个等式转置，不要只改变某一个矩阵。</li>
 </ul>
 <h3 id="22-kv">2.2 低秩 KV 联合压缩<a class="headerlink" href="#22-kv" title="Permanent link">&para;</a></h3>
-<p>下面的数学推导统一使用<strong>列向量</strong>，并暂时忽略 RoPE。</p>
-<p>对第 <code>j</code> 个 token 的隐藏状态 <span class="arithmatex">\(h_j\in\mathbb{R}^{d\times 1}\)</span>，MLA 先做一次 KV 联合下投影：</p>
+<p>下面暂时忽略 RoPE。</p>
+<p>对第 <code>j</code> 个 token 的隐藏状态 <span class="arithmatex">\(h_j\in\mathbb{R}^{1\times d}\)</span>，MLA 先做一次 KV 联合下投影：</p>
 <div class="arithmatex">\[
-\underbrace{c_j}_{r\times 1}
-=\underbrace{W^{DKV}}_{r\times d}
-\underbrace{h_j}_{d\times 1}.
+\underbrace{c_j}_{1\times r}
+=\underbrace{h_j}_{1\times d}
+\underbrace{W^{DKV}}_{d\times r}.
 \]</div>
-<p>其中 <code>r</code> 是 KV latent 的维度，远小于所有头的完整 K、V 总维度。在 PyTorch 中，对应计算为 <code>c_j = h_j @ W_DKV.T</code>，其中 <code>W_DKV.shape == [r, d]</code>。</p>
+<p>其中 <code>r</code> 是 KV latent 的维度，远小于所有头的完整 K、V 总维度。在 PyTorch 中，对应参数 <code>w_dkv.weight.shape == [r, d]</code>，计算为 <code>c_j = h_j @ w_dkv.weight.T</code>。</p>
 <p>对第 <code>i</code> 个头，再分别把同一个 <span class="arithmatex">\(c_j\)</span> 上投影为 key 和 value：</p>
 <div class="arithmatex">\[
-k_{j,i}=W_i^{UK}c_j,\qquad W_i^{UK}\in\mathbb{R}^{d_k\times r},
+k_{j,i}=c_jW_i^{UK},\qquad W_i^{UK}\in\mathbb{R}^{r\times d_k},
 \]</div>
 <div class="arithmatex">\[
-v_{j,i}=W_i^{UV}c_j,\qquad W_i^{UV}\in\mathbb{R}^{d_v\times r}.
+v_{j,i}=c_jW_i^{UV},\qquad W_i^{UV}\in\mathbb{R}^{r\times d_v}.
 \]</div>
 <p>直观上，<span class="arithmatex">\(c_j\)</span> 是 K、V 的一份“共同压缩底稿”，不同注意力头用各自的上投影矩阵读取它。</p>
 <p>如果只做到这里，虽然可以在 Cache 中只保存 <span class="arithmatex">\(c_j\)</span>，但每生成一个 token 都要把全部历史 <span class="arithmatex">\(c_1,\ldots,c_T\)</span> 重新展开成 K、V，计算量会很大。“吸收”就是为了避免这次全量展开。</p>
 <hr />
 <h2 id="3-k-k-q">3. K 吸收：把历史 K 的工作移到当前 Q<a class="headerlink" href="#3-k-k-q" title="Permanent link">&para;</a></h2>
 <h3 id="31-content-score">3.1 原来的 content score<a class="headerlink" href="#31-content-score" title="Permanent link">&para;</a></h3>
-<p>第 <code>i</code> 个头的当前 query 是 <span class="arithmatex">\(q_i\in\mathbb{R}^{d_k}\)</span>。它和第 <code>j</code> 个历史 key 的内容分数为：</p>
+<p>第 <code>i</code> 个头的当前 query 是 <span class="arithmatex">\(q_i\in\mathbb{R}^{1\times d_k}\)</span>。它和第 <code>j</code> 个历史 key 的内容分数为：</p>
 <div class="arithmatex">\[
-s_{i,j}^{content}=q_i^T k_{j,i}
-=q_i^T W_i^{UK}c_j.
+s_{i,j}^{content}=q_i k_{j,i}^T
+=q_i(c_jW_i^{UK})^T
+=q_i(W_i^{UK})^Tc_j^T.
 \]</div>
 <p>根据矩阵乘法结合律：</p>
 <div class="arithmatex">\[
-q_i^T W_i^{UK}c_j
-=\left((W_i^{UK})^Tq_i\right)^T c_j.
+q_i(W_i^{UK})^Tc_j^T
+=\left(q_i(W_i^{UK})^T\right)c_j^T.
 \]</div>
 <p>定义吸收后的 query：</p>
 <div class="arithmatex">\[
-\widehat q_i=(W_i^{UK})^Tq_i,\qquad \widehat q_i\in\mathbb{R}^{r}.
+\widehat q_i=q_i(W_i^{UK})^T,
+\qquad \widehat q_i\in\mathbb{R}^{1\times r}.
 \]</div>
 <p>于是：</p>
 <div class="arithmatex">\[
-s_{i,j}^{content}=\widehat q_i^T c_j.
+s_{i,j}^{content}=\widehat q_i c_j^T.
 \]</div>
 <h3 id="32">3.2 它节省了什么<a class="headerlink" href="#32" title="Permanent link">&para;</a></h3>
 <p>未吸收时，对每次解码都可能需要：</p>
 <div class="arithmatex">\[
-c_j\xrightarrow{W_i^{UK}}k_{j,i},\qquad j=1,\ldots,T.
+c_j\xrightarrow{\ \times W_i^{UK}\ }k_{j,i},
+\qquad j=1,\ldots,T.
 \]</div>
 <p>吸收后，只需对<strong>当前 token 的每个 query</strong>做一次变换：</p>
 <div class="arithmatex">\[
-q_i\xrightarrow{(W_i^{UK})^T}\widehat q_i,
+q_i\xrightarrow{\ \times(W_i^{UK})^T\ }\widehat q_i,
 \]</div>
 <p>然后让 <span class="arithmatex">\(\widehat q_i\)</span> 直接和 Cache 中所有 <span class="arithmatex">\(c_j\)</span> 做点积。历史 token 不再被逐头展开成 key。</p>
 <h3 id="33-q">3.3 “吸收到 Q”有两种实现含义<a class="headerlink" href="#33-q" title="Permanent link">&para;</a></h3>
-<p>如果 <span class="arithmatex">\(q_i=W_i^Qh_t\)</span> 且中间没有非线性运算，可以预先合并权重：</p>
+<p>如果 <span class="arithmatex">\(q_i=h_tW_i^Q\)</span> 且中间没有非线性运算，可以预先合并权重：</p>
 <div class="arithmatex">\[
-\widehat W_i^Q=(W_i^{UK})^TW_i^Q,
-\qquad \widehat q_i=\widehat W_i^Qh_t.
+\widehat W_i^Q=W_i^Q(W_i^{UK})^T,
+\qquad \widehat q_i=h_t\widehat W_i^Q,
 \]</div>
+<p>其中 <span class="arithmatex">\(W_i^Q\in\mathbb{R}^{d\times d_k}\)</span>，所以 <span class="arithmatex">\(\widehat W_i^Q\in\mathbb{R}^{d\times r}\)</span>。</p>
 <p>如果 Q 本身也采用低秩投影，例如：</p>
 <div class="arithmatex">\[
-c_t^Q=W^{DQ}h_t,\qquad q_i=W_i^{UQ}c_t^Q,
+c_t^Q=h_tW^{DQ},\qquad q_i=c_t^QW_i^{UQ},
 \]</div>
 <p>则可以只合并两个上投影：</p>
 <div class="arithmatex">\[
-\widehat W_i^{UQ}=(W_i^{UK})^TW_i^{UQ}.
+\widehat W_i^{UQ}=W_i^{UQ}(W_i^{UK})^T.
 \]</div>
-<p>工程实现也可以不真正生成一份合并后的权重，而是在运行时先算 <span class="arithmatex">\(q_i\)</span>，再乘 <span class="arithmatex">\(W_i^{UK}\)</span>。两者数学含义相同；后者更方便复用、量化和切分原权重。</p>
+<p>工程实现也可以不真正生成一份合并后的权重，而是在运行时先算 <span class="arithmatex">\(q_i\)</span>，再乘 <span class="arithmatex">\((W_i^{UK})^T\)</span>。两者数学含义相同；后者更方便复用、量化和切分原权重。</p>
 <hr />
 <h2 id="4-v-latent">4. V 吸收：先在 latent 空间加权，再展开<a class="headerlink" href="#4-v-latent" title="Permanent link">&para;</a></h2>
 <p>设 softmax 后第 <code>i</code> 个头对历史位置 <code>j</code> 的注意力权重是 <span class="arithmatex">\(a_{i,j}\)</span>。原来的头输出为：</p>
 <div class="arithmatex">\[
 o_i=\sum_{j=1}^{T}a_{i,j}v_{j,i}
-=\sum_{j=1}^{T}a_{i,j}W_i^{UV}c_j.
+=\sum_{j=1}^{T}a_{i,j}c_jW_i^{UV}.
 \]</div>
 <p>线性映射对加权和可分配：</p>
 <div class="arithmatex">\[
 o_i
-=W_i^{UV}\left(\sum_{j=1}^{T}a_{i,j}c_j\right).
+=\left(\sum_{j=1}^{T}a_{i,j}c_j\right)W_i^{UV}.
 \]</div>
 <p>先在 latent 空间计算：</p>
 <div class="arithmatex">\[
-z_i=\sum_{j=1}^{T}a_{i,j}c_j,\qquad z_i\in\mathbb{R}^{r},
+z_i=\sum_{j=1}^{T}a_{i,j}c_j,
+\qquad z_i\in\mathbb{R}^{1\times r},
 \]</div>
 <p>再只对当前头的聚合结果展开一次：</p>
 <div class="arithmatex">\[
-o_i=W_i^{UV}z_i.
+o_i=z_iW_i^{UV}.
 \]</div>
 <p>这避免了先为全部历史 token、全部头生成 <span class="arithmatex">\(v_{j,i}\)</span>。</p>
-<p>若输出投影 <span class="arithmatex">\(W^O\)</span> 按头分块为 <span class="arithmatex">\(W_i^O\in\mathbb{R}^{d\times d_v}\)</span>，最终输出为：</p>
+<p>若输出投影 <span class="arithmatex">\(W^O\)</span> 按头分块为 <span class="arithmatex">\(W_i^O\in\mathbb{R}^{d_v\times d}\)</span>，最终输出为：</p>
 <div class="arithmatex">\[
-u=\sum_{i=1}^{H}W_i^Oo_i
-=\sum_{i=1}^{H}\underbrace{(W_i^OW_i^{UV})}_{B_i}z_i.
+u=\sum_{i=1}^{H}o_iW_i^O
+=\sum_{i=1}^{H}z_i\underbrace{(W_i^{UV}W_i^O)}_{B_i}.
 \]</div>
 <p>因此还可以预先形成：</p>
 <div class="arithmatex">\[
-B_i=W_i^OW_i^{UV}\in\mathbb{R}^{d\times r},
+B_i=W_i^{UV}W_i^O\in\mathbb{R}^{r\times d},
 \]</div>
 <p>也就是把 V 上投影吸收到输出投影。实际内核也可能保留“两次较小矩阵乘”，而不显式保存 <span class="arithmatex">\(B_i\)</span>。</p>
 <blockquote>
@@ -1904,55 +1999,60 @@ B_i=W_i^OW_i^{UV}\in\mathbb{R}^{d\times r},
 </blockquote>
 <hr />
 <h2 id="5-rope-k">5. RoPE 为什么不能照搬 K 吸收<a class="headerlink" href="#5-rope-k" title="Permanent link">&para;</a></h2>
-<p>如果直接给压缩 key 的上投影结果施加 RoPE，那么 key 变为：</p>
+<p>如果直接给压缩 key 的上投影结果施加 RoPE，那么在行向量约定下可以把位置 <code>j</code> 的旋转写成右乘矩阵 <span class="arithmatex">\(R_j\)</span>：</p>
 <div class="arithmatex">\[
-k_{j,i}=R_jW_i^{UK}c_j,
+k_{j,i}=c_jW_i^{UK}R_j.
 \]</div>
 <p>其中 <span class="arithmatex">\(R_j\)</span> 是与历史位置 <code>j</code> 有关的旋转矩阵。分数中会出现：</p>
 <div class="arithmatex">\[
-q_i^TR_jW_i^{UK}c_j.
+q_i k_{j,i}^T
+=q_iR_j^T(W_i^{UK})^Tc_j^T.
 \]</div>
-<p>由于 <span class="arithmatex">\(R_j\)</span> 随位置变化并夹在 Q 与 <span class="arithmatex">\(W_i^{UK}\)</span> 之间，无法构造一个对所有历史位置都通用的吸收后 query。矩阵乘法有结合律，但通常<strong>没有交换律</strong>，不能随意把 <span class="arithmatex">\(R_j\)</span> 与 <span class="arithmatex">\(W_i^{UK}\)</span> 调换。</p>
+<p>由于 <span class="arithmatex">\(R_j^T\)</span> 随位置变化并夹在 Q 与 <span class="arithmatex">\((W_i^{UK})^T\)</span> 之间，无法构造一个对所有历史位置都通用的吸收后 query。矩阵乘法有结合律，但通常<strong>没有交换律</strong>，不能随意把 <span class="arithmatex">\(R_j\)</span> 与 <span class="arithmatex">\(W_i^{UK}\)</span> 调换。</p>
 <p>DeepSeek 的办法是 <strong>Decoupled RoPE（解耦 RoPE）</strong>：把 Q、K 分成内容分支和位置分支。</p>
 <div class="arithmatex">\[
-q_i=[q_i^{C};q_i^{R}],\qquad
-k_{j,i}=[k_{j,i}^{C};k_j^{R}].
+q_i=[q_i^{C}\;\;q_i^{R}],\qquad
+k_{j,i}=[k_{j,i}^{C}\;\;k_j^{R}].
 \]</div>
 <ul>
-<li>内容 key：<span class="arithmatex">\(k_{j,i}^{C}=W_i^{UK}c_j\)</span>，不施加 RoPE，可以吸收；</li>
-<li>位置 key：<span class="arithmatex">\(k_j^{R}=\operatorname{RoPE}(W^{KR}h_j)\)</span>，在各头间共享，单独缓存；</li>
+<li>内容 key：<span class="arithmatex">\(k_{j,i}^{C}=c_jW_i^{UK}\)</span>，不施加 RoPE，可以吸收；</li>
+<li>位置 key：<span class="arithmatex">\(k_j^{R}=\operatorname{RoPE}(h_jW^{KR})\)</span>，在各头间共享，单独缓存；</li>
 <li>位置 query：<span class="arithmatex">\(q_i^{R}\)</span> 施加 RoPE，但它只和 <span class="arithmatex">\(k_j^{R}\)</span> 点积。</li>
 </ul>
 <p>完整 logit（省略 mask）为：</p>
 <div class="arithmatex">\[
 s_{i,j}
 =\frac{
-\underbrace{\widehat q_i^{T}c_j}_{内容分支}
-+\underbrace{(q_i^{R})^Tk_j^{R}}_{位置分支}
+\underbrace{\widehat q_i c_j^T}_{内容分支}
++\underbrace{q_i^{R}(k_j^{R})^T}_{位置分支}
 }{\sqrt{d_k+d_R}}.
 \]</div>
 <p>因此每个历史 token、每层只需缓存：</p>
 <div class="arithmatex">\[
-\boxed{c_j\in\mathbb{R}^{r}\quad+\quad k_j^R\in\mathbb{R}^{d_R}}.
+\boxed{
+c_j\in\mathbb{R}^{1\times r}
+\quad+\quad
+k_j^R\in\mathbb{R}^{1\times d_R}
+}.
 \]</div>
 <p>位置 key 不按头复制，是 MLA Cache 很小的另一个重要原因。</p>
 <hr />
 <h2 id="6">6. 一次解码的完整数据流<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>当前隐藏状态 h_t
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>   │
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>   ├─&gt; 当前 q_nope ──乘 K 上投影──&gt; q_abs ─────┐
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>   │                                             │ 与历史 c_cache 点积
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>   ├─&gt; 当前 q_rope ─────施加 RoPE───────────────┤ 与历史 pe_cache 点积
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>   │                                             ▼
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>   ├─&gt; 当前 c_t ─────────────────────────────&gt; logits → mask → softmax = A
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>   │          │                                  │
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>   │          └────────追加到 c_cache             │ A @ c_cache
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>   │                                             ▼
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>   └─&gt; 当前 k_rope ──追加到 pe_cache        每个头的 latent context z_i
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>                                                  │
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>                                             V 上投影 / 输出吸收
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>                                                  ▼
-</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>                                              当前层输出
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>当前隐藏状态 h_t
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>   │
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>   ├─&gt; 当前 q_nope ──乘 K 上投影──&gt; q_abs ─────┐
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>   │                                             │ 与历史 c_cache 点积
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>   ├─&gt; 当前 q_rope ─────施加 RoPE───────────────┤ 与历史 pe_cache 点积
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>   │                                             ▼
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>   ├─&gt; 当前 c_t ─────────────────────────────&gt; logits → mask → softmax = A
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>   │          │                                  │
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>   │          └────────追加到 c_cache             │ A @ c_cache
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>   │                                             ▼
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>   └─&gt; 当前 k_rope ──追加到 pe_cache        每个头的 latent context z_i
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>                                                  │
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>                                             V 上投影 / 输出吸收
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>                                                  ▼
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>                                              当前层输出
 </span></code></pre></div>
 <p>关键的不对称性是：历史信息始终保留在共享 latent 空间；只有当前 query 和 softmax 后的当前 context 按头展开。</p>
 <hr />
@@ -1964,68 +2064,70 @@ s_{i,j}
 <li><code>d_c</code>：每头非位置 Q/K 维度；</li>
 <li><code>d_R</code>：RoPE 维度；<code>d_v</code>：每头 V 维度。</li>
 </ul>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">mla_decode</span><span class="p">(</span><span class="n">x_t</span><span class="p">,</span> <span class="n">c_cache</span><span class="p">,</span> <span class="n">pe_cache</span><span class="p">):</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="c1"># 1. 只为当前 token 生成 query 的两个分支</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="n">q_nope</span> <span class="o">=</span> <span class="n">make_q_nope</span><span class="p">(</span><span class="n">x_t</span><span class="p">)</span>          <span class="c1"># [H, d_c]</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="n">q_rope</span> <span class="o">=</span> <span class="n">rope</span><span class="p">(</span><span class="n">make_q_rope</span><span class="p">(</span><span class="n">x_t</span><span class="p">))</span>    <span class="c1"># [H, d_R]</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="c1"># 2. 为当前 token 生成需要缓存的两小块状态</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    <span class="n">c_t</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">make_kv_latent</span><span class="p">(</span><span class="n">x_t</span><span class="p">))</span>     <span class="c1"># [r]</span>
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    <span class="n">k_rope_t</span> <span class="o">=</span> <span class="n">rope</span><span class="p">(</span><span class="n">make_k_rope</span><span class="p">(</span><span class="n">x_t</span><span class="p">))</span>  <span class="c1"># [d_R]，各头共享</span>
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="n">c_cache</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c_t</span><span class="p">)</span>                 <span class="c1"># [T, r]</span>
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="n">pe_cache</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k_rope_t</span><span class="p">)</span>           <span class="c1"># [T, d_R]</span>
-</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
-</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    <span class="c1"># 3. K 吸收：W_k_up[h] 的布局视为 [d_c, r]</span>
-</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>    <span class="n">q_abs</span> <span class="o">=</span> <span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;hd,hdr-&gt;hr&quot;</span><span class="p">,</span> <span class="n">q_nope</span><span class="p">,</span> <span class="n">W_k_up</span><span class="p">)</span>  <span class="c1"># [H, r]</span>
-</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>
-</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>    <span class="c1"># 4. 内容与位置两个分支分别打分</span>
-</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>    <span class="n">score_content</span> <span class="o">=</span> <span class="n">q_abs</span> <span class="o">@</span> <span class="n">c_cache</span><span class="o">.</span><span class="n">T</span>               <span class="c1"># [H, T]</span>
-</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>    <span class="n">score_position</span> <span class="o">=</span> <span class="n">q_rope</span> <span class="o">@</span> <span class="n">pe_cache</span><span class="o">.</span><span class="n">T</span>            <span class="c1"># [H, T]</span>
-</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>    <span class="n">logits</span> <span class="o">=</span> <span class="p">(</span><span class="n">score_content</span> <span class="o">+</span> <span class="n">score_position</span><span class="p">)</span> <span class="o">/</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">d_c</span> <span class="o">+</span> <span class="n">d_R</span><span class="p">)</span>
-</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>    <span class="n">A</span> <span class="o">=</span> <span class="n">softmax</span><span class="p">(</span><span class="n">apply_causal_mask</span><span class="p">(</span><span class="n">logits</span><span class="p">),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>   <span class="c1"># [H, T]</span>
-</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>
-</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>    <span class="c1"># 5. V 吸收：先在 latent 空间按头聚合</span>
-</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>    <span class="n">z</span> <span class="o">=</span> <span class="n">A</span> <span class="o">@</span> <span class="n">c_cache</span>                                  <span class="c1"># [H, r]</span>
-</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>
-</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>    <span class="c1"># 方案 A：先做 V 上投影，再做普通输出投影</span>
-</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>    <span class="n">head_out</span> <span class="o">=</span> <span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;hr,hvr-&gt;hv&quot;</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">W_v_up</span><span class="p">)</span>      <span class="c1"># [H, d_v]</span>
-</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>    <span class="n">y_t</span> <span class="o">=</span> <span class="n">output_projection</span><span class="p">(</span><span class="n">head_out</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">H</span> <span class="o">*</span> <span class="n">d_v</span><span class="p">))</span>
-</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>
-</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>    <span class="c1"># 方案 B：若预先计算 B[h] = W_o[h] @ W_v_up[h]</span>
-</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>    <span class="c1"># y_t = sum_h B[h] @ z[h]</span>
-</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a>
-</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a>    <span class="k">return</span> <span class="n">y_t</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">mla_decode</span><span class="p">(</span><span class="n">x_t</span><span class="p">,</span> <span class="n">c_cache</span><span class="p">,</span> <span class="n">pe_cache</span><span class="p">):</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="c1"># 1. 只为当前 token 生成 query 的两个分支</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="n">q_nope</span> <span class="o">=</span> <span class="n">make_q_nope</span><span class="p">(</span><span class="n">x_t</span><span class="p">)</span>          <span class="c1"># [H, d_c]</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="n">q_rope</span> <span class="o">=</span> <span class="n">rope</span><span class="p">(</span><span class="n">make_q_rope</span><span class="p">(</span><span class="n">x_t</span><span class="p">))</span>    <span class="c1"># [H, d_R]</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    <span class="c1"># 2. 为当前 token 生成需要缓存的两小块状态</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    <span class="n">c_t</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">make_kv_latent</span><span class="p">(</span><span class="n">x_t</span><span class="p">))</span>     <span class="c1"># [r]</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    <span class="n">k_rope_t</span> <span class="o">=</span> <span class="n">rope</span><span class="p">(</span><span class="n">make_k_rope</span><span class="p">(</span><span class="n">x_t</span><span class="p">))</span>  <span class="c1"># [d_R]，各头共享</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    <span class="n">c_cache</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c_t</span><span class="p">)</span>                 <span class="c1"># [T, r]</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    <span class="n">pe_cache</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k_rope_t</span><span class="p">)</span>           <span class="c1"># [T, d_R]</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    <span class="c1"># 3. K 吸收</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>    <span class="c1"># PyTorch 保存的 W_k_up_weight[h] 是公式中 (W_UK[h]).T，形状 [d_c, r]</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>    <span class="n">q_abs</span> <span class="o">=</span> <span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;hd,hdr-&gt;hr&quot;</span><span class="p">,</span> <span class="n">q_nope</span><span class="p">,</span> <span class="n">W_k_up_weight</span><span class="p">)</span>  <span class="c1"># [H, r]</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>    <span class="c1"># 4. 内容与位置两个分支分别打分</span>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>    <span class="n">score_content</span> <span class="o">=</span> <span class="n">q_abs</span> <span class="o">@</span> <span class="n">c_cache</span><span class="o">.</span><span class="n">T</span>               <span class="c1"># [H, T]</span>
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>    <span class="n">score_position</span> <span class="o">=</span> <span class="n">q_rope</span> <span class="o">@</span> <span class="n">pe_cache</span><span class="o">.</span><span class="n">T</span>            <span class="c1"># [H, T]</span>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>    <span class="n">logits</span> <span class="o">=</span> <span class="p">(</span><span class="n">score_content</span> <span class="o">+</span> <span class="n">score_position</span><span class="p">)</span> <span class="o">/</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">d_c</span> <span class="o">+</span> <span class="n">d_R</span><span class="p">)</span>
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>    <span class="n">A</span> <span class="o">=</span> <span class="n">softmax</span><span class="p">(</span><span class="n">apply_causal_mask</span><span class="p">(</span><span class="n">logits</span><span class="p">),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>   <span class="c1"># [H, T]</span>
+</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>
+</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>    <span class="c1"># 5. V 吸收：先在 latent 空间按头聚合</span>
+</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>    <span class="n">z</span> <span class="o">=</span> <span class="n">A</span> <span class="o">@</span> <span class="n">c_cache</span>                                  <span class="c1"># [H, r]</span>
+</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>
+</span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>    <span class="c1"># 方案 A：先做 V 上投影，再做普通输出投影</span>
+</span><span id="__span-2-26"><a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>    <span class="c1"># PyTorch 保存的 W_v_up_weight[h] 是公式中 (W_UV[h]).T，形状 [d_v, r]</span>
+</span><span id="__span-2-27"><a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>    <span class="n">head_out</span> <span class="o">=</span> <span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;hr,hvr-&gt;hv&quot;</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">W_v_up_weight</span><span class="p">)</span>  <span class="c1"># [H, d_v]</span>
+</span><span id="__span-2-28"><a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>    <span class="n">y_t</span> <span class="o">=</span> <span class="n">output_projection</span><span class="p">(</span><span class="n">head_out</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">H</span> <span class="o">*</span> <span class="n">d_v</span><span class="p">))</span>
+</span><span id="__span-2-29"><a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>
+</span><span id="__span-2-30"><a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>    <span class="c1"># 方案 B：若按行向量公式预先计算 B[h] = W_UV[h] @ W_O[h]，形状 [r, d]</span>
+</span><span id="__span-2-31"><a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a>    <span class="c1"># y_t = sum_h z[h] @ B[h]</span>
+</span><span id="__span-2-32"><a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a>
+</span><span id="__span-2-33"><a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a>    <span class="k">return</span> <span class="n">y_t</span>
 </span></code></pre></div>
 <p>官方 DeepSeek-V3 参考实现的非朴素分支正是这个顺序：先将 <code>q_nope</code> 乘 K 上投影、缓存 <code>kv</code> latent 和位置 key、对 latent Cache 计算 logits、用注意力权重聚合 latent、最后才做 V 上投影和输出投影。</p>
 <hr />
 <h2 id="8">8. 一个极小的数值例子<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
-<p>只看一个头和 K 吸收。设：</p>
+<p>只看一个头和 K 吸收。所有向量都按行向量书写，设：</p>
 <div class="arithmatex">\[
-c=\begin{bmatrix}1\\2\end{bmatrix},\quad
-W^{UK}=\begin{bmatrix}2&amp;0\\1&amp;-1\end{bmatrix},\quad
-q=\begin{bmatrix}4\\-2\end{bmatrix}.
+c=\begin{bmatrix}1&amp;2\end{bmatrix},\quad
+W^{UK}=\begin{bmatrix}2&amp;1\\0&amp;-1\end{bmatrix},\quad
+q=\begin{bmatrix}4&amp;-2\end{bmatrix}.
 \]</div>
 <h3 id="k">先展开 K<a class="headerlink" href="#k" title="Permanent link">&para;</a></h3>
 <div class="arithmatex">\[
-k=W^{UK}c
-=\begin{bmatrix}2\\-1\end{bmatrix},
+k=cW^{UK}
+=\begin{bmatrix}2&amp;-1\end{bmatrix},
 \]</div>
 <div class="arithmatex">\[
-q^Tk=4\times2+(-2)\times(-1)=10.
+qk^T=4\times2+(-2)\times(-1)=10.
 \]</div>
 <h3 id="k-q">把 K 投影吸收到 Q<a class="headerlink" href="#k-q" title="Permanent link">&para;</a></h3>
 <div class="arithmatex">\[
-\widehat q=(W^{UK})^Tq
-=\begin{bmatrix}6\\2\end{bmatrix},
+\widehat q=q(W^{UK})^T
+=\begin{bmatrix}6&amp;2\end{bmatrix},
 \]</div>
 <div class="arithmatex">\[
-\widehat q^Tc=6\times1+2\times2=10.
+\widehat q c^T=6\times1+2\times2=10.
 \]</div>
 <p>两条路径得到完全相同的 score。差别只是：前者要为每个历史 token 生成 K；后者只变换当前 Q，然后直接读取历史 latent。</p>
 <p>V 侧同理。若两个历史 latent 的权重分别为 <code>0.25</code>、<code>0.75</code>，则：</p>
 <div class="arithmatex">\[
-0.25W^{UV}c_1+0.75W^{UV}c_2
-=W^{UV}(0.25c_1+0.75c_2).
+0.25c_1W^{UV}+0.75c_2W^{UV}
+=(0.25c_1+0.75c_2)W^{UV}.
 \]</div>
 <p>所以只需把两个小 latent 加权成一个，再展开一次。</p>
 <hr />
@@ -2069,7 +2171,7 @@ r+d_R.
 <p>而不是交换律。一般情况下 <span class="arithmatex">\(AB\ne BA\)</span>。</p>
 <h3 id="_1">实现陷阱<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>转置和布局</strong>：论文多用列向量，PyTorch 常用行向量；<code>W</code> 的转置方向最容易写错。</li>
+<li><strong>转置和布局</strong>：本文统一使用行向量和 <code>[in, out]</code> 的有效矩阵；PyTorch 的 <code>nn.Linear.weight</code> 保存为 <code>[out, in]</code>，对照代码时需要转置。</li>
 <li><strong>缩放因子</strong>：softmax scale 对应完整 Q/K 头维度，即内容维度加 RoPE 维度，而不是吸收后的 latent 维度。</li>
 <li><strong>Cache 内容</strong>：如果 KV 下投影后有 RMSNorm，通常应缓存归一化后的 latent；要与训练图保持一致。</li>
 <li><strong>位置 key 的共享维</strong>：解耦 RoPE key 通常不按头重复缓存。</li>
@@ -2079,8 +2181,8 @@ r+d_R.
 <hr />
 <h2 id="11">11. 建议的理解顺序<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
 <ol>
-<li>先只看 <span class="arithmatex">\(q^TW^{UK}c=((W^{UK})^Tq)^Tc\)</span>，彻底理解 K 吸收。</li>
-<li>再看 <span class="arithmatex">\(\sum_j a_jW^{UV}c_j=W^{UV}\sum_j a_jc_j\)</span>，理解 V 吸收。</li>
+<li>先只看 <span class="arithmatex">\(q(cW^{UK})^T=\bigl(q(W^{UK})^T\bigr)c^T\)</span>，彻底理解 K 吸收。</li>
+<li>再看 <span class="arithmatex">\(\sum_j a_jc_jW^{UV}=\left(\sum_j a_jc_j\right)W^{UV}\)</span>，理解 V 吸收。</li>
 <li>记住 Cache 中保存的是共享 latent，而不是每头 K/V。</li>
 <li>最后加入 RoPE：内容分支可以吸收，位置分支单独计算和缓存。</li>
 <li>对照伪代码，找到 <code>q_abs @ c_cache.T</code> 和 <code>A @ c_cache</code> 这两个核心矩阵乘法。</li>
@@ -2114,47 +2216,47 @@ r+d_R.
 <tr>
 <td><span class="arithmatex">\(h_j\)</span></td>
 <td>第 <code>j</code> 个 token 的层输入</td>
-<td><span class="arithmatex">\(d\)</span></td>
+<td><span class="arithmatex">\(1\times d\)</span></td>
 </tr>
 <tr>
 <td><span class="arithmatex">\(c_j\)</span></td>
 <td>K/V 共享压缩 latent</td>
-<td><span class="arithmatex">\(r\)</span></td>
+<td><span class="arithmatex">\(1\times r\)</span></td>
 </tr>
 <tr>
 <td><span class="arithmatex">\(W^{DKV}\)</span></td>
 <td>K/V 联合下投影</td>
-<td><span class="arithmatex">\(r\times d\)</span></td>
+<td><span class="arithmatex">\(d\times r\)</span></td>
 </tr>
 <tr>
 <td><span class="arithmatex">\(W_i^{UK}\)</span></td>
 <td>第 <code>i</code> 头的 K 上投影</td>
-<td><span class="arithmatex">\(d_c\times r\)</span></td>
+<td><span class="arithmatex">\(r\times d_c\)</span></td>
 </tr>
 <tr>
 <td><span class="arithmatex">\(W_i^{UV}\)</span></td>
 <td>第 <code>i</code> 头的 V 上投影</td>
-<td><span class="arithmatex">\(d_v\times r\)</span></td>
+<td><span class="arithmatex">\(r\times d_v\)</span></td>
 </tr>
 <tr>
 <td><span class="arithmatex">\(q_i^C\)</span></td>
 <td>第 <code>i</code> 头的非位置 query</td>
-<td><span class="arithmatex">\(d_c\)</span></td>
+<td><span class="arithmatex">\(1\times d_c\)</span></td>
 </tr>
 <tr>
 <td><span class="arithmatex">\(\widehat q_i\)</span></td>
 <td>K 吸收后的 query</td>
-<td><span class="arithmatex">\(r\)</span></td>
+<td><span class="arithmatex">\(1\times r\)</span></td>
 </tr>
 <tr>
 <td><span class="arithmatex">\(q_i^R\)</span></td>
 <td>第 <code>i</code> 头的 RoPE query</td>
-<td><span class="arithmatex">\(d_R\)</span></td>
+<td><span class="arithmatex">\(1\times d_R\)</span></td>
 </tr>
 <tr>
 <td><span class="arithmatex">\(k_j^R\)</span></td>
 <td>各头共享的 RoPE key</td>
-<td><span class="arithmatex">\(d_R\)</span></td>
+<td><span class="arithmatex">\(1\times d_R\)</span></td>
 </tr>
 <tr>
 <td><span class="arithmatex">\(a_{i,j}\)</span></td>
@@ -2164,12 +2266,12 @@ r+d_R.
 <tr>
 <td><span class="arithmatex">\(z_i\)</span></td>
 <td>注意力权重聚合后的 latent</td>
-<td><span class="arithmatex">\(r\)</span></td>
+<td><span class="arithmatex">\(1\times r\)</span></td>
 </tr>
 <tr>
 <td><span class="arithmatex">\(W_i^O\)</span></td>
 <td>第 <code>i</code> 头对应的输出投影分块</td>
-<td><span class="arithmatex">\(d\times d_v\)</span></td>
+<td><span class="arithmatex">\(d_v\times d\)</span></td>
 </tr>
 </tbody>
 </table>
