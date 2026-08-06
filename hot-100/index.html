@@ -6886,18 +6886,18 @@
 <hr />
 <h2 id="_202">这个页面是怎样加入网站的<a class="headerlink" href="#_202" title="Permanent link">&para;</a></h2>
 <ol>
-<li>在 <code>site-source/content/</code> 下创建模块目录 <code>hot-100/</code>。</li>
+<li>在工作区的 <code>docs/</code> 下创建模块目录 <code>hot-100/</code>，并在其中建立 <code>source/</code> 与 <code>assets/</code>。</li>
 <li>
-<p>创建 <code>_module.yml</code>，设置模块名称和导航顺序：</p>
+<p>创建 <code>module.yml</code>，设置模块名称和导航顺序：</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-111-1"><a id="__codelineno-111-1" name="__codelineno-111-1" href="#__codelineno-111-1"></a><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Hot 100</span>
 </span><span id="__span-111-2"><a id="__codelineno-111-2" name="__codelineno-111-2" href="#__codelineno-111-2"></a><span class="nt">order</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">15</span>
 </span><span id="__span-111-3"><a id="__codelineno-111-3" name="__codelineno-111-3" href="#__codelineno-111-3"></a><span class="nt">index_title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">完整题单</span>
 </span></code></pre></div>
 </li>
 <li>
-<p>将这份 Markdown 保存为 <code>content/hot-100/index.md</code>。构建器会扫描 <code>_module.yml</code> 和目录中的所有 <code>.md</code> 文件，自动生成导航，不需要修改 <code>mkdocs.yml</code>。</p>
+<p>将这份 Markdown 保存为 <code>docs/hot-100/source/index.md</code>。构建器会扫描 <code>module.yml</code> 和 <code>source/</code> 中的所有 <code>.md</code> 文件，自动生成导航，不需要修改 <code>mkdocs.yml</code>。</p>
 </li>
-<li>执行 <code>./build.sh</code>。内容先复制到 <code>.build/docs/hot-100/index.md</code>，再由 MkDocs 渲染为 <code>.build/site/hot-100/index.html</code>。</li>
+<li>执行 <code>./build.sh</code>。内容先整理到 <code>.build/prepared/hot-100/index.md</code>，再由 MkDocs 渲染为 <code>.build/site/hot-100/index.html</code>。</li>
 <li>执行 <code>./publish.sh --push</code>，将生成的 HTML 同步到 <code>Lai-JX.github.io</code> 并推送。</li>
 </ol>
 <p>以后在任意已有模块中添加新文件，只需要：</p>
@@ -6914,7 +6914,7 @@
 </span><span id="__span-114-2"><a id="__codelineno-114-2" name="__codelineno-114-2" href="#__codelineno-114-2"></a>./.venv/Scripts/python.exe<span class="w"> </span>scripts/update_hot_100.py
 </span><span id="__span-114-3"><a id="__codelineno-114-3" name="__codelineno-114-3" href="#__codelineno-114-3"></a>./build.sh
 </span></code></pre></div>
-<p>重新生成时会再次扫描 <code>做题完整版.md</code>，自动更新“站内题解”链接。</p>
+<p>重新生成时会再次扫描 <code>docs/algorithms/source/做题完整版.md</code>，自动更新“站内题解”链接。</p>
 
 
 

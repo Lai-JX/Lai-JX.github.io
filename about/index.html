@@ -1222,10 +1222,10 @@
 <p>这个站点用于持续整理算法、AI 与工程实践中的知识。</p>
 <h2 id="_2">内容组织<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>算法题库</strong>：源自 <code>做题/做题完整版.md</code>，构建时按照 <code>study-chapter</code> 标记自动拆分为专题页面。</li>
+<li><strong>算法题库</strong>：源自 <code>docs/algorithms/source/做题完整版.md</code>，构建时按照 <code>study-chapter</code> 标记自动拆分为专题页面。</li>
 <li><strong>Hot 100</strong>：根据力扣公开学习计划整理完整 100 题，并自动链接到算法题库中已有的站内笔记。</li>
 <li><strong>AI 原理</strong>：每篇 Markdown 对应一个独立页面，目前包含 MLA 矩阵吸收算法详解。</li>
-<li><strong>首页与说明页</strong>：位于 <code>site-source/content</code>，用于维护站点级内容。</li>
+<li><strong>首页与说明页</strong>：位于 <code>docs/site/source</code>，全站样式和脚本位于 <code>docs/site/assets</code>。</li>
 </ul>
 <h2 id="_3">构建方式<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <p>网站使用 MkDocs Material 生成。Markdown 源码与发布仓库分离：</p>
@@ -1244,7 +1244,7 @@
 <li>使用 <code>./content.sh add-image</code> 导入图片并取得正确的 Markdown 引用。</li>
 <li>执行 <code>./publish.sh --push</code> 构建并发布。</li>
 </ol>
-<p>模块、页面、多级目录和算法专题都会被自动加入导航，无需修改 <code>mkdocs.yml</code>。算法题库也无需手动拆页；在 <code>做题完整版.md</code> 中新增专题标记后，构建器会自动生成对应专题文件。</p>
+<p>模块、页面、多级目录和算法专题都会被自动加入导航，无需修改 <code>mkdocs.yml</code>。算法题库也无需手动拆页；在 <code>docs/algorithms/source/做题完整版.md</code> 中新增专题标记后，构建器会自动生成对应专题文件。</p>
 
 
 
