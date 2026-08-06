@@ -1224,7 +1224,7 @@
   <a href="#problem-3sum" class="md-nav__link">
     <span class="md-ellipsis">
       
-        第15题. 三数之和
+        15. 三数之和
       
     </span>
   </a>
@@ -2567,7 +2567,7 @@
 <h1 id="leetcode-100">LeetCode 热题 100<a class="headerlink" href="#leetcode-100" title="Permanent link">&para;</a></h1>
 <blockquote>
 <p>数据来源：<a href="https://leetcode.cn/studyplan/top-100-liked/">力扣 LeetCode 热题 100 学习计划</a>。
-本地整理日期：2026-08-06；题单后续如有调整，以力扣页面为准。</p>
+本地整理日期：2026-08-07；题单后续如有调整，以力扣页面为准。</p>
 </blockquote>
 <p>这份页面按官方学习计划的分类顺序整理 100 道题，并为每道题提供快速复习、详细题解和 Python 实现。题目名称链接到力扣原题；“原专题”列会链接到 <code>做题完整版.md</code> 已有的站内题解。</p>
 <h2 id="_1">题单概览<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
@@ -2620,11 +2620,10 @@
 </div>
 <h4 id="_2">快速复习<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h4>
 <ol>
-<li>两数之和 - 力扣（LeetCode） 问题的关键在于将已经遍历过的数据及其下标存放起来（dict），后续只需查看target-val的值是否在记录中，是则可以直接获取下标 3.5 四数之和II</li>
+<li>两数之和 - 力扣（LeetCode） 问题的关键在于将已经遍历过的数据及其下标存放起来（dict），后续只需查看target-val的值是否在记录中，是则可以直接获取下标</li>
 </ol>
 <h4 id="_3">详细题解<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h4>
 <p>问题的关键在于将已经遍历过的数据及其下标存放起来（dict），后续只需查看target-val的值是否在记录中，是则可以直接获取下标</p>
-<p><strong>3.5 四数之和</strong>II****</p>
 <h4 id="python">Python 实现<a class="headerlink" href="#python" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">twoSum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">target</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
@@ -2644,7 +2643,6 @@
 <h4 id="_4">快速复习<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h4>
 <p>把排序后的字符串或 26 维频次数组作为哈希键。</p>
 <h4 id="_5">详细题解<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
-<p><strong>3.2 </strong>两个数组的交集****</p>
 <blockquote>
 <p><strong>补充思路：</strong> 用哈希结构把重复扫描变成常数时间查询，重点选择 set、dict 或计数数组。</p>
 </blockquote>
@@ -2771,7 +2769,7 @@
 </span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>        <span class="k">return</span> <span class="n">answer</span>
 </span></code></pre></div>
 <hr />
-<h3 id="problem-3sum">第15题. 三数之和<a class="headerlink" href="#problem-3sum" title="Permanent link">&para;</a></h3>
+<h3 id="problem-3sum">15. 三数之和<a class="headerlink" href="#problem-3sum" title="Permanent link">&para;</a></h3>
 <p><a href="../algorithms/chapter-3/#problem-3sum">返回原专题题解 · 哈希表</a></p>
 <div class="study-card-meta">
 <p><span class="difficulty difficulty--unknown">Unknown</span>
@@ -3034,7 +3032,6 @@
 <li>push(value)：如果push的元素value大于<strong>入</strong>口元素的数值，那么就将队列入口的元素弹出，直到push元素的数值小于等于队列入口元素的数值为止</li>
 <li>pop(value)：如果窗口移除的元素value等于单调队列的<strong>出</strong>口元素，那么队列弹出元素，否则不用任何操作</li>
 </ol>
-<p><strong>5.7 </strong>前 K 个高频元素****</p>
 <h4 id="python_10">Python 实现<a class="headerlink" href="#python_10" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">deque</span>
 </span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -4221,11 +4218,10 @@
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
 <h4 id="_76">快速复习<a class="headerlink" href="#_76" title="Permanent link">&para;</a></h4>
-<p>本质是遍历节点，采用之前任意一种遍历方式均可以，”处理节点“在这里指的交换左右孩子；同时在遍历时需注意左右孩子位置的变化，避免重复遍历一边 6.3 对称二叉树</p>
+<p>本质是遍历节点，采用之前任意一种遍历方式均可以，”处理节点“在这里指的交换左右孩子；同时在遍历时需注意左右孩子位置的变化，避免重复遍历一边</p>
 <h4 id="_77">详细题解<a class="headerlink" href="#_77" title="Permanent link">&para;</a></h4>
 <p>本质是遍历节点，采用之前任意一种遍历方式均可以，”处理节点“在这里指的交换左右孩子。</p>
 <p>同时在遍历时需注意左右孩子位置的变化，避免重复遍历一边</p>
-<p><strong>6.3 对称二叉树</strong></p>
 <h4 id="python_37">Python 实现<a class="headerlink" href="#python_37" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="c1"># Definition for a binary tree node.</span>
 </span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a><span class="c1"># class TreeNode:</span>
@@ -4251,10 +4247,9 @@
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
 <h4 id="_78">快速复习<a class="headerlink" href="#_78" title="Permanent link">&para;</a></h4>
-<p>关键在于node1.left和node2.right比，node1.right和node2.left比 6.4 平衡二叉树</p>
+<p>关键在于node1.left和node2.right比，node1.right和node2.left比</p>
 <h4 id="_79">详细题解<a class="headerlink" href="#_79" title="Permanent link">&para;</a></h4>
 <p>关键在于node1.left和node2.right比，node1.right和node2.left比</p>
-<p><strong>6.4 </strong>平衡二叉树****</p>
 <h4 id="python_38">Python 实现<a class="headerlink" href="#python_38" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
 </span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">isSymmetric</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="n">TreeNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
@@ -4972,13 +4967,9 @@
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
 <h4 id="_114">快速复习<a class="headerlink" href="#_114" title="Permanent link">&para;</a></h4>
-<p>和之前类似，只不过for循环的列表是变化的 7.2 分割 1. 分割回文串</p>
+<p>和之前类似，只不过for循环的列表是变化的</p>
 <h4 id="_115">详细题解<a class="headerlink" href="#_115" title="Permanent link">&para;</a></h4>
 <p>和之前类似，只不过for循环的列表是变化的</p>
-<p><strong>7.2 分割</strong></p>
-<ol>
-<li><strong>分割回文串</strong></li>
-</ol>
 <blockquote>
 <p><strong>补充思路：</strong> 把问题画成决策树：for 循环横向枚举选择，递归纵向进入下一层，返回后撤销选择。</p>
 </blockquote>
@@ -5355,37 +5346,6 @@
 <ul>
 <li>在判定左边是否有序时用的是≤，这样才能保证else分支中一定是右边有序。否则当left=mid时会有问题。如数组为[3,1]</li>
 </ul>
-<p><strong>1.2 </strong>移除元素****</p>
-<p>关键在于理解<strong>快慢指针</strong></p>
-<ul>
-<li>快指针：用于遍历数组</li>
-<li>慢指针：指向更新 新数组下标的位置。</li>
-<li>tip<ul>
-<li>慢指针只有在赋值给新数组时（<code>nums[fase_index]!=target</code>），才自增</li>
-<li>而当<code>nums[fase_index]==target</code> ，只有快指针自增，表示跳过目标元素</li>
-</ul>
-</li>
-</ul>
-<p class="missing-asset">原笔记中的配图未随 Markdown 源文件保存。</p>
-
-<p><strong><em>*1.3 有序数组的平方</em></strong>*</p>
-<p>这种题目关键在于数组中存在负数，其平方之后可能更大。可采用<strong>双指针</strong>，从数组两端向中间遍历，因为大的值出现在数组两端</p>
-<p><strong><em>*1.4 长度最小的子数组</em></strong>*</p>
-<p>同样可以采用双指针的方法（这里有个更形象的名称叫“<strong>滑动窗口</strong>”）</p>
-<ul>
-<li>终止窗口位置（外层while）：扩大窗口，直至满足要求。（类似于快指针，用于遍历数组）</li>
-<li>起始窗口位置（内层while）：缩小窗口，直至无法满足长度要求</li>
-</ul>
-<p><strong>1.5 螺旋矩阵II</strong></p>
-<p>关键在于处理好循环（n//2次）、<strong>衔接（左闭右开）</strong>、求好offset（初始offset为1）、考虑奇数层的情况</p>
-<ul>
-<li>循环<ul>
-<li>每次循环开始前把startx和starty赋值给i,j</li>
-<li>依据i和j进行赋值</li>
-<li>每次循环末尾更新startx和starty，以及offset</li>
-</ul>
-</li>
-</ul>
 <h4 id="python_65">Python 实现<a class="headerlink" href="#python_65" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-70-1"><a id="__codelineno-70-1" name="__codelineno-70-1" href="#__codelineno-70-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
 </span><span id="__span-70-2"><a id="__codelineno-70-2" name="__codelineno-70-2" href="#__codelineno-70-2"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
@@ -5524,7 +5484,7 @@
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
 <h4 id="_138">快速复习<a class="headerlink" href="#_138" title="Permanent link">&para;</a></h4>
-<p>可以用一个dict辅助实现 5.4 删除字符串中的所有相邻重复项</p>
+<p>可以用一个dict辅助实现</p>
 <h4 id="_139">详细题解<a class="headerlink" href="#_139" title="Permanent link">&para;</a></h4>
 <p>可以用一个dict辅助实现</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-73-1"><a id="__codelineno-73-1" name="__codelineno-73-1" href="#__codelineno-73-1"></a><span class="n">s_map</span> <span class="o">=</span> <span class="p">{</span>
@@ -5535,7 +5495,6 @@
 </span><span id="__span-73-6"><a id="__codelineno-73-6" name="__codelineno-73-6" href="#__codelineno-73-6"></a><span class="n">keys</span> <span class="o">=</span> <span class="n">s_map</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
 </span><span id="__span-73-7"><a id="__codelineno-73-7" name="__codelineno-73-7" href="#__codelineno-73-7"></a><span class="n">vals</span> <span class="o">=</span> <span class="n">s_map</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
 </span></code></pre></div>
-<p><strong>5.4 </strong>删除字符串中的所有相邻重复项****</p>
 <blockquote>
 <p><strong>补充思路：</strong> 利用栈的后进先出或队列的先进先出维护尚未解决的元素；需要极值时考虑单调结构或堆。</p>
 </blockquote>
@@ -6339,10 +6298,6 @@
 <p>dp[i] : 字符串长度为i的话，dp[i]为true，表示可以拆分为一个或多个在字典中出现的单词；9.3 打家劫舍 1. 打家劫舍</p>
 <h4 id="_173">详细题解<a class="headerlink" href="#_173" title="Permanent link">&para;</a></h4>
 <p><strong>dp[i] : 字符串长度为i的话，dp[i]为true，表示可以拆分为一个或多个在字典中出现的单词</strong>。</p>
-<p><strong>9.3 打家劫舍</strong></p>
-<ol>
-<li><strong>打家劫舍</strong></li>
-</ol>
 <h4 id="python_85">Python 实现<a class="headerlink" href="#python_85" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-93-1"><a id="__codelineno-93-1" name="__codelineno-93-1" href="#__codelineno-93-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
 </span><span id="__span-93-2"><a id="__codelineno-93-2" name="__codelineno-93-2" href="#__codelineno-93-2"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">wordBreak</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">wordDict</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
