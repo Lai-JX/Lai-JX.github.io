@@ -649,7 +649,7 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#41" class="md-nav__link">
+  <a href="#section-4-1" class="md-nav__link">
     <span class="md-ellipsis">
       
         4.1 反转字符串
@@ -677,7 +677,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#42-ii" class="md-nav__link">
+  <a href="#section-4-2" class="md-nav__link">
     <span class="md-ellipsis">
       
         4.2 反转字符串II
@@ -705,7 +705,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#43" class="md-nav__link">
+  <a href="#section-4-3" class="md-nav__link">
     <span class="md-ellipsis">
       
         4.3 不使用额外空间进行字符串修改
@@ -755,7 +755,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#44-kmp" class="md-nav__link">
+  <a href="#section-4-4" class="md-nav__link">
     <span class="md-ellipsis">
       
         4.4 KMP
@@ -783,7 +783,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#45" class="md-nav__link">
+  <a href="#section-4-5" class="md-nav__link">
     <span class="md-ellipsis">
       
         4.5 重复的子字符串
@@ -1335,7 +1335,7 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#41" class="md-nav__link">
+  <a href="#section-4-1" class="md-nav__link">
     <span class="md-ellipsis">
       
         4.1 反转字符串
@@ -1363,7 +1363,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#42-ii" class="md-nav__link">
+  <a href="#section-4-2" class="md-nav__link">
     <span class="md-ellipsis">
       
         4.2 反转字符串II
@@ -1391,7 +1391,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#43" class="md-nav__link">
+  <a href="#section-4-3" class="md-nav__link">
     <span class="md-ellipsis">
       
         4.3 不使用额外空间进行字符串修改
@@ -1441,7 +1441,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#44-kmp" class="md-nav__link">
+  <a href="#section-4-4" class="md-nav__link">
     <span class="md-ellipsis">
       
         4.4 KMP
@@ -1469,7 +1469,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#45" class="md-nav__link">
+  <a href="#section-4-5" class="md-nav__link">
     <span class="md-ellipsis">
       
         4.5 重复的子字符串
@@ -1515,7 +1515,7 @@
 
 <h1 id="_1">字符串<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
 <p>5（8）/8</p>
-<h2 id="41">4.1 反转字符串<a class="headerlink" href="#41" title="Permanent link">&para;</a></h2>
+<h2 id="section-4-1">4.1 反转字符串<a class="headerlink" href="#section-4-1" title="Permanent link">&para;</a></h2>
 <p>采用双指针：<code>s[i], s[s_len-i-1] = s[s_len-i-1], s[i]</code></p>
 <h3 id="problem-reverse-string">344. 反转字符串<a class="headerlink" href="#problem-reverse-string" title="Permanent link">&para;</a></h3>
 <div class="study-card-meta">
@@ -1537,7 +1537,7 @@
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        <span class="n">s</span><span class="p">[:]</span> <span class="o">=</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 </span></code></pre></div>
-<h2 id="42-ii">4.2 反转字符串II<a class="headerlink" href="#42-ii" title="Permanent link">&para;</a></h2>
+<h2 id="section-4-2">4.2 反转字符串II<a class="headerlink" href="#section-4-2" title="Permanent link">&para;</a></h2>
 <p>同样很简单，但需要注意的是<strong>字符串是不可变对象（immutable），不能通过切片赋值进行原地修改</strong></p>
 <h3 id="problem-reverse-string-ii">541. 反转字符串 II<a class="headerlink" href="#problem-reverse-string-ii" title="Permanent link">&para;</a></h3>
 <div class="study-card-meta">
@@ -1563,7 +1563,7 @@
 </span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>            <span class="n">p</span> <span class="o">=</span> <span class="n">p</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">k</span>
 </span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>        <span class="k">return</span> <span class="n">s</span>
 </span></code></pre></div>
-<h2 id="43">4.3 不使用额外空间进行字符串修改<a class="headerlink" href="#43" title="Permanent link">&para;</a></h2>
+<h2 id="section-4-3">4.3 不使用额外空间进行字符串修改<a class="headerlink" href="#section-4-3" title="Permanent link">&para;</a></h2>
 <p>由于python无法修改String，故这里不过多考虑</p>
 <ul>
 <li>替换数字</li>
@@ -1626,7 +1626,7 @@
 </span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">-</span><span class="n">k</span><span class="p">:]</span> <span class="o">+</span> <span class="n">s</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">-</span><span class="n">k</span><span class="p">]</span>
 </span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 </span></code></pre></div>
-<h2 id="44-kmp">4.4 KMP<a class="headerlink" href="#44-kmp" title="Permanent link">&para;</a></h2>
+<h2 id="section-4-4">4.4 KMP<a class="headerlink" href="#section-4-4" title="Permanent link">&para;</a></h2>
 <p>关键在于求最长相等前后缀，保证每次匹配失败时，子串不会退到最开始的位置。同时主串永远只向前移动</p>
 <p>视频讲解：<a href="https://www.bilibili.com/video/BV1AY4y157yL">https://www.bilibili.com/video/BV1AY4y157yL</a></p>
 <p>这道题看上述视频会比较清晰，同时必须自己写一遍！！！</p>
@@ -1653,7 +1653,7 @@
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">strStr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">haystack</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">needle</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>        <span class="k">return</span> <span class="n">haystack</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">needle</span><span class="p">)</span>
 </span></code></pre></div>
-<h2 id="45">4.5 重复的子字符串<a class="headerlink" href="#45" title="Permanent link">&para;</a></h2>
+<h2 id="section-4-5">4.5 重复的子字符串<a class="headerlink" href="#section-4-5" title="Permanent link">&para;</a></h2>
 <p>充分条件：如果字符串s是由重复子串组成，那么 最长相等前后缀不包含的子串 一定是 s的最小重复子串。</p>
 <p>必要条件：如果字符串s的最长相等前后缀不包含的子串 是 s最小重复子串，那么 s是由重复子串组成。</p>
 <p>在必要条件，这个是 显而易见的，都已经假设 最长相等前后缀不包含的子串 是 s的最小重复子串了，那s必然是重复子串。</p>
