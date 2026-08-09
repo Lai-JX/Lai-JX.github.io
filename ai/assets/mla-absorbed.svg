@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1960" viewBox="0 0 1440 1960" role="img" aria-labelledby="title desc">
+  <title id="title">吸收式 MLA 的正确计算流程与张量并行</title>
+  <desc id="desc">展示 Query 先经过下投影、归一化、上投影，再拆分为 NoPE 和 RoPE 分支；KV latent 与位置 key 分别缓存；两路分数合并后在 latent 空间聚合，再经过 Value 上投影、输出投影和张量并行归并。</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .band { fill: #ffffff; stroke: #dbe4ef; stroke-width: 2; }
+      .node { fill: #ffffff; stroke: #64748b; stroke-width: 2.5; }
+      .proj { fill: #eaf2ff; stroke: #3b6fb6; stroke-width: 2.5; }
+      .tp { fill: #f3edff; stroke: #7656b5; stroke-width: 2.5; stroke-dasharray: 8 6; }
+      .cache { fill: #e7f7ec; stroke: #3d8b5b; stroke-width: 2.5; }
+      .rope { fill: #fff5dc; stroke: #b7791f; stroke-width: 2.5; }
+      .compute { fill: #fff0e8; stroke: #c65d2e; stroke-width: 2.5; }
+      .result { fill: #e8f4ff; stroke: #1d6fa5; stroke-width: 3; }
+      .arrow { fill: none; stroke: #475569; stroke-width: 2.5; marker-end: url(#arrow); }
+      .arrow-soft { fill: none; stroke: #64748b; stroke-width: 2; marker-end: url(#arrow); }
+      .title { font-family: "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; font-size: 34px; font-weight: 700; fill: #0f172a; }
+      .subtitle { font-family: "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; font-size: 18px; fill: #475569; }
+      .section { font-family: "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; font-size: 21px; font-weight: 700; fill: #334155; }
+      .label { font-family: "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; font-size: 18px; font-weight: 600; fill: #172033; text-anchor: middle; }
+      .shape { font-family: Consolas, "SFMono-Regular", monospace; font-size: 15px; fill: #475569; text-anchor: middle; }
+      .small { font-family: "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; font-size: 15px; fill: #64748b; }
+      .legend { font-family: "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; font-size: 15px; fill: #334155; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1440" height="1850"/>
+  <text class="title" x="720" y="48" text-anchor="middle">吸收式 MLA：正确计算流程与张量并行</text>
+  <text class="subtitle" x="720" y="80" text-anchor="middle">行向量约定 · 特征位于最后一维 · Hₚ = H / TP</text>
+
+  <!-- projection band -->
+  <rect class="band" x="30" y="105" width="1380" height="740" rx="22"/>
+  <text class="section" x="55" y="140">① 投影、拆分与 Cache 更新</text>
+
+  <!-- hidden states -->
+  <rect class="result" x="565" y="155" width="310" height="72" rx="16"/>
+  <text class="label" x="720" y="184">hidden_states</text>
+  <text class="shape" x="720" y="209">[B, S, d]</text>
+
+  <!-- query path -->
+  <text class="section" x="95" y="185">Query 路径</text>
+  <rect class="proj" x="90" y="250" width="270" height="72" rx="14"/>
+  <text class="label" x="225" y="279">q_a_proj · 下投影</text>
+  <text class="shape" x="225" y="304">[B,S,d] → [B,S,r_q]</text>
+
+  <rect class="node" x="90" y="350" width="270" height="68" rx="14"/>
+  <text class="label" x="225" y="378">RMSNorm</text>
+  <text class="shape" x="225" y="402">[B,S,r_q]</text>
+
+  <rect class="tp" x="90" y="446" width="270" height="76" rx="14"/>
+  <text class="label" x="225" y="475">q_b_proj · 上投影</text>
+  <text class="shape" x="225" y="500">[B,S,Hₚ(d_c+d_R)]</text>
+
+  <rect class="node" x="90" y="550" width="270" height="76" rx="14"/>
+  <text class="label" x="225" y="579">reshape → split</text>
+  <text class="shape" x="225" y="604">[...,Hₚ,d_c+d_R]</text>
+
+  <rect class="node" x="45" y="665" width="245" height="74" rx="14"/>
+  <text class="label" x="167.5" y="694">q_nope</text>
+  <text class="shape" x="167.5" y="719">[B,S,Hₚ,d_c]</text>
+
+  <rect class="rope" x="335" y="665" width="245" height="74" rx="14"/>
+  <text class="label" x="457.5" y="694">RoPE(q_rope)</text>
+  <text class="shape" x="457.5" y="719">[B,S,Hₚ,d_R]</text>
+
+  <rect class="tp" x="45" y="750" width="245" height="86" rx="14"/>
+  <text class="label" x="167.5" y="778">× (W_K_up)ᵀ</text>
+  <text class="shape" x="167.5" y="802">W: [Hₚ,d_c,r]</text>
+  <text class="shape" x="167.5" y="824">q_abs: [B,S,Hₚ,r]</text>
+
+  <!-- KV path -->
+  <text class="section" x="980" y="185">KV / Cache 路径</text>
+  <rect class="proj" x="1020" y="250" width="300" height="72" rx="14"/>
+  <text class="label" x="1170" y="279">kv_a_proj · 联合下投影</text>
+  <text class="shape" x="1170" y="304">[B,S,d] → [B,S,r+d_R]</text>
+
+  <rect class="node" x="1020" y="350" width="300" height="68" rx="14"/>
+  <text class="label" x="1170" y="378">split(kv_c, k_pe)</text>
+  <text class="shape" x="1170" y="402">r + d_R</text>
+
+  <rect class="node" x="745" y="460" width="250" height="74" rx="14"/>
+  <text class="label" x="870" y="489">RMSNorm(kv_c)</text>
+  <text class="shape" x="870" y="514">[B,S,r]</text>
+
+  <rect class="rope" x="1080" y="460" width="250" height="74" rx="14"/>
+  <text class="label" x="1205" y="489">RoPE(k_pe)</text>
+  <text class="shape" x="1205" y="514">[B,S,d_R]</text>
+
+  <rect class="cache" x="665" y="575" width="240" height="72" rx="14"/>
+  <text class="label" x="785" y="604">cached_kv</text>
+  <text class="shape" x="785" y="629">[B,T−S,r]</text>
+
+  <rect class="cache" x="1110" y="575" width="260" height="72" rx="14"/>
+  <text class="label" x="1240" y="604">cached_k_pe</text>
+  <text class="shape" x="1240" y="629">[B,T−S,d_R]</text>
+
+  <rect class="cache" x="745" y="690" width="280" height="82" rx="14"/>
+  <text class="label" x="885" y="719">C = concat(cache, kv_c)</text>
+  <text class="shape" x="885" y="746">[B,T,r] · 无 head 维</text>
+
+  <rect class="cache" x="1080" y="690" width="290" height="82" rx="14"/>
+  <text class="label" x="1225" y="719">K_pe = concat(cache, k_pe)</text>
+  <text class="shape" x="1225" y="746">[B,T,d_R] · 无 head 维</text>
+
+  <!-- projection arrows -->
+  <path class="arrow" d="M 630 227 C 520 245, 425 260, 360 280"/>
+  <path class="arrow" d="M 810 227 C 930 245, 970 260, 1020 282"/>
+  <path class="arrow" d="M 225 322 L 225 350"/>
+  <path class="arrow" d="M 225 418 L 225 446"/>
+  <path class="arrow" d="M 225 522 L 225 550"/>
+  <path class="arrow" d="M 185 626 C 165 640, 165 650, 167 665"/>
+  <path class="arrow" d="M 265 626 C 350 638, 420 647, 455 665"/>
+  <path class="arrow" d="M 167 739 L 167 750"/>
+  <path class="arrow" d="M 1170 322 L 1170 350"/>
+  <path class="arrow" d="M 1100 418 C 1000 430, 930 440, 870 460"/>
+  <path class="arrow" d="M 1235 418 C 1235 430, 1225 442, 1210 460"/>
+  <path class="arrow" d="M 870 534 C 865 590, 865 640, 885 690"/>
+  <path class="arrow" d="M 785 647 C 790 668, 820 680, 850 690"/>
+  <path class="arrow" d="M 1205 534 C 1205 590, 1215 640, 1225 690"/>
+  <path class="arrow" d="M 1240 647 L 1235 690"/>
+
+  <!-- attention band -->
+  <rect class="band" x="30" y="850" width="1380" height="385" rx="22"/>
+  <text class="section" x="55" y="887">② 两路注意力得分与 latent 聚合</text>
+
+  <rect class="compute" x="305" y="905" width="400" height="100" rx="15"/>
+  <text class="label" x="505" y="934">content score</text>
+  <text class="shape" x="505" y="962">[B,Hₚ,S,r] @ [B,1,r,T]</text>
+  <text class="shape" x="505" y="986">→ [B,Hₚ,S,T]</text>
+
+  <rect class="compute" x="735" y="905" width="400" height="100" rx="15"/>
+  <text class="label" x="935" y="934">position score</text>
+  <text class="shape" x="935" y="962">[B,Hₚ,S,d_R] @ [B,1,d_R,T]</text>
+  <text class="shape" x="935" y="986">→ [B,Hₚ,S,T]</text>
+
+  <rect class="compute" x="515" y="1040" width="410" height="78" rx="15"/>
+  <text class="label" x="720" y="1069">相加 → scale → mask → softmax</text>
+  <text class="shape" x="720" y="1095">A: [B,Hₚ,S,T]</text>
+
+  <rect class="result" x="520" y="1148" width="400" height="72" rx="15"/>
+  <text class="label" x="720" y="1177">latent 聚合：z = A @ C</text>
+  <text class="shape" x="720" y="1202">[B,Hₚ,S,T] @ [B,1,T,r] → [B,Hₚ,S,r]</text>
+
+  <!-- attention arrows -->
+  <path class="arrow" d="M 167 836 C 190 875, 255 900, 330 940"/>
+  <path class="arrow" d="M 885 772 C 820 835, 660 855, 610 905"/>
+  <path class="arrow" d="M 457 739 C 520 800, 750 850, 810 905"/>
+  <path class="arrow" d="M 1225 772 C 1170 830, 1080 860, 1030 905"/>
+  <path class="arrow" d="M 505 1005 C 535 1025, 590 1032, 625 1040"/>
+  <path class="arrow" d="M 935 1005 C 905 1025, 850 1032, 815 1040"/>
+  <path class="arrow" d="M 720 1118 L 720 1148"/>
+  <path class="arrow-soft" d="M 885 772 C 1000 900, 1010 1080, 920 1184"/>
+
+  <!-- output band -->
+  <rect class="band" x="30" y="1260" width="1380" height="625" rx="22"/>
+  <text class="section" x="55" y="1297">③ 只展开当前 Value，并合并 TP 部分输出</text>
+
+  <rect class="tp" x="510" y="1315" width="420" height="100" rx="15"/>
+  <text class="label" x="720" y="1344">permute → V 上投影 · W_V_up</text>
+  <text class="shape" x="720" y="1372">z: [B,Hₚ,S,r] → [B,S,Hₚ,r]</text>
+  <text class="shape" x="720" y="1396">→ [B,S,Hₚ,d_v]</text>
+
+  <rect class="node" x="525" y="1450" width="390" height="76" rx="15"/>
+  <text class="label" x="720" y="1479">拼接本地 heads</text>
+  <text class="shape" x="720" y="1505">[B,S,Hₚ·d_v]</text>
+
+  <rect class="tp" x="510" y="1560" width="420" height="84" rx="15"/>
+  <text class="label" x="720" y="1590">local o_proj · Row Parallel</text>
+  <text class="shape" x="720" y="1618">[B,S,Hₚd_v] @ [Hₚd_v,d] → [B,S,d] partial</text>
+
+  <rect class="node" x="525" y="1680" width="390" height="70" rx="15"/>
+  <text class="label" x="720" y="1709">TP all_reduce</text>
+  <text class="shape" x="720" y="1734">P 个 [B,S,d] 部分和</text>
+
+  <rect class="result" x="525" y="1790" width="390" height="74" rx="16"/>
+  <text class="label" x="720" y="1819">attention output</text>
+  <text class="shape" x="720" y="1845">[B,S,d]</text>
+
+  <path class="arrow" d="M 720 1220 L 720 1315"/>
+  <path class="arrow" d="M 720 1415 L 720 1450"/>
+  <path class="arrow" d="M 720 1526 L 720 1560"/>
+  <path class="arrow" d="M 720 1644 L 720 1680"/>
+  <path class="arrow" d="M 720 1750 L 720 1790"/>
+
+  <!-- notes and legend -->
+  <rect x="70" y="1335" width="365" height="310" rx="16" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <text class="section" x="95" y="1370">关键修正</text>
+  <text class="small" x="95" y="1405">• Query 必须先完成 q_b 上投影，</text>
+  <text class="small" x="112" y="1430">再 reshape / split 为 q_nope、q_rope。</text>
+  <text class="small" x="95" y="1470">• 打分前将 Q 调整为 head-first；</text>
+  <text class="small" x="112" y="1495">C、K_pe 墙加可广播的 head 维。</text>
+  <text class="small" x="95" y="1535">• W_K_up 移到当前 Q 一侧；</text>
+  <text class="small" x="112" y="1560">W_V_up 只展开当前 latent context。</text>
+  <text class="small" x="95" y="1600">• score、softmax、output 按标准语义命名。</text>
+
+  <rect x="1005" y="1335" width="340" height="260" rx="16" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <text class="section" x="1030" y="1370">图例</text>
+  <rect class="proj" x="1030" y="1395" width="52" height="28" rx="6"/>
+  <text class="legend" x="1095" y="1415">普通线性投影</text>
+  <rect class="tp" x="1030" y="1440" width="52" height="28" rx="6"/>
+  <text class="legend" x="1095" y="1460">TP 分片权重/投影</text>
+  <rect class="cache" x="1030" y="1485" width="52" height="28" rx="6"/>
+  <text class="legend" x="1095" y="1505">历史或完整 Cache</text>
+  <rect class="rope" x="1030" y="1530" width="52" height="28" rx="6"/>
+  <text class="legend" x="1095" y="1550">RoPE 位置分支</text>
+
+</svg>

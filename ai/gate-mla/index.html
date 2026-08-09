@@ -15,10 +15,10 @@
         <link rel="canonical" href="https://lai-jx.github.io/ai/gate-mla/">
       
       
-        <link rel="prev" href="../">
+        <link rel="prev" href="../mla-matrix-absorption/">
       
       
-        <link rel="next" href="../mla-matrix-absorption/">
+        <link rel="next" href="../KDA/">
       
       
         
@@ -437,8 +437,6 @@
       
         
       
-        
-      
     
     
     
@@ -829,34 +827,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../algorithms/chapter-13/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    其他
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -952,6 +922,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1007,6 +981,34 @@
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mla-matrix-absorption/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MLA 的矩阵吸收算法：从直觉到公式与伪代码
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
               
             
               
@@ -1507,14 +1509,42 @@
   
   
     <li class="md-nav__item">
-      <a href="../mla-matrix-absorption/" class="md-nav__link">
+      <a href="../KDA/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    MLA 的矩阵吸收算法：从直觉到公式与伪代码
+    Kimi Linear：从 Attention 到 KDA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reading-list/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    好文收藏
   
 
     
@@ -2144,7 +2174,7 @@ y_t=\widetilde o_t^{\,gated}W^O.
 <hr />
 <h2 id="3-gate">3. Gate 具体加在哪里<a class="headerlink" href="#3-gate" title="Permanent link">&para;</a></h2>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>                         ┌─&gt; gate = sigmoid(x_t @ W_G) ───────────┐
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>当前输入 x_t ────────────┤                                        │
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>当前输入 x_t ────────────┤                                         │
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>                         └─&gt; Q/K/V → softmax attention ─&gt; o_tilde ├─&gt; 按通道相乘
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>                                                                  │
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>                                                                  ▼
@@ -2179,7 +2209,7 @@ P_t=\operatorname{Softmax}
 <h2 id="4-gate">4. Gate 控制的是什么<a class="headerlink" href="#4-gate" title="Permanent link">&para;</a></h2>
 <p>假设某个 token 的部分 gate 为：</p>
 <div class="arithmatex">\[
-g_t=egin{bmatrix}
+g_t=\begin{bmatrix}
 0.02&amp;0.95&amp;0.60&amp;0.01&amp;\cdots
 \end{bmatrix}.
 \]</div>
@@ -2227,6 +2257,8 @@ y_t=
 <li>output gate 决定<strong>读出的哪些通道进入后续网络</strong>。</li>
 </ul>
 <h3 id="53-attention-sink">5.3 与 attention sink 的关系<a class="headerlink" href="#53-attention-sink" title="Permanent link">&para;</a></h3>
+<p><strong>Attention sink（注意力汇）</strong>是指某些位置长期吸收较大的注意力概率，最常见的是序列开头的 BOS 或前几个 token。即使这些 token 的内容与当前预测关系不大，一些注意力头仍可能持续关注它们。</p>
+<p>一种直观理解是：softmax 要求每个 query 的注意力概率之和为 1。当某个注意力头没有特别需要读取的位置时，它也不能把全部概率都设为 0，于是可能把暂时“用不上的”概率集中到少数固定位置。这些位置就像注意力概率的汇点。较大的注意力权重因此不一定表示模型真正使用了该 token 的语义信息。</p>
 <p>《Gated Attention for Large Language Models》对多种 gated softmax-attention 结构进行了系统实验，发现 SDPA 后的 sigmoid gate 能改善训练稳定性和长上下文外推，并缓解 attention sink。该工作将收益主要归因于非线性和 query-dependent sparse gating。</p>
 <p>需要区分两件事：</p>
 <ul>
@@ -2718,6 +2750,9 @@ O(dm),
 
 
 
+
+  
+  
 
 
 

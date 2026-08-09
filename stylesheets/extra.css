@@ -112,7 +112,8 @@
   margin: -0.25rem 0 0.8rem;
 }
 
-.difficulty {
+.difficulty,
+.problem-type {
   display: inline-flex;
   align-items: center;
   min-height: 1.55rem;
@@ -141,6 +142,18 @@
 .difficulty--unknown {
   color: var(--md-default-fg-color--light);
   background: var(--md-code-bg-color);
+}
+
+.problem-type {
+  color: #6d28d9;
+  background: rgba(124, 58, 237, 0.13);
+  border: 1px solid rgba(124, 58, 237, 0.22);
+}
+
+[data-md-color-scheme="slate"] .problem-type {
+  color: #c4b5fd;
+  background: rgba(139, 92, 246, 0.18);
+  border-color: rgba(196, 181, 253, 0.28);
 }
 
 .study-card-meta .md-button {

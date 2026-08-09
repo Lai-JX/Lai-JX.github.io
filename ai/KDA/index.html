@@ -1,0 +1,2882 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="算法复习、AI 原理与持续整理的技术笔记">
+      
+      
+        <meta name="author" content="LJX">
+      
+      
+        <link rel="canonical" href="https://lai-jx.github.io/ai/KDA/">
+      
+      
+        <link rel="prev" href="../gate-mla/">
+      
+      
+        <link rel="next" href="../reading-list/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Kimi Linear：从 Attention 到 KDA - LJX 知识库</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#attention-kimi-linear" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="LJX 知识库" class="md-header__button md-logo" aria-label="LJX 知识库" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19.07 14.88 2.05 2.05L15.06 23H13v-2.06zm1.97-1.75c.14 0 .27.06.38.17l1.28 1.28c.22.21.22.56 0 .77l-1 1-2.05-2.05 1-1c.11-.11.25-.17.39-.17M17 4v6l-2-2-2 2V4H9v16h2v2H7c-1.05 0-2-.95-2-2v-1H3v-2h2v-4H3v-2h2V7H3V5h2V4a2 2 0 0 1 2-2h12c1.05 0 2 .95 2 2v6l-2 2V4zM5 5v2h2V5zm0 6v2h2v-2zm0 6v2h2v-2z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LJX 知识库
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Kimi Linear：从 Attention 到 KDA
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange"  aria-label="切换至深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换至深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="orange"  aria-label="切换至浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换至浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Lai-JX/Lai-JX.github.io" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Lai-JX/Lai-JX.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../algorithms/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  算法题库
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../hot-100/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Hot 100
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  AI 原理
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="LJX 知识库" class="md-nav__button md-logo" aria-label="LJX 知识库" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19.07 14.88 2.05 2.05L15.06 23H13v-2.06zm1.97-1.75c.14 0 .27.06.38.17l1.28 1.28c.22.21.22.56 0 .77l-1 1-2.05-2.05 1-1c.11-.11.25-.17.39-.17M17 4v6l-2-2-2 2V4H9v16h2v2H7c-1.05 0-2-.95-2-2v-1H3v-2h2v-4H3v-2h2V7H3V5h2V4a2 2 0 0 1 2-2h12c1.05 0 2 .95 2 2v6l-2 2V4zM5 5v2h2V5zm0 6v2h2v-2zm0 6v2h2v-2z"/></svg>
+
+    </a>
+    LJX 知识库
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Lai-JX/Lai-JX.github.io" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Lai-JX/Lai-JX.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../algorithms/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    算法题库
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    算法题库
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数组
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    链表
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    哈希表
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    字符串
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    栈与队列
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    二叉树
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    回溯算法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    贪心算法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    动态规划
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    单调栈
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    图论
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hot 100
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../hot-100/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hot 100
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Hot 100
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI 原理
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    AI 原理
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mla-matrix-absorption/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MLA 的矩阵吸收算法：从直觉到公式与伪代码
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gate-mla/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kimi K3 的 Gated MLA：从公式、维度到矩阵吸收
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kimi Linear：从 Attention 到 KDA
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kimi Linear：从 Attention 到 KDA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 先从普通 Attention 讲起
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 先从普通 Attention 讲起">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-qkv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Q、K、V 到底在做什么
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 手算一次简化的 Attention
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 普通 Attention 为什么效果好
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 代价为什么会随上下文快速增长
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-linear-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Linear Attention：能否不再回看全部历史
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Linear Attention：能否不再回看全部历史">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 从矩阵乘法结合律看核心思路
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-softmax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Softmax 阻断结合律：引入可分解核函数
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-linear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 它为什么叫 Linear
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 固定大小状态带来了什么问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-delta-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Delta Rule：不要只追加，要先纠错再写入
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Delta Rule：不要只追加，要先纠错再写入">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 用“住址变更”理解普通线性写入的问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-delta-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Delta Rule 的更新公式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 一个极简数值例子
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-gated-deltanet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Gated DeltaNet：有些记忆需要主动遗忘
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-kimi-delta-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Kimi Delta Attention：把遗忘控制做得更细
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Kimi Delta Attention：把遗忘控制做得更细">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-head-wise-gate-channel-wise-gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 从 head-wise gate 到 channel-wise gate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-dplr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 为什么会出现 DPLR
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-kda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 KDA 层还包含什么
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-kimi-linear-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 为什么 Kimi Linear 仍然保留全局 Attention
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 为什么 Kimi Linear 仍然保留全局 Attention">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-linear-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Linear state 是有损压缩
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 3:1 的混合方案
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-prefill-decode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 从 Prefill 和 Decode 看实际收益
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 从 Prefill 和 Decode 看实际收益">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-prefill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 Prefill：递归公式不能直接串行跑
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-decode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Decode：只带着状态向前走
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-kimi-linear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 Kimi Linear 的缓存到底是什么
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-checkpoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 官方开源 checkpoint 的整体配置
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 性能数字应该怎样理解
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 常见误解
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. 常见误解">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kimi-linear-softmax-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误解一：Kimi Linear 就是把 softmax Attention 换个近似公式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linear-on" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误解二：Linear 表示整个模型都是 \(O(N)\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1m-context-1m-token" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误解三：支持 1M context 就表示能无损记住 1M token
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-kda-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误解四：6 倍来自单个 KDA 算子快 6 倍
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#moe-kimi-linear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误解五：MoE 是 Kimi Linear 能处理长上下文的原因
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 一句话总结每一步
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考资料
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reading-list/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    好文收藏
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 先从普通 Attention 讲起
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 先从普通 Attention 讲起">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-qkv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Q、K、V 到底在做什么
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 手算一次简化的 Attention
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 普通 Attention 为什么效果好
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 代价为什么会随上下文快速增长
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-linear-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Linear Attention：能否不再回看全部历史
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Linear Attention：能否不再回看全部历史">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 从矩阵乘法结合律看核心思路
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-softmax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Softmax 阻断结合律：引入可分解核函数
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-linear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 它为什么叫 Linear
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 固定大小状态带来了什么问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-delta-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Delta Rule：不要只追加，要先纠错再写入
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Delta Rule：不要只追加，要先纠错再写入">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 用“住址变更”理解普通线性写入的问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-delta-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Delta Rule 的更新公式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 一个极简数值例子
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-gated-deltanet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Gated DeltaNet：有些记忆需要主动遗忘
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-kimi-delta-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Kimi Delta Attention：把遗忘控制做得更细
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Kimi Delta Attention：把遗忘控制做得更细">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-head-wise-gate-channel-wise-gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 从 head-wise gate 到 channel-wise gate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-dplr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 为什么会出现 DPLR
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-kda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 KDA 层还包含什么
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-kimi-linear-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 为什么 Kimi Linear 仍然保留全局 Attention
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 为什么 Kimi Linear 仍然保留全局 Attention">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-linear-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Linear state 是有损压缩
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 3:1 的混合方案
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-prefill-decode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 从 Prefill 和 Decode 看实际收益
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 从 Prefill 和 Decode 看实际收益">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-prefill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 Prefill：递归公式不能直接串行跑
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-decode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Decode：只带着状态向前走
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-kimi-linear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 Kimi Linear 的缓存到底是什么
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-checkpoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 官方开源 checkpoint 的整体配置
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 性能数字应该怎样理解
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 常见误解
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. 常见误解">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kimi-linear-softmax-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误解一：Kimi Linear 就是把 softmax Attention 换个近似公式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linear-on" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误解二：Linear 表示整个模型都是 \(O(N)\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1m-context-1m-token" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误解三：支持 1M context 就表示能无损记住 1M token
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-kda-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误解四：6 倍来自单个 KDA 算子快 6 倍
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#moe-kimi-linear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误解五：MoE 是 Kimi Linear 能处理长上下文的原因
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 一句话总结每一步
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考资料
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="attention-kimi-linear">从普通 Attention 到 Kimi Linear：一篇循序渐进的理解指南<a class="headerlink" href="#attention-kimi-linear" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>本文面向了解 Transformer 基础、但对 Linear Attention、DeltaNet 和 KDA 不熟悉的读者。目标不是罗列 Kimi Linear 的结论，而是从普通 Attention 开始，一步步说明它为什么出现、每一步解决了什么问题，以及它为推理系统带来了什么变化。</p>
+<p><strong>全文记号约定：</strong>正文自行书写的公式统一把单个 token 的 <span class="arithmatex">\(q,k\in\mathbb{R}^{1\times d_k}\)</span> 和 <span class="arithmatex">\(v\in\mathbb{R}^{1\times d_v}\)</span> 视为行向量；<span class="arithmatex">\(Q,K,V\)</span> 由它们逐行堆叠。状态统一采用 <span class="arithmatex">\(S\in\mathbb{R}^{d_k\times d_v}\)</span>。因此，相似度写成 <span class="arithmatex">\(qk^\top\)</span>，写入状态写成 <span class="arithmatex">\(k^\top v\)</span>，从状态读取写成 <span class="arithmatex">\(qS\)</span>。引用图片则原样保留原作者的公式和转置位置，不受这一正文约定限制；原图使用列向量或混合记法时，图后会单独说明它与正文的对应关系。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>对象或运算</th>
+<th style="text-align: right;">维度</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(q,k\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(1\times d_k\)</span></td>
+<td>单个 token 的 query、key 行向量</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(v\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(1\times d_v\)</span></td>
+<td>单个 token 的 value 行向量</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(qk^\top\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(1\times1\)</span></td>
+<td>query 与 key 的相似度标量</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(S\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(d_k\times d_v\)</span></td>
+<td>压缩历史的状态矩阵</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(k^\top v\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(d_k\times d_v\)</span></td>
+<td>把一组 key–value 关联写入状态</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(qS\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(1\times d_v\)</span></td>
+<td>用 query 从状态中读取 value</td>
+</tr>
+</tbody>
+</table>
+<p>先记住全文的主线：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>普通 Attention
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  每次查询都回看全部历史，准确但长上下文昂贵
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>        ↓ 用可分解核函数表示或近似 softmax 相似度，再利用结合律
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>Linear Attention
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>  把历史压进固定大小的状态，高效但容易发生记忆覆盖和干扰
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        ↓ 引入“先纠错，再写入”
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>DeltaNet
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>  能定点更新已有记忆，但不擅长快速忘掉大片过时信息
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        ↓ 加入遗忘门
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>Gated DeltaNet
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>  可以整体控制记忆衰减，但一个 head 共用一个衰减率仍然较粗
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>        ↓ 将遗忘门细化到 key channel
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>Kimi Delta Attention（KDA）
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>  更细粒度地管理有限状态，并设计适合 GPU 的分块算法
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>        ↓ 保留少量全局注意力兜底
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>Kimi Linear
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>  约 3 个 KDA 层搭配 1 个全局 MLA 层的混合架构
+</span></code></pre></div>
+<p>如果只看 Kimi Linear 相对 Gated DeltaNet 的直接改动，可以先记住两个亮点：</p>
+<ol>
+<li>KDA 把每个 attention head 共用的单个衰减系数，变成了 <span class="arithmatex">\(d_k\)</span> 个 channel-wise 衰减系数；</li>
+<li>完整模型没有走纯线性路线，而是按约 3:1 混合 KDA 与全局 MLA。</li>
+</ol>
+<p>下面的内容主要是在回答：这两个看似不大的改动，为什么会出现在这里。</p>
+<h2 id="1-attention">1. 先从普通 Attention 讲起<a class="headerlink" href="#1-attention" title="Permanent link">&para;</a></h2>
+<h3 id="11-qkv">1.1 Q、K、V 到底在做什么<a class="headerlink" href="#11-qkv" title="Permanent link">&para;</a></h3>
+<p>假设上下文中有下面几句话：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>小明住在北京。
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>小红住在上海。
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>现在问：小明住在哪里？
+</span></code></pre></div>
+<p>可以把 Attention 想象成查询一叠卡片：</p>
+<ul>
+<li>Query（Q）表示“我现在想找什么”，例如“与小明住址有关的信息”；</li>
+<li>Key（K）表示“每张卡片的索引是什么”，例如“小明—住址”；</li>
+<li>Value（V）表示“卡片里真正保存的内容”，例如“北京”。</li>
+</ul>
+<p>当前 token 的 Query 会和历史 token 的所有 Key 比较。越相关的 Key 获得越大的权重，对应 Value 对输出的贡献也越大。</p>
+<p>对单个 query，Scaled Dot-Product Attention 可以写成：</p>
+<div class="arithmatex">\[
+\operatorname{Attention}(q,K,V)
+=\operatorname{softmax}\left(\frac{qK^\top}{\sqrt d}\right)V
+\]</div>
+<p>它分为三步：</p>
+<ol>
+<li>用 <span class="arithmatex">\(qK^\top\)</span> 计算当前 query 与每个历史 key 的相似度；</li>
+<li>用 softmax 把相似度变成和为 1 的权重；</li>
+<li>按权重对所有历史 value 做加权求和。</li>
+</ol>
+<p>在自回归语言模型中还会使用 causal mask：第 <span class="arithmatex">\(t\)</span> 个 token 只能看到 <span class="arithmatex">\(1\ldots t\)</span>，不能偷看未来。</p>
+<p>需要注意，Q、K、V 并不是模型直接保存的汉字或标签，而是由当前层输入分别乘 <span class="arithmatex">\(W_Q\)</span>、<span class="arithmatex">\(W_K\)</span>、<span class="arithmatex">\(W_V\)</span> 得到的向量。“索引卡片”只是帮助理解这些向量在计算中扮演的角色。</p>
+<h3 id="12-attention">1.2 手算一次简化的 Attention<a class="headerlink" href="#12-attention" title="Permanent link">&para;</a></h3>
+<p>继续使用住址例子。假设 query 与三个历史 key 的相似度为：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>“小明住在北京”  → 2.0
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>“小红住在上海”  → 0.5
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>“今天天气不错”  → 0.0
+</span></code></pre></div>
+<p>经过 softmax 后，权重大约变成：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>[0.74, 0.16, 0.10]
+</span></code></pre></div>
+<p>如果为了演示，把“北京”的 value 写成 <span class="arithmatex">\([1,0]\)</span>，“上海”写成 <span class="arithmatex">\([0,1]\)</span>，无关信息写成 <span class="arithmatex">\([0,0]\)</span>，那么输出是：</p>
+<div class="arithmatex">\[
+0.74[1,0]+0.16[0,1]+0.10[0,0]=[0.74,0.16]
+\]</div>
+<p>结果明显更偏向“北京”。真实模型会同时使用多个 attention head 和数十到数百维的向量，但基本过程仍是“逐个比较历史位置，再按相关性汇总内容”。</p>
+<h3 id="13-attention">1.3 普通 Attention 为什么效果好<a class="headerlink" href="#13-attention" title="Permanent link">&para;</a></h3>
+<p>普通 Attention 保存的是一份相对“原始”的历史：每个历史位置都有自己的 K 和 V。查询时，模型可以重新决定该关注哪几个位置。</p>
+<p>它像档案室：资料虽然越来越多，但原始档案仍然在。只要 query 足够好，模型就有机会精确找到很早以前的一句话。</p>
+<h3 id="14">1.4 代价为什么会随上下文快速增长<a class="headerlink" href="#14" title="Permanent link">&para;</a></h3>
+<p>设序列长度为 <span class="arithmatex">\(N\)</span>：</p>
+<ul>
+<li>Prefill 时需要构造近似 <span class="arithmatex">\(N\times N\)</span> 的注意力关系，计算复杂度随 <span class="arithmatex">\(N^2\)</span> 增长；</li>
+<li>Decode 时，每产生一个新 token，都要让新 query 与前面 <span class="arithmatex">\(N\)</span> 个 key 比较；</li>
+<li>为了避免重复计算，推理服务会保存所有层、所有历史 token 的 K 和 V，也就是 KV Cache；</li>
+<li>上下文越长，单个请求占用的 KV Cache 越大，可并行服务的请求就越少。</li>
+</ul>
+<p>以单层为例，普通多头注意力的 KV Cache 大小近似为：</p>
+<div class="arithmatex">\[
+\text{KV bytes}
+=N\times 2\times H_{kv}\times d_{head}\times \text{bytes_per_element}
+\]</div>
+<p>其中额外的 <span class="arithmatex">\(2\)</span> 代表 K 和 V 两份缓存。完整模型还要再乘注意力层数。</p>
+<p>这解释了一个常见现象：长上下文 Decode 往往不是算力不够，而是显存容量和读取 KV Cache 的内存带宽先成为瓶颈。</p>
+<h2 id="2-linear-attention">2. Linear Attention：能否不再回看全部历史<a class="headerlink" href="#2-linear-attention" title="Permanent link">&para;</a></h2>
+<h3 id="21">2.1 从矩阵乘法结合律看核心思路<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
+<p>先暂时忽略 softmax 和归一化，只看 Attention 的矩阵乘法骨架：</p>
+<div class="arithmatex">\[
+O=(QK^\top)V=Q(K^\top V)
+\]</div>
+<p>两种顺序结果相同，但中间量不同：</p>
+<ul>
+<li><span class="arithmatex">\((QK^\top)V\)</span> 先构造 <span class="arithmatex">\(N\times N\)</span> 的 token 关系矩阵；</li>
+<li><span class="arithmatex">\(Q(K^\top V)\)</span> 先把历史汇总到固定形状的 <span class="arithmatex">\(K^\top V\)</span>，再由 Q 读取。</li>
+</ul>
+<p>这正是 Linear Attention 想利用的计算顺序。</p>
+<p><img alt="从标准 Attention 到相关性计算骨架" src="../assets/attention-computation-skeleton.webp" /></p>
+<p><em>图 1：从标准 Attention 提取相关性计算骨架。来源：知乎用户 <a href="https://www.zhihu.com/question/1967516557811909769/answer/1967989954656305654">kaiyuan 的回答</a>。</em></p>
+<p>但这只是复杂度直觉：标准 Attention 含有 softmax，不能直接这样移动括号。下一节将说明如何通过可分解核函数处理这个限制。</p>
+<h3 id="22-softmax">2.2 Softmax 阻断结合律：引入可分解核函数<a class="headerlink" href="#22-softmax" title="Permanent link">&para;</a></h3>
+<p>对第 <span class="arithmatex">\(i\)</span> 个 query，softmax Attention 可以写成归一化加权和：</p>
+<div class="arithmatex">\[
+o_i=
+\frac{
+\sum_{j\le i}\exp\left(q_i k_j^\top/\sqrt d\right)v_j
+}{
+\sum_{j\le i}\exp\left(q_i k_j^\top/\sqrt d\right)
+}
+\]</div>
+<p>这里的指数相似度必须在 <span class="arithmatex">\(q_i\)</span> 与每个 <span class="arithmatex">\(k_j\)</span> 做完点积后才能计算，分母又依赖当前 query 对所有 key 的分数。softmax 不是矩阵乘法，不能随着括号一起移动。因此一般有：</p>
+<div class="arithmatex">\[
+\operatorname{softmax}(QK^\top)V
+\ne Q\left(K^\top V\right)
+\]</div>
+<p>所以正确的逻辑不是“softmax Attention 满足结合律”，而是：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>softmax Attention 不能直接交换乘法顺序
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>          ↓
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>寻找一个能拆成 query feature × key feature 的核函数
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>          ↓
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>用这个核替换或近似 softmax 的指数相似度
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>          ↓
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>此时才可以利用结合律先汇总 K/V
+</span></code></pre></div>
+<p>具体来说，希望找到一个特征映射 <span class="arithmatex">\(\phi\)</span>，使相似度可以写成：</p>
+<div class="arithmatex">\[
+\kappa(q,k)
+\approx
+\phi(q)\phi(k)^\top
+\]</div>
+<p>如果目标是近似原始 softmax Attention，那么对应的目标 kernel 是：</p>
+<div class="arithmatex">\[
+\kappa_{\text{softmax}}(q,k)
+=\exp\left(qk^\top/\sqrt d\right)
+\]</div>
+<p>于是希望：</p>
+<div class="arithmatex">\[
+\exp\left(qk^\top/\sqrt d\right)
+\approx \phi(q)\phi(k)^\top
+\]</div>
+<p>等式右边已经把 query 和 key 分开：<span class="arithmatex">\(\phi(q)\in\mathbb{R}^{1\times m}\)</span> 只依赖 query，<span class="arithmatex">\(\phi(k)\in\mathbb{R}^{1\times m}\)</span> 只依赖 key；两者相乘得到标量。这种“可分解性”才是后面使用结合律的关键。</p>
+<p>实践中有两条不同路线，不应混为一谈：</p>
+<table>
+<thead>
+<tr>
+<th>路线</th>
+<th>做法</th>
+<th>与原 softmax 的关系</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>kernel replacement</td>
+<td>直接选择容易计算的正值特征映射，例如 <span class="arithmatex">\(\phi(x)=\operatorname{ELU}(x)+1\)</span></td>
+<td>定义了新的相似度，并非严格近似 softmax</td>
+</tr>
+<tr>
+<td>kernel approximation</td>
+<td>用随机特征等方法近似指数 kernel</td>
+<td>目标是近似原来的 softmax Attention，例如 Performer 路线</td>
+</tr>
+</tbody>
+</table>
+<p>因此，“用核函数来近似 softmax”是很好的入门直觉；严格地说，一些 Linear Attention 方法在近似 softmax，另一些则直接用新的 kernel 替换它。</p>
+<p>原回答用“把二维数据映射到更高维空间”说明 <span class="arithmatex">\(\phi\)</span> 的作用：变换后，原本不容易表达的关系可能变得更容易计算。</p>
+<p><img alt="核函数升维的直观示意" src="../assets/kernel-feature-map.webp" /></p>
+<p><em>图 2：核函数升维的直观示意。来源：知乎用户 <a href="https://www.zhihu.com/question/1967516557811909769/answer/1967989954656305654">kaiyuan 的回答</a>。</em></p>
+<p>这张图只是在解释 feature map 的一般直觉，并不表示 Linear Transformer 的 <span class="arithmatex">\(\phi\)</span> 一定显式构造一个三维坐标。对 Linear Attention 而言，升到什么空间不是唯一重点；更重要的是让相似度能够分解成 <span class="arithmatex">\(\phi(q)\phi(k)^\top\)</span>。</p>
+<p>把可分解 kernel 代回 Attention，对第 <span class="arithmatex">\(i\)</span> 个 query 有：</p>
+<div class="arithmatex">\[
+o_i=
+\frac{
+\phi(q_i)\sum_{j\le i}\phi(k_j)^\top v_j
+}{
+\phi(q_i)\sum_{j\le i}\phi(k_j)^\top
+}
+\]</div>
+<p>如果 <span class="arithmatex">\(\phi(q)\phi(k)^\top\)</span> 是近似，整个输出也相应是对 softmax Attention 的近似；如果它定义的是一个新 kernel，上式就是该新注意力机制的精确表达。</p>
+<p>现在定义两个与当前 query 无关的状态：</p>
+<div class="arithmatex">\[
+S_i=\sum_{j\le i}\phi(k_j)^\top v_j,
+\qquad
+z_i=\sum_{j\le i}\phi(k_j)
+\]</div>
+<p>输出便成为：</p>
+<div class="arithmatex">\[
+o_i=\frac{\phi(q_i)S_i}{\phi(q_i)z_i^\top}
+\]</div>
+<p>在 causal 场景中，这两个状态可以逐 token 递推：</p>
+<div class="arithmatex">\[
+S_t=S_{t-1}+\phi(k_t)^\top v_t,\qquad
+z_t=z_{t-1}+\phi(k_t)
+\]</div>
+<p>求和中的 <span class="arithmatex">\(S_i\)</span> 和 <span class="arithmatex">\(z_i\)</span> 不再随当前 query 改变，所以可以先累计和缓存。到这里，矩阵乘法结合律才真正转化成固定大小的 recurrent state。</p>
+<p>下面这张图展示了完整的变形顺序：先把与 query 无关的求和项移到一起，再利用 causal 条件把求和上限从整个序列改为当前位置 <span class="arithmatex">\(i\)</span>，最后把两项分别定义为状态 <span class="arithmatex">\(S_i\)</span> 和 <span class="arithmatex">\(Z_i\)</span>。</p>
+<p><img alt="Linear Attention 化为递归状态" src="../assets/linear-attention-recurrent-state.webp" /></p>
+<p><em>图 3：Linear Attention 化为递归状态的推导路径。来源：知乎用户 <a href="https://www.zhihu.com/question/1967516557811909769/answer/1967989954656305654">kaiyuan 的回答</a>。</em></p>
+<p>图 3 保留原作者记法。其核心重排按单向量为列向量理解：原图定义 <span class="arithmatex">\(S_i^{\mathrm{src}}=\sum_j\phi(K_j)V_j^\top\)</span>，再用 <span class="arithmatex">\(\phi(Q_i)^\top S_i^{\mathrm{src}}\)</span> 读取；正文的行向量版本则是 <span class="arithmatex">\(S_i=\sum_j\phi(k_j)^\top v_j\)</span> 和 <span class="arithmatex">\(\phi(q_i)S_i\)</span>。这里两种状态的形状其实相同，只是单向量的书写方向不同。原图右上角又使用了 <span class="arithmatex">\(x_iW\)</span> 这种常见的行向量写法，因此不宜把原图的每一个转置都当成一套严格统一的维度约定；正文公式已经按开头的维度表重新整理。</p>
+<p>图中的两个状态分工不同：<span class="arithmatex">\(S_i\)</span> 是 attention memory，保存 key/value 的关联；<span class="arithmatex">\(Z_i\)</span> 是 normalizer memory，只用于计算分母。后续 DeltaNet/KDA 的递推式主要讨论前一种矩阵记忆，并不意味着 <span class="arithmatex">\(Z_i\)</span> 被简单原样搬进了 KDA。</p>
+<p>这里的重点不是某一种 <span class="arithmatex">\(\phi\)</span>，而是历史已经从“长度为 <span class="arithmatex">\(N\)</span> 的 token 列表”变成了“尺寸不随 <span class="arithmatex">\(N\)</span> 增长的状态”。</p>
+<p>从计算表示上看，历史由不断增长的 KV 列表压缩成了随序列递推更新的固定尺寸状态；在递归 Decode 实现中，这也使 KDA 层的历史缓存不再随上下文长度增长。</p>
+<h3 id="23-linear">2.3 它为什么叫 Linear<a class="headerlink" href="#23-linear" title="Permanent link">&para;</a></h3>
+<p>这里的 Linear 指复杂度关于序列长度 <span class="arithmatex">\(N\)</span> 近似线性，而不是说整个神经网络只有线性变换。</p>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th style="text-align: right;">普通全注意力</th>
+<th style="text-align: right;">纯递归 Linear Attention</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>长度为 <span class="arithmatex">\(N\)</span> 的 Prefill</td>
+<td style="text-align: right;">关于 <span class="arithmatex">\(N\)</span> 为 <span class="arithmatex">\(O(N^2)\)</span></td>
+<td style="text-align: right;">关于 <span class="arithmatex">\(N\)</span> 为 <span class="arithmatex">\(O(N)\)</span></td>
+</tr>
+<tr>
+<td>单 token Decode</td>
+<td style="text-align: right;">读取 <span class="arithmatex">\(O(N)\)</span> 历史 KV</td>
+<td style="text-align: right;">更新、读取固定大小状态</td>
+</tr>
+<tr>
+<td>随序列增长的缓存</td>
+<td style="text-align: right;"><span class="arithmatex">\(O(N)\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(O(1)\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>表中的 <span class="arithmatex">\(O(1)\)</span> 只表示“不随上下文长度增长”，状态矩阵本身仍然可能不小。</p>
+<p>如果把 head dimension 也写出来，普通 Attention 中的 <span class="arithmatex">\(QK^\top\)</span> 和权重乘 <span class="arithmatex">\(V\)</span> 大致需要 <span class="arithmatex">\(O(N^2d)\)</span> 计算；Linear Attention 先计算 <span class="arithmatex">\(K^\top V\)</span>、再让 <span class="arithmatex">\(Q\)</span> 读取，大致需要 <span class="arithmatex">\(O(Nd^2)\)</span>。因为模型的 head dimension <span class="arithmatex">\(d\)</span> 固定，而序列长度 <span class="arithmatex">\(N\)</span> 不断增长，所以通常分别简称为关于序列长度的“二次”和“线性”复杂度。</p>
+<h3 id="24">2.4 固定大小状态带来了什么问题<a class="headerlink" href="#24" title="Permanent link">&para;</a></h3>
+<p>普通 Attention 像保留全部原始档案；Linear Attention 更像把档案不断浓缩到一块白板上。</p>
+<p>白板大小固定，所以它会遇到两个问题：</p>
+<ol>
+<li><strong>记忆冲突</strong>：相似的 key 会写到相近方向，新旧 value 混在一起；</li>
+<li><strong>容量有限</strong>：上下文不断增长，状态大小却不增长，不可能无损保存任意多的细节。</li>
+</ol>
+<p>最简单的累加更新 <span class="arithmatex">\(S_t=S_{t-1}+k_t^\top v_t\)</span> 只会继续叠加，缺少“修改旧记录”的能力。</p>
+<h2 id="3-delta-rule">3. Delta Rule：不要只追加，要先纠错再写入<a class="headerlink" href="#3-delta-rule" title="Permanent link">&para;</a></h2>
+<h3 id="31">3.1 用“住址变更”理解普通线性写入的问题<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
+<p>假设模型已经写入：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>小明 → 北京
+</span></code></pre></div>
+<p>后来上下文又说：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>小明搬到了杭州。
+</span></code></pre></div>
+<p>如果只做加法，状态里可能同时残留“北京”和“杭州”。下次查询“小明住在哪里”时，两条记忆会相互干扰。</p>
+<p>Delta Rule 的思路是：写入新答案前，先问一下当前状态对这个 key 会给出什么旧答案，然后只写入两者的差值。</p>
+<h3 id="32-delta-rule">3.2 Delta Rule 的更新公式<a class="headerlink" href="#32-delta-rule" title="Permanent link">&para;</a></h3>
+<p>为便于理解，以下采用状态 <span class="arithmatex">\(S\in\mathbb{R}^{d_k\times d_v}\)</span> 的记号。先读取 key <span class="arithmatex">\(k_t\)</span> 当前对应的预测：</p>
+<div class="arithmatex">\[
+\hat v_t=k_tS_{t-1}
+\]</div>
+<p>计算新目标与旧预测之间的误差：</p>
+<div class="arithmatex">\[
+e_t=v_t-\hat v_t
+\]</div>
+<p>再沿着 <span class="arithmatex">\(k_t\)</span> 的方向写入这个误差：</p>
+<div class="arithmatex">\[
+S_t=S_{t-1}+\beta_t k_t^\top e_t
+\]</div>
+<p>其中 <span class="arithmatex">\(\beta_t\in[0,1]\)</span> 控制更新强度。</p>
+<p>把三步合起来：</p>
+<div class="arithmatex">\[
+S_t=S_{t-1}
++\beta_t k_t^\top\left(v_t-k_tS_{t-1}\right)
+\]</div>
+<p>它不是简单地把 <span class="arithmatex">\(k_t^\top v_t\)</span> 加到状态中，而是在当前 key 对应的记忆槽上做“定点修正”。如果旧预测已经正确，误差很小，就不需要大幅改写。</p>
+<h3 id="33">3.3 一个极简数值例子<a class="headerlink" href="#33" title="Permanent link">&para;</a></h3>
+<p>假设只有一个 key 方向，当前状态读出的旧地址是 0.8（偏向“北京”），新目标“杭州”编码为 0.2，且 <span class="arithmatex">\(\beta=1\)</span>：</p>
+<div class="arithmatex">\[
+e=0.2-0.8=-0.6
+\]</div>
+<p>写入的是 <span class="arithmatex">\(-0.6\)</span> 的修正量，而不是再追加一个 <span class="arithmatex">\(0.2\)</span>。更新后，该方向读出的结果从 0.8 变成 0.2。</p>
+<p>真实模型中的 key 和 value 都是高维向量，不会是一维数字，但“比较旧值，然后写入误差”的直觉相同。</p>
+<h2 id="4-gated-deltanet">4. Gated DeltaNet：有些记忆需要主动遗忘<a class="headerlink" href="#4-gated-deltanet" title="Permanent link">&para;</a></h2>
+<p>Delta Rule 擅长修改某个 key 对应的内容，但语言中还存在更大范围的状态切换。例如：</p>
+<ul>
+<li>开始讨论一个全新的主题；</li>
+<li>进入代码块、表格或新的文档章节；</li>
+<li>之前的临时约束已经失效；</li>
+<li>模型需要重置一部分工作记忆。</li>
+</ul>
+<p>Gated DeltaNet 在 Delta Rule 外增加遗忘门。概念上可以写成：</p>
+<div class="arithmatex">\[
+\bar S_t=\alpha_t S_{t-1}
+\]</div>
+<div class="arithmatex">\[
+S_t=\bar S_t
++\beta_t k_t^\top\left(v_t-k_t\bar S_t\right)
+\]</div>
+<p><span class="arithmatex">\(\alpha_t\)</span> 越接近 1，历史保留得越多；越接近 0，历史衰减得越快。</p>
+<p>因此两种机制各司其职：</p>
+<ul>
+<li>Forget gate 负责较大范围的被动遗忘；</li>
+<li>Delta rule 负责针对某个 key 的主动纠错。</li>
+</ul>
+<p>原回答将这一演进关系画成了下面的路线图：Linear Attention 先写成 recurrent state，再借用 SSM/LTI 的状态转移视角，引入 gate、遗忘系数 <span class="arithmatex">\(\alpha\)</span> 和 Delta Rule，最后组合成 GDN。</p>
+<p><img alt="从 Linear Attention、SSM、Gate 与 Delta Rule 到 GDN" src="../assets/gated-deltanet-evolution.webp" /></p>
+<p><em>图 4：从 Linear Attention、SSM、Gate 与 Delta Rule 到 GDN 的概念路线。来源：知乎用户 <a href="https://www.zhihu.com/question/1967516557811909769/answer/1967989954656305654">kaiyuan 的回答</a>。</em></p>
+<p>图 4 也保留原作者记法。图中 GDN 主公式使用 <span class="arithmatex">\(S_t^{\mathrm{src}}\in\mathbb{R}^{d_v\times d_k}\)</span>，从右侧作用 key 方向的状态转移，并以 <span class="arithmatex">\(v_tk_t^\top\)</span> 写入。正文使用其转置 <span class="arithmatex">\(S_t=(S_t^{\mathrm{src}})^\top\in\mathbb{R}^{d_k\times d_v}\)</span>，所以相应写成从左侧作用状态转移，并以 <span class="arithmatex">\(k_t^\top v_t\)</span> 写入。原图左上角沿用了前一幅图中不完全统一的转置方式，应把整张图理解为“思想来源和模块组合”，而不是逐项检查矩阵维度的严格推导。</p>
+<p>另外，不是每个箭头都代表严格等价变形。例如，只有当状态转移参数不随 token 改变时，普通 SSM 才能直接展开为图中的固定 LTI 卷积核；GDN 的 <span class="arithmatex">\(q/k/v/\alpha/\beta\)</span> 则由当前输入动态生成。</p>
+<h2 id="5-kimi-delta-attention">5. Kimi Delta Attention：把遗忘控制做得更细<a class="headerlink" href="#5-kimi-delta-attention" title="Permanent link">&para;</a></h2>
+<h3 id="51-head-wise-gate-channel-wise-gate">5.1 从 head-wise gate 到 channel-wise gate<a class="headerlink" href="#51-head-wise-gate-channel-wise-gate" title="Permanent link">&para;</a></h3>
+<p>Gated DeltaNet 的遗忘率通常是 head-wise scalar：同一个 head 的整个状态共用一个 <span class="arithmatex">\(\alpha_t\)</span>。这相当于一个房间里只有一个总亮度开关，要亮一起亮，要暗一起暗。</p>
+<p>Kimi Delta Attention（KDA）的关键改动，是把 gate 细化到 key 的不同 channel。令：</p>
+<div class="arithmatex">\[
+\boldsymbol{\alpha}_t\in(0,1)^{d_k},\qquad
+D_t=\operatorname{diag}(\boldsymbol{\alpha}_t)
+\]</div>
+<p>状态先按行进行不同程度的衰减：</p>
+<div class="arithmatex">\[
+\bar S_t=D_tS_{t-1}
+\]</div>
+<p>然后再执行 delta 更新：</p>
+<div class="arithmatex">\[
+S_t=\bar S_t
++\beta_t k_t^\top\left(v_t-k_t\bar S_t\right)
+\]</div>
+<p>直观上，它把“房间总开关”换成了“一排独立调光开关”：某些记忆通道可以快速清空，另一些通道继续长期保存。</p>
+<p>原回答的 GDN/KDA 对照图准确抓住了这一变化：左侧的 <span class="arithmatex">\(\alpha_t\)</span> 是单个数，右侧的 <span class="arithmatex">\(\boldsymbol{\alpha}_t\)</span> 是长度为 <span class="arithmatex">\(d_k\)</span> 的向量，放进状态更新前先变成 <span class="arithmatex">\(\operatorname{Diag}(\boldsymbol{\alpha}_t)\)</span>。</p>
+<p><img alt="GDN 的标量遗忘门与 KDA 的逐通道遗忘门" src="../assets/gdn-vs-kda-gating.webp" /></p>
+<p><em>图 5：GDN 的标量遗忘门升级为 KDA 的逐通道对角门。来源：知乎用户 <a href="https://www.zhihu.com/question/1967516557811909769/answer/1967989954656305654">kaiyuan 的回答</a>。</em></p>
+<p>图中的“增加上投影”是说：KDA 不再只为每个 head 生成一个数，而要为每个 head 生成 <span class="arithmatex">\(d_k\)</span> 个 gate。若直接从隐藏维度投影到所有 gate，参数量会较大，因此实际采用“先降维、再升维”的低秩投影。</p>
+<p>按照正文的行向量约定，可以分两步理解。先把当前 token 的隐藏状态压缩到中间维度 <span class="arithmatex">\(r\)</span>：</p>
+<div class="arithmatex">\[
+u_t=x_tW_{\alpha}^{\downarrow},\qquad
+x_t\in\mathbb{R}^{1\times d_{\mathrm{model}}},\quad
+u_t\in\mathbb{R}^{1\times r}
+\]</div>
+<p>再把它展开成第 <span class="arithmatex">\(h\)</span> 个 head 的 <span class="arithmatex">\(d_k\)</span> 个 gate logits：</p>
+<div class="arithmatex">\[
+a_t^{(h)}=u_tW_{\alpha,h}^{\uparrow}
+\in\mathbb{R}^{1\times d_k}
+\]</div>
+<p>其中 <span class="arithmatex">\(W_{\alpha}^{\downarrow}\in\mathbb{R}^{d_{\mathrm{model}}\times r}\)</span>，<span class="arithmatex">\(W_{\alpha,h}^{\uparrow}\in\mathbb{R}^{r\times d_k}\)</span>。这里的 down/up 只描述维度变化：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>x_t（d_model 维） → u_t（r 维瓶颈） → a_t^(h)（d_k 个通道）
+</span></code></pre></div>
+<p><span class="arithmatex">\(a_t^{(h)}\)</span> 还不是最终遗忘系数。这里需要区分论文与实现：</p>
+<ul>
+<li><strong>论文公式</strong>采用列向量写成 <span class="arithmatex">\(\boldsymbol{\alpha}_t^{(h)}=f(W_\alpha^\uparrow W_\alpha^\downarrow x_t)\)</span>，并说明 <span class="arithmatex">\(f\)</span> 是类似 GDN 和 Mamba 的 decay function，没有在正文中展开 <span class="arithmatex">\(f\)</span>；换成本文的行向量记法，就是 <span class="arithmatex">\(\boldsymbol{\alpha}_t^{(h)}=f(x_tW_\alpha^\downarrow W_{\alpha,h}^\uparrow)\)</span>；</li>
+<li><strong>开源实现</strong>把这个 decay function 具体实现为 log-space 的负 softplus。按照本文行向量记法，可写成：</li>
+</ul>
+<div class="arithmatex">\[
+g_t^{(h)}
+=-\exp(A_{\log,h})\,
+\operatorname{softplus}\!\left(a_t^{(h)}+b_h\right)
+\le 0
+\]</div>
+<p>然后取指数：</p>
+<div class="arithmatex">\[
+\boldsymbol{\alpha}_t^{(h)}
+=\exp\left(g_t^{(h)}\right)
+\in(0,1]^{1\times d_k}
+\]</div>
+<p>其中 <span class="arithmatex">\(A_{\log,h}\)</span> 是第 <span class="arithmatex">\(h\)</span> 个 head 的可学习时间尺度参数，<span class="arithmatex">\(b_h\)</span> 是该 head 各 key channel 的 gate bias。这样可以保证每个元素都是合法的衰减系数：接近 <span class="arithmatex">\(1\)</span> 表示该 key channel 基本保留，接近 <span class="arithmatex">\(0\)</span> 表示快速遗忘。最后令 <span class="arithmatex">\(D_t=\operatorname{diag}(\boldsymbol{\alpha}_t)\)</span>，计算 <span class="arithmatex">\(D_tS_{t-1}\)</span>；由于 <span class="arithmatex">\(S\in\mathbb{R}^{d_k\times d_v}\)</span>，左乘对角矩阵就是用 <span class="arithmatex">\(d_k\)</span> 个不同的系数分别缩放状态的 <span class="arithmatex">\(d_k\)</span> 行。</p>
+<p>因此，负 softplus 公式应理解为论文中抽象函数 <span class="arithmatex">\(f\)</span> 的一种具体实现，而不是论文原样列出的等式。来源可对照 <a href="https://arxiv.org/pdf/2510.26692">Kimi Linear 论文第 4 节的 Neural Parameterization</a>、<a href="https://github.com/fla-org/flash-linear-attention/blob/main/fla/layers/kda.py">KDA 层实现</a>及其<a href="https://github.com/fla-org/flash-linear-attention/blob/main/fla/ops/kda/chunk.py">分块 kernel 接口</a>。</p>
+<p>相比之下，普通 Gated DeltaNet 的一个 head 只有一个标量 <span class="arithmatex">\(\alpha_t\)</span>，相当于把该 head 的整个状态矩阵统一乘以同一个数。</p>
+<blockquote>
+<p><strong>原图与正文的记号对应：</strong>图 5 原样保留原作者记法，而且左右两侧切换了状态方向。左侧 GDN 把单向量视为列向量，采用 <span class="arithmatex">\(S^{\mathrm{src}}\in\mathbb{R}^{d_v\times d_k}\)</span> 和写入项 <span class="arithmatex">\(vk^\top\)</span>；右侧 KDA 则采用 <span class="arithmatex">\(S^{\mathrm{src}}\in\mathbb{R}^{d_k\times d_v}\)</span> 和写入项 <span class="arithmatex">\(kv^\top\)</span>。这只是展示时改变了状态矩阵方向，不是 KDA 的另一项结构创新。正文始终采用行向量与 <span class="arithmatex">\(S\in\mathbb{R}^{d_k\times d_v}\)</span>，所以两处写入项都统一写成 <span class="arithmatex">\(k^\top v\)</span>。</p>
+</blockquote>
+<h3 id="52-dplr">5.2 为什么会出现 DPLR<a class="headerlink" href="#52-dplr" title="Permanent link">&para;</a></h3>
+<p>把上面的更新展开：</p>
+<div class="arithmatex">\[
+S_t=
+\left(I-\beta_tk_t^\top k_t\right)D_tS_{t-1}
++\beta_tk_t^\top v_t
+\]</div>
+<p>状态转移包含：</p>
+<ul>
+<li>一个对角矩阵 <span class="arithmatex">\(D_t\)</span>；</li>
+<li>一个由 <span class="arithmatex">\(k_t^\top k_t\)</span> 形成的低秩修正。</li>
+</ul>
+<p>这就是 Diagonal-Plus-Low-Rank（DPLR）结构出现的原因。论文进一步针对这种特殊结构设计了 chunkwise 算法，减少通用 DPLR 算法中不必要的计算，使它既能递归 Decode，也能在训练和 Prefill 时分块并行。</p>
+<h3 id="53-kda">5.3 KDA 层还包含什么<a class="headerlink" href="#53-kda" title="Permanent link">&para;</a></h3>
+<p>KDA 不只是上面一条状态更新公式。官方 checkpoint 的实现还包括：</p>
+<ul>
+<li>对 Q、K、V 的长度为 4 的短卷积，用来补充局部顺序信息；</li>
+<li>对 Q/K 的归一化；</li>
+<li>写入强度 <span class="arithmatex">\(\beta\)</span>；</li>
+<li>channel-wise forget gate；</li>
+<li>输出上的归一化和门控；</li>
+<li>针对 Prefill 和 Decode 的专用 kernel。</li>
+</ul>
+<p>所以把 KDA 简单描述成“带遗忘的 RNN”并不完整。更准确的说法是：它是一个能够以递归形式运行、以矩阵状态充当联想记忆、又能在 GPU 上分块并行的线性注意力模块。</p>
+<h2 id="6-kimi-linear-attention">6. 为什么 Kimi Linear 仍然保留全局 Attention<a class="headerlink" href="#6-kimi-linear-attention" title="Permanent link">&para;</a></h2>
+<h3 id="61-linear-state">6.1 Linear state 是有损压缩<a class="headerlink" href="#61-linear-state" title="Permanent link">&para;</a></h3>
+<p>无论 gate 和 delta rule 多聪明，固定大小状态都无法无损保存无限增长的上下文。普通 Attention 能直接访问某个历史 token，KDA 访问的则是历史压缩后的状态。</p>
+<p>因此纯 KDA 模型可能在以下场景中吃亏：</p>
+<ul>
+<li>精确复述很早以前的一段原文；</li>
+<li>从大量相似信息中找出唯一目标；</li>
+<li>需要 token 级精确对齐；</li>
+<li>上下文长度远超训练分布，有限状态发生严重干扰。</li>
+</ul>
+<h3 id="62-31">6.2 3:1 的混合方案<a class="headerlink" href="#62-31" title="Permanent link">&para;</a></h3>
+<p>Kimi Linear 采用 KDA 与全局 MLA 约为 3:1 的混合架构。官方 27 层 checkpoint 实际包含 20 个 KDA 层和 7 个 MLA 层：</p>
+<p><img alt="Kimi Linear 的 KDA、MLA 与 MoE 结构" src="../assets/kimi-linear-architecture.webp" /></p>
+<p><em>图 6：Kimi Linear 的 KDA、MLA 与 MoE 结构。来源：知乎用户 <a href="https://www.zhihu.com/question/1967516557811909769/answer/1967989954656305654">kaiyuan 的回答</a>，基础结构图源自 Kimi Linear 技术报告。</em></p>
+<p>左侧表示两种 decoder block：多数 block 使用 KDA，周期性插入 MLA block；两者之后都接 MoE。右上角展开 MoE router 如何选择 routed experts 并配合 shared experts，右下角则展开 KDA 内部的 Q/K/V、短卷积、forget gate、<span class="arithmatex">\(\beta\)</span> 与输出 gate。图中的 “<span class="arithmatex">\(N\times\)</span> KDA + <span class="arithmatex">\(1\times\)</span> MLA” 是结构示意。</p>
+<p>图 6 右下角最右侧的绿色分支是 <strong>output gate（输出门）</strong>，不要与控制状态遗忘的 <span class="arithmatex">\(\boldsymbol{\alpha}_t\)</span> 混淆。它从当前 token 的隐藏状态生成：</p>
+<div class="arithmatex">\[
+r_t=
+\operatorname{Sigmoid}\left(
+x_tW_g^\downarrow W_g^\uparrow
+\right)
+\in(0,1)^{1\times Hd_v}
+\]</div>
+<p>其中低秩的 down/up projection 最终输出 <span class="arithmatex">\(H d_v\)</span> 个数，恰好与所有 head 的 KDA 输出通道一一对应。令</p>
+<div class="arithmatex">\[
+y_t=\operatorname{KDA}
+\left(q_t,k_t,v_t,\boldsymbol{\alpha}_t,\beta_t\right)
+\in\mathbb{R}^{1\times Hd_v},
+\]</div>
+<p>则整个输出阶段按正文的行向量记法为：</p>
+<div class="arithmatex">\[
+o_t=
+\left[
+r_t\odot\operatorname{RMSNorm}(y_t)
+\right]W_o
+\]</div>
+<p><span class="arithmatex">\(\odot\)</span> 表示逐元素乘法，所以图中这条分支可以“直接作用”在 attention 结果上：<span class="arithmatex">\(r_t\)</span> 的第 <span class="arithmatex">\(j\)</span> 个元素决定 KDA 输出第 <span class="arithmatex">\(j\)</span> 个通道放行多少。它只控制本层向后续网络输出什么，不参与 <span class="arithmatex">\(S_t\)</span> 的写入、遗忘或纠错；若某些通道的 KDA 结果对当前 token 没有帮助，模型可以把对应 gate 压低。之后的 <span class="arithmatex">\(W_o\)</span> 再混合各个 head/channel，block 外部还会与 residual 分支相加。这个结构可以类比 LSTM 的 output gate。论文的完整输出式见 <a href="https://arxiv.org/pdf/2510.26692">第 4 节公式 (10)</a>。</p>
+<p>实际开源 checkpoint 的精确层表如下。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Layer  1: KDA
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>Layer  2: KDA
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>Layer  3: KDA
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>Layer  4: MLA
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>Layer  5: KDA
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>Layer  6: KDA
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>Layer  7: KDA
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>Layer  8: MLA
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>             ...
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>Layer 24: MLA
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>Layer 25: KDA
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>Layer 26: KDA
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>Layer 27: MLA
+</span></code></pre></div>
+<p>MLA（Multi-head Latent Attention）仍然属于全局注意力，只是把 K/V 压缩到 latent representation 中以降低缓存成本。Kimi Linear 的这些全局 MLA 层采用 NoPE，不在 MLA 内施加显式位置编码；论文把位置感知和 recency bias 的主要责任交给 KDA 的数据依赖状态转移。这里的 NoPE 不表示模型完全没有位置信息，因为 KDA 的递推、逐通道衰减和短卷积本身都与顺序有关。</p>
+<p>两类层形成互补：</p>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>更像什么</th>
+<th>长处</th>
+<th>局限</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>KDA</td>
+<td>固定大小的工作记忆</td>
+<td>长上下文高效、Decode 成本不随历史线性增长</td>
+<td>历史被有损压缩</td>
+</tr>
+<tr>
+<td>MLA</td>
+<td>可检索的原始档案</td>
+<td>能精确回看具体历史位置</td>
+<td>KV Cache 随上下文增长</td>
+</tr>
+</tbody>
+</table>
+<p>因此 Kimi Linear 的工程判断不是“Linear Attention 已经完全取代全注意力”，而是“让 Linear Attention 承担大部分层，再用少量全局层兜底”。</p>
+<h2 id="7-prefill-decode">7. 从 Prefill 和 Decode 看实际收益<a class="headerlink" href="#7-prefill-decode" title="Permanent link">&para;</a></h2>
+<h3 id="71-prefill">7.1 Prefill：递归公式不能直接串行跑<a class="headerlink" href="#71-prefill" title="Permanent link">&para;</a></h3>
+<p>输入一段长 prompt 时，GPU 最擅长大块并行计算。如果严格按照：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>S1 → S2 → S3 → ... → SN
+</span></code></pre></div>
+<p>逐 token 更新，虽然理论计算量是线性的，实际硬件利用率却可能很差。</p>
+<p>KDA 使用 chunkwise 算法：</p>
+<ol>
+<li>把序列切成多个 chunk；</li>
+<li>chunk 内尽量并行计算；</li>
+<li>在 chunk 之间传播压缩状态；</li>
+<li>利用特殊 DPLR 结构减少状态转移的计算量。</li>
+</ol>
+<p>这一步很重要：只有高效算法和 kernel 配合，复杂度优势才能真正变成 GPU 上的吞吐优势。</p>
+<h3 id="72-decode">7.2 Decode：只带着状态向前走<a class="headerlink" href="#72-decode" title="Permanent link">&para;</a></h3>
+<p>生成阶段一次通常只处理一个新 token。KDA 可以直接使用递归模式：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>读取当前 state
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>  → 应用 forget gate
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>  → 用当前 K/V 做 delta update
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>  → 用当前 Q 读取输出
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>  → 原地保存新 state
+</span></code></pre></div>
+<p>历史从 10K 增长到 1M token 时，KDA 层要读写的核心 state 大小不随序列长度增加。相比之下，全注意力层仍然要访问越来越长的 KV Cache。</p>
+<h3 id="73-kimi-linear">7.3 Kimi Linear 的缓存到底是什么<a class="headerlink" href="#73-kimi-linear" title="Permanent link">&para;</a></h3>
+<p>完整 Kimi Linear 不是纯 KDA，因此它的请求缓存由两部分组成：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>Kimi Linear request cache
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>├── KDA layers
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>│   ├── 固定大小 recurrent state
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>│   └── 固定长度 short-convolution state
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>└── MLA layers
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>    └── 随 token 数增长的 MLA KV Cache
+</span></code></pre></div>
+<p>这带来两个容易混淆的结论：</p>
+<ol>
+<li>KDA 层的状态关于序列长度是 <span class="arithmatex">\(O(1)\)</span>；</li>
+<li>整个 Kimi Linear 仍含 MLA 层，所以整个模型的缓存不是严格的 <span class="arithmatex">\(O(1)\)</span>，只是增长斜率明显更小。</li>
+</ol>
+<p>可以用 3:1 的层混合比例形成一个粗略直觉：大约四分之三的 token-mixing 层从全局 MLA 换成了固定状态 KDA。但“最多减少 75% KV Cache”是官方实测结论，不能仅由层数比例直接推出；实际比例还取决于 MLA latent cache、KDA state、短卷积状态、数据类型和框架布局。</p>
+<h2 id="8-checkpoint">8. 官方开源 checkpoint 的整体配置<a class="headerlink" href="#8-checkpoint" title="Permanent link">&para;</a></h2>
+<p>KDA 是注意力模块，Kimi Linear checkpoint 则是包含 MoE、归一化、词表等组件的完整语言模型，二者不要混为一谈。</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th style="text-align: right;"><code>Kimi-Linear-48B-A3B</code> 配置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>总参数量</td>
+<td style="text-align: right;">约 48B</td>
+</tr>
+<tr>
+<td>每 token 激活参数</td>
+<td style="text-align: right;">约 3B</td>
+</tr>
+<tr>
+<td>上下文上限</td>
+<td style="text-align: right;">1,048,576 tokens</td>
+</tr>
+<tr>
+<td>Transformer 层数</td>
+<td style="text-align: right;">27</td>
+</tr>
+<tr>
+<td>KDA / MLA 层数</td>
+<td style="text-align: right;">20 / 7</td>
+</tr>
+<tr>
+<td>隐藏维度</td>
+<td style="text-align: right;">2304</td>
+</tr>
+<tr>
+<td>KDA heads</td>
+<td style="text-align: right;">32</td>
+</tr>
+<tr>
+<td>KDA key/value head dimension</td>
+<td style="text-align: right;">128 / 128</td>
+</tr>
+<tr>
+<td>短卷积 kernel size</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr>
+<td>routed experts</td>
+<td style="text-align: right;">256</td>
+</tr>
+<tr>
+<td>每 token 选择的 routed experts</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr>
+<td>shared experts</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td>已发布版本</td>
+<td style="text-align: right;">Base、Instruct</td>
+</tr>
+<tr>
+<td>checkpoint 训练量</td>
+<td style="text-align: right;">5.7T tokens</td>
+</tr>
+</tbody>
+</table>
+<p>“48B-A3B”表示模型总共有约 48B 参数，但 MoE 路由使每个 token 只激活其中约 3B。MoE 解决的是 FFN 参数与计算量问题；KDA/MLA 解决的是 Attention 和长上下文问题。这是两条不同的优化轴。</p>
+<h2 id="9">9. 性能数字应该怎样理解<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
+<p>论文与官方模型卡报告：</p>
+<ul>
+<li>相比全 MLA，KV Cache 最多减少约 75%；</li>
+<li>在 1M 上下文下，Decode 吞吐最高约提升 6 倍；</li>
+<li>MMLU-Pro 4K 得分为 51.0，速度与 full attention 接近；</li>
+<li>RULER 128K 得分为 84.3，并获得约 3.98 倍加速；</li>
+<li>在采用相同训练 recipe 的 1.4T-token 对照实验中，Kimi Linear 在短上下文、长上下文和 RL scaling 评测上整体优于 full MLA 基线。</li>
+</ul>
+<p>这些是特定模型、硬件、batch size、上下文长度和 kernel 下的官方实验结果，不能理解成任何部署场景都会固定加速 6 倍。实际收益通常取决于：</p>
+<ul>
+<li>请求的平均输入、输出长度；</li>
+<li>batch size 是否受 KV Cache 容量限制；</li>
+<li>KDA kernel 是否针对当前 GPU 优化；</li>
+<li>MLA 和 KDA state 的数据类型与布局；</li>
+<li>调度器是否能正确管理两类缓存；</li>
+<li>Prefill、Decode 是否分离部署。</li>
+</ul>
+<p>长输入、长输出且显存受限时，Kimi Linear 的优势最容易体现；短上下文或小 batch 下，额外门控、卷积和 kernel launch 可能让差距变小。</p>
+<h2 id="10">10. 常见误解<a class="headerlink" href="#10" title="Permanent link">&para;</a></h2>
+<h3 id="kimi-linear-softmax-attention">误解一：Kimi Linear 就是把 softmax Attention 换个近似公式<a class="headerlink" href="#kimi-linear-softmax-attention" title="Permanent link">&para;</a></h3>
+<p>不完全是。KDA 更适合从“可学习的递归联想记忆”理解：它维护状态，能够衰减旧状态，并使用 delta rule 定点纠错。</p>
+<h3 id="linear-on">误解二：Linear 表示整个模型都是 <span class="arithmatex">\(O(N)\)</span><a class="headerlink" href="#linear-on" title="Permanent link">&para;</a></h3>
+<p>不是。KDA 层关于序列长度是线性的，但模型还保留约四分之一的全局 MLA 层，因此整体仍有随上下文增长的 KV Cache 和一部分二次 Prefill 计算。</p>
+<h3 id="1m-context-1m-token">误解三：支持 1M context 就表示能无损记住 1M token<a class="headerlink" href="#1m-context-1m-token" title="Permanent link">&para;</a></h3>
+<p>不是。context window 表示模型和实现允许处理该长度，不保证任意信息在任何位置都能被完美召回。KDA 状态本身还是有限容量，MLA 层也会受到模型能力和位置分布影响。</p>
+<h3 id="6-kda-6">误解四：6 倍来自单个 KDA 算子快 6 倍<a class="headerlink" href="#6-kda-6" title="Permanent link">&para;</a></h3>
+<p>不一定。官方说明中特别强调了 KV Cache 减少后可以使用更大的 batch。端到端吞吐提升是算子速度、访存减少和 batch capacity 共同作用的结果。</p>
+<h3 id="moe-kimi-linear">误解五：MoE 是 Kimi Linear 能处理长上下文的原因<a class="headerlink" href="#moe-kimi-linear" title="Permanent link">&para;</a></h3>
+<p>不是。MoE 降低每个 token 激活的 FFN 计算；KDA/MLA 混合架构降低 Attention 和 KV Cache 成本。它们同时出现在 checkpoint 中，但作用不同。</p>
+<h2 id="11">11. 一句话总结每一步<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>架构</th>
+<th>一句话理解</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Full Attention</td>
+<td>保存所有历史 K/V，查询时回看原始档案</td>
+</tr>
+<tr>
+<td>Linear Attention</td>
+<td>把历史 K/V 汇总成固定大小的状态</td>
+</tr>
+<tr>
+<td>DeltaNet</td>
+<td>写新记忆前先读取旧值，只写入纠错量</td>
+</tr>
+<tr>
+<td>Gated DeltaNet</td>
+<td>在定点纠错之外，增加整体遗忘能力</td>
+</tr>
+<tr>
+<td>KDA</td>
+<td>把遗忘细化到 channel，并让 DPLR 更新适合 GPU 分块执行</td>
+</tr>
+<tr>
+<td>Kimi Linear</td>
+<td>用 KDA 承担约四分之三的层，用全局 MLA 保留精确检索能力</td>
+</tr>
+</tbody>
+</table>
+<p>最值得记住的不是“线性 Attention 比普通 Attention 快”，而是下面这个取舍：</p>
+<blockquote>
+<p>普通 Attention 用不断增长的存储换取精确回看；KDA 用固定大小的可更新状态换取效率；Kimi Linear 再用少量全局 Attention 补偿固定状态的信息损失。</p>
+</blockquote>
+<h2 id="_1">参考资料<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Kimi Team, <a href="https://arxiv.org/abs/2510.26692">Kimi Linear: An Expressive, Efficient Attention Architecture</a>, 2025.</li>
+<li>Moonshot AI, <a href="https://github.com/MoonshotAI/Kimi-Linear">Kimi Linear 官方代码仓库</a>.</li>
+<li>Moonshot AI, <a href="https://huggingface.co/moonshotai/Kimi-Linear-48B-A3B-Instruct">Kimi-Linear-48B-A3B-Instruct 模型卡与配置</a>.</li>
+<li>Vaswani et al., <a href="https://arxiv.org/abs/1706.03762">Attention Is All You Need</a>, 2017.</li>
+<li>Katharopoulos et al., <a href="https://arxiv.org/abs/2006.16236">Transformers are RNNs: Fast Autoregressive Transformers with Linear Attention</a>, 2020.</li>
+<li>Yang et al., <a href="https://arxiv.org/abs/2412.06464">Gated Delta Networks: Improving Mamba2 with Delta Rule</a>, 2024.</li>
+<li>kaiyuan, <a href="https://www.zhihu.com/question/1967516557811909769/answer/1967989954656305654">月之暗面推出全新注意力架构 KimiLinear，有哪些技术亮点？</a>，知乎。本文参考了该回答从 Attention、复杂度与结合律逐步引出 KDA 的讲解路径；公式、配置与性能数据同时以官方论文、模型卡和开源实现交叉核对。</li>
+</ol>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 LJX
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/Lai-JX" target="_blank" rel="noopener" title="Lai-JX on GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.tracking", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
