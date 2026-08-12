@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900" role="img" aria-labelledby="title desc">
+  <title id="title">DeepSeek-V3 MLA 与 KV Cache 数据流</title>
+  <desc id="desc">展示 Query 低秩投影、KV 联合压缩、解耦 RoPE，以及 naive 和 weight-absorbed 两种推理路径。</desc>
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f8fafc"/>
+      <stop offset="1" stop-color="#ecfeff"/>
+    </linearGradient>
+    <filter id="shadow2" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#0f172a" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrow2" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 30px system-ui, sans-serif; fill: #0f172a; }
+      .subtitle { font: 400 16px system-ui, sans-serif; fill: #475569; }
+      .lane { font: 700 20px system-ui, sans-serif; fill: #0f172a; }
+      .label { font: 700 16px system-ui, sans-serif; fill: #0f172a; }
+      .body { font: 400 14px system-ui, sans-serif; fill: #334155; }
+      .small { font: 400 12px system-ui, sans-serif; fill: #475569; }
+      .flow { stroke: #475569; stroke-width: 2.2; fill: none; marker-end: url(#arrow2); }
+      .blue { stroke: #2563eb; }
+      .violet { stroke: #7c3aed; }
+      .dash { stroke-dasharray: 7 6; }
+    </style>
+  </defs>
+
+  <rect width="1400" height="900" rx="24" fill="url(#bg2)"/>
+  <text x="55" y="58" class="title">Multi-head Latent Attention：把历史 KV 压缩成 latent</text>
+  <text x="55" y="88" class="subtitle">蓝色为内容路径（可 weight absorption），紫色为位置路径（单独施加 RoPE）</text>
+
+  <g filter="url(#shadow2)">
+    <rect x="55" y="125" width="1290" height="250" rx="20" fill="#ffffff" stroke="#93c5fd"/>
+    <text x="82" y="158" class="lane">Query 路径</text>
+
+    <rect x="85" y="195" width="145" height="72" rx="13" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="157" y="225" text-anchor="middle" class="label">hidden</text>
+    <text x="157" y="248" text-anchor="middle" class="body">[B,S,7168]</text>
+
+    <rect x="285" y="195" width="170" height="72" rx="13" fill="#eff6ff" stroke="#60a5fa"/>
+    <text x="370" y="225" text-anchor="middle" class="label">W_DQ + RMSNorm</text>
+    <text x="370" y="248" text-anchor="middle" class="body">Q latent: 1536</text>
+
+    <rect x="510" y="195" width="205" height="72" rx="13" fill="#eff6ff" stroke="#60a5fa"/>
+    <text x="612" y="225" text-anchor="middle" class="label">W_UQ</text>
+    <text x="612" y="248" text-anchor="middle" class="body">128 heads × 192</text>
+
+    <rect x="780" y="178" width="180" height="64" rx="13" fill="#eff6ff" stroke="#60a5fa"/>
+    <text x="870" y="205" text-anchor="middle" class="label">q_nope</text>
+    <text x="870" y="227" text-anchor="middle" class="body">128 / head</text>
+
+    <rect x="780" y="270" width="180" height="64" rx="13" fill="#faf5ff" stroke="#c084fc"/>
+    <text x="870" y="297" text-anchor="middle" class="label">q_rope</text>
+    <text x="870" y="319" text-anchor="middle" class="body">64 / head + RoPE</text>
+
+    <rect x="1050" y="213" width="235" height="72" rx="13" fill="#f0fdf4" stroke="#86efac"/>
+    <text x="1167" y="242" text-anchor="middle" class="label">Attention score</text>
+    <text x="1167" y="265" text-anchor="middle" class="body">content score + position score</text>
+
+    <path d="M230 231 H285" class="flow blue"/>
+    <path d="M455 231 H510" class="flow blue"/>
+    <path d="M715 231 H745 V210 H780" class="flow blue"/>
+    <path d="M745 231 V302 H780" class="flow violet"/>
+    <path d="M960 210 H1005 V239 H1050" class="flow blue"/>
+    <path d="M960 302 H1005 V259 H1050" class="flow violet"/>
+  </g>
+
+  <g filter="url(#shadow2)">
+    <rect x="55" y="410" width="1290" height="425" rx="20" fill="#ffffff" stroke="#a5b4fc"/>
+    <text x="82" y="446" class="lane">Key / Value 路径与两种 Cache 实现</text>
+
+    <rect x="85" y="492" width="145" height="72" rx="13" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="157" y="522" text-anchor="middle" class="label">hidden</text>
+    <text x="157" y="545" text-anchor="middle" class="body">[B,S,7168]</text>
+
+    <rect x="285" y="492" width="190" height="72" rx="13" fill="#ecfeff" stroke="#22d3ee"/>
+    <text x="380" y="522" text-anchor="middle" class="label">W_DKV 一次投影</text>
+    <text x="380" y="545" text-anchor="middle" class="body">512 + 64 = 576</text>
+
+    <rect x="535" y="465" width="180" height="72" rx="13" fill="#eff6ff" stroke="#60a5fa"/>
+    <text x="625" y="494" text-anchor="middle" class="label">c_KV + RMSNorm</text>
+    <text x="625" y="517" text-anchor="middle" class="body">512-d latent</text>
+
+    <rect x="535" y="574" width="180" height="72" rx="13" fill="#faf5ff" stroke="#c084fc"/>
+    <text x="625" y="603" text-anchor="middle" class="label">k_rope</text>
+    <text x="625" y="626" text-anchor="middle" class="body">共享 64-d + RoPE</text>
+
+    <path d="M230 528 H285" class="flow"/>
+    <path d="M475 528 H505 V501 H535" class="flow blue"/>
+    <path d="M505 528 V610 H535" class="flow violet"/>
+
+    <rect x="785" y="455" width="510" height="145" rx="16" fill="#fff7ed" stroke="#fb923c"/>
+    <text x="810" y="485" class="label">naive：先展开完整 K/V，再缓存</text>
+    <text x="810" y="512" class="body">c_KV → W_UKV → 128 × (k_nope 128 + value 128)</text>
+    <text x="810" y="539" class="body">K = [k_nope 128 ; k_rope 64]，每个 head 复制位置 key</text>
+    <text x="810" y="566" class="body">Cache / token / layer：128 × (192 + 128) = 40,960 elements</text>
+    <path d="M715 501 H785" class="flow blue"/>
+    <path d="M715 610 H750 V554 H785" class="flow violet"/>
+
+    <rect x="785" y="645" width="510" height="145" rx="16" fill="#f0fdf4" stroke="#22c55e"/>
+    <text x="810" y="675" class="label">absorb：缓存 latent，把 W_UK / W_UV 吸收到计算两侧</text>
+    <text x="810" y="702" class="body">score = (q_nope · W_UK) · c_KV + q_rope · k_rope</text>
+    <text x="810" y="729" class="body">output = (attention weights · c_KV) · W_UV</text>
+    <text x="810" y="756" class="body">Cache / token / layer：512 + 64 = 576 elements（逻辑表示缩小 71.1×）</text>
+    <path d="M715 501 H750 V700 H785" class="flow blue dash"/>
+    <path d="M715 610 H750 V743 H785" class="flow violet dash"/>
+  </g>
+
+  <text x="60" y="870" class="small">注：参考 demo 在多卡 absorb 模式会在各 rank 复制 512+64 cache；实际每卡节省比例还取决于并行与缓存切分方式。</text>
+</svg>

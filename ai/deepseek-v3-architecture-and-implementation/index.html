@@ -1,0 +1,3424 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="算法复习、AI 原理与持续整理的技术笔记">
+      
+      
+        <meta name="author" content="LJX">
+      
+      
+        <link rel="canonical" href="https://lai-jx.github.io/ai/deepseek-v3-architecture-and-implementation/">
+      
+      
+        <link rel="prev" href="../KDA/">
+      
+      
+        <link rel="next" href="../reading-list/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>DeepSeek-V3 架构与参考实现解析 - LJX 知识库</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#deepseek-v3" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="LJX 知识库" class="md-header__button md-logo" aria-label="LJX 知识库" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19.07 14.88 2.05 2.05L15.06 23H13v-2.06zm1.97-1.75c.14 0 .27.06.38.17l1.28 1.28c.22.21.22.56 0 .77l-1 1-2.05-2.05 1-1c.11-.11.25-.17.39-.17M17 4v6l-2-2-2 2V4H9v16h2v2H7c-1.05 0-2-.95-2-2v-1H3v-2h2v-4H3v-2h2V7H3V5h2V4a2 2 0 0 1 2-2h12c1.05 0 2 .95 2 2v6l-2 2V4zM5 5v2h2V5zm0 6v2h2v-2zm0 6v2h2v-2z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LJX 知识库
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              DeepSeek-V3 架构与参考实现解析
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange"  aria-label="切换至深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换至深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="orange"  aria-label="切换至浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换至浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Lai-JX/Lai-JX.github.io" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Lai-JX/Lai-JX.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../algorithms/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  算法题库
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../hot-100/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Hot 100
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  AI 原理
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="LJX 知识库" class="md-nav__button md-logo" aria-label="LJX 知识库" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19.07 14.88 2.05 2.05L15.06 23H13v-2.06zm1.97-1.75c.14 0 .27.06.38.17l1.28 1.28c.22.21.22.56 0 .77l-1 1-2.05-2.05 1-1c.11-.11.25-.17.39-.17M17 4v6l-2-2-2 2V4H9v16h2v2H7c-1.05 0-2-.95-2-2v-1H3v-2h2v-4H3v-2h2V7H3V5h2V4a2 2 0 0 1 2-2h12c1.05 0 2 .95 2 2v6l-2 2V4zM5 5v2h2V5zm0 6v2h2v-2zm0 6v2h2v-2z"/></svg>
+
+    </a>
+    LJX 知识库
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Lai-JX/Lai-JX.github.io" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Lai-JX/Lai-JX.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../algorithms/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    算法题库
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    算法题库
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数组
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    链表
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    哈希表
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    字符串
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    栈与队列
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    二叉树
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    回溯算法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    贪心算法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    动态规划
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    单调栈
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    图论
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms/chapter-12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hot 100
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../hot-100/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hot 100
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Hot 100
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI 原理
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    AI 原理
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mla-matrix-absorption/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MLA 的矩阵吸收算法：从直觉到公式与伪代码
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gate-mla/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kimi K3 的 Gated MLA：从公式、维度到矩阵吸收
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../KDA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kimi Linear：从 Attention 到 KDA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DeepSeek-V3 架构与实现
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DeepSeek-V3 架构与实现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 先给结论
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 文档范围：模型设计不等于 demo 能力
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 源码地图
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-671b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 671B 配置与层级结构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 671B 配置与层级结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 核心超参数
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 主干数据流
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-mla-rope-weight-absorption" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. MLA：低秩压缩、解耦 RoPE 与 Weight Absorption
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. MLA：低秩压缩、解耦 RoPE 与 Weight Absorption">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-mha" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 为什么不是普通 MHA
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-query" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Query 路径
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-kv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 KV 与位置路径
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-decoupled-rope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 Decoupled RoPE 为什么必要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#55-naive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5 naive 路径
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#56-absorb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.6 absorb 路径
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#57-cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.7 Cache 节省量与并行语义
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#58-yarn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.8 YaRN 长上下文
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-deepseekmoe-routed-experts-shared-expert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. DeepSeekMoE：细粒度 routed experts + shared expert
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. DeepSeekMoE：细粒度 routed experts + shared expert">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 单个专家
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-router" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Router 前向
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-moe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 MoE 输出
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-auxiliary-loss-free-load-balancing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 Auxiliary-loss-free load balancing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65-group-limited-node-limited" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 Group-limited 与论文中的 node-limited
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-mtp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. MTP：训练信号与推理加速候选
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-fp8-triton" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. FP8 设计与 Triton 实现
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. FP8 设计与 Triton 实现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 权重格式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-linear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 Linear 的两条运行路径
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-activation-quantization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 activation quantization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#84-fp8-gemm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.4 FP8 GEMM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#85" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.5 论文中的训练系统
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 模型并行与专家并行
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 模型并行与专家并行">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-vocabulary-parallel-embedding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 Vocabulary parallel embedding
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-column-parallel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 Column parallel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93-row-parallel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 Row parallel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#94-expert-partition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4 Expert partition
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-checkpoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Checkpoint 转换
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Checkpoint 转换">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.1 参数名映射
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2 张量切分
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#103-mtp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.3 MTP 处理
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 自回归生成流程
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 如何运行参考实现
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. 如何运行参考实现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#121" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.1 转换权重
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#122" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.2 启动两节点、每节点八卡
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#123-fp8-bf16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.3 FP8 转 BF16
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 参考实现的性能边界
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. 代码阅读顺序
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. 常见误区
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="15. 常见误区">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#151-671b-token" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.1 “671B 都会参与每个 token 计算”
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#152-mla-head-kv-512" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.2 “MLA 就是把每个 head 的 K/V 各压成 512 维”
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#153-correction-bias" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.3 “correction bias 直接乘到专家输出上”
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#154-auxiliary-loss-free" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.4 “auxiliary-loss-free 表示没有任何均衡损失”
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#155-checkpoint-mtp-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.5 “开源 checkpoint 有 MTP，所以这个 demo 会自动加速”
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#156-128k-config-128k" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.6 “模型支持 128K，所以 config 默认就是 128K”
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#157-expert-parallel-64-way-ep" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.7 “参考代码中的 expert parallel 就是训练系统的 64-way EP”
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16. 参考资料
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="16. 参考资料">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        官方一手资料
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        官方源码文件
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reading-list/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    好文收藏
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 先给结论
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 文档范围：模型设计不等于 demo 能力
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 源码地图
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-671b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 671B 配置与层级结构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 671B 配置与层级结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 核心超参数
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 主干数据流
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-mla-rope-weight-absorption" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. MLA：低秩压缩、解耦 RoPE 与 Weight Absorption
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. MLA：低秩压缩、解耦 RoPE 与 Weight Absorption">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-mha" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 为什么不是普通 MHA
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-query" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Query 路径
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-kv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 KV 与位置路径
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-decoupled-rope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 Decoupled RoPE 为什么必要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#55-naive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5 naive 路径
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#56-absorb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.6 absorb 路径
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#57-cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.7 Cache 节省量与并行语义
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#58-yarn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.8 YaRN 长上下文
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-deepseekmoe-routed-experts-shared-expert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. DeepSeekMoE：细粒度 routed experts + shared expert
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. DeepSeekMoE：细粒度 routed experts + shared expert">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 单个专家
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-router" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Router 前向
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-moe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 MoE 输出
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-auxiliary-loss-free-load-balancing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 Auxiliary-loss-free load balancing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65-group-limited-node-limited" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 Group-limited 与论文中的 node-limited
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-mtp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. MTP：训练信号与推理加速候选
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-fp8-triton" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. FP8 设计与 Triton 实现
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. FP8 设计与 Triton 实现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 权重格式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-linear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 Linear 的两条运行路径
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-activation-quantization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 activation quantization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#84-fp8-gemm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.4 FP8 GEMM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#85" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.5 论文中的训练系统
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 模型并行与专家并行
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 模型并行与专家并行">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-vocabulary-parallel-embedding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 Vocabulary parallel embedding
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-column-parallel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 Column parallel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93-row-parallel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 Row parallel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#94-expert-partition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4 Expert partition
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-checkpoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Checkpoint 转换
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Checkpoint 转换">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.1 参数名映射
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2 张量切分
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#103-mtp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.3 MTP 处理
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 自回归生成流程
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 如何运行参考实现
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. 如何运行参考实现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#121" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.1 转换权重
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#122" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.2 启动两节点、每节点八卡
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#123-fp8-bf16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.3 FP8 转 BF16
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 参考实现的性能边界
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. 代码阅读顺序
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. 常见误区
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="15. 常见误区">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#151-671b-token" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.1 “671B 都会参与每个 token 计算”
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#152-mla-head-kv-512" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.2 “MLA 就是把每个 head 的 K/V 各压成 512 维”
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#153-correction-bias" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.3 “correction bias 直接乘到专家输出上”
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#154-auxiliary-loss-free" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.4 “auxiliary-loss-free 表示没有任何均衡损失”
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#155-checkpoint-mtp-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.5 “开源 checkpoint 有 MTP，所以这个 demo 会自动加速”
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#156-128k-config-128k" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.6 “模型支持 128K，所以 config 默认就是 128K”
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#157-expert-parallel-64-way-ep" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.7 “参考代码中的 expert parallel 就是训练系统的 64-way EP”
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16. 参考资料
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="16. 参考资料">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        官方一手资料
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        官方源码文件
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="deepseek-v3">DeepSeek-V3 架构与参考实现解析<a class="headerlink" href="#deepseek-v3" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>本文以 <a href="https://github.com/deepseek-ai/DeepSeek-V3">DeepSeek-V3 官方仓库</a>为代码基准，以 <a href="https://arxiv.org/html/2412.19437">DeepSeek-V3 Technical Report</a> 和 <a href="https://arxiv.org/html/2405.04434">DeepSeek-V2 Technical Report</a> 为理论依据，解释模型架构、张量形状、推理流程和实现边界。</p>
+<p>代码基准核对日期：2026-08-10。本文讨论的是 <strong>DeepSeek-V3 671B</strong>；<code>config_v3.1.json</code> 只在 FP8 scale 格式等实现细节上另行说明。</p>
+</blockquote>
+<h2 id="1">1. 先给结论<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>DeepSeek-V3 是一个 decoder-only、稀疏激活的 Transformer：</p>
+<ul>
+<li>主模型共 61 个 Transformer Block，隐藏维度 7,168；</li>
+<li>每层 Attention 都使用 MLA（Multi-head Latent Attention）；</li>
+<li>前 3 层使用 Dense SwiGLU FFN，后 58 层使用 DeepSeekMoE；</li>
+<li>每个 MoE 层包含 256 个 routed experts，每个 token 选择 8 个，同时始终经过 1 个 shared expert；</li>
+<li>主模型共 671B 参数，每个 token 激活约 36.7B，通常四舍五入为 37B；</li>
+<li>开源 checkpoint 还包含 1 个 MTP 模块。Hugging Face 文件标称总量约 685B，其中主模型 671B、MTP 部分约 14B；</li>
+<li>模型在 4K 序列上完成主要预训练，再通过 YaRN 两阶段扩展到 32K、128K；</li>
+<li>权重以 FP8 E4M3、128×128 block scale 发布，运行时可以解量化到 BF16，也可以走动态激活量化的 FP8 GEMM。</li>
+</ul>
+<p>最重要的三个设计取舍是：</p>
+<ol>
+<li><strong>MLA 用低维 latent 代替完整历史 K/V</strong>，降低长上下文 decode 的缓存和访存成本。</li>
+<li><strong>DeepSeekMoE 用细粒度专家扩大总参数量，但每个 token 只激活少量专家</strong>，把模型容量和单 token 计算量解耦。</li>
+<li><strong>辅助损失无关的负载均衡与 MTP 属于训练设计</strong>；参考推理代码只消费其结果，没有实现完整训练算法。</li>
+</ol>
+<p>下图是技术报告 Figure 2 的总体架构图。左侧给出重复的 Transformer Block；右上展开 DeepSeekMoE，右下展开 MLA。MLA 图中带斜线阴影的向量表示推理时需要缓存的内容，即压缩后的 <code>c_t^KV</code> 与 decoupled RoPE key <code>k_t^R</code>。</p>
+<p><img alt="DeepSeek-V3 论文总体架构：Transformer Block、DeepSeekMoE 与 MLA" src="../assets/deepseek-v3-paper-architecture.png" /></p>
+<blockquote>
+<p>图源：<a href="https://arxiv.org/html/2412.19437">DeepSeek-V3 Technical Report, Figure 2</a>。本站将本地副本统一存放在模块的 <code>assets/</code> 目录中，便于离线构建。</p>
+</blockquote>
+<h2 id="2-demo">2. 文档范围：模型设计不等于 demo 能力<a class="headerlink" href="#2-demo" title="Permanent link">&para;</a></h2>
+<p>DeepSeek-V3 官方仓库公开的是一个便于理解权重与推理路径的最小实现，不是训练 DeepSeek-V3 的完整 HAI-LLM 系统，也不是面向生产的高吞吐推理引擎。</p>
+<table>
+<thead>
+<tr>
+<th>能力</th>
+<th>论文 / 权重</th>
+<th>官方 <code>inference/</code> demo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>61 层主模型</td>
+<td>完整</td>
+<td>已实现</td>
+</tr>
+<tr>
+<td>MLA naive 路径</td>
+<td>架构等价形式</td>
+<td>已实现</td>
+</tr>
+<tr>
+<td>MLA weight absorption</td>
+<td>推理优化</td>
+<td>已实现</td>
+</tr>
+<tr>
+<td>DeepSeekMoE 前向</td>
+<td>完整架构</td>
+<td>已实现，但使用 Python 循环</td>
+</tr>
+<tr>
+<td>auxiliary-loss-free bias</td>
+<td>训练中动态更新</td>
+<td>只加载 correction bias 并参与选路</td>
+</tr>
+<tr>
+<td>MTP</td>
+<td>训练目标，可用于 speculative decoding</td>
+<td>未实现；转换时跳过第 61 号附加层</td>
+</tr>
+<tr>
+<td>FP8 训练</td>
+<td>细粒度混合精度训练框架</td>
+<td>未实现</td>
+</tr>
+<tr>
+<td>FP8 权重推理</td>
+<td>官方权重格式</td>
+<td>已提供 BF16 解量化和 FP8 GEMM 两条路径</td>
+</tr>
+<tr>
+<td>DualPipe / 16-way PP / 64-way EP</td>
+<td>训练系统</td>
+<td>未实现</td>
+</tr>
+<tr>
+<td>高性能 token dispatch / combine</td>
+<td>生产系统所需</td>
+<td>未实现 All-to-All kernel</td>
+</tr>
+</tbody>
+</table>
+<p>因此，阅读代码时应区分两类问题：</p>
+<ul>
+<li>“DeepSeek-V3 为什么这样设计？”——看论文和本文章节 4–8；</li>
+<li>“这个最小仓库具体怎样跑起来？”——看本文章节 9–13。</li>
+</ul>
+<h2 id="3">3. 源码地图<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>作用</th>
+<th>建议关注点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/configs/config_671B.json"><code>inference/configs/config_671B.json</code></a></td>
+<td>671B 结构参数</td>
+<td>层数、MLA 维度、专家数、FP8 dtype</td>
+</tr>
+<tr>
+<td><a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/model.py"><code>inference/model.py</code></a></td>
+<td>模型主体</td>
+<td><code>MLA</code>、<code>Gate</code>、<code>MoE</code>、<code>Block</code>、并行线性层</td>
+</tr>
+<tr>
+<td><a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/kernel.py"><code>inference/kernel.py</code></a></td>
+<td>Triton 低精度 kernel</td>
+<td>activation quant、weight dequant、FP8 GEMM</td>
+</tr>
+<tr>
+<td><a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/generate.py"><code>inference/generate.py</code></a></td>
+<td>自回归生成</td>
+<td>checkpoint 加载、prefill/decode、采样</td>
+</tr>
+<tr>
+<td><a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/convert.py"><code>inference/convert.py</code></a></td>
+<td>HF 权重转 demo 格式</td>
+<td>参数名映射、TP/EP 切分、跳过 MTP</td>
+</tr>
+<tr>
+<td><a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/fp8_cast_bf16.py"><code>inference/fp8_cast_bf16.py</code></a></td>
+<td>FP8 checkpoint 转 BF16</td>
+<td>128×128 block 反量化</td>
+</tr>
+<tr>
+<td><a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/README_WEIGHTS%2Emd"><code>README_WEIGHTS.md</code></a></td>
+<td>权重结构说明</td>
+<td>主模型 / MTP 边界、FP8 scale</td>
+</tr>
+</tbody>
+</table>
+<p>本文聚焦 DeepSeek-V3 的“架构—源码”直接映射；建议阅读时固定官方仓库 commit，避免后续实现变更导致行号漂移。</p>
+<h2 id="4-671b">4. 671B 配置与层级结构<a class="headerlink" href="#4-671b" title="Permanent link">&para;</a></h2>
+<h3 id="41">4.1 核心超参数<a class="headerlink" href="#41" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/configs/config_671B.json"><code>config_671B.json</code></a> 中的主要配置如下：</p>
+<table>
+<thead>
+<tr>
+<th>配置项</th>
+<th style="text-align: right;">值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>vocab_size</code></td>
+<td style="text-align: right;">129,280</td>
+<td>词表大小</td>
+</tr>
+<tr>
+<td><code>dim</code></td>
+<td style="text-align: right;">7,168</td>
+<td>residual stream / hidden size</td>
+</tr>
+<tr>
+<td><code>n_layers</code></td>
+<td style="text-align: right;">61</td>
+<td>主模型 Transformer Block 数</td>
+</tr>
+<tr>
+<td><code>n_dense_layers</code></td>
+<td style="text-align: right;">3</td>
+<td>前 3 层使用 Dense FFN</td>
+</tr>
+<tr>
+<td><code>inter_dim</code></td>
+<td style="text-align: right;">18,432</td>
+<td>Dense SwiGLU 中间维度</td>
+</tr>
+<tr>
+<td><code>moe_inter_dim</code></td>
+<td style="text-align: right;">2,048</td>
+<td>单个专家的中间维度</td>
+</tr>
+<tr>
+<td><code>n_heads</code></td>
+<td style="text-align: right;">128</td>
+<td>Attention query heads</td>
+</tr>
+<tr>
+<td><code>q_lora_rank</code></td>
+<td style="text-align: right;">1,536</td>
+<td>Query 低秩 latent 维度</td>
+</tr>
+<tr>
+<td><code>kv_lora_rank</code></td>
+<td style="text-align: right;">512</td>
+<td>Key/Value 联合 latent 维度</td>
+</tr>
+<tr>
+<td><code>qk_nope_head_dim</code></td>
+<td style="text-align: right;">128</td>
+<td>每个 Q/K head 的内容维度</td>
+</tr>
+<tr>
+<td><code>qk_rope_head_dim</code></td>
+<td style="text-align: right;">64</td>
+<td>每个 Q/K head 的位置维度</td>
+</tr>
+<tr>
+<td><code>v_head_dim</code></td>
+<td style="text-align: right;">128</td>
+<td>每个 Value head 维度</td>
+</tr>
+<tr>
+<td><code>n_routed_experts</code></td>
+<td style="text-align: right;">256</td>
+<td>每个 MoE 层的 routed experts 数</td>
+</tr>
+<tr>
+<td><code>n_shared_experts</code></td>
+<td style="text-align: right;">1</td>
+<td>始终执行的 shared expert 数</td>
+</tr>
+<tr>
+<td><code>n_activated_experts</code></td>
+<td style="text-align: right;">8</td>
+<td>每 token 的 routed Top-K</td>
+</tr>
+<tr>
+<td><code>n_expert_groups</code></td>
+<td style="text-align: right;">8</td>
+<td>routed experts 分组数</td>
+</tr>
+<tr>
+<td><code>n_limited_groups</code></td>
+<td style="text-align: right;">4</td>
+<td>每 token 可进入的 Top group 数</td>
+</tr>
+<tr>
+<td><code>score_func</code></td>
+<td style="text-align: right;"><code>sigmoid</code></td>
+<td>router affinity 函数</td>
+</tr>
+<tr>
+<td><code>route_scale</code></td>
+<td style="text-align: right;">2.5</td>
+<td>选中专家权重的最终缩放</td>
+</tr>
+<tr>
+<td><code>dtype</code></td>
+<td style="text-align: right;"><code>fp8</code></td>
+<td>checkpoint 权重类型</td>
+</tr>
+</tbody>
+</table>
+<p>由此可得每个 attention head：</p>
+<div class="arithmatex">\[
+d_q=d_k=d_{nope}+d_{rope}=128+64=192, \qquad d_v=128
+\]</div>
+<h3 id="42">4.2 主干数据流<a class="headerlink" href="#42" title="Permanent link">&para;</a></h3>
+<p>论文图强调数学结构，下面的 SVG 则按官方 <a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/model.py"><code>model.py</code></a> 的实际执行顺序重排：顶部是严格从左到右的主模型前向，下方只展开一个 Block。虚线表示“展开关系”，不表示张量流动；Block 内蓝色箭头表示两次 residual bypass。</p>
+<p><img alt="DeepSeek-V3 源码执行流与单个 Transformer Block" src="../assets/deepseek-v3-code-flow.svg" /></p>
+<p>模型前向可概括为：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>token ids [B,S]
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  → vocab-parallel embedding [B,S,7168]
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  → Transformer Block × 61
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>      ├─ RMSNorm → MLA → residual add
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>      └─ RMSNorm → Dense MLP / MoE → residual add
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>  → RMSNorm
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>  → 取最后一个位置
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>  → vocab-parallel LM head
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>  → all-gather logits [B,129280]
+</span></code></pre></div>
+<p><a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/model.py#L696-L735"><code>Block</code></a> 是标准 Pre-Norm 结构：</p>
+<div class="arithmatex">\[
+x' = x + \operatorname{MLA}(\operatorname{RMSNorm}(x))
+\]</div>
+<div class="arithmatex">\[
+y = x' + \operatorname{FFN}(\operatorname{RMSNorm}(x'))
+\]</div>
+<p><a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/model.py#L706-L718"><code>Block.__init__</code></a> 使用 <code>layer_id &lt; n_dense_layers</code> 决定 FFN 类型，因此层号 0–2 是 Dense MLP，层号 3–60 是 MoE，共 3 个 Dense 层和 58 个 MoE 层。</p>
+<h2 id="5-mla-rope-weight-absorption">5. MLA：低秩压缩、解耦 RoPE 与 Weight Absorption<a class="headerlink" href="#5-mla-rope-weight-absorption" title="Permanent link">&para;</a></h2>
+<h3 id="51-mha">5.1 为什么不是普通 MHA<a class="headerlink" href="#51-mha" title="Permanent link">&para;</a></h3>
+<p>普通 MHA 在自回归 decode 时，需要为每个历史 token 保存所有 head 的 K 和 V。DeepSeek-V3 的维度下，逻辑缓存量为：</p>
+<div class="arithmatex">\[
+128\times(192+128)=40{,}960\ \text{elements/token/layer}
+\]</div>
+<p>长上下文 decode 通常受显存带宽限制。MLA 的核心不是简单减少 head 数，而是把所有 head 的 K/V 内容联合压缩到一个 512 维 latent：</p>
+<div class="arithmatex">\[
+c_t^{KV}=W^{DKV}h_t,\qquad c_t^{KV}\in\mathbb{R}^{512}
+\]</div>
+<p>位置相关的 key 不能直接按同样方式吸收，所以额外保留 64 维的 decoupled RoPE key。最终逻辑缓存为：</p>
+<div class="arithmatex">\[
+512+64=576\ \text{elements/token/layer}
+\]</div>
+<p><img alt="MLA 与 KV Cache 数据流" src="../assets/deepseek-v3-mla-cache-flow.svg" /></p>
+<h3 id="52-query">5.2 Query 路径<a class="headerlink" href="#52-query" title="Permanent link">&para;</a></h3>
+<p>在 671B 配置中，<a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/model.py#L412-L437"><code>MLA.__init__</code></a> 创建：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>x [B,S,7168]
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  → wq_a: 7168 → 1536
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>  → RMSNorm(1536)
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  → wq_b: 1536 → local_heads × 192
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>  → reshape [B,S,local_heads,192]
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>  → split(q_nope=128, q_pe=64)
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>  → RoPE(q_pe)
+</span></code></pre></div>
+<p>公式写成：</p>
+<div class="arithmatex">\[
+c_t^Q=W^{DQ}h_t
+\]</div>
+<div class="arithmatex">\[
+[q_{t,1}^{C};\dots;q_{t,H}^{C};q_{t,1}^{R};\dots;q_{t,H}^{R}]
+=W^{UQ}\operatorname{RMSNorm}(c_t^Q)
+\]</div>
+<p><code>q_lora_rank</code> 中的 “LoRA” 表示模型原生的低秩投影结构，不是 PEFT adapter。</p>
+<h3 id="53-kv">5.3 KV 与位置路径<a class="headerlink" href="#53-kv" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/model.py#L446-L497"><code>MLA.forward</code></a> 首先用一个投影同时产生 KV latent 和位置 key：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>x [B,S,7168]
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>  → wkv_a: 7168 → (512 + 64)
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>  → split
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>      ├─ kv [B,S,512] → RMSNorm
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>      └─ k_pe [B,S,64] → 增加共享 head 维 → RoPE
+</span></code></pre></div>
+<p>内容 key 和 value 可以从 latent 恢复：</p>
+<div class="arithmatex">\[
+k_{t}^{C}=W^{UK}c_t^{KV},\qquad v_t=W^{UV}c_t^{KV}
+\]</div>
+<p>位置 key：</p>
+<div class="arithmatex">\[
+k_t^R=\operatorname{RoPE}(W^{KR}h_t)
+\]</div>
+<p>每个 head 使用拼接后的 key：</p>
+<div class="arithmatex">\[
+k_{t,i}=[k_{t,i}^{C};k_t^R]
+\]</div>
+<p>这里的 <code>k_t^R</code> 在 head 间共享，但各 head 的 <code>q_{t,i}^R</code> 不同，所以 positional score 仍然是 per-head 的。</p>
+<h3 id="54-decoupled-rope">5.4 Decoupled RoPE 为什么必要<a class="headerlink" href="#54-decoupled-rope" title="Permanent link">&para;</a></h3>
+<p>对不带位置变换的内容 key，有结合律：</p>
+<div class="arithmatex">\[
+q^T(W^{UK}c)=((W^{UK})^Tq)^Tc
+\]</div>
+<p>因此可以不展开历史 <code>k_nope</code>，把 <code>W^{UK}</code> 吸收到 query 侧。但若对整个 key 使用位置相关的旋转矩阵：</p>
+<div class="arithmatex">\[
+q_i^T R_j W^{UK}c_j
+\]</div>
+<p><code>R_j</code> 随历史位置 <code>j</code> 变化，固定的 <code>W^{UK}</code> 不能直接跨所有位置吸收到 query 侧。MLA 将 score 拆成内容项和位置项：</p>
+<div class="arithmatex">\[
+q_i^Tk_j=(q_i^C)^Tk_j^C+(q_i^R)^Tk_j^R
+\]</div>
+<p>这样，内容项可以 absorption，64 维位置项单独做 RoPE 和 cache。</p>
+<h3 id="55-naive">5.5 naive 路径<a class="headerlink" href="#55-naive" title="Permanent link">&para;</a></h3>
+<p>设置全局变量 <code>attn_impl = "naive"</code> 时，参考实现：</p>
+<ol>
+<li>用 <code>wkv_b</code> 将 512 维 latent 展开为每个 head 的 <code>k_nope</code> 和 <code>v</code>；</li>
+<li>将共享的 <code>k_pe</code> 扩展到所有 local heads；</li>
+<li>缓存完整 <code>k_cache</code> 与 <code>v_cache</code>；</li>
+<li>直接计算普通 attention。</li>
+</ol>
+<p>核心形状是：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>k_cache: [max_batch, max_seq, local_heads, 192]
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>v_cache: [max_batch, max_seq, local_heads, 128]
+</span></code></pre></div>
+<p>这条路径更直观，主要用于验证结构正确性。</p>
+<h3 id="56-absorb">5.6 absorb 路径<a class="headerlink" href="#56-absorb" title="Permanent link">&para;</a></h3>
+<p>默认 <code>attn_impl = "absorb"</code>。代码把 <code>wkv_b</code> reshape 为：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>[local_heads, qk_nope_head_dim + v_head_dim, kv_lora_rank]
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>= [local_heads, 256, 512]
+</span></code></pre></div>
+<p>其中前 128 行是每个 head 的 <code>W_UK</code>，后 128 行是 <code>W_UV</code>。</p>
+<p>Key-side absorption：</p>
+<div class="arithmatex">\[
+\widetilde q_{i}^{C}=(W_i^{UK})^Tq_i^C
+\]</div>
+<div class="arithmatex">\[
+score_{i,j}=(\widetilde q_i^C)^Tc_j^{KV}+(q_i^R)^Tk_j^R
+\]</div>
+<p>Value-side absorption：</p>
+<div class="arithmatex">\[
+z_i=\sum_j a_{i,j}c_j^{KV}
+\]</div>
+<div class="arithmatex">\[
+o_i=W_i^{UV}z_i
+\]</div>
+<p>所以缓存只需：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>kv_cache: [max_batch, max_seq, 512]
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>pe_cache: [max_batch, max_seq, 64]
+</span></code></pre></div>
+<p>源码对应 <a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/model.py#L481-L495"><code>model.py:481–495</code></a>。naive 与 absorb 数学等价，但浮点运算顺序不同，结果只应在数值误差范围内接近。</p>
+<h3 id="57-cache">5.7 Cache 节省量与并行语义<a class="headerlink" href="#57-cache" title="Permanent link">&para;</a></h3>
+<p>从模型的逻辑表示看：</p>
+<div class="arithmatex">\[
+\frac{40{,}960}{576}=71.11
+\]</div>
+<p>即元素数约缩小 71.1 倍，减少约 98.59%。若全部按 BF16 估算，batch=1、61 层、128K token：</p>
+<table>
+<thead>
+<tr>
+<th>形式</th>
+<th style="text-align: right;">单 token / layer</th>
+<th style="text-align: right;">128K × 61 层</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>完整 MHA 风格 K/V</td>
+<td style="text-align: right;">80 KiB</td>
+<td style="text-align: right;">610 GiB</td>
+</tr>
+<tr>
+<td>MLA latent + RoPE key</td>
+<td style="text-align: right;">1.125 KiB</td>
+<td style="text-align: right;">约 8.58 GiB</td>
+</tr>
+</tbody>
+</table>
+<p>这组数字用于解释表示压缩，不是某个生产框架的实测显存。参考 demo 的 absorb cache 在各 tensor-parallel rank 上复制，而 naive cache 只保存 local heads；allocator、cache dtype、分页、batch 和并行切分都会改变实际单卡占用。</p>
+<h3 id="58-yarn">5.8 YaRN 长上下文<a class="headerlink" href="#58-yarn" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/model.py#L297-L375"><code>precompute_freqs_cis</code></a> 对 RoPE 频率做 YaRN 风格插值，并在扩展长度下调整 attention softmax scale。论文中的流程是：</p>
+<ol>
+<li>主要预训练最大序列长度 4K；</li>
+<li>额外训练 1,000 steps 扩展到 32K；</li>
+<li>再训练 1,000 steps 扩展到 128K；</li>
+<li>YaRN 的上下文扩展集中在解耦 RoPE 通道；论文特别说明其作用对象是 shared positional key <code>k^R</code>，代码则用同一组 <code>freqs_cis</code> 对 <code>q_pe</code> 与 <code>k_pe</code> 做匹配旋转。</li>
+</ol>
+<p>需要注意：模型具备 128K 能力，不代表这个 demo 的默认内存配置就是 128K。<code>ModelArgs.max_seq_len</code> 默认是 <code>4096 * 4 = 16K</code>，而 <code>config_671B.json</code> 没有覆盖它；要实验更长序列，必须显式修改配置/代码并准备相应 cache 显存。</p>
+<h2 id="6-deepseekmoe-routed-experts-shared-expert">6. DeepSeekMoE：细粒度 routed experts + shared expert<a class="headerlink" href="#6-deepseekmoe-routed-experts-shared-expert" title="Permanent link">&para;</a></h2>
+<h3 id="61">6.1 单个专家<a class="headerlink" href="#61" title="Permanent link">&para;</a></h3>
+<p>Dense MLP 和 Expert 都采用 SwiGLU：</p>
+<div class="arithmatex">\[
+\operatorname{FFN}(x)=W_2(\operatorname{SiLU}(W_1x)\odot W_3x)
+\]</div>
+<ul>
+<li>Dense MLP 中间维度为 18,432；</li>
+<li>单个 routed/shared expert 的中间维度为 2,048；</li>
+<li>输入输出维度都保持 7,168，因此 FFN 类型的切换对 residual stream 透明。</li>
+</ul>
+<p>实现见 <a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/model.py#L500-L532"><code>MLP</code></a> 和 <a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/model.py#L601-L633"><code>Expert</code></a>。</p>
+<h3 id="62-router">6.2 Router 前向<a class="headerlink" href="#62-router" title="Permanent link">&para;</a></h3>
+<p>对展平后的 token hidden state <code>x ∈ R^(tokens×7168)</code>，<a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/model.py#L566-L598"><code>Gate.forward</code></a> 的步骤是：</p>
+<ol>
+<li>线性投影到 256 个专家分数；</li>
+<li>对 V3 使用 sigmoid 得到原始 affinity <code>s</code>；</li>
+<li>将 inference checkpoint 中的 correction bias <code>b</code> 只加到“选谁”的分数上；</li>
+<li>将 256 个专家分成 8 组，每组 32 个；</li>
+<li>使用组内最高两个带 bias 分数之和作为 group score，保留 Top-4 groups；</li>
+<li>在候选组内选 Top-8 experts；</li>
+<li>真正的 mixture 权重从无 bias 的原始 affinity 中 gather；</li>
+<li>对 8 个权重归一化，再乘 <code>route_scale=2.5</code>。</li>
+</ol>
+<p>形式化地：</p>
+<div class="arithmatex">\[
+s_{i,t}=\sigma(x_t^Te_i)
+\]</div>
+<p>选路使用：</p>
+<div class="arithmatex">\[
+\operatorname{TopK}(s_{i,t}+b_i)
+\]</div>
+<p>输出混合权重仍来自 <code>s</code>：</p>
+<div class="arithmatex">\[
+g_{i,t}=\frac{s_{i,t}}{\sum_{j\in \mathcal T_t}s_{j,t}}\cdot 2.5,
+\qquad i\in\mathcal T_t
+\]</div>
+<p>这个细节很关键：correction bias 改变专家入选机会，但不直接改变已选专家输出的语义权重。</p>
+<h3 id="63-moe">6.3 MoE 输出<a class="headerlink" href="#63-moe" title="Permanent link">&para;</a></h3>
+<p>对 token <code>x_t</code>，MoE 分支输出：</p>
+<div class="arithmatex">\[
+y_t=\sum_{i\in\mathcal T_t}g_{i,t}E_i(x_t)+E_{shared}(x_t)
+\]</div>
+<p>参考实现为每个本地专家查找命中的 <code>(token_idx, top_idx)</code>，逐专家执行前向并累加；shared expert 对所有 token 执行。多 rank 时 routed 输出做 <code>all_reduce</code>，最后与 shared 输出相加，见 <a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/model.py#L669-L693"><code>MoE.forward</code></a>。</p>
+<h3 id="64-auxiliary-loss-free-load-balancing">6.4 Auxiliary-loss-free load balancing<a class="headerlink" href="#64-auxiliary-loss-free-load-balancing" title="Permanent link">&para;</a></h3>
+<p>训练期若某专家过载，就降低其 bias；若负载不足，就提高其 bias：</p>
+<div class="arithmatex">\[
+b_i \leftarrow
+\begin{cases}
+b_i-\gamma,&amp;\text{overloaded}\\
+b_i+\gamma,&amp;\text{underloaded}
+\end{cases}
+\]</div>
+<p>DeepSeek-V3 论文报告前 14.3T tokens 使用 <code>γ=0.001</code>，最后 500B tokens 设为 0。它仍保留极小的 sequence-wise auxiliary loss（<code>α=0.0001</code>）防止单序列极端失衡，所以“auxiliary-loss-free”准确含义是：<strong>主要的 batch-wise 均衡不通过会干扰模型目标的大额辅助损失完成</strong>，并非训练目标中绝对没有任何 balance loss。</p>
+<p><code>model.py</code> 是推理实现，只读取训练完成后的 bias，不包含负载监控和 bias 更新。</p>
+<h3 id="65-group-limited-node-limited">6.5 Group-limited 与论文中的 node-limited<a class="headerlink" href="#65-group-limited-node-limited" title="Permanent link">&para;</a></h3>
+<p>本 demo 的 8 groups / Top-4 groups 对应限制候选专家范围的推理逻辑。论文中的训练系统进一步将专家部署到 64 张 GPU、8 个节点，并限制每个 token 最多发送到 4 个节点，以约束跨节点通信。</p>
+<p>两者目标相同：先限制通信域，再在域内选择专家。但不能把当前 Python <code>group top-k</code> 当成完整的跨节点 dispatch 实现；官方参考仓库没有实现生产训练系统的 All-to-All kernel。</p>
+<h2 id="7-mtp">7. MTP：训练信号与推理加速候选<a class="headerlink" href="#7-mtp" title="Permanent link">&para;</a></h2>
+<p>MTP（Multi-Token Prediction）让每个位置除预测下一个 token 外，还按深度顺序预测更远的未来 token。它不是简单挂多个互相独立的 LM Head。</p>
+<p>第 <code>k</code> 个模块组合：</p>
+<ul>
+<li>上一深度 hidden state <code>h_i^(k-1)</code>；</li>
+<li>第 <code>i+k</code> 个真实 token 的共享 embedding；</li>
+<li>两路 RMSNorm 后拼接；</li>
+<li><code>2d → d</code> 投影；</li>
+<li>一个额外 Transformer Block；</li>
+<li>与主模型共享的 output head。</li>
+</ul>
+<div class="arithmatex">\[
+h_i^{\prime k}=M_k[
+\operatorname{RMSNorm}(h_i^{k-1});
+\operatorname{RMSNorm}(\operatorname{Emb}(t_{i+k}))]
+\]</div>
+<p>主模型训练 loss 加上各 MTP depth 的平均损失：</p>
+<div class="arithmatex">\[
+\mathcal L=\mathcal L_{main}+\frac{\lambda}{D}
+\sum_{k=1}^{D}\mathcal L_{MTP}^k
+\]</div>
+<p>MTP 有两个作用：</p>
+<ul>
+<li>训练时增加每个位置的监督密度，让主模型学习对更远未来有规划的表示；</li>
+<li>推理时可以直接丢弃，不影响主模型；也可以作为 speculative decoding 的候选生成模块。</li>
+</ul>
+<p>开源权重中 <code>num_nextn_predict_layers=1</code>，附加模块位于 <code>model.layers.61</code>。但 <a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/convert.py#L50-L55"><code>convert.py</code></a> 遇到 <code>model.layers.61</code> 会 <code>continue</code>，而 <a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/model.py#L750-L770"><code>Transformer</code></a> 只按 <code>n_layers=61</code> 创建主模型的 0–60 层。因此当前 demo <strong>不加载也不执行 MTP</strong>。</p>
+<h2 id="8-fp8-triton">8. FP8 设计与 Triton 实现<a class="headerlink" href="#8-fp8-triton" title="Permanent link">&para;</a></h2>
+<h3 id="81">8.1 权重格式<a class="headerlink" href="#81" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/README_WEIGHTS%2Emd"><code>README_WEIGHTS.md</code></a> 定义：</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">&quot;activation_scheme&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dynamic&quot;</span><span class="p">,</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nt">&quot;fmt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;e4m3&quot;</span><span class="p">,</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="nt">&quot;quant_method&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;fp8&quot;</span><span class="p">,</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">  </span><span class="nt">&quot;weight_block_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">128</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p">]</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>每个 128×128 权重块保存一个 FP32 <code>weight_scale_inv</code>。逻辑反量化为：</p>
+<div class="arithmatex">\[
+W_{bf16}^{block}=W_{fp8}^{block}\cdot scale_{inv}^{block}
+\]</div>
+<p>不足 128 对齐的边缘在计算 scale 时先补零，量化后去除 padding。</p>
+<h3 id="82-linear">8.2 <code>Linear</code> 的两条运行路径<a class="headerlink" href="#82-linear" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/model.py#L131-L163"><code>linear</code></a> 根据权重和全局 <code>gemm_impl</code> 选择：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>BF16 权重
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>  → torch.nn.functional.linear
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>FP8 权重 + gemm_impl == &quot;bf16&quot;（默认）
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>  → weight_dequant 到 BF16
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>  → F.linear
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>FP8 权重 + gemm_impl == &quot;fp8&quot;
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>  → activation 动态量化
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>  → Triton fp8_gemm
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>  → 可选 bias
+</span></code></pre></div>
+<p><code>Linear.__init__</code> 根据矩阵尺寸创建二维 scale tensor：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>[ceil(out_features / 128), ceil(in_features / 128)]
+</span></code></pre></div>
+<h3 id="83-activation-quantization">8.3 activation quantization<a class="headerlink" href="#83-activation-quantization" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/kernel.py#L38-L57"><code>act_quant</code></a> 要求最后一维能被 128 整除，对每 128 个连续 channel 计算 <code>amax</code> 和动态 scale，并输出 <code>float8_e4m3fn</code>。</p>
+<p>对普通 V3，scale 使用 FP32。<code>config_v3.1.json</code> 额外设置 <code>scale_fmt: "ue8m0"</code>；当该参数传入 <code>act_quant</code> 时，kernel 会把 scale 向上取整到 2 的整数次幂。这是 V3.1 权重格式兼容点，不改变本文讨论的 671B 主干结构。当前参考代码的 <code>ColumnParallelLinear</code> / <code>RowParallelLinear</code> 重写了 <code>forward</code>，没有把 <code>scale_fmt</code> 继续传给 <code>linear</code> helper，因此不要把这个 demo 视为所有 UE8M0 路径的完整生产实现。</p>
+<h3 id="84-fp8-gemm">8.4 FP8 GEMM<a class="headerlink" href="#84-fp8-gemm" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/kernel.py#L118-L172"><code>fp8_gemm_kernel</code></a> 做 tiled matmul：</p>
+<ol>
+<li>加载 FP8 activation tile 和 weight tile；</li>
+<li><code>tl.dot(a, b)</code>；</li>
+<li>按 activation scale 与 weight block scale 恢复量级；</li>
+<li>用 FP32 accumulator 累加；</li>
+<li>输出为 BF16。</li>
+</ol>
+<p>这是参考 kernel，展示了数据布局和 scale 如何进入 GEMM，不代表论文中完整的 FP8 训练栈。论文还包含 tile/block-wise training quantization、提高累加精度、FP8 activation cache/dispatch、BF16 optimizer states 等训练系统设计。</p>
+<h3 id="85">8.5 论文中的训练系统<a class="headerlink" href="#85" title="Permanent link">&para;</a></h3>
+<p>DeepSeek-V3 在 2,048 张 NVIDIA H800 上训练，每节点 8 卡，节点内使用 NVLink/NVSwitch，节点间使用 InfiniBand。训练并行组合为：</p>
+<ul>
+<li>16-way Pipeline Parallelism；</li>
+<li>64-way Expert Parallelism，跨 8 个节点；</li>
+<li>ZeRO-1 Data Parallelism；</li>
+<li>不使用 Tensor Parallelism。</li>
+</ul>
+<p>DualPipe 从流水线两端同时调度 micro-batch，并重叠前向/反向计算与 MoE dispatch/combine 通信；配套的跨节点 All-to-All kernel 根据 IB/NVLink 拓扑控制通信占用的 SM 数。这里的关键不是某一个独立算子，而是路由约束、并行策略、网络拓扑和 kernel 的联合设计。</p>
+<p>这些训练组件没有出现在官方参考推理目录中。<code>model.py</code> 中的 Tensor Parallelism 是轻量推理 demo 的权重切分方案，不应与论文“训练时避免 TP”这一结论混为一谈。</p>
+<h2 id="9">9. 模型并行与专家并行<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
+<h3 id="91-vocabulary-parallel-embedding">9.1 Vocabulary parallel embedding<a class="headerlink" href="#91-vocabulary-parallel-embedding" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/model.py#L89-L128"><code>ParallelEmbedding</code></a> 沿 vocab 维切分 embedding。每个 rank：</p>
+<ol>
+<li>只保存自己的词表区间；</li>
+<li>将不属于本 rank 的 token 位置 mask 为 0；</li>
+<li>本地 lookup 后清零 mask 位置；</li>
+<li><code>all_reduce</code> 合并完整 embedding。</li>
+</ol>
+<h3 id="92-column-parallel">9.2 Column parallel<a class="headerlink" href="#92-column-parallel" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/model.py#L208-L234"><code>ColumnParallelLinear</code></a> 沿输出特征切分权重：</p>
+<div class="arithmatex">\[
+W=[W_0;W_1;\dots;W_{p-1}]
+\]</div>
+<p>每个 rank 得到一部分输出，不立刻通信。MLA 的 Q heads、展开后的 K/V heads，Dense MLP 的 <code>w1/w3</code> 和 LM head 都使用这种切分。</p>
+<h3 id="93-row-parallel">9.3 Row parallel<a class="headerlink" href="#93-row-parallel" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/model.py#L237-L267"><code>RowParallelLinear</code></a> 沿输入特征切分：</p>
+<div class="arithmatex">\[
+y=\sum_r x_rW_r^T
+\]</div>
+<p>每个 rank 算局部 partial output，再 <code>all_reduce</code>。MLA 输出投影 <code>wo</code> 与 Dense MLP 的 <code>w2</code> 使用它，正好接住 column-parallel 的局部输出。</p>
+<h3 id="94-expert-partition">9.4 Expert partition<a class="headerlink" href="#94-expert-partition" title="Permanent link">&para;</a></h3>
+<p>256 个 routed experts 按 rank 连续均分，每个 rank 只构建自己的 expert 区间。<code>convert.py</code> 同样按 expert ID 将权重写到对应 shard。</p>
+<p>这个最小实现没有把 token 通过 All-to-All dispatch 到专家所在 rank。因为所有 rank 都持有同一批 token hidden states，每个 rank 找出命中本地专家的 token、计算局部 routed output，再 <code>all_reduce</code> 汇总。这种方式逻辑简单，但计算/通信/显存行为不同于高性能 EP 系统。</p>
+<h2 id="10-checkpoint">10. Checkpoint 转换<a class="headerlink" href="#10-checkpoint" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/convert.py"><code>convert.py</code></a> 完成三件事。</p>
+<h3 id="101">10.1 参数名映射<a class="headerlink" href="#101" title="Permanent link">&para;</a></h3>
+<p>例如：</p>
+<table>
+<thead>
+<tr>
+<th>Hugging Face 名称</th>
+<th>demo 名称</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>embed_tokens</code></td>
+<td><code>embed</code></td>
+</tr>
+<tr>
+<td><code>input_layernorm</code></td>
+<td><code>attn_norm</code></td>
+</tr>
+<tr>
+<td><code>post_attention_layernorm</code></td>
+<td><code>ffn_norm</code></td>
+</tr>
+<tr>
+<td><code>q_a_proj</code> / <code>q_b_proj</code></td>
+<td><code>wq_a</code> / <code>wq_b</code></td>
+</tr>
+<tr>
+<td><code>kv_a_proj_with_mqa</code> / <code>kv_b_proj</code></td>
+<td><code>wkv_a</code> / <code>wkv_b</code></td>
+</tr>
+<tr>
+<td><code>o_proj</code></td>
+<td><code>wo</code></td>
+</tr>
+<tr>
+<td><code>e_score_correction_bias</code></td>
+<td><code>bias</code></td>
+</tr>
+<tr>
+<td><code>weight_scale_inv</code></td>
+<td><code>scale</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="102">10.2 张量切分<a class="headerlink" href="#102" title="Permanent link">&para;</a></h3>
+<p>映射表中的切分维度：</p>
+<ul>
+<li>dim 0：embedding、Q/K/V column-parallel 输出、<code>w1/w3</code>、LM head；</li>
+<li>dim 1：attention <code>wo</code>、MLP/expert <code>w2</code>；</li>
+<li><code>None</code>：norm、router 等复制到各 shard、不按该规则切分；权重的 <code>weight_scale_inv</code> 会随所属投影采用相应的切分维度；</li>
+<li>routed expert：依据 expert ID 只写入所属 rank。</li>
+</ul>
+<h3 id="103-mtp">10.3 MTP 处理<a class="headerlink" href="#103-mtp" title="Permanent link">&para;</a></h3>
+<p><code>model.layers.61</code> 被明确跳过，进一步证明输出的 <code>model{rank}-mp{world_size}.safetensors</code> 只服务 61 层主模型。</p>
+<h2 id="11">11. 自回归生成流程<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/generate.py"><code>generate.py</code></a> 的执行顺序：</p>
+<ol>
+<li>读取 JSON，构造 <code>ModelArgs</code>；</li>
+<li>初始化 NCCL process group 和本地 CUDA device；</li>
+<li>构造 <code>Transformer</code>，预热一次，再加载当前 rank 的 safetensors；</li>
+<li>tokenizer 将 prompt 编码；</li>
+<li>第一次 <code>model(tokens[:, 0:prompt_len], start_pos=0)</code> 完成 prefill；</li>
+<li>此后每轮只输入上一个新 token，并通过 <code>start_pos</code> 追加 KV cache；</li>
+<li>模型只对最后位置做 final norm 和 LM head；</li>
+<li>temperature &gt; 0 时用 exponential-race 形式采样，否则 greedy argmax；</li>
+<li>遇到 EOS 或长度上限后停止。</li>
+</ol>
+<p><a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/model.py#L772-L798"><code>Transformer.forward</code></a> 在 <code>seqlen &gt; 1</code> 时构造 causal mask；decode 单 token 时依靠 cache 的有效前缀天然保证因果性。</p>
+<p>批量生成把不同长度 prompt 放入一个以 <code>-1</code> 填充的 tensor，并从最短 prompt 位置开始推进；每个位置若仍属于原 prompt，就保留原 token，否则采样。这个实现适合功能演示，不包含 continuous batching、paged cache、prefix cache、chunked prefill 或 fused sampling。</p>
+<h2 id="12">12. 如何运行参考实现<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
+<p>官方 README 给出的环境约束是 Linux、Python 3.10、CUDA GPU；Mac 和 Windows 不在支持范围内。依赖固定为 PyTorch 2.4.1、Triton 3.0.0、Transformers 4.46.3 和 safetensors 0.4.5。</p>
+<h3 id="121">12.1 转换权重<a class="headerlink" href="#121" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nb">cd</span><span class="w"> </span>inference
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>python<span class="w"> </span>convert.py<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span>--hf-ckpt-path<span class="w"> </span>/path/to/DeepSeek-V3<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span>--save-path<span class="w"> </span>/path/to/DeepSeek-V3-Demo<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">  </span>--n-experts<span class="w"> </span><span class="m">256</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">  </span>--model-parallel<span class="w"> </span><span class="m">16</span>
+</span></code></pre></div>
+<p>输出类似：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>model0-mp16.safetensors
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>...
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>model15-mp16.safetensors
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>tokenizer...
+</span></code></pre></div>
+<h3 id="122">12.2 启动两节点、每节点八卡<a class="headerlink" href="#122" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>torchrun<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span>--nnodes<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span>--nproc-per-node<span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">  </span>--node-rank<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$RANK</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">  </span>--master-addr<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$ADDR</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">  </span>generate.py<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">  </span>--ckpt-path<span class="w"> </span>/path/to/DeepSeek-V3-Demo<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">  </span>--config<span class="w"> </span>configs/config_671B.json<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">  </span>--interactive<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="w">  </span>--temperature<span class="w"> </span><span class="m">0</span>.7<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="w">  </span>--max-new-tokens<span class="w"> </span><span class="m">200</span>
+</span></code></pre></div>
+<p>这里的 <code>--model-parallel 16</code> 必须与启动时总进程数一致，否则 checkpoint shard、head 数和 expert partition 无法对应。</p>
+<h3 id="123-fp8-bf16">12.3 FP8 转 BF16<a class="headerlink" href="#123-fp8-bf16" title="Permanent link">&para;</a></h3>
+<p>若目标引擎不直接消费官方 FP8 权重：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>python<span class="w"> </span>fp8_cast_bf16.py<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span>--input-fp8-hf-path<span class="w"> </span>/path/to/fp8_weights<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span>--output-bf16-hf-path<span class="w"> </span>/path/to/bf16_weights
+</span></code></pre></div>
+<p>671B 权重对存储、主机内存、GPU 显存和跨机网络要求极高。这个命令说明格式转换方式，不意味着单机可以装下完整模型。</p>
+<h2 id="13">13. 参考实现的性能边界<a class="headerlink" href="#13" title="Permanent link">&para;</a></h2>
+<p>不要从这个 demo 的吞吐推断 DeepSeek-V3 架构本身的上限。主要瓶颈包括：</p>
+<ul>
+<li><code>MoE.forward</code> 用 Python 循环遍历专家，并逐专家索引 token；</li>
+<li>没有 fused router、token permutation、grouped GEMM、dispatch/combine kernel；</li>
+<li>专家并行通过 replicated token + all-reduce 模拟，没有高性能 All-to-All；</li>
+<li>cache 是按 <code>max_batch_size × max_seq_len</code> 预分配的连续 tensor，不是 paged cache；</li>
+<li>attention 使用 <code>einsum</code>，没有 FlashMLA / FlashAttention kernel；</li>
+<li>没有 pipeline parallel、data-parallel attention、continuous batching；</li>
+<li>MTP checkpoint 被跳过，不能直接做 speculative decoding；</li>
+<li>默认 <code>gemm_impl="bf16"</code> 会先解量化 FP8 权重，需显式改为 <code>"fp8"</code> 才走参考 FP8 GEMM。</li>
+</ul>
+<p>生产部署通常交给 SGLang、vLLM、TensorRT-LLM、LMDeploy 等引擎；它们对 kernel、并行、调度和 cache 的实现会随版本快速变化，应以目标引擎当前官方文档为准。</p>
+<h2 id="14">14. 代码阅读顺序<a class="headerlink" href="#14" title="Permanent link">&para;</a></h2>
+<p>若只希望用最短路径理解实现，推荐：</p>
+<ol>
+<li><code>config_671B.json</code>：先固定所有维度；</li>
+<li><code>Block.forward</code>：确认 Pre-Norm 与 residual；</li>
+<li><code>MLA.forward</code> 的 naive 分支：理解 Q/K/V 真实语义；</li>
+<li><code>MLA.forward</code> 的 absorb 分支：推导两次矩阵结合律；</li>
+<li><code>Gate.forward</code>：区分 selection score 与 mixture weight；</li>
+<li><code>MoE.forward</code>：理解 routed + shared 两条路径；</li>
+<li><code>ColumnParallelLinear</code> / <code>RowParallelLinear</code>：理解 head/hidden 切分；</li>
+<li><code>convert.py</code>：把 HF checkpoint 名称映射回上述模块；</li>
+<li><code>kernel.py</code>：最后再看 FP8 scale 与 GEMM。</li>
+</ol>
+<p>建议至少做三个验证实验：</p>
+<ul>
+<li>小尺寸随机权重下对比 <code>attn_impl="naive"</code> 与 <code>"absorb"</code>；</li>
+<li>记录 router 的 group Top-K、expert Top-K、原始权重与 correction bias；</li>
+<li>分别统计 naive / absorb cache 的 shape、dtype 和实际字节数。</li>
+</ul>
+<h2 id="15">15. 常见误区<a class="headerlink" href="#15" title="Permanent link">&para;</a></h2>
+<h3 id="151-671b-token">15.1 “671B 都会参与每个 token 计算”<a class="headerlink" href="#151-671b-token" title="Permanent link">&para;</a></h3>
+<p>错误。MoE 的大部分 routed experts 对当前 token 不执行；约 37B 是每 token 激活参数口径，671B 是主模型总参数口径。</p>
+<h3 id="152-mla-head-kv-512">15.2 “MLA 就是把每个 head 的 K/V 各压成 512 维”<a class="headerlink" href="#152-mla-head-kv-512" title="Permanent link">&para;</a></h3>
+<p>错误。512 维 <code>c_KV</code> 是跨所有 heads 联合共享的 latent；另有共享的 64 维 RoPE key。</p>
+<h3 id="153-correction-bias">15.3 “correction bias 直接乘到专家输出上”<a class="headerlink" href="#153-correction-bias" title="Permanent link">&para;</a></h3>
+<p>错误。bias 只参与 Top-K selection，实际混合权重从无 bias 的 sigmoid affinity 取值。</p>
+<h3 id="154-auxiliary-loss-free">15.4 “auxiliary-loss-free 表示没有任何均衡损失”<a class="headerlink" href="#154-auxiliary-loss-free" title="Permanent link">&para;</a></h3>
+<p>不准确。主要的 batch-wise 均衡由动态 bias 完成，但论文仍使用极小的 sequence-wise auxiliary loss 防止极端失衡。</p>
+<h3 id="155-checkpoint-mtp-demo">15.5 “开源 checkpoint 有 MTP，所以这个 demo 会自动加速”<a class="headerlink" href="#155-checkpoint-mtp-demo" title="Permanent link">&para;</a></h3>
+<p>错误。转换脚本主动跳过 MTP 附加层，<code>Transformer</code> 也未定义 MTP forward。</p>
+<h3 id="156-128k-config-128k">15.6 “模型支持 128K，所以 config 默认就是 128K”<a class="headerlink" href="#156-128k-config-128k" title="Permanent link">&para;</a></h3>
+<p>错误。论文和模型能力是 128K；当前 dataclass 默认 cache 长度是 16K，需调整运行配置并承担显存开销。</p>
+<h3 id="157-expert-parallel-64-way-ep">15.7 “参考代码中的 expert parallel 就是训练系统的 64-way EP”<a class="headerlink" href="#157-expert-parallel-64-way-ep" title="Permanent link">&para;</a></h3>
+<p>错误。参考代码仅按 rank 放置专家并 all-reduce 输出；论文系统还包含跨节点 token dispatch/combine、通信拓扑与计算通信重叠。</p>
+<h2 id="16">16. 参考资料<a class="headerlink" href="#16" title="Permanent link">&para;</a></h2>
+<h3 id="_1">官方一手资料<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://arxiv.org/html/2412.19437">DeepSeek-V3 Technical Report</a></li>
+<li><a href="https://arxiv.org/html/2405.04434">DeepSeek-V2 Technical Report</a>：MLA 与 DeepSeekMoE 的更完整来源</li>
+<li><a href="https://github.com/deepseek-ai/DeepSeek-V3">DeepSeek-V3 官方仓库</a></li>
+<li><a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/README_WEIGHTS%2Emd">DeepSeek-V3 权重说明</a></li>
+<li><a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/configs/config_671B.json">DeepSeek-V3 671B 配置</a></li>
+<li><a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/model.py">DeepSeek-V3 参考模型实现</a></li>
+</ul>
+<h3 id="_2">官方源码文件<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://github.com/deepseek-ai/DeepSeek-V3?tab=readme-ov-file">项目 README</a></li>
+<li><a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/README_WEIGHTS%2Emd">权重结构</a></li>
+<li><a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/model.py">模型实现</a></li>
+<li><a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/kernel.py">Triton kernels</a></li>
+<li><a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/generate.py">生成入口</a></li>
+<li><a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/convert.py">权重转换</a></li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 LJX
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/Lai-JX" target="_blank" rel="noopener" title="Lai-JX on GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.tracking", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
