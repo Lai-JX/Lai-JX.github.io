@@ -12,19 +12,19 @@
         <meta name="author" content="LJX">
       
       
-        <link rel="canonical" href="https://lai-jx.github.io/ai/deepseek-v3-architecture-and-implementation/">
+        <link rel="canonical" href="https://lai-jx.github.io/ai/ds-v3/deepseek-v3-architecture-and-implementation/">
       
       
-        <link rel="prev" href="../KDA/">
+        <link rel="prev" href="../">
       
       
-        <link rel="next" href="../reading-list/">
+        <link rel="next" href="../mla-matrix-absorption/">
       
       
         
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
@@ -33,10 +33,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -49,9 +49,9 @@
       
     
     
-      <link rel="stylesheet" href="../../stylesheets/extra.css">
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -90,7 +90,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="页眉">
-    <a href="../.." title="LJX 知识库" class="md-header__button md-logo" aria-label="LJX 知识库" data-md-component="logo">
+    <a href="../../.." title="LJX 知识库" class="md-header__button md-logo" aria-label="LJX 知识库" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19.07 14.88 2.05 2.05L15.06 23H13v-2.06zm1.97-1.75c.14 0 .27.06.38.17l1.28 1.28c.22.21.22.56 0 .77l-1 1-2.05-2.05 1-1c.11-.11.25-.17.39-.17M17 4v6l-2-2-2 2V4H9v16h2v2H7c-1.05 0-2-.95-2-2v-1H3v-2h2v-4H3v-2h2V7H3V5h2V4a2 2 0 0 1 2-2h12c1.05 0 2 .95 2 2v6l-2 2V4zM5 5v2h2V5zm0 6v2h2v-2zm0 6v2h2v-2z"/></svg>
@@ -228,7 +228,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../.." class="md-tabs__link">
+      <a href="../../.." class="md-tabs__link">
         
   
   
@@ -249,7 +249,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../algorithms/" class="md-tabs__link">
+        <a href="../../../algorithms/" class="md-tabs__link">
           
   
   
@@ -271,7 +271,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../hot-100/" class="md-tabs__link">
+        <a href="../../../hot-100/" class="md-tabs__link">
           
   
   
@@ -295,7 +295,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../" class="md-tabs__link">
+        <a href="../../" class="md-tabs__link">
           
   
   
@@ -315,7 +315,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../about/" class="md-tabs__link">
+      <a href="../../../about/" class="md-tabs__link">
         
   
   
@@ -350,7 +350,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="LJX 知识库" class="md-nav__button md-logo" aria-label="LJX 知识库" data-md-component="logo">
+    <a href="../../.." title="LJX 知识库" class="md-nav__button md-logo" aria-label="LJX 知识库" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19.07 14.88 2.05 2.05L15.06 23H13v-2.06zm1.97-1.75c.14 0 .27.06.38.17l1.28 1.28c.22.21.22.56 0 .77l-1 1-2.05-2.05 1-1c.11-.11.25-.17.39-.17M17 4v6l-2-2-2 2V4H9v16h2v2H7c-1.05 0-2-.95-2-2v-1H3v-2h2v-4H3v-2h2V7H3V5h2V4a2 2 0 0 1 2-2h12c1.05 0 2 .95 2 2v6l-2 2V4zM5 5v2h2V5zm0 6v2h2v-2zm0 6v2h2v-2z"/></svg>
@@ -380,7 +380,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   
@@ -454,7 +454,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../algorithms/" class="md-nav__link ">
+            <a href="../../../algorithms/" class="md-nav__link ">
               
   
   
@@ -498,7 +498,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../algorithms/chapter-1/" class="md-nav__link">
+      <a href="../../../algorithms/chapter-1/" class="md-nav__link">
         
   
   
@@ -526,7 +526,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../algorithms/chapter-2/" class="md-nav__link">
+      <a href="../../../algorithms/chapter-2/" class="md-nav__link">
         
   
   
@@ -554,7 +554,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../algorithms/chapter-3/" class="md-nav__link">
+      <a href="../../../algorithms/chapter-3/" class="md-nav__link">
         
   
   
@@ -582,7 +582,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../algorithms/chapter-4/" class="md-nav__link">
+      <a href="../../../algorithms/chapter-4/" class="md-nav__link">
         
   
   
@@ -610,7 +610,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../algorithms/chapter-5/" class="md-nav__link">
+      <a href="../../../algorithms/chapter-5/" class="md-nav__link">
         
   
   
@@ -638,7 +638,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../algorithms/chapter-6/" class="md-nav__link">
+      <a href="../../../algorithms/chapter-6/" class="md-nav__link">
         
   
   
@@ -666,7 +666,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../algorithms/chapter-7/" class="md-nav__link">
+      <a href="../../../algorithms/chapter-7/" class="md-nav__link">
         
   
   
@@ -694,7 +694,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../algorithms/chapter-8/" class="md-nav__link">
+      <a href="../../../algorithms/chapter-8/" class="md-nav__link">
         
   
   
@@ -722,7 +722,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../algorithms/chapter-9/" class="md-nav__link">
+      <a href="../../../algorithms/chapter-9/" class="md-nav__link">
         
   
   
@@ -750,7 +750,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../algorithms/chapter-10/" class="md-nav__link">
+      <a href="../../../algorithms/chapter-10/" class="md-nav__link">
         
   
   
@@ -778,7 +778,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../algorithms/chapter-11/" class="md-nav__link">
+      <a href="../../../algorithms/chapter-11/" class="md-nav__link">
         
   
   
@@ -806,7 +806,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../algorithms/chapter-12/" class="md-nav__link">
+      <a href="../../../algorithms/chapter-12/" class="md-nav__link">
         
   
   
@@ -864,7 +864,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../hot-100/" class="md-nav__link ">
+            <a href="../../../hot-100/" class="md-nav__link ">
               
   
   
@@ -926,8 +926,6 @@
       
         
       
-        
-      
     
     
     
@@ -948,7 +946,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
+            <a href="../../" class="md-nav__link ">
               
   
   
@@ -991,15 +989,87 @@
   
   
   
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../transformer%E5%9F%BA%E7%A1%80/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transformer 基础
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_2" id="__nav_4_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Transformer 基础
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../mla-matrix-absorption/" class="md-nav__link">
+      <a href="../../transformer%E5%9F%BA%E7%A1%80/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AE%A1%E7%AE%97attention%E6%97%B6softmax%E4%B8%AD%E8%A6%81%E9%99%A4%E4%BB%A5dk/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    MLA 的矩阵吸收算法：从直觉到公式与伪代码
+    为什么 Attention 要除以 √dₖ
   
 
     
@@ -1013,29 +1083,9 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../gate-mla/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Kimi K3 的 Gated MLA：从公式、维度到矩阵吸收
-  
-
-    
-  </span>
-  
-  
-
-      </a>
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -1045,17 +1095,49 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../KDA/" class="md-nav__link">
+  
+    
+    
+      
         
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
     
   
-    Kimi Linear：从 Attention 到 KDA
+    DeepSeek-V3
   
 
     
@@ -1063,10 +1145,26 @@
   
   
 
-      </a>
-    </li>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_3" id="__nav_4_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    DeepSeek-V3
   
 
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
               
             
               
@@ -1810,7 +1908,211 @@
   
   
     <li class="md-nav__item">
-      <a href="../reading-list/" class="md-nav__link">
+      <a href="../mla-matrix-absorption/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MLA 的矩阵吸收算法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../k3/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    K3
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_4" id="__nav_4_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    K3
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../k3/KDA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kimi Linear：从 Attention 到 KDA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../k3/kda-prefill/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KDA Prefill：Chunkwise 与 FlashKDA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../k3/gate-mla/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kimi K3 的 Gated MLA：从公式、维度到矩阵吸收
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reading-list/" class="md-nav__link">
         
   
   
@@ -1845,7 +2147,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/" class="md-nav__link">
+      <a href="../../../about/" class="md-nav__link">
         
   
   
@@ -2591,7 +2893,7 @@
 <li><strong>辅助损失无关的负载均衡与 MTP 属于训练设计</strong>；参考推理代码只消费其结果，没有实现完整训练算法。</li>
 </ol>
 <p>下图是技术报告 Figure 2 的总体架构图。左侧给出重复的 Transformer Block；右上展开 DeepSeekMoE，右下展开 MLA。MLA 图中带斜线阴影的向量表示推理时需要缓存的内容，即压缩后的 <code>c_t^KV</code> 与 decoupled RoPE key <code>k_t^R</code>。</p>
-<p><img alt="DeepSeek-V3 论文总体架构：Transformer Block、DeepSeekMoE 与 MLA" src="../assets/deepseek-v3-paper-architecture.png" /></p>
+<p><img alt="DeepSeek-V3 论文总体架构：Transformer Block、DeepSeekMoE 与 MLA" src="../../assets/deepseek-v3-paper-architecture.png" /></p>
 <blockquote>
 <p>图源：<a href="https://arxiv.org/html/2412.19437">DeepSeek-V3 Technical Report, Figure 2</a>。本站将本地副本统一存放在模块的 <code>assets/</code> 目录中，便于离线构建。</p>
 </blockquote>
@@ -2831,7 +3133,7 @@ d_q=d_k=d_{nope}+d_{rope}=128+64=192, \qquad d_v=128
 \]</div>
 <h3 id="42">4.2 主干数据流<a class="headerlink" href="#42" title="Permanent link">&para;</a></h3>
 <p>论文图强调数学结构，下面的 SVG 则按官方 <a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/model.py"><code>model.py</code></a> 的实际执行顺序重排：顶部是严格从左到右的主模型前向，下方只展开一个 Block。虚线表示“展开关系”，不表示张量流动；Block 内蓝色箭头表示两次 residual bypass。</p>
-<p><img alt="DeepSeek-V3 源码执行流与单个 Transformer Block" src="../assets/deepseek-v3-code-flow.svg" /></p>
+<p><img alt="DeepSeek-V3 源码执行流与单个 Transformer Block" src="../../assets/deepseek-v3-code-flow.svg" /></p>
 <p>模型前向可概括为：</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>token ids [B,S]
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  → vocab-parallel embedding [B,S,7168]
@@ -2865,7 +3167,7 @@ c_t^{KV}=W^{DKV}h_t,\qquad c_t^{KV}\in\mathbb{R}^{512}
 <div class="arithmatex">\[
 512+64=576\ \text{elements/token/layer}
 \]</div>
-<p><img alt="MLA 与 KV Cache 数据流" src="../assets/deepseek-v3-mla-cache-flow.svg" /></p>
+<p><img alt="MLA 与 KV Cache 数据流" src="../../assets/deepseek-v3-mla-cache-flow.svg" /></p>
 <h3 id="52-query">5.2 Query 路径<a class="headerlink" href="#52-query" title="Permanent link">&para;</a></h3>
 <p>在 671B 配置中，<a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/model.py#L412-L437"><code>MLA.__init__</code></a> 创建：</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>x [B,S,7168]
@@ -3410,12 +3712,12 @@ y=\sum_r x_rW_r^T
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.tracking", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.tracking", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
-        <script src="../../javascripts/mathjax.js"></script>
+        <script src="../../../javascripts/mathjax.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       

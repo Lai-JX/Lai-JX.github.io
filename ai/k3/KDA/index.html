@@ -12,19 +12,19 @@
         <meta name="author" content="LJX">
       
       
-        <link rel="canonical" href="https://lai-jx.github.io/ai/KDA/">
+        <link rel="canonical" href="https://lai-jx.github.io/ai/k3/KDA/">
       
       
-        <link rel="prev" href="../gate-mla/">
+        <link rel="prev" href="../">
       
       
-        <link rel="next" href="../deepseek-v3-architecture-and-implementation/">
+        <link rel="next" href="../kda-prefill/">
       
       
         
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
@@ -33,10 +33,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -49,9 +49,9 @@
       
     
     
-      <link rel="stylesheet" href="../../stylesheets/extra.css">
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -90,7 +90,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="页眉">
-    <a href="../.." title="LJX 知识库" class="md-header__button md-logo" aria-label="LJX 知识库" data-md-component="logo">
+    <a href="../../.." title="LJX 知识库" class="md-header__button md-logo" aria-label="LJX 知识库" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19.07 14.88 2.05 2.05L15.06 23H13v-2.06zm1.97-1.75c.14 0 .27.06.38.17l1.28 1.28c.22.21.22.56 0 .77l-1 1-2.05-2.05 1-1c.11-.11.25-.17.39-.17M17 4v6l-2-2-2 2V4H9v16h2v2H7c-1.05 0-2-.95-2-2v-1H3v-2h2v-4H3v-2h2V7H3V5h2V4a2 2 0 0 1 2-2h12c1.05 0 2 .95 2 2v6l-2 2V4zM5 5v2h2V5zm0 6v2h2v-2zm0 6v2h2v-2z"/></svg>
@@ -228,7 +228,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../.." class="md-tabs__link">
+      <a href="../../.." class="md-tabs__link">
         
   
   
@@ -249,7 +249,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../algorithms/" class="md-tabs__link">
+        <a href="../../../algorithms/" class="md-tabs__link">
           
   
   
@@ -271,7 +271,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../hot-100/" class="md-tabs__link">
+        <a href="../../../hot-100/" class="md-tabs__link">
           
   
   
@@ -295,7 +295,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../" class="md-tabs__link">
+        <a href="../../" class="md-tabs__link">
           
   
   
@@ -315,7 +315,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../about/" class="md-tabs__link">
+      <a href="../../../about/" class="md-tabs__link">
         
   
   
@@ -350,7 +350,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="LJX 知识库" class="md-nav__button md-logo" aria-label="LJX 知识库" data-md-component="logo">
+    <a href="../../.." title="LJX 知识库" class="md-nav__button md-logo" aria-label="LJX 知识库" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19.07 14.88 2.05 2.05L15.06 23H13v-2.06zm1.97-1.75c.14 0 .27.06.38.17l1.28 1.28c.22.21.22.56 0 .77l-1 1-2.05-2.05 1-1c.11-.11.25-.17.39-.17M17 4v6l-2-2-2 2V4H9v16h2v2H7c-1.05 0-2-.95-2-2v-1H3v-2h2v-4H3v-2h2V7H3V5h2V4a2 2 0 0 1 2-2h12c1.05 0 2 .95 2 2v6l-2 2V4zM5 5v2h2V5zm0 6v2h2v-2zm0 6v2h2v-2z"/></svg>
@@ -380,7 +380,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   
@@ -454,7 +454,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../algorithms/" class="md-nav__link ">
+            <a href="../../../algorithms/" class="md-nav__link ">
               
   
   
@@ -498,7 +498,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../algorithms/chapter-1/" class="md-nav__link">
+      <a href="../../../algorithms/chapter-1/" class="md-nav__link">
         
   
   
@@ -526,7 +526,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../algorithms/chapter-2/" class="md-nav__link">
+      <a href="../../../algorithms/chapter-2/" class="md-nav__link">
         
   
   
@@ -554,7 +554,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../algorithms/chapter-3/" class="md-nav__link">
+      <a href="../../../algorithms/chapter-3/" class="md-nav__link">
         
   
   
@@ -582,7 +582,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../algorithms/chapter-4/" class="md-nav__link">
+      <a href="../../../algorithms/chapter-4/" class="md-nav__link">
         
   
   
@@ -610,7 +610,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../algorithms/chapter-5/" class="md-nav__link">
+      <a href="../../../algorithms/chapter-5/" class="md-nav__link">
         
   
   
@@ -638,7 +638,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../algorithms/chapter-6/" class="md-nav__link">
+      <a href="../../../algorithms/chapter-6/" class="md-nav__link">
         
   
   
@@ -666,7 +666,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../algorithms/chapter-7/" class="md-nav__link">
+      <a href="../../../algorithms/chapter-7/" class="md-nav__link">
         
   
   
@@ -694,7 +694,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../algorithms/chapter-8/" class="md-nav__link">
+      <a href="../../../algorithms/chapter-8/" class="md-nav__link">
         
   
   
@@ -722,7 +722,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../algorithms/chapter-9/" class="md-nav__link">
+      <a href="../../../algorithms/chapter-9/" class="md-nav__link">
         
   
   
@@ -750,7 +750,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../algorithms/chapter-10/" class="md-nav__link">
+      <a href="../../../algorithms/chapter-10/" class="md-nav__link">
         
   
   
@@ -778,7 +778,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../algorithms/chapter-11/" class="md-nav__link">
+      <a href="../../../algorithms/chapter-11/" class="md-nav__link">
         
   
   
@@ -806,7 +806,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../algorithms/chapter-12/" class="md-nav__link">
+      <a href="../../../algorithms/chapter-12/" class="md-nav__link">
         
   
   
@@ -864,7 +864,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../hot-100/" class="md-nav__link ">
+            <a href="../../../hot-100/" class="md-nav__link ">
               
   
   
@@ -926,8 +926,6 @@
       
         
       
-        
-      
     
     
     
@@ -948,7 +946,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
+            <a href="../../" class="md-nav__link ">
               
   
   
@@ -991,15 +989,197 @@
   
   
   
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../transformer%E5%9F%BA%E7%A1%80/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transformer 基础
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_2" id="__nav_4_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Transformer 基础
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../mla-matrix-absorption/" class="md-nav__link">
+      <a href="../../transformer%E5%9F%BA%E7%A1%80/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AE%A1%E7%AE%97attention%E6%97%B6softmax%E4%B8%AD%E8%A6%81%E9%99%A4%E4%BB%A5dk/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    MLA 的矩阵吸收算法：从直觉到公式与伪代码
+    为什么 Attention 要除以 √dₖ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ds-v3/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DeepSeek-V3
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_3" id="__nav_4_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    DeepSeek-V3
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ds-v3/deepseek-v3-architecture-and-implementation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DeepSeek-V3 架构与实现
   
 
     
@@ -1020,14 +1200,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../gate-mla/" class="md-nav__link">
+      <a href="../../ds-v3/mla-matrix-absorption/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Kimi K3 的 Gated MLA：从公式、维度到矩阵吸收
+    MLA 的矩阵吸收算法
   
 
     
@@ -1039,6 +1219,92 @@
     </li>
   
 
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    K3
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_4" id="__nav_4_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    K3
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
               
             
               
@@ -1561,14 +1827,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../deepseek-v3-architecture-and-implementation/" class="md-nav__link">
+      <a href="../kda-prefill/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    DeepSeek-V3 架构与实现
+    KDA Prefill：Chunkwise 与 FlashKDA
   
 
     
@@ -1589,7 +1855,43 @@
   
   
     <li class="md-nav__item">
-      <a href="../reading-list/" class="md-nav__link">
+      <a href="../gate-mla/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kimi K3 的 Gated MLA：从公式、维度到矩阵吸收
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reading-list/" class="md-nav__link">
         
   
   
@@ -1624,7 +1926,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/" class="md-nav__link">
+      <a href="../../../about/" class="md-nav__link">
         
   
   
@@ -2267,7 +2569,7 @@ O=(QK^\top)V=Q(K^\top V)
 <li><span class="arithmatex">\(Q(K^\top V)\)</span> 先把历史汇总到固定形状的 <span class="arithmatex">\(K^\top V\)</span>，再由 Q 读取。</li>
 </ul>
 <p>这正是 Linear Attention 想利用的计算顺序。</p>
-<p><img alt="从标准 Attention 到相关性计算骨架" src="../assets/attention-computation-skeleton.webp" /></p>
+<p><img alt="从标准 Attention 到相关性计算骨架" src="../../assets/attention-computation-skeleton.webp" /></p>
 <p><em>图 1：从标准 Attention 提取相关性计算骨架。来源：知乎用户 <a href="https://www.zhihu.com/question/1967516557811909769/answer/1967989954656305654">kaiyuan 的回答</a>。</em></p>
 <p>但这只是复杂度直觉：标准 Attention 含有 softmax，不能直接这样移动括号。下一节将说明如何通过可分解核函数处理这个限制。</p>
 <h3 id="22-softmax">2.2 Softmax 阻断结合律：引入可分解核函数<a class="headerlink" href="#22-softmax" title="Permanent link">&para;</a></h3>
@@ -2335,7 +2637,7 @@ o_i=
 </table>
 <p>因此，“用核函数来近似 softmax”是很好的入门直觉；严格地说，一些 Linear Attention 方法在近似 softmax，另一些则直接用新的 kernel 替换它。</p>
 <p>原回答用“把二维数据映射到更高维空间”说明 <span class="arithmatex">\(\phi\)</span> 的作用：变换后，原本不容易表达的关系可能变得更容易计算。</p>
-<p><img alt="核函数升维的直观示意" src="../assets/kernel-feature-map.webp" /></p>
+<p><img alt="核函数升维的直观示意" src="../../assets/kernel-feature-map.webp" /></p>
 <p><em>图 2：核函数升维的直观示意。来源：知乎用户 <a href="https://www.zhihu.com/question/1967516557811909769/answer/1967989954656305654">kaiyuan 的回答</a>。</em></p>
 <p>这张图只是在解释 feature map 的一般直觉，并不表示 Linear Transformer 的 <span class="arithmatex">\(\phi\)</span> 一定显式构造一个三维坐标。对 Linear Attention 而言，升到什么空间不是唯一重点；更重要的是让相似度能够分解成 <span class="arithmatex">\(\phi(q)\phi(k)^\top\)</span>。</p>
 <p>把可分解 kernel 代回 Attention，对第 <span class="arithmatex">\(i\)</span> 个 query 有：</p>
@@ -2365,7 +2667,7 @@ z_t=z_{t-1}+\phi(k_t)
 \]</div>
 <p>求和中的 <span class="arithmatex">\(S_i\)</span> 和 <span class="arithmatex">\(z_i\)</span> 不再随当前 query 改变，所以可以先累计和缓存。到这里，矩阵乘法结合律才真正转化成固定大小的 recurrent state。</p>
 <p>下面这张图展示了完整的变形顺序：先把与 query 无关的求和项移到一起，再利用 causal 条件把求和上限从整个序列改为当前位置 <span class="arithmatex">\(i\)</span>，最后把两项分别定义为状态 <span class="arithmatex">\(S_i\)</span> 和 <span class="arithmatex">\(Z_i\)</span>。</p>
-<p><img alt="Linear Attention 化为递归状态" src="../assets/linear-attention-recurrent-state.webp" /></p>
+<p><img alt="Linear Attention 化为递归状态" src="../../assets/linear-attention-recurrent-state.webp" /></p>
 <p><em>图 3：Linear Attention 化为递归状态的推导路径。来源：知乎用户 <a href="https://www.zhihu.com/question/1967516557811909769/answer/1967989954656305654">kaiyuan 的回答</a>。</em></p>
 <p>图 3 保留原作者记法。其核心重排按单向量为列向量理解：原图定义 <span class="arithmatex">\(S_i^{\mathrm{src}}=\sum_j\phi(K_j)V_j^\top\)</span>，再用 <span class="arithmatex">\(\phi(Q_i)^\top S_i^{\mathrm{src}}\)</span> 读取；正文的行向量版本则是 <span class="arithmatex">\(S_i=\sum_j\phi(k_j)^\top v_j\)</span> 和 <span class="arithmatex">\(\phi(q_i)S_i\)</span>。这里两种状态的形状其实相同，只是单向量的书写方向不同。原图右上角又使用了 <span class="arithmatex">\(x_iW\)</span> 这种常见的行向量写法，因此不宜把原图的每一个转置都当成一套严格统一的维度约定；正文公式已经按开头的维度表重新整理。</p>
 <p>图中的两个状态分工不同：<span class="arithmatex">\(S_i\)</span> 是 attention memory，保存 key/value 的关联；<span class="arithmatex">\(Z_i\)</span> 是 normalizer memory，只用于计算分母。后续 DeltaNet/KDA 的递推式主要讨论前一种矩阵记忆，并不意味着 <span class="arithmatex">\(Z_i\)</span> 被简单原样搬进了 KDA。</p>
@@ -2469,7 +2771,7 @@ S_t=\bar S_t
 <li>Delta rule 负责针对某个 key 的主动纠错。</li>
 </ul>
 <p>原回答将这一演进关系画成了下面的路线图：Linear Attention 先写成 recurrent state，再借用 SSM/LTI 的状态转移视角，引入 gate、遗忘系数 <span class="arithmatex">\(\alpha\)</span> 和 Delta Rule，最后组合成 GDN。</p>
-<p><img alt="从 Linear Attention、SSM、Gate 与 Delta Rule 到 GDN" src="../assets/gated-deltanet-evolution.webp" /></p>
+<p><img alt="从 Linear Attention、SSM、Gate 与 Delta Rule 到 GDN" src="../../assets/gated-deltanet-evolution.webp" /></p>
 <p><em>图 4：从 Linear Attention、SSM、Gate 与 Delta Rule 到 GDN 的概念路线。来源：知乎用户 <a href="https://www.zhihu.com/question/1967516557811909769/answer/1967989954656305654">kaiyuan 的回答</a>。</em></p>
 <p>图 4 也保留原作者记法。图中 GDN 主公式使用 <span class="arithmatex">\(S_t^{\mathrm{src}}\in\mathbb{R}^{d_v\times d_k}\)</span>，从右侧作用 key 方向的状态转移，并以 <span class="arithmatex">\(v_tk_t^\top\)</span> 写入。正文使用其转置 <span class="arithmatex">\(S_t=(S_t^{\mathrm{src}})^\top\in\mathbb{R}^{d_k\times d_v}\)</span>，所以相应写成从左侧作用状态转移，并以 <span class="arithmatex">\(k_t^\top v_t\)</span> 写入。原图左上角沿用了前一幅图中不完全统一的转置方式，应把整张图理解为“思想来源和模块组合”，而不是逐项检查矩阵维度的严格推导。</p>
 <p>另外，不是每个箭头都代表严格等价变形。例如，只有当状态转移参数不随 token 改变时，普通 SSM 才能直接展开为图中的固定 LTI 卷积核；GDN 的 <span class="arithmatex">\(q/k/v/\alpha/\beta\)</span> 则由当前输入动态生成。</p>
@@ -2492,7 +2794,7 @@ S_t=\bar S_t
 \]</div>
 <p>直观上，它把“房间总开关”换成了“一排独立调光开关”：某些记忆通道可以快速清空，另一些通道继续长期保存。</p>
 <p>原回答的 GDN/KDA 对照图准确抓住了这一变化：左侧的 <span class="arithmatex">\(\alpha_t\)</span> 是单个数，右侧的 <span class="arithmatex">\(\boldsymbol{\alpha}_t\)</span> 是长度为 <span class="arithmatex">\(d_k\)</span> 的向量，放进状态更新前先变成 <span class="arithmatex">\(\operatorname{Diag}(\boldsymbol{\alpha}_t)\)</span>。</p>
-<p><img alt="GDN 的标量遗忘门与 KDA 的逐通道遗忘门" src="../assets/gdn-vs-kda-gating.webp" /></p>
+<p><img alt="GDN 的标量遗忘门与 KDA 的逐通道遗忘门" src="../../assets/gdn-vs-kda-gating.webp" /></p>
 <p><em>图 5：GDN 的标量遗忘门升级为 KDA 的逐通道对角门。来源：知乎用户 <a href="https://www.zhihu.com/question/1967516557811909769/answer/1967989954656305654">kaiyuan 的回答</a>。</em></p>
 <p>图中的“增加上投影”是说：KDA 不再只为每个 head 生成一个数，而要为每个 head 生成 <span class="arithmatex">\(d_k\)</span> 个 gate。若直接从隐藏维度投影到所有 gate，参数量会较大，因此实际采用“先降维、再升维”的低秩投影。</p>
 <p>按照正文的行向量约定，可以分两步理解。先把当前 token 的隐藏状态压缩到中间维度 <span class="arithmatex">\(r\)</span>：</p>
@@ -2568,7 +2870,7 @@ S_t=
 </ul>
 <h3 id="62-31">6.2 3:1 的混合方案<a class="headerlink" href="#62-31" title="Permanent link">&para;</a></h3>
 <p>Kimi Linear 采用 KDA 与全局 MLA 约为 3:1 的混合架构。官方 27 层 checkpoint 实际包含 20 个 KDA 层和 7 个 MLA 层：</p>
-<p><img alt="Kimi Linear 的 KDA、MLA 与 MoE 结构" src="../assets/kimi-linear-architecture.webp" /></p>
+<p><img alt="Kimi Linear 的 KDA、MLA 与 MoE 结构" src="../../assets/kimi-linear-architecture.webp" /></p>
 <p><em>图 6：Kimi Linear 的 KDA、MLA 与 MoE 结构。来源：知乎用户 <a href="https://www.zhihu.com/question/1967516557811909769/answer/1967989954656305654">kaiyuan 的回答</a>，基础结构图源自 Kimi Linear 技术报告。</em></p>
 <p>左侧表示两种 decoder block：多数 block 使用 KDA，周期性插入 MLA block；两者之后都接 MoE。右上角展开 MoE router 如何选择 routed experts 并配合 shared experts，右下角则展开 KDA 内部的 Q/K/V、短卷积、forget gate、<span class="arithmatex">\(\beta\)</span> 与输出 gate。图中的 “<span class="arithmatex">\(N\times\)</span> KDA + <span class="arithmatex">\(1\times\)</span> MLA” 是结构示意。</p>
 <p>图 6 右下角最右侧的绿色分支是 <strong>output gate（输出门）</strong>，不要与控制状态遗忘的 <span class="arithmatex">\(\boldsymbol{\alpha}_t\)</span> 混淆。它从当前 token 的隐藏状态生成：</p>
@@ -2898,12 +3200,12 @@ r_t\odot\operatorname{RMSNorm}(y_t)
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.tracking", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.tracking", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
-        <script src="../../javascripts/mathjax.js"></script>
+        <script src="../../../javascripts/mathjax.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       

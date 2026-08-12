@@ -176,6 +176,13 @@
   font-style: italic;
 }
 
+/* Material 的 sections 模式会弱化三级导航的视觉缩进。 */
+.md-sidebar--primary .md-nav[data-md-level="2"] > .md-nav__list {
+  margin-inline-start: 0.55rem;
+  padding-inline-start: 0.55rem;
+  border-inline-start: 1px solid var(--md-default-fg-color--lighter);
+}
+
 @media screen and (max-width: 44.984375em) {
   .stat-grid {
     grid-template-columns: 1fr;

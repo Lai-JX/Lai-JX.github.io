@@ -12,31 +12,31 @@
         <meta name="author" content="LJX">
       
       
-        <link rel="canonical" href="https://lai-jx.github.io/algorithms/">
+        <link rel="canonical" href="https://lai-jx.github.io/ai/ds-v3/">
       
       
-        <link rel="prev" href="..">
+        <link rel="prev" href="../transformer%E5%9F%BA%E7%A1%80/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AE%A1%E7%AE%97attention%E6%97%B6softmax%E4%B8%AD%E8%A6%81%E9%99%A4%E4%BB%A5dk/">
       
       
-        <link rel="next" href="chapter-1/">
+        <link rel="next" href="deepseek-v3-architecture-and-implementation/">
       
       
         
       
       
-      <link rel="icon" href="../assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
-        <title>题库总览 - LJX 知识库</title>
+        <title>DeepSeek-V3 - LJX 知识库</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -49,9 +49,9 @@
       
     
     
-      <link rel="stylesheet" href="../stylesheets/extra.css">
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#_1" class="md-skip">
+        <a href="#deepseek-v3" class="md-skip">
           跳转至
         </a>
       
@@ -90,7 +90,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="页眉">
-    <a href=".." title="LJX 知识库" class="md-header__button md-logo" aria-label="LJX 知识库" data-md-component="logo">
+    <a href="../.." title="LJX 知识库" class="md-header__button md-logo" aria-label="LJX 知识库" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19.07 14.88 2.05 2.05L15.06 23H13v-2.06zm1.97-1.75c.14 0 .27.06.38.17l1.28 1.28c.22.21.22.56 0 .77l-1 1-2.05-2.05 1-1c.11-.11.25-.17.39-.17M17 4v6l-2-2-2 2V4H9v16h2v2H7c-1.05 0-2-.95-2-2v-1H3v-2h2v-4H3v-2h2V7H3V5h2V4a2 2 0 0 1 2-2h12c1.05 0 2 .95 2 2v6l-2 2V4zM5 5v2h2V5zm0 6v2h2v-2zm0 6v2h2v-2z"/></svg>
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              题库总览
+              DeepSeek-V3
             
           </span>
         </div>
@@ -228,7 +228,7 @@
   
   
     <li class="md-tabs__item">
-      <a href=".." class="md-tabs__link">
+      <a href="../.." class="md-tabs__link">
         
   
   
@@ -245,13 +245,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="./" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../algorithms/" class="md-tabs__link">
           
   
   
@@ -273,7 +271,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../hot-100/" class="md-tabs__link">
+        <a href="../../hot-100/" class="md-tabs__link">
           
   
   
@@ -291,11 +289,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../ai/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
           
   
   
@@ -315,7 +315,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../about/" class="md-tabs__link">
+      <a href="../../about/" class="md-tabs__link">
         
   
   
@@ -350,7 +350,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="LJX 知识库" class="md-nav__button md-logo" aria-label="LJX 知识库" data-md-component="logo">
+    <a href="../.." title="LJX 知识库" class="md-nav__button md-logo" aria-label="LJX 知识库" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19.07 14.88 2.05 2.05L15.06 23H13v-2.06zm1.97-1.75c.14 0 .27.06.38.17l1.28 1.28c.22.21.22.56 0 .77l-1 1-2.05-2.05 1-1c.11-.11.25-.17.39-.17M17 4v6l-2-2-2 2V4H9v16h2v2H7c-1.05 0-2-.95-2-2v-1H3v-2h2v-4H3v-2h2V7H3V5h2V4a2 2 0 0 1 2-2h12c1.05 0 2 .95 2 2v6l-2 2V4zM5 5v2h2V5zm0 6v2h2v-2zm0 6v2h2v-2z"/></svg>
@@ -380,7 +380,7 @@
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -404,8 +404,6 @@
       
   
   
-    
-  
   
   
     
@@ -443,23 +441,20 @@
     
     
       
-        
-        
-      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="./" class="md-nav__link md-nav__link--active">
+            <a href="../../algorithms/" class="md-nav__link ">
               
   
   
@@ -477,13 +472,13 @@
             </a>
             
               
-              <label class="md-nav__link md-nav__link--active" for="__nav_2" id="__nav_2_label" tabindex="">
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -503,7 +498,7 @@
   
   
     <li class="md-nav__item">
-      <a href="chapter-1/" class="md-nav__link">
+      <a href="../../algorithms/chapter-1/" class="md-nav__link">
         
   
   
@@ -531,7 +526,7 @@
   
   
     <li class="md-nav__item">
-      <a href="chapter-2/" class="md-nav__link">
+      <a href="../../algorithms/chapter-2/" class="md-nav__link">
         
   
   
@@ -559,7 +554,7 @@
   
   
     <li class="md-nav__item">
-      <a href="chapter-3/" class="md-nav__link">
+      <a href="../../algorithms/chapter-3/" class="md-nav__link">
         
   
   
@@ -587,7 +582,7 @@
   
   
     <li class="md-nav__item">
-      <a href="chapter-4/" class="md-nav__link">
+      <a href="../../algorithms/chapter-4/" class="md-nav__link">
         
   
   
@@ -615,7 +610,7 @@
   
   
     <li class="md-nav__item">
-      <a href="chapter-5/" class="md-nav__link">
+      <a href="../../algorithms/chapter-5/" class="md-nav__link">
         
   
   
@@ -643,7 +638,7 @@
   
   
     <li class="md-nav__item">
-      <a href="chapter-6/" class="md-nav__link">
+      <a href="../../algorithms/chapter-6/" class="md-nav__link">
         
   
   
@@ -671,7 +666,7 @@
   
   
     <li class="md-nav__item">
-      <a href="chapter-7/" class="md-nav__link">
+      <a href="../../algorithms/chapter-7/" class="md-nav__link">
         
   
   
@@ -699,7 +694,7 @@
   
   
     <li class="md-nav__item">
-      <a href="chapter-8/" class="md-nav__link">
+      <a href="../../algorithms/chapter-8/" class="md-nav__link">
         
   
   
@@ -727,7 +722,7 @@
   
   
     <li class="md-nav__item">
-      <a href="chapter-9/" class="md-nav__link">
+      <a href="../../algorithms/chapter-9/" class="md-nav__link">
         
   
   
@@ -755,7 +750,7 @@
   
   
     <li class="md-nav__item">
-      <a href="chapter-10/" class="md-nav__link">
+      <a href="../../algorithms/chapter-10/" class="md-nav__link">
         
   
   
@@ -783,7 +778,7 @@
   
   
     <li class="md-nav__item">
-      <a href="chapter-11/" class="md-nav__link">
+      <a href="../../algorithms/chapter-11/" class="md-nav__link">
         
   
   
@@ -811,7 +806,7 @@
   
   
     <li class="md-nav__item">
-      <a href="chapter-12/" class="md-nav__link">
+      <a href="../../algorithms/chapter-12/" class="md-nav__link">
         
   
   
@@ -869,7 +864,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../hot-100/" class="md-nav__link ">
+            <a href="../../hot-100/" class="md-nav__link ">
               
   
   
@@ -912,6 +907,8 @@
       
   
   
+    
+  
   
   
     
@@ -933,20 +930,23 @@
     
     
       
+        
+        
+      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../ai/" class="md-nav__link ">
+            <a href="../" class="md-nav__link ">
               
   
   
@@ -964,13 +964,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1004,10 +1004,13 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
@@ -1015,7 +1018,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../ai/transformer%E5%9F%BA%E7%A1%80/" class="md-nav__link ">
+            <a href="../transformer%E5%9F%BA%E7%A1%80/" class="md-nav__link ">
               
   
   
@@ -1033,7 +1036,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_4_2" id="__nav_4_2_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -1059,7 +1062,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ai/transformer%E5%9F%BA%E7%A1%80/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AE%A1%E7%AE%97attention%E6%97%B6softmax%E4%B8%AD%E8%A6%81%E9%99%A4%E4%BB%A5dk/" class="md-nav__link">
+      <a href="../transformer%E5%9F%BA%E7%A1%80/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AE%A1%E7%AE%97attention%E6%97%B6softmax%E4%B8%AD%E8%A6%81%E9%99%A4%E4%BB%A5dk/" class="md-nav__link">
         
   
   
@@ -1092,6 +1095,8 @@
                 
   
   
+    
+  
   
   
     
@@ -1111,18 +1116,21 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../ai/ds-v3/" class="md-nav__link ">
+            <a href="./" class="md-nav__link md-nav__link--active">
               
   
   
@@ -1140,13 +1148,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+              <label class="md-nav__link md-nav__link--active" for="__nav_4_3" id="__nav_4_3_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1166,7 +1174,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ai/ds-v3/deepseek-v3-architecture-and-implementation/" class="md-nav__link">
+      <a href="deepseek-v3-architecture-and-implementation/" class="md-nav__link">
         
   
   
@@ -1194,7 +1202,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ai/ds-v3/mla-matrix-absorption/" class="md-nav__link">
+      <a href="mla-matrix-absorption/" class="md-nav__link">
         
   
   
@@ -1248,10 +1256,13 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
@@ -1259,7 +1270,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../ai/k3/" class="md-nav__link ">
+            <a href="../k3/" class="md-nav__link ">
               
   
   
@@ -1277,7 +1288,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_4_4" id="__nav_4_4_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -1303,7 +1314,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ai/k3/KDA/" class="md-nav__link">
+      <a href="../k3/KDA/" class="md-nav__link">
         
   
   
@@ -1331,7 +1342,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ai/k3/kda-prefill/" class="md-nav__link">
+      <a href="../k3/kda-prefill/" class="md-nav__link">
         
   
   
@@ -1359,7 +1370,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ai/k3/gate-mla/" class="md-nav__link">
+      <a href="../k3/gate-mla/" class="md-nav__link">
         
   
   
@@ -1395,7 +1406,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ai/reading-list/" class="md-nav__link">
+      <a href="../reading-list/" class="md-nav__link">
         
   
   
@@ -1430,7 +1441,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../about/" class="md-nav__link">
+      <a href="../../about/" class="md-nav__link">
         
   
   
@@ -1477,49 +1488,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        常用且可用的标准库模块
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="常用且可用的标准库模块">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#import" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ✅ 常用内置模块或函数（无需 import）
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ✅ 可导入的标准库（部分列举）
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        专题导航
+        建议阅读顺序
       
     </span>
   </a>
@@ -1543,218 +1515,22 @@
 
 
 
-<h1 id="_1">算法面试做题手册<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
-<div class="admonition tip">
-<p class="admonition-title">复习提示</p>
-<ul>
-<li>这里只记录关键的算法思路（看到就能一下子明白该算法的关键点）。</li>
-<li>详细思路和题目：<a href="https://www.programmercarl.com/%E6%95%B0%E7%BB%84%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80.html">代码随想录</a></li>
-<li>公司出题偏好：<a href="https://codetop.cc/home">https://codetop.cc/home</a></li>
-<li>笔试：<a href="https://www.nowcoder.com/exam/company?questionJobId=10&amp;subTabName=written_page">https://www.nowcoder.com/exam/company?questionJobId=10&amp;subTabName=written_page</a></li>
-<li>很多降低复杂度的思想往往来自于数学，如求余等操作</li>
-</ul>
-</div>
-<h2 id="_2">常用且可用的标准库模块<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<h3 id="import"><strong>✅ 常用内置模块或函数（无需 import）</strong><a class="headerlink" href="#import" title="Permanent link">&para;</a></h3>
-<ul>
-<li><code>list</code>, <code>dict</code>, <code>set</code>, <code>tuple</code></li>
-<li><code>len()</code>, <code>max()</code>, <code>min()</code>, <code>sum()</code>, <code>sorted()</code>, <code>reversed()</code></li>
-<li><code>enumerate()</code>, <code>zip()</code>, <code>map()</code>, <code>filter()</code></li>
-<li>字符转ASCII：<code>ord()</code></li>
-<li>ASCII转字符：<code>chr()</code></li>
-</ul>
-<h3 id="_3"><strong>✅ 可导入的标准库（部分列举）</strong><a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th><strong>模块</strong></th>
-<th><strong>用途</strong></th>
-<th><strong>示例</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>collections</code></td>
-<td>高级容器类型</td>
-<td><code>deque</code>, <code>Counter</code>（用法：val→num，删除用pop方法。遍历类似于dict）, <code>defaultdict</code>, <code>OrderedDict</code></td>
-</tr>
-<tr>
-<td><code>heapq</code></td>
-<td>堆/优先队列</td>
-<td><code>heappush</code>, <code>heappop</code>, <code>heapify</code></td>
-</tr>
-<tr>
-<td><code>bisect</code></td>
-<td>二分查找</td>
-<td><code>bisect_left</code>, <code>bisect_right</code></td>
-</tr>
-<tr>
-<td><code>itertools</code></td>
-<td>迭代器工具</td>
-<td><code>permutations</code>, <code>combinations</code>, <code>product</code></td>
-</tr>
-<tr>
-<td><code>functools</code></td>
-<td>高阶函数和操作</td>
-<td><code>lru_cache</code>, <code>cmp_to_key</code></td>
-</tr>
-<tr>
-<td><code>math</code></td>
-<td>数学函数</td>
-<td><code>sqrt</code>, <code>ceil</code>, <code>floor</code>, <code>gcd</code>, <code>inf</code></td>
-</tr>
-<tr>
-<td><code>random</code></td>
-<td>随机数（偶尔用于打乱等）</td>
-<td><code>random()</code>, <code>shuffle()</code></td>
-</tr>
-<tr>
-<td><code>string</code></td>
-<td>字符串常量</td>
-<td><code>ascii_lowercase</code>, <code>digits</code></td>
-</tr>
-<tr>
-<td><code>re</code></td>
-<td>正则表达式</td>
-<td><code>match</code>, <code>search</code>, <code>findall</code></td>
-</tr>
-<tr>
-<td><code>typing</code></td>
-<td>类型提示（仅用于注解，不影响运行）</td>
-<td><code>List</code>, <code>Optional</code>, <code>Tuple</code>（注意：Python 3.9+ 可直接用 <code>list[int]</code>）</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>Counter<ul>
-<li>用法(类似dict)：val→num，删除用pop方法</li>
-<li>支持传入参数为可迭代对象（如str，list）、dict</li>
-</ul>
-</li>
-<li>栈</li>
-</ul>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1"># push</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># pop</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1"># top</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-</span></code></pre></div>
-<ul>
-<li>队列（collections下）</li>
-</ul>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">que</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1"># push</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">que</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># pop</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">que</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="c1"># top</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">que</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="c1"># 其它</span>
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="c1"># 删除队尾</span>
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="n">que</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-</span></code></pre></div>
-<ul>
-<li>
-<p>heapq</p>
-<p>heapq里面没有直接提供建立大根堆的方法，可以采取如下方法：每次push时给元素加一个负号（即取相反数），此时最小值变最大值，反之亦然，那么实际上的最大值就可以处于堆顶了，返回时再取负即可</p>
-</li>
-</ul>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">pri_que</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1">#小顶堆</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1"># 添加</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">pri_que</span><span class="p">,</span> <span class="p">(</span><span class="n">freq</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># 弹出</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">pri_que</span><span class="p">)</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1"># 堆顶元素</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">pri_que</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-</span></code></pre></div>
-<ul>
-<li>
-<p><code>defaultdict</code>（collections下）</p>
-<p>可自动创建默认value值</p>
-</li>
-<li>
-<p>排序时指定对比函数</p>
-<ul>
-<li><strong>Python 2</strong>: <code>list.sort(cmp=compare)</code></li>
-<li><strong>Python 3</strong>: <code>list.sort(key=cmp_to_key(compare))</code><ul>
-<li><code>functools</code></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>ACM输入输出模式<ul>
-<li>一次读取一行：a = input().split()</li>
-<li>一次读取<strong>所有输入</strong>，直到文件结束（EOF）：sys.stdin.read()</li>
-</ul>
-</li>
-</ul>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nb">input</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">read</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="n">data</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>    <span class="n">vec</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>        <span class="n">vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">index</span><span class="o">+</span><span class="n">i</span><span class="p">]))</span>
-</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>    <span class="n">index</span> <span class="o">+=</span> <span class="n">n</span>
-</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>
-</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>    <span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
-</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>    <span class="n">total_sum</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>        <span class="n">total_sum</span> <span class="o">+=</span> <span class="n">vec</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>        <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">total_sum</span>
-</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>
-</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>    <span class="k">while</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>        <span class="n">a</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
-</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>        <span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
-</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>        <span class="n">index</span> <span class="o">+=</span> <span class="mi">2</span>
-</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>
-</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>        <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">b</span><span class="p">]</span><span class="o">-</span><span class="n">p</span><span class="p">[</span><span class="n">a</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">a</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">p</span><span class="p">[</span><span class="n">b</span><span class="p">])</span>
-</span><span id="__span-3-27"><a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a>
-</span><span id="__span-3-28"><a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a>    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
-</span><span id="__span-3-29"><a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
-</span><span id="__span-3-30"><a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a>    <span class="k">return</span>
-</span><span id="__span-3-31"><a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a>
-</span><span id="__span-3-32"><a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-</span><span id="__span-3-33"><a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a>    <span class="n">main</span><span class="p">()</span>
-</span></code></pre></div>
-<ul>
-<li>
-<p>排序</p>
-<p><a href="https://www.runoob.com/w3cnote/ten-sorting-algorithm.html">https://www.runoob.com/w3cnote/ten-sorting-algorithm.html</a></p>
-</li>
-</ul>
-<div class="admonition info">
-<p class="admonition-title">题库概览</p>
-<p>当前共整理 <strong>186</strong> 道题，分为 <strong>12</strong> 个专题。构建时会依据专题标记自动拆页。</p>
-</div>
-<h2 id="_4">专题导航<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
-<div class="chapter-grid">
-<a class="chapter-link" href="chapter-1/"><strong>数组</strong><span>10 题</span></a>
-<a class="chapter-link" href="chapter-2/"><strong>链表</strong><span>7 题</span></a>
-<a class="chapter-link" href="chapter-3/"><strong>哈希表</strong><span>10 题</span></a>
-<a class="chapter-link" href="chapter-4/"><strong>字符串</strong><span>7 题</span></a>
-<a class="chapter-link" href="chapter-5/"><strong>栈与队列</strong><span>8 题</span></a>
-<a class="chapter-link" href="chapter-6/"><strong>二叉树</strong><span>31 题</span></a>
-<a class="chapter-link" href="chapter-7/"><strong>回溯算法</strong><span>14 题</span></a>
-<a class="chapter-link" href="chapter-8/"><strong>贪心算法</strong><span>19 题</span></a>
-<a class="chapter-link" href="chapter-9/"><strong>动态规划</strong><span>38 题</span></a>
-<a class="chapter-link" href="chapter-10/"><strong>单调栈</strong><span>5 题</span></a>
-<a class="chapter-link" href="chapter-11/"><strong>图论</strong><span>21 题</span></a>
-<a class="chapter-link" href="chapter-12/"><strong>Hot 100</strong><span>16 题</span></a>
-</div>
+<h1 id="deepseek-v3">DeepSeek-V3<a class="headerlink" href="#deepseek-v3" title="Permanent link">&para;</a></h1>
+<p>这里整理 DeepSeek-V3 的模型架构、MLA 机制与参考实现。</p>
+<h2 id="_1">建议阅读顺序<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ol>
+<li><a href="deepseek-v3-architecture-and-implementation/">DeepSeek-V3 架构与参考实现解析</a>：先建立对 MLA、DeepSeekMoE、MTP、FP8 与整体推理流程的认识。</li>
+<li><a href="mla-matrix-absorption/">MLA 的矩阵吸收算法</a>：进一步理解 MLA 在推理阶段如何压缩 KV Cache 并完成权重吸收。</li>
+</ol>
 
 
 
 
 
 
+
+  
+  
 
 
 
@@ -1823,12 +1599,12 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.tracking", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.tracking", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
-        <script src="../javascripts/mathjax.js"></script>
+        <script src="../../javascripts/mathjax.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
