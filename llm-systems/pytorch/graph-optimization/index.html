@@ -12,13 +12,13 @@
         <meta name="author" content="LJX">
       
       
-        <link rel="canonical" href="https://lai-jx.github.io/ai/transformer%E5%9F%BA%E7%A1%80/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AE%A1%E7%AE%97attention%E6%97%B6softmax%E4%B8%AD%E8%A6%81%E9%99%A4%E4%BB%A5dk/">
+        <link rel="canonical" href="https://lai-jx.github.io/llm-systems/pytorch/graph-optimization/">
       
       
-        <link rel="prev" href="../">
+        <link rel="prev" href="../torch-compile/">
       
       
-        <link rel="next" href="../flashattention/">
+        <link rel="next" href="../../vllm/">
       
       
         
@@ -29,7 +29,7 @@
     
     
       
-        <title>为什么 Attention 要除以 sqrt(d_k) - LJX 知识库</title>
+        <title>计算图优化 - LJX 知识库</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#attentionsoftmaxsqrtd_k" class="md-skip">
+        <a href="#pytorch" class="md-skip">
           跳转至
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              为什么 Attention 要除以 sqrt(d_k)
+              计算图优化
             
           </span>
         </div>
@@ -267,13 +267,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../../" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../../ai/" class="md-tabs__link">
           
   
   
@@ -291,11 +289,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../../llm-systems/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
           
   
   
@@ -538,8 +538,6 @@
       
   
   
-    
-  
   
   
     
@@ -563,23 +561,20 @@
     
     
       
-        
-        
-      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../" class="md-nav__link ">
+            <a href="../../../ai/" class="md-nav__link ">
               
   
   
@@ -597,13 +592,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -620,8 +615,6 @@
                 
   
   
-    
-  
   
   
     
@@ -643,21 +636,18 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
+            <a href="../../../ai/transformer%E5%9F%BA%E7%A1%80/" class="md-nav__link ">
               
   
   
@@ -675,13 +665,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -698,37 +688,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    为什么 Attention 要除以 √dₖ
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../../ai/transformer%E5%9F%BA%E7%A1%80/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AE%A1%E7%AE%97attention%E6%97%B6softmax%E4%B8%AD%E8%A6%81%E9%99%A4%E4%BB%A5dk/" class="md-nav__link">
         
   
   
@@ -744,148 +707,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="目录">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#softmax" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        先搞清楚 softmax 在干嘛
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        为什么会梯度消失——求偏导：
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#qkt-d_k" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        为什么\(qk^T\)的方差是 \(d_k\)？
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="为什么\(qk^T\)的方差是 \(d_k\)？">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        前提假设
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        两个独立随机变量乘积的方差
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#d_k" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        \(d_k\) 个独立项求和的方差
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sqrtd_k-1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        为什么除以 \(\sqrt{d_k}\) 就能把方差拉回 1？
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="为什么除以 \(\sqrt{d_k}\) 就能把方差拉回 1？">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        方差的缩放性质
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        代入
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        直觉总结
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -898,7 +719,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../flashattention/" class="md-nav__link">
+      <a href="../../../ai/transformer%E5%9F%BA%E7%A1%80/flashattention/" class="md-nav__link">
         
   
   
@@ -926,7 +747,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../flashattention-%E7%AE%80%E5%8C%96%E7%89%88/" class="md-nav__link">
+      <a href="../../../ai/transformer%E5%9F%BA%E7%A1%80/flashattention-%E7%AE%80%E5%8C%96%E7%89%88/" class="md-nav__link">
         
   
   
@@ -976,13 +797,10 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
@@ -990,7 +808,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../mlp%E5%9F%BA%E7%A1%80/" class="md-nav__link ">
+            <a href="../../../ai/mlp%E5%9F%BA%E7%A1%80/" class="md-nav__link ">
               
   
   
@@ -1008,7 +826,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -1034,7 +852,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../mlp%E5%9F%BA%E7%A1%80/FFN/" class="md-nav__link">
+      <a href="../../../ai/mlp%E5%9F%BA%E7%A1%80/FFN/" class="md-nav__link">
         
   
   
@@ -1086,13 +904,10 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
@@ -1100,7 +915,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../ds-v3/" class="md-nav__link ">
+            <a href="../../../ai/ds-v3/" class="md-nav__link ">
               
   
   
@@ -1118,7 +933,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_4" id="__nav_3_4_label" tabindex="">
+              <label class="md-nav__link " for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -1144,7 +959,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../ds-v3/deepseek-v3-architecture-and-implementation/" class="md-nav__link">
+      <a href="../../../ai/ds-v3/deepseek-v3-architecture-and-implementation/" class="md-nav__link">
         
   
   
@@ -1172,7 +987,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../ds-v3/mla-matrix-absorption/" class="md-nav__link">
+      <a href="../../../ai/ds-v3/mla-matrix-absorption/" class="md-nav__link">
         
   
   
@@ -1226,13 +1041,10 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
@@ -1240,7 +1052,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../k3/" class="md-nav__link ">
+            <a href="../../../ai/k3/" class="md-nav__link ">
               
   
   
@@ -1258,7 +1070,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_5" id="__nav_3_5_label" tabindex="">
+              <label class="md-nav__link " for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -1284,7 +1096,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../k3/KDA/" class="md-nav__link">
+      <a href="../../../ai/k3/KDA/" class="md-nav__link">
         
   
   
@@ -1312,7 +1124,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../k3/kda-prefill/" class="md-nav__link">
+      <a href="../../../ai/k3/kda-prefill/" class="md-nav__link">
         
   
   
@@ -1340,7 +1152,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../k3/gate-mla/" class="md-nav__link">
+      <a href="../../../ai/k3/gate-mla/" class="md-nav__link">
         
   
   
@@ -1376,7 +1188,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reading-list/" class="md-nav__link">
+      <a href="../../../ai/reading-list/" class="md-nav__link">
         
   
   
@@ -1408,6 +1220,8 @@
       
   
   
+    
+  
   
   
     
@@ -1429,20 +1243,23 @@
     
     
       
+        
+        
+      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../llm-systems/" class="md-nav__link ">
+            <a href="../../" class="md-nav__link ">
               
   
   
@@ -1460,13 +1277,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1483,6 +1300,8 @@
                 
   
   
+    
+  
   
   
     
@@ -1504,18 +1323,21 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../llm-systems/pytorch/" class="md-nav__link ">
+            <a href="../" class="md-nav__link ">
               
   
   
@@ -1533,13 +1355,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_4_2" id="__nav_4_2_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1559,7 +1381,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../llm-systems/pytorch/cuda-memory-management/" class="md-nav__link">
+      <a href="../cuda-memory-management/" class="md-nav__link">
         
   
   
@@ -1587,7 +1409,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../llm-systems/pytorch/torch-compile/" class="md-nav__link">
+      <a href="../torch-compile/" class="md-nav__link">
         
   
   
@@ -1612,10 +1434,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../../llm-systems/pytorch/graph-optimization/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    计算图优化
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1631,6 +1480,186 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        快速复习
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 图优化的本质
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-fx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. FX 图是什么
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 编译链路中的主要优化
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 编译链路中的主要优化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 规范化、函数化与分解
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 算子融合
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 布局与循环级优化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 消除中间张量与内存规划
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 优化层次与收益来源
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 图边界决定优化上限
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 静态特化与动态形状
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-cuda-graphs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. CUDA Graphs 与“计算图编译”不是一回事
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 如何判断优化是否真的有效
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 一组实用判断
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1665,10 +1694,13 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
@@ -1676,7 +1708,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../llm-systems/vllm/" class="md-nav__link ">
+            <a href="../../vllm/" class="md-nav__link ">
               
   
   
@@ -1694,7 +1726,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_4_3" id="__nav_4_3_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -1720,7 +1752,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../llm-systems/vllm/kv-layout/" class="md-nav__link">
+      <a href="../../vllm/kv-layout/" class="md-nav__link">
         
   
   
@@ -1770,10 +1802,13 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
@@ -1781,7 +1816,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../llm-systems/performance/" class="md-nav__link ">
+            <a href="../../performance/" class="md-nav__link ">
               
   
   
@@ -1799,7 +1834,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_4_4" id="__nav_4_4_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -1825,7 +1860,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../llm-systems/performance/gpu-utilization/" class="md-nav__link">
+      <a href="../../performance/gpu-utilization/" class="md-nav__link">
         
   
   
@@ -1875,10 +1910,13 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
@@ -1886,7 +1924,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../llm-systems/distributed/" class="md-nav__link ">
+            <a href="../../distributed/" class="md-nav__link ">
               
   
   
@@ -1904,7 +1942,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_4_5" id="__nav_4_5_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -1930,7 +1968,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../llm-systems/distributed/parallel-communication/" class="md-nav__link">
+      <a href="../../distributed/parallel-communication/" class="md-nav__link">
         
   
   
@@ -2020,21 +2058,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#softmax" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        先搞清楚 softmax 在干嘛
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        为什么会梯度消失——求偏导：
+        快速复习
       
     </span>
   </a>
@@ -2042,22 +2069,44 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#qkt-d_k" class="md-nav__link">
+  <a href="#1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        为什么\(qk^T\)的方差是 \(d_k\)？
+        1. 图优化的本质
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="为什么\(qk^T\)的方差是 \(d_k\)？">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-fx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. FX 图是什么
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 编译链路中的主要优化
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 编译链路中的主要优化">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#31" class="md-nav__link">
     <span class="md-ellipsis">
       
-        前提假设
+        3.1 规范化、函数化与分解
       
     </span>
   </a>
@@ -2065,10 +2114,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#32" class="md-nav__link">
     <span class="md-ellipsis">
       
-        两个独立随机变量乘积的方差
+        3.2 算子融合
       
     </span>
   </a>
@@ -2076,10 +2125,32 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#d_k" class="md-nav__link">
+  <a href="#33" class="md-nav__link">
     <span class="md-ellipsis">
       
-        \(d_k\) 个独立项求和的方差
+        3.3 布局与循环级优化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 消除中间张量与内存规划
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 优化层次与收益来源
       
     </span>
   </a>
@@ -2092,49 +2163,54 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#sqrtd_k-1" class="md-nav__link">
+  <a href="#4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        为什么除以 \(\sqrt{d_k}\) 就能把方差拉回 1？
+        4. 图边界决定优化上限
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="为什么除以 \(\sqrt{d_k}\) 就能把方差拉回 1？">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        方差的缩放性质
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        代入
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
+  <a href="#5" class="md-nav__link">
     <span class="md-ellipsis">
       
-        直觉总结
+        5. 静态特化与动态形状
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-cuda-graphs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. CUDA Graphs 与“计算图编译”不是一回事
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 如何判断优化是否真的有效
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 一组实用判断
       
     </span>
   </a>
@@ -2158,112 +2234,224 @@
 
 
 
-<h1 id="attentionsoftmaxsqrtd_k">为什么计算attention时softmax中要除以<span class="arithmatex">\(\sqrt{d_k}\)</span><a class="headerlink" href="#attentionsoftmaxsqrtd_k" title="Permanent link">&para;</a></h1>
-<div class="arithmatex">\[
-Attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt{d_k}})V
-\]</div>
-<p>一句话：防止梯度消失</p>
-<h2 id="softmax">先搞清楚 softmax 在干嘛<a class="headerlink" href="#softmax" title="Permanent link">&para;</a></h2>
-<p>假设某一行的 score 是三个数：<span class="arithmatex">\(s_1, s_2, s_3\)</span>，softmax 把它们变成加起来等于 1 的概率： <span class="arithmatex">\(S(s_1) = \frac{e^{s_1}}{e^{s_1} + e^{s_2} + e^{s_3}}, \quad S(s_2) = \frac{e^{s_2}}{e^{s_1} + e^{s_2} + e^{s_3}}, \quad \cdots\)</span></p>
-<p>为了方便写，把分母记作 <span class="arithmatex">\(D = e^{s_1} + e^{s_2} + e^{s_3}\)</span>，所以 <span class="arithmatex">\(S(s_j) = \frac{e^{s_j}}{D}\)</span>。 </p>
-<h2 id="_1">为什么会梯度消失——求偏导：<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<p>分两种情况</p>
-<p>情况一：对 <span class="arithmatex">\(s_j\)</span> 自己求偏导（<span class="arithmatex">\(i = j\)</span>） <span class="arithmatex">\(\frac{\partial S(s_j)}{\partial s_j} = \frac{\partial}{\partial s_j}\left(\frac{e^{s_j}}{D}\right)\)</span> </p>
-<div class="arithmatex">\[
-\frac{\partial S(s_j)}{\partial s_j} = \frac{e^{s_j} \cdot D - e^{s_j} \cdot e^{s_j}}{D^2} = \frac{e^{s_j}}{D} - \frac{e^{s_j}}{D} \cdot \frac{e^{s_j}}{D} = S(s_j) - S(s_j)^2 \\
-\]</div>
-<div class="arithmatex">\[
-\boxed{\frac{\partial S(s_j)}{\partial s_j} = S(s_j)\big(1 - S(s_j)\big)}
-\]</div>
-<p>情况二：对另一个 <span class="arithmatex">\(s_i\)</span> 求偏导（<span class="arithmatex">\(i \neq j\)</span>） <span class="arithmatex">\(\frac{\partial S(s_j)}{\partial s_i} = \frac{\partial}{\partial s_i}\left(\frac{e^{s_j}}{D}\right)\)</span>  </p>
-<div class="arithmatex">\[
-\frac{\partial S(s_j)}{\partial s_i} = \frac{0 \cdot D - e^{s_j} \cdot e^{s_i}}{D^2} = -\frac{e^{s_j}}{D} \cdot \frac{e^{s_i}}{D}\\
-\]</div>
-<div class="arithmatex">\[
-\boxed{\frac{\partial S(s_j)}{\partial s_i} = -S(s_j) \cdot S(s_i)}\]</div>
-<p>然后看为什么梯度会消失 现在我们有了两个公式： </p>
+<h1 id="pytorch">PyTorch 计算图优化<a class="headerlink" href="#pytorch" title="Permanent link">&para;</a></h1>
+<h2 id="_1">快速复习<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <ul>
-<li><span class="arithmatex">\(\text{对自己：} \quad S(s_j)(1 - S(s_j))\)</span></li>
-<li><span class="arithmatex">\(\text{对别人：} \quad -S(s_j) \cdot S(s_i)\)</span></li>
+<li>PyTorch 中的 autograd graph、FX/Inductor graph 和 CUDA Graph 解决的是不同问题。</li>
+<li>图优化的主要收益往往来自减少 kernel launch 和全局显存读写，而不只是减少 FLOPs。</li>
+<li>融合受数据依赖、迭代域、资源占用、mutation/alias 和图边界约束，并非越大越好。</li>
+<li>静态 shape 便于特化，动态 shape 便于复用；实际系统常用 bucketing 折中。</li>
+<li>最终判断标准是端到端稳态性能，不能只看节点数或生成 kernel 数。</li>
 </ul>
-<p>关键就在于这两个公式里都有 <span class="arithmatex">\(S(s_j)\)</span> 这个因子。来看看极端情况： </p>
-<ul>
-<li><strong>当某个 <span class="arithmatex">\(s_j\)</span> 远大于其他时：</strong> <span class="arithmatex">\(S(s_j) \to 1, \quad S(s_i) \to 0 \;\;(i \neq j)\)</span><ul>
-<li>对自己：<span class="arithmatex">\(1 \times (1 - 1) = 0\)</span></li>
-<li>对别人：<span class="arithmatex">\(-1 \times 0 = 0\)</span></li>
-</ul>
-</li>
-<li><strong>当某个 <span class="arithmatex">\(s_j\)</span> 远小于其他时：</strong> <span class="arithmatex">\(S(s_j) \to 0\)</span><ul>
-<li>对自己：<span class="arithmatex">\(0 \times (1 - 0) = 0\)</span></li>
-<li>对别人：<span class="arithmatex">\(-0 \times S(s_i) = 0\)</span></li>
-</ul>
-</li>
-<li><strong>不管哪种极端，梯度全是 0。</strong> 这就是梯度消失。为了不出现上述情况，就需要方差不能太大</li>
-</ul>
-<h2 id="qkt-d_k">为什么<span class="arithmatex">\(qk^T\)</span>的方差是 <span class="arithmatex">\(d_k\)</span>？<a class="headerlink" href="#qkt-d_k" title="Permanent link">&para;</a></h2>
-<h3 id="_2">前提假设<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
-<p>q 和 k 都是维度为 <span class="arithmatex">\(d_k\)</span> 的向量，每个元素 <span class="arithmatex">\(q_i\)</span>、<span class="arithmatex">\(k_i\)</span> 满足：</p>
-<ul>
-<li>均值 <span class="arithmatex">\(E[q_i] = 0\)</span>，<span class="arithmatex">\(E[k_i] = 0\)</span></li>
-<li>方差 <span class="arithmatex">\(\text{Var}(q_i) = 1\)</span>，<span class="arithmatex">\(\text{Var}(k_i) = 1\)</span></li>
-<li>所有元素之间互相独立</li>
-</ul>
-<h3 id="_3">两个独立随机变量乘积的方差<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
-<p>对于 <span class="arithmatex">\(q_i\)</span> 和 <span class="arithmatex">\(k_i\)</span> 独立、均值都为 0 的情况，有一个性质：</p>
-<div class="arithmatex">\[
-E[q_i k_i] = E[q_i] \cdot E[k_i] = 0 \times 0 = 0
-\]</div>
-<div class="arithmatex">\[
-\text{Var}(q_i k_i) = E[q_i^2] \cdot E[k_i^2] = \text{Var}(q_i) \cdot \text{Var}(k_i) = 1 \times 1 = 1
-\]</div>
-<blockquote>
-<p>简单理解：两个均值 0、方差 1 的独立变量相乘，乘积的均值是 0，方差是 1。</p>
-</blockquote>
-<h3 id="d_k"><span class="arithmatex">\(d_k\)</span> 个独立项求和的方差<a class="headerlink" href="#d_k" title="Permanent link">&para;</a></h3>
-<p>独立随机变量之和的方差 = 各自方差之和（方差的<strong>可加性</strong>）：</p>
-<div class="arithmatex">\[
-\text{Var}\!\left(\sum_{i=1}^{d_k} q_i k_i\right) = \sum_{i=1}^{d_k} \text{Var}(q_i k_i) = \sum_{i=1}^{d_k} 1 = d_k
-\]</div>
-<p>所以：</p>
-<div class="arithmatex">\[\boxed{\text{Var}(q \cdot k) = d_k}\]</div>
-<h2 id="sqrtd_k-1">为什么除以 <span class="arithmatex">\(\sqrt{d_k}\)</span> 就能把方差拉回 1？<a class="headerlink" href="#sqrtd_k-1" title="Permanent link">&para;</a></h2>
-<h3 id="_4">方差的缩放性质<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
-<p>有一个基本性质：给随机变量乘一个常数 <span class="arithmatex">\(c\)</span>，方差变成原来的 <span class="arithmatex">\(c^2\)</span> 倍：</p>
-<div class="arithmatex">\[\text{Var}(c \cdot X) = c^2 \cdot \text{Var}(X)\]</div>
-<h3 id="_5">代入<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
-<p>现在把 <span class="arithmatex">\(q \cdot k\)</span> 除以 <span class="arithmatex">\(\sqrt{d_k}\)</span>，等价于乘以 <span class="arithmatex">\(\frac{1}{\sqrt{d_k}}\)</span>：</p>
-<div class="arithmatex">\[\text{Var}\!\left(\frac{q \cdot k}{\sqrt{d_k}}\right) = \left(\frac{1}{\sqrt{d_k}}\right)^2 \cdot \text{Var}(q \cdot k) = \frac{1}{d_k} \cdot d_k = 1\]</div>
-<p>所以：</p>
-<div class="arithmatex">\[\boxed{\text{Var}\!\left(\frac{q \cdot k}{\sqrt{d_k}}\right) = 1}\]</div>
-<hr />
-<h2 id="_6">直觉总结<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<h2 id="1">1. 图优化的本质<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>图优化不是单纯“减少算子数量”，而是在保持程序语义的条件下，降低关键路径上的成本：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>总时间 ≈ Python/dispatcher 开销
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>       + kernel launch 开销
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>       + 显存读写时间
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>       + 实际计算时间
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>       + 同步与通信时间
+</span></code></pre></div>
+<p>对许多逐元素算子，计算量很小，主要成本是反复读写显存和启动 kernel。因此把多个算子放进一个 kernel，往往比减少几次标量运算重要得多。</p>
+<p>先区分三个经常混用的“图”：</p>
 <table>
 <thead>
 <tr>
-<th></th>
-<th>方差</th>
-<th>标准差（波动幅度）</th>
+<th>图</th>
+<th>记录什么</th>
+<th>主要用途</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>不 scaling</td>
-<td><span class="arithmatex">\(d_k\)</span></td>
-<td><span class="arithmatex">\(\sqrt{d_k}\)</span>，随维度线性增大</td>
+<td>autograd graph</td>
+<td>Tensor 操作对应的梯度依赖</td>
+<td>反向传播</td>
 </tr>
 <tr>
-<td>scaling 后</td>
-<td><span class="arithmatex">\(1\)</span></td>
-<td><span class="arithmatex">\(1\)</span>，跟维度无关了</td>
+<td>FX/ATen/Inductor graph</td>
+<td>可分析、可变换的算子与数据依赖</td>
+<td>编译、融合和代码生成</td>
+</tr>
+<tr>
+<td>CUDA Graph</td>
+<td>一段已经确定的 GPU 工作及依赖</td>
+<td>低开销重复提交</td>
 </tr>
 </tbody>
 </table>
-<p>比如 <span class="arithmatex">\(d_k = 64\)</span>：</p>
+<p>它们可以衔接使用，但不是同一种表示。</p>
+<h2 id="2-fx">2. FX 图是什么<a class="headerlink" href="#2-fx" title="Permanent link">&para;</a></h2>
+<p>FX 使用 <code>GraphModule</code> 表示 Python 可调用对象和一张有序、无环的节点图。常见节点类型包括：</p>
 <ul>
-<li>不 scaling：标准差 = 8，score 动不动在 ±24 波动，softmax 直接变成 one-hot</li>
-<li>scaling 后：标准差 = 1，score 在 ±3 左右波动，softmax 输出平滑，梯度健康</li>
+<li><code>placeholder</code>：函数输入；</li>
+<li><code>get_attr</code>：读取参数或常量属性；</li>
+<li><code>call_function</code>、<code>call_method</code>、<code>call_module</code>：执行操作；</li>
+<li><code>output</code>：返回值。</li>
 </ul>
-<p><strong>本质就是：方差可加性让点积方差随维度增长，而方差缩放性质让除以 <span class="arithmatex">\(\sqrt{d_k}\)</span> 恰好抵消这个增长。</strong> 两个性质对撞，刚好抵消，所以 <span class="arithmatex">\(\sqrt{d_k}\)</span> 不是随便选的数字，是数学上精确算出来的。</p>
+<p>简单观察：</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">nn</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">torch.fx</span><span class="w"> </span><span class="kn">import</span> <span class="n">symbolic_trace</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="k">class</span><span class="w"> </span><span class="nc">Block</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">bias</span><span class="p">):</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">bias</span><span class="p">)</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="n">gm</span> <span class="o">=</span> <span class="n">symbolic_trace</span><span class="p">(</span><span class="n">Block</span><span class="p">())</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="nb">print</span><span class="p">(</span><span class="n">gm</span><span class="o">.</span><span class="n">graph</span><span class="p">)</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="nb">print</span><span class="p">(</span><span class="n">gm</span><span class="o">.</span><span class="n">code</span><span class="p">)</span>
+</span></code></pre></div>
+<p>FX 是可变换 IR，但 <code>torch.compile</code> 内部得到的图和传统 <code>symbolic_trace</code> 并不完全等价；前者来自 Dynamo/AOTAutograd，并配合 FakeTensor、shape/stride、Guards 和 autograd 等编译信息。<code>symbolic_trace</code> 也无法直接追踪所有依赖 Tensor 数据的 Python 控制流。</p>
+<p>手写 FX pass 时，修改完图应执行 <code>graph.lint()</code> 检查拓扑和引用，再执行 <code>GraphModule.recompile()</code> 让 Python <code>forward</code> 与图同步。参考官方 <a href="https://docs.pytorch.org/docs/stable/fx.html">torch.fx 文档</a>。</p>
+<h2 id="3">3. 编译链路中的主要优化<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<h3 id="31">3.1 规范化、函数化与分解<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
+<p>高层 PyTorch 操作形式多样，还包含 inplace、view 和别名语义。AOTAutograd/AOTDispatcher 先把它们转换成更规则的表示，再将复合算子分解为后端理解的核心算子。这样做不是直接提速，而是让后续依赖分析、融合和代码生成更可靠。</p>
+<p>一些经典图变换也属于这个层次，例如在语义允许时折叠常量表达式、移除无副作用且结果未被使用的节点，以及合并冗余转换。具体是否执行取决于当前 backend 和 IR；不能假设所有数学上等价的改写都安全，因为浮点精度、随机数、mutation 和 alias 都会限制变换。</p>
+<h3 id="32">3.2 算子融合<a class="headerlink" href="#32" title="Permanent link">&para;</a></h3>
+<p>考虑：</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">scale</span> <span class="o">+</span> <span class="n">bias</span><span class="p">)</span>
+</span></code></pre></div>
+<p>eager 可能依次产生乘法、加法、ReLU kernel，并为中间结果读写全局显存。融合后可在一个 kernel 中完成：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Eager: read x → write t1 → read t1 → write t2 → read t2 → write y
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Fused: read x,bias,scale ────────────────────────────────→ write y
+</span></code></pre></div>
+<p>常见融合类别：</p>
+<ul>
+<li><strong>纵向融合</strong>：producer 与 consumer 融合，如 pointwise 链；</li>
+<li><strong>epilogue 融合</strong>：把 bias、激活等融合到 matmul/conv 模板尾部；</li>
+<li><strong>pointwise + reduction 融合</strong>：在依赖、资源和调度允许时减少中间读写；</li>
+<li><strong>横向融合</strong>：无直接依赖但迭代域兼容的操作共同调度，以减少 launch。</li>
+</ul>
+<p>融合并非越多越好。过度融合可能增加寄存器压力、降低 occupancy，或让不同调度需求的算子互相牵制。Inductor 的 scheduler 会基于依赖关系和代价模型选择，而不是把相邻节点无条件拼接。PyTorch 2 论文对 <a href="https://docs.pytorch.org/assets/pytorch2-2.pdf">Inductor 的融合与 Triton codegen</a> 有更完整描述。</p>
+<p>判断两个节点能否融合，至少要考虑：</p>
+<ul>
+<li>producer/consumer 的数据依赖是否允许重排；</li>
+<li>iteration domain 和索引关系是否兼容；</li>
+<li>inplace、view、alias 或副作用会不会改变可见语义；</li>
+<li>融合后的寄存器、shared memory 和并行度是否仍然合理；</li>
+<li>中间结果是否被图外或多个不兼容的 consumer 使用。</li>
+</ul>
+<h3 id="33">3.3 布局与循环级优化<a class="headerlink" href="#33" title="Permanent link">&para;</a></h3>
+<p>Tensor 的 shape 相同并不代表访存方式相同，stride/layout 会影响合并访存、向量化及是否需要复制。编译器能利用整张子图的信息：</p>
+<ul>
+<li>选择循环顺序和 tile；</li>
+<li>尽量让 producer 直接以 consumer 需要的方式产生数据；</li>
+<li>消除只为格式转换产生的中间 materialization；</li>
+<li>对特定 shape 选择 matmul/conv 实现或 autotune 配置。</li>
+</ul>
+<p>因此不能只看 FX 节点数判断优化质量，还要看生成 kernel、内存流量和实际设备指标。</p>
+<h3 id="34">3.4 消除中间张量与内存规划<a class="headerlink" href="#34" title="Permanent link">&para;</a></h3>
+<p>融合可以让中间值停留在寄存器或片上存储，不再形成完整 CUDA tensor。对必须 materialize 的值，编译器还可依据生命周期安排 buffer 复用。</p>
+<p>训练图的显存还有另一层权衡：AOTAutograd partitioner 决定 forward 为 backward 保存哪些值、哪些值在 backward 重算。少保存能降低激活显存，但增加计算量，这与 activation checkpointing 的思想相近。</p>
+<h3 id="35">3.5 优化层次与收益来源<a class="headerlink" href="#35" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>优化</th>
+<th>主要减少</th>
+<th>更容易受益的负载</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>捕获更大的连续图</td>
+<td>Python 往返与优化边界</td>
+<td>小算子密集、Python 调度明显</td>
+</tr>
+<tr>
+<td>pointwise/reduction 融合</td>
+<td>kernel launch、全局显存流量</td>
+<td>memory-bound 算子链</td>
+</tr>
+<tr>
+<td>epilogue 融合</td>
+<td>中间张量读写</td>
+<td>Linear/Conv 后接 bias、激活</td>
+</tr>
+<tr>
+<td>布局与 tile 选择</td>
+<td>非合并访存、低效计算</td>
+<td>shape 稳定的 GEMM/Conv/Reduction</td>
+</tr>
+<tr>
+<td>buffer 复用与重计算</td>
+<td>峰值显存</td>
+<td>训练、长序列或大激活模型</td>
+</tr>
+<tr>
+<td>CUDA Graph replay</td>
+<td>CPU 提交和 launch 间隙</td>
+<td>shape 和地址稳定的小 batch 推理</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4">4. 图边界决定优化上限<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    <span class="n">a</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">sin</span><span class="p">()</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># 可能形成 graph break</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="k">return</span> <span class="n">a</span><span class="o">.</span><span class="n">cos</span><span class="p">()</span>
+</span></code></pre></div>
+<p>若 <code>sin</code> 和 <code>cos</code> 分属两个 graph，编译器无法跨 break 融合，也无法统一规划中间 buffer。优化图之前，通常应先用 <code>TORCH_LOGS=graph_breaks</code> 确认图是否被意外切碎。</p>
+<p>但 <code>fullgraph=True</code> 不是生产环境必须项。某段不频繁执行或天然不适合捕获的 Python 逻辑保留 eager，可能比为消除一个 break 大幅改写代码更合理。</p>
+<h2 id="5">5. 静态特化与动态形状<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<p>已知具体 shape/stride 时，编译器可以生成高度特化的 tile、向量宽度和 kernel；动态 shape 则提高复用范围，减少输入变化带来的编译次数。</p>
+<table>
+<thead>
+<tr>
+<th>策略</th>
+<th>优点</th>
+<th>风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>静态特化</td>
+<td>优化空间大，稳态 kernel 可能更快</td>
+<td>shape 多时产生编译风暴和缓存膨胀</td>
+</tr>
+<tr>
+<td>符号动态</td>
+<td>一份产物覆盖多个尺寸</td>
+<td>Guard 更复杂，部分优化受限，仍可能被迫特化</td>
+</tr>
+<tr>
+<td>padding/bucketing</td>
+<td>兼顾稳定 shape 和输入变化</td>
+<td>多做无效计算、可能增加显存</td>
+</tr>
+</tbody>
+</table>
+<p>LLM serving 中常用长度分桶，实质是减少 shape 种类，让编译缓存和高效 kernel 更容易复用。</p>
+<h2 id="6-cuda-graphs">6. CUDA Graphs 与“计算图编译”不是一回事<a class="headerlink" href="#6-cuda-graphs" title="Permanent link">&para;</a></h2>
+<p>两者容易混淆：</p>
+<ul>
+<li><strong>Dynamo/FX/Inductor graph</strong>：编译器 IR，用于分析语义、融合和生成代码；</li>
+<li><strong>CUDA Graph</strong>：记录一串已经确定的 GPU 工作，并以较低 CPU launch 开销重放。</li>
+</ul>
+<p>CUDA Graph replay 要求每次重放时 kernel 参数和内存地址保持有效，因此通常配合固定输入 buffer 与图私有内存池。<code>mode="reduce-overhead"</code> 会在适用时使用 CUDA Graphs，但可能因缓存 workspace 增加显存，也会受输入 mutation、动态形状等条件限制。以当前版本 <a href="https://docs.pytorch.org/docs/stable/generated/torch.compile.html"><code>torch.compile</code> mode 文档</a> 为准。</p>
+<h2 id="7">7. 如何判断优化是否真的有效<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<p>建议依次回答：</p>
+<ol>
+<li><strong>图捕获是否完整？</strong> 看 Graph Break。</li>
+<li><strong>产物是否稳定复用？</strong> 看 Guard failure 和 Recompile。</li>
+<li><strong>kernel 是否减少？</strong> 用 PyTorch Profiler / Nsight Systems 比较 launch 数量。</li>
+<li><strong>显存流量是否下降？</strong> 看 kernel 时间、带宽指标和中间 allocation。</li>
+<li><strong>峰值显存是否变化？</strong> 比较 <code>max_memory_allocated()</code>，注意 CUDA Graph workspace/private pool。</li>
+<li><strong>端到端是否更快？</strong> 排除编译和 warm-up，用真实 shape 分布测量稳态吞吐与尾延迟。</li>
+</ol>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nv">$env:TORCH_LOGS</span> <span class="p">=</span> <span class="s2">"graph_breaks,recompiles,perf_hints,output_code"</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">python</span> <span class="n">benchmark</span><span class="p">.</span><span class="n">py</span>
+</span></code></pre></div>
+<p>日志很多时，可按阶段逐个打开。<code>output_code</code> 能查看 Inductor 生成代码；<code>perf_hints</code> 能解释 CUDA Graphs 等优化为何没有应用。官方 <a href="https://docs.pytorch.org/docs/stable/user_guide/torch_compiler/torch.compiler_troubleshooting.html">编译器故障排查指南</a> 还提供 <code>TORCH_TRACE</code>/<code>tlparse</code> 的全局分析方法。</p>
+<h2 id="8">8. 一组实用判断<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Graph Break 少，不等于一定快；还要看图内是否有可融合的小算子。</li>
+<li>kernel 数少，不等于一定快；大融合 kernel 可能受寄存器或并行度限制。</li>
+<li>编译后显存增加，不等于泄漏；可能来自编译缓存、autotune 或 CUDA Graph 私有池。</li>
+<li>动态 shape 少重编译，不等于一定比静态快；应以真实输入分布衡量总成本。</li>
+<li><code>torch.compile</code> 优化的是被捕获区域；数据加载、分布式通信和 Python 侧调度仍需分别分析。</li>
+</ul>
+<p>返回专题：<a href="../">PyTorch 运行时与编译</a>。</p>
 
 
 

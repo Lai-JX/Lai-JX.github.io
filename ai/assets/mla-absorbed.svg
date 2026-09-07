@@ -54,15 +54,15 @@
 
   <rect class="tp" x="90" y="446" width="270" height="76" rx="14"/>
   <text class="label" x="225" y="475">q_b_proj · 上投影</text>
-  <text class="shape" x="225" y="500">[B,S,Hₚ(d_c+d_R)]</text>
+  <text class="shape" x="225" y="500">[B,S,Hₚ(d_k+d_R)]</text>
 
   <rect class="node" x="90" y="550" width="270" height="76" rx="14"/>
   <text class="label" x="225" y="579">reshape → split</text>
-  <text class="shape" x="225" y="604">[...,Hₚ,d_c+d_R]</text>
+  <text class="shape" x="225" y="604">[...,Hₚ,d_k+d_R]</text>
 
   <rect class="node" x="45" y="665" width="245" height="74" rx="14"/>
   <text class="label" x="167.5" y="694">q_nope</text>
-  <text class="shape" x="167.5" y="719">[B,S,Hₚ,d_c]</text>
+  <text class="shape" x="167.5" y="719">[B,S,Hₚ,d_k]</text>
 
   <rect class="rope" x="335" y="665" width="245" height="74" rx="14"/>
   <text class="label" x="457.5" y="694">RoPE(q_rope)</text>
@@ -70,7 +70,7 @@
 
   <rect class="tp" x="45" y="750" width="245" height="86" rx="14"/>
   <text class="label" x="167.5" y="778">× (W_K_up)ᵀ</text>
-  <text class="shape" x="167.5" y="802">W: [Hₚ,d_c,r]</text>
+  <text class="shape" x="167.5" y="802">W: [Hₚ,d_k,r]</text>
   <text class="shape" x="167.5" y="824">q_abs: [B,S,Hₚ,r]</text>
 
   <!-- KV path -->

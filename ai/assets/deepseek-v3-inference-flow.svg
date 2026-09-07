@@ -1,0 +1,227 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1580" viewBox="0 0 1800 1580" role="img" aria-labelledby="title desc">
+  <title id="title">DeepSeek-V3 推理张量 Shape 与通信流</title>
+  <desc id="desc">依据官方 inference/generate.py 和 model.py 绘制，展示输入输出张量 shape、MLA latent cache、专家路由，以及 all-reduce 和 all-gather 通信。</desc>
+  <defs>
+    <marker id="dataArrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#0369a1"/></marker>
+    <marker id="cacheArrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#dc2626"/></marker>
+    <marker id="commArrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#7c3aed"/></marker>
+    <style>
+      .title{font:700 30px -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans SC",sans-serif;fill:#0f172a}
+      .section{font:700 21px -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans SC",sans-serif;fill:#0f172a}
+      .h{font:700 16px -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans SC",sans-serif;fill:#0f172a}
+      .t{font:14px -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans SC",sans-serif;fill:#334155}
+      .s{font:12px -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans SC",sans-serif;fill:#475569}
+      .shape{font:700 14px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;fill:#0c4a6e}
+      .code{font:12px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;fill:#475569}
+      .box{stroke:#334155;stroke-width:1.5;rx:10}
+      .rep{fill:#dbeafe}.local{fill:#fef3c7}.cache{fill:#fee2e2;stroke:#dc2626}.comm{fill:#ede9fe;stroke:#7c3aed;stroke-width:2}.ctrl{fill:#f1f5f9}.expert{fill:#ffedd5}.result{fill:#dcfce7}
+      .data{stroke:#0369a1;stroke-width:2;fill:none;marker-end:url(#dataArrow)}
+      .cacheLine{stroke:#dc2626;stroke-width:2;fill:none;marker-end:url(#cacheArrow)}
+      .commLine{stroke:#7c3aed;stroke-width:2.4;fill:none;marker-end:url(#commArrow)}
+      .dash{stroke-dasharray:7 5}
+    </style>
+  </defs>
+
+  <rect width="1800" height="1580" fill="#f8fafc"/>
+  <text x="900" y="40" text-anchor="middle" class="title">DeepSeek-V3 推理：输入/输出 Shape 与 Rank 间通信</text>
+  <text x="900" y="66" text-anchor="middle" class="t">严格对应本地官方 DeepSeek-Infer demo；蓝线=张量流，红线=Cache，紫色=distributed collective</text>
+
+  <!-- Symbols and legend -->
+  <rect x="35" y="84" width="1730" height="72" rx="14" fill="#ffffff" stroke="#94a3b8"/>
+  <text x="55" y="109" class="h">符号</text>
+  <text x="55" y="135" class="t">B=batch　S=本轮输入长度（Prefill: prompt chunk；Decode: 通常 1）　T=start_pos+S　W=world_size　H=128/W　D=7168　V=129280　N=B×S</text>
+  <rect x="1180" y="99" width="115" height="38" class="box rep"/><text x="1237" y="123" text-anchor="middle" class="s">各 rank 复制</text>
+  <rect x="1310" y="99" width="115" height="38" class="box local"/><text x="1367" y="123" text-anchor="middle" class="s">rank 本地分片</text>
+  <rect x="1440" y="99" width="115" height="38" class="box cache"/><text x="1497" y="123" text-anchor="middle" class="s">持久 Cache</text>
+  <rect x="1570" y="99" width="165" height="38" class="box comm"/><text x="1652" y="123" text-anchor="middle" class="s">Rank 间通信</text>
+
+  <!-- Main backbone -->
+  <rect x="35" y="180" width="1730" height="225" rx="18" fill="#eff6ff" stroke="#0284c7" stroke-width="2"/>
+  <text x="55" y="211" class="section">① generate() → Transformer.forward() 主张量流</text>
+  <rect x="60" y="245" width="235" height="105" class="box ctrl"/>
+  <text x="177" y="271" text-anchor="middle" class="h">Token Buffer</text><text x="177" y="296" text-anchor="middle" class="shape">tokens [B, total_len]</text><text x="177" y="320" text-anchor="middle" class="code">generate.py:51–61</text><text x="177" y="341" text-anchor="middle" class="s">切片 x=tokens[:,prev_pos:cur_pos]</text>
+  <path d="M295 297 H345" class="data"/>
+  <rect x="350" y="245" width="185" height="105" class="box rep"/>
+  <text x="442" y="272" text-anchor="middle" class="h">本轮 Token IDs</text><text x="442" y="298" text-anchor="middle" class="shape">x [B, S]</text><text x="442" y="322" text-anchor="middle" class="t">Prefill: S&gt;1</text><text x="442" y="342" text-anchor="middle" class="t">Decode: S=1</text>
+  <path d="M535 297 H585" class="data"/>
+  <rect x="590" y="235" width="225" height="125" class="box local"/>
+  <text x="702" y="262" text-anchor="middle" class="h">ParallelEmbedding</text><text x="702" y="286" text-anchor="middle" class="shape">weight [V/W, D]</text><text x="702" y="310" text-anchor="middle" class="shape">partial [B,S,D]</text><text x="702" y="333" text-anchor="middle" class="code">model.py:120–127</text><text x="702" y="351" text-anchor="middle" class="s">非本 rank 词表项置 0</text>
+  <path d="M815 297 H850" class="commLine"/>
+  <rect x="855" y="252" width="170" height="90" class="box comm"/>
+  <text x="940" y="280" text-anchor="middle" class="h">ALL_REDUCE ①</text><text x="940" y="305" text-anchor="middle" class="shape">[B,S,D]</text><text x="940" y="328" text-anchor="middle" class="s">SUM embedding 分片</text>
+  <path d="M1025 297 H1060" class="data"/>
+  <rect x="1065" y="245" width="215" height="105" class="box rep"/>
+  <text x="1172" y="272" text-anchor="middle" class="h">Hidden States</text><text x="1172" y="298" text-anchor="middle" class="shape">h [B,S,D]</text><text x="1172" y="322" text-anchor="middle" class="t">每个 rank 相同</text><text x="1172" y="342" text-anchor="middle" class="code">model.py:784–791</text>
+  <path d="M1280 297 H1320" class="data"/>
+  <rect x="1325" y="235" width="380" height="125" class="box rep"/>
+  <text x="1515" y="262" text-anchor="middle" class="h">61 × Block.forward()</text><text x="1515" y="287" text-anchor="middle" class="shape">[B,S,D] → [B,S,D]</text><text x="1515" y="312" text-anchor="middle" class="t">Attention residual → FFN residual</text><text x="1515" y="335" text-anchor="middle" class="code">model.py:733–735, 790–791</text><text x="1515" y="353" text-anchor="middle" class="s">下方展开单层 MLA 与 FFN 的 shape/通信</text>
+  <text x="60" y="386" class="s">当 S&gt;1：mask [S,S]；当 S=1：mask=None。Cache 的历史长度是 T，输入 S 不会包含已经缓存的 token。</text>
+
+  <!-- MLA -->
+  <rect x="35" y="430" width="1730" height="470" rx="18" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
+  <text x="55" y="461" class="section">② 单层 MLA.forward()（默认 absorb）：局部多头计算 + 复制的 latent Cache</text>
+  <text x="55" y="484" class="code">model.py:459–497　输入与输出都是 [B,S,D]</text>
+
+  <rect x="60" y="515" width="190" height="80" class="box rep"/>
+  <text x="155" y="542" text-anchor="middle" class="h">RMSNorm 输入</text><text x="155" y="568" text-anchor="middle" class="shape">x [B,S,D]</text><text x="155" y="587" text-anchor="middle" class="s">各 rank 相同</text>
+
+  <!-- Q path -->
+  <path d="M250 548 H300" class="data"/>
+  <rect x="305" y="505" width="250" height="100" class="box rep"/>
+  <text x="430" y="528" text-anchor="middle" class="h">wq_a（每 rank 完整复制）</text><text x="430" y="551" text-anchor="middle" class="shape">[B,S,D] → q_c [B,S,1536]</text><text x="430" y="574" text-anchor="middle" class="shape">q_norm(q_c) → [B,S,1536]</text><text x="430" y="598" text-anchor="middle" class="s">权重与结果均复制；无通信</text>
+  <path d="M555 555 H605" class="data"/>
+  <rect x="610" y="500" width="290" height="120" class="box local"/>
+  <text x="755" y="527" text-anchor="middle" class="h">wq_b（Column Parallel）</text><text x="755" y="550" text-anchor="middle" class="s">输入：q_norm 后的 q_c [B,S,1536]</text><text x="755" y="573" text-anchor="middle" class="shape">→ 本 rank [B,S,H×192]</text><text x="755" y="594" text-anchor="middle" class="shape">reshape [B,S,H,192]</text><text x="755" y="608" text-anchor="middle" class="s">split: q_nope 128 + q_pe 64；无通信</text>
+  <path d="M900 555 H950" class="data"/>
+  <rect x="955" y="500" width="295" height="110" class="box local"/>
+  <text x="1102" y="527" text-anchor="middle" class="h">吸收 W_UK</text><text x="1102" y="552" text-anchor="middle" class="shape">q_nope [B,S,H,128]</text><text x="1102" y="576" text-anchor="middle" class="shape">→ q' [B,S,H,512]</text><text x="1102" y="599" text-anchor="middle" class="code">einsum bshd,hdc→bshc</text>
+
+  <!-- KV path -->
+  <path d="M155 595 V680 H300" class="data"/>
+  <rect x="305" y="640" width="250" height="105" class="box rep"/>
+  <text x="430" y="662" text-anchor="middle" class="h">wkv_a（每 rank 完整复制）</text><text x="430" y="684" text-anchor="middle" class="shape">[B,S,D] → [B,S,576]</text><text x="430" y="704" text-anchor="middle" class="s">split last dim: [512, 64]</text><text x="430" y="724" text-anchor="middle" class="shape">kv_norm(c_KV) [B,S,512]</text><text x="430" y="743" text-anchor="middle" class="shape">RoPE(k_pe) [B,S,64]</text>
+  <path d="M555 692 H605" class="cacheLine"/>
+  <rect x="610" y="632" width="330" height="120" class="box cache"/>
+  <text x="775" y="659" text-anchor="middle" class="h">每层 Cache（每 rank 一份）</text><text x="775" y="684" text-anchor="middle" class="shape">kv_cache [B_max,L_max,512]</text><text x="775" y="708" text-anchor="middle" class="shape">pe_cache [B_max,L_max,64]</text><text x="775" y="732" text-anchor="middle" class="code">写 [start_pos:T]；读 [:T]</text><text x="775" y="748" text-anchor="middle" class="s">这里没有 rank 间通信</text>
+
+  <!-- Latent attention: expand both score terms and both aggregation stages -->
+  <rect x="1270" y="492" width="455" height="398" rx="14" fill="#fffbeb" stroke="#d97706" stroke-width="1.5"/>
+  <text x="1497" y="519" text-anchor="middle" class="h">Latent Attention（rank 本地 H=128/W 个头）</text>
+
+  <!-- content score -->
+  <path d="M1250 555 H1280" class="data"/>
+  <rect x="1285" y="535" width="205" height="88" class="box local"/>
+  <text x="1387" y="558" text-anchor="middle" class="h">① 内容分数</text>
+  <text x="1387" y="581" text-anchor="middle" class="shape">q' [B,S,H,512]</text>
+  <text x="1387" y="602" text-anchor="middle" class="shape">× cache [B,T,512]</text>
+  <text x="1387" y="618" text-anchor="middle" class="code">→ [B,S,H,T] · L486</text>
+
+  <!-- positional score -->
+  <rect x="1500" y="535" width="210" height="88" class="box local"/>
+  <text x="1605" y="558" text-anchor="middle" class="h">② 位置分数</text>
+  <text x="1605" y="581" text-anchor="middle" class="shape">RoPE(q_pe) [B,S,H,64]</text>
+  <text x="1605" y="602" text-anchor="middle" class="shape">× pe_cache [B,T,64]</text>
+  <text x="1605" y="618" text-anchor="middle" class="code">→ [B,S,H,T] · L467, 470, 487</text>
+
+  <!-- Dedicated lanes: c_KV stays on the panel's left; pe_cache enters from the right; q_pe enters from the top -->
+  <!-- Cache reads share one dashed trunk, then split only near their consumers -->
+  <path d="M940 692 H1255 M1255 585 V895 H1740" class="cacheLine dash" style="marker-end:none"/>
+  <path d="M1255 585 H1280" class="cacheLine dash"/>
+  <path d="M1740 835 H1715" class="cacheLine dash"/>
+  <path d="M1740 895 V585 H1715" class="cacheLine dash"/>
+  <path d="M900 520 V475 H1740 V550 H1715" class="data dash"/>
+
+  <!-- merge score preparation and softmax into one stage -->
+  <path d="M1387 623 V640" class="data"/>
+  <path d="M1605 623 V640" class="data"/>
+  <rect x="1285" y="645" width="425" height="120" class="box local"/>
+  <text x="1497" y="670" text-anchor="middle" class="h">③ 合并分数 → Mask → Softmax</text>
+  <text x="1497" y="694" text-anchor="middle" class="shape">scores = (content + position) × scale</text>
+  <text x="1497" y="716" text-anchor="middle" class="shape">scores += causal mask [S,S]（仅 S&gt;1）</text>
+  <text x="1497" y="738" text-anchor="middle" class="shape">A=softmax(scores, dim=T)</text>
+  <text x="1497" y="758" text-anchor="middle" class="code">A [B,S,H,T] · model.py:486–490</text>
+
+  <!-- aggregate compressed values first, then apply the absorbed value projection -->
+  <path d="M1605 765 V795" class="data"/>
+  <rect x="1500" y="800" width="210" height="70" class="box local"/>
+  <text x="1605" y="825" text-anchor="middle" class="h">④ 聚合 Latent Value</text>
+  <text x="1605" y="848" text-anchor="middle" class="shape">A @ c_KV → [B,S,H,512]</text>
+  <text x="1605" y="866" text-anchor="middle" class="code">einsum · L494</text>
+  <path d="M1500 835 H1485" class="data"/>
+  <rect x="1285" y="800" width="195" height="70" class="box local"/>
+  <text x="1382" y="825" text-anchor="middle" class="h">⑤ 乘 W_UV 解压</text>
+  <text x="1382" y="853" text-anchor="middle" class="shape">→ [B,S,H,128]</text>
+  <text x="1382" y="868" text-anchor="middle" class="code">einsum · L495</text>
+
+  <!-- Wo and allreduce -->
+  <path d="M1285 835 H1190" class="data"/>
+  <rect x="890" y="790" width="295" height="80" class="box local"/>
+  <text x="1037" y="817" text-anchor="middle" class="h">wo（Row Parallel）本地部分</text><text x="1037" y="842" text-anchor="middle" class="shape">[B,S,H×128] → partial [B,S,D]</text><text x="1037" y="862" text-anchor="middle" class="code">model.py:433, 496</text>
+  <path d="M890 830 H845" class="commLine"/>
+  <rect x="620" y="790" width="220" height="80" class="box comm"/>
+  <text x="730" y="817" text-anchor="middle" class="h">ALL_REDUCE ②</text><text x="730" y="842" text-anchor="middle" class="shape">[B,S,D]</text><text x="730" y="862" text-anchor="middle" class="s">SUM 所有 head 分片</text>
+  <path d="M620 830 H575" class="data"/>
+  <rect x="315" y="790" width="255" height="80" class="box rep"/>
+  <text x="442" y="817" text-anchor="middle" class="h">Attention 输出</text><text x="442" y="842" text-anchor="middle" class="shape">[B,S,D]</text><text x="442" y="862" text-anchor="middle" class="s">各 rank 相同 → 加 residual</text>
+
+  <!-- FFN / MoE -->
+  <rect x="35" y="925" width="1730" height="420" rx="18" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/>
+  <text x="55" y="956" class="section">③ FFN 子层：[B,S,D] → [B,S,D]，Dense TP 与 MoE Expert Parallel</text>
+  <rect x="65" y="990" width="195" height="78" class="box rep"/>
+  <text x="162" y="1017" text-anchor="middle" class="h">FFN RMSNorm</text><text x="162" y="1043" text-anchor="middle" class="shape">x [B,S,D]</text><text x="162" y="1061" text-anchor="middle" class="s">各 rank 相同</text>
+
+  <!-- dense branch: tensor-parallel SwiGLU -->
+  <path d="M260 1025 H300" class="data"/>
+  <rect x="305" y="975" width="445" height="112" class="box local"/>
+  <text x="527" y="1001" text-anchor="middle" class="h">层 0–2：Dense SwiGLU（Tensor Parallel）</text>
+  <text x="527" y="1025" text-anchor="middle" class="shape">w1,w3 Column: [B,S,D] → u,g [B,S,18432/W]</text>
+  <text x="527" y="1049" text-anchor="middle" class="shape">SiLU(u) ⊙ g → [B,S,18432/W]</text>
+  <text x="527" y="1073" text-anchor="middle" class="shape">w2 Row → partial [B,S,D]</text>
+  <path d="M750 1031 H785" class="commLine"/>
+  <rect x="790" y="987" width="200" height="88" class="box comm"/>
+  <text x="890" y="1015" text-anchor="middle" class="h">ALL_REDUCE ③a</text><text x="890" y="1040" text-anchor="middle" class="shape">[B,S,D]</text><text x="890" y="1063" text-anchor="middle" class="s">仅 w2 后通信</text>
+
+  <!-- MoE input and replicated gate -->
+  <path d="M162 1068 V1178 H295" class="data"/>
+  <rect x="300" y="1100" width="330" height="168" class="box rep"/>
+  <text x="465" y="1127" text-anchor="middle" class="h">层 3–60：Gate.forward()（各 rank 复制）</text>
+  <text x="465" y="1151" text-anchor="middle" class="shape">flat x [N,D] → sigmoid scores [N,256]</text>
+  <text x="465" y="1175" text-anchor="middle" class="shape">reshape [N,8 groups,32 experts]</text>
+  <text x="465" y="1199" text-anchor="middle" class="shape">每组 Top-2 求和 → Top-4 groups → Top-8 experts</text>
+  <text x="465" y="1223" text-anchor="middle" class="shape">indices, weights [N,8]</text>
+  <text x="465" y="1245" text-anchor="middle" class="s">weights 归一化 × 2.5；选择 bias 不进入权重</text>
+  <text x="465" y="1263" text-anchor="middle" class="code">Gate.forward · model.py:576–598</text>
+
+  <!-- Routed experts: experts are sharded, but each expert MLP is complete -->
+  <path d="M630 1178 H660" class="data"/>
+  <rect x="665" y="1095" width="385" height="150" class="box expert"/>
+  <text x="857" y="1120" text-anchor="middle" class="h">本 rank 路由专家：E_local=256/W</text>
+  <text x="857" y="1143" text-anchor="middle" class="s">专家按 rank 分片；每个 Expert 都是完整 MLP，不做 TP</text>
+  <text x="857" y="1166" text-anchor="middle" class="shape">x_i [N_i,D] → w1,w3 → [N_i,2048]</text>
+  <text x="857" y="1189" text-anchor="middle" class="shape">SiLU(w1) ⊙ w3 → w2 → [N_i,D]</text>
+  <text x="857" y="1212" text-anchor="middle" class="shape">× route weight → [N_i,D]</text>
+  <text x="857" y="1235" text-anchor="middle" class="shape">scatter-add → y_partial [N,D]</text>
+  <path d="M1050 1166 H1085" class="commLine"/>
+  <rect x="1090" y="1122" width="210" height="88" class="box comm"/>
+  <text x="1195" y="1150" text-anchor="middle" class="h">ALL_REDUCE ③b</text><text x="1195" y="1175" text-anchor="middle" class="shape">y_partial → y [N,D]</text><text x="1195" y="1198" text-anchor="middle" class="code">model.py:691–692</text>
+
+  <!-- Shared expert consumes the same replicated x, independently of Gate -->
+  <path d="M162 1068 V1300 H660" class="data"/>
+  <rect x="665" y="1250" width="385" height="88" class="box local"/>
+  <text x="857" y="1276" text-anchor="middle" class="h">共享专家：TP MLP（直接接收同一份 x）</text>
+  <text x="857" y="1300" text-anchor="middle" class="shape">w1,w3 Column → [N,2048/W] → SiLU ⊙</text>
+  <text x="857" y="1324" text-anchor="middle" class="shape">w2 Row → z_partial [N,D]</text>
+  <path d="M1050 1294 H1085" class="commLine"/>
+  <rect x="1090" y="1250" width="210" height="88" class="box comm"/>
+  <text x="1195" y="1278" text-anchor="middle" class="h">ALL_REDUCE ③c</text><text x="1195" y="1303" text-anchor="middle" class="shape">z_partial → z [N,D]</text><text x="1195" y="1326" text-anchor="middle" class="s">共享专家 w2 内部</text>
+
+  <!-- Merge routed and shared outputs -->
+  <path d="M1300 1166 H1330 V1220 H1350" class="data"/>
+  <path d="M1300 1294 H1330 V1260 H1350" class="data"/>
+  <rect x="1355" y="1188" width="285" height="105" class="box result"/>
+  <text x="1497" y="1217" text-anchor="middle" class="h">合并并恢复序列 Shape</text><text x="1497" y="1243" text-anchor="middle" class="shape">y + z [N,D] → [B,S,D]</text><text x="1497" y="1267" text-anchor="middle" class="s">再与 FFN residual 相加</text><text x="1497" y="1287" text-anchor="middle" class="code">model.py:693, 734</text>
+  <text x="1660" y="1150" text-anchor="middle" class="s">demo：复制 x</text><text x="1660" y="1171" text-anchor="middle" class="s">无 token all-to-all</text><text x="1660" y="1192" text-anchor="middle" class="s">归约专家输出</text>
+
+  <!-- Head and sampling -->
+  <rect x="35" y="1370" width="1730" height="155" rx="18" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+  <text x="55" y="1401" class="section">④ 最后一层 → 全词表 logits → next token</text>
+  <rect x="65" y="1425" width="225" height="75" class="box rep"/>
+  <text x="177" y="1452" text-anchor="middle" class="h">Final RMSNorm</text><text x="177" y="1477" text-anchor="middle" class="shape">[B,S,D] → last [B,D]</text>
+  <path d="M290 1462 H335" class="data"/>
+  <rect x="340" y="1412" width="280" height="100" class="box local"/>
+  <text x="480" y="1438" text-anchor="middle" class="h">LM Head（Column Parallel）</text><text x="480" y="1462" text-anchor="middle" class="shape">h [B,D] × W_head,local [D,V/W]</text><text x="480" y="1486" text-anchor="middle" class="shape">→ local_logits [B,V/W]</text><text x="480" y="1505" text-anchor="middle" class="s">代码存储 weightᵀ [V/W,D]</text>
+  <path d="M620 1462 H665" class="commLine"/>
+  <rect x="670" y="1417" width="215" height="90" class="box comm"/>
+  <text x="777" y="1444" text-anchor="middle" class="h">ALL_GATHER ④</text><text x="777" y="1469" text-anchor="middle" class="shape">W × [B,V/W]</text><text x="777" y="1493" text-anchor="middle" class="code">model.py:794–797</text>
+  <path d="M885 1462 H930" class="data"/>
+  <rect x="935" y="1425" width="210" height="75" class="box result"/>
+  <text x="1040" y="1452" text-anchor="middle" class="h">完整 Logits</text><text x="1040" y="1477" text-anchor="middle" class="shape">logits [B,V]</text>
+  <path d="M1145 1462 H1190" class="data"/>
+  <rect x="1195" y="1425" width="230" height="75" class="box result"/>
+  <text x="1310" y="1452" text-anchor="middle" class="h">sample / argmax</text><text x="1310" y="1477" text-anchor="middle" class="shape">next_token [B]</text>
+  <path d="M1425 1462 H1470" class="data"/>
+  <rect x="1475" y="1417" width="255" height="90" class="box ctrl"/>
+  <text x="1602" y="1444" text-anchor="middle" class="h">写 tokens[:,cur_pos]</text><text x="1602" y="1469" text-anchor="middle" class="shape">buffer 仍为 [B,total_len]</text><text x="1602" y="1493" text-anchor="middle" class="s">EOS? 否则 prev_pos=cur_pos 循环</text>
+
+  <text x="900" y="1562" text-anchor="middle" class="s">重要边界：论文生产部署的 MoE 使用 token dispatch/combine all-to-all；本图对应的简化 demo 复制输入并 all-reduce 专家输出，二者通信拓扑不同。</text>
+</svg>

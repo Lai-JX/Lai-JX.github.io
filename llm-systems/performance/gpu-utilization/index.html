@@ -12,13 +12,13 @@
         <meta name="author" content="LJX">
       
       
-        <link rel="canonical" href="https://lai-jx.github.io/ai/transformer%E5%9F%BA%E7%A1%80/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AE%A1%E7%AE%97attention%E6%97%B6softmax%E4%B8%AD%E8%A6%81%E9%99%A4%E4%BB%A5dk/">
+        <link rel="canonical" href="https://lai-jx.github.io/llm-systems/performance/gpu-utilization/">
       
       
         <link rel="prev" href="../">
       
       
-        <link rel="next" href="../flashattention/">
+        <link rel="next" href="../../distributed/">
       
       
         
@@ -29,7 +29,7 @@
     
     
       
-        <title>为什么 Attention 要除以 sqrt(d_k) - LJX 知识库</title>
+        <title>GPU 利用率：指标、口径与排查方法 - LJX 知识库</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#attentionsoftmaxsqrtd_k" class="md-skip">
+        <a href="#gpu" class="md-skip">
           跳转至
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              为什么 Attention 要除以 sqrt(d_k)
+              GPU 利用率：指标、口径与排查方法
             
           </span>
         </div>
@@ -267,13 +267,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../../" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../../ai/" class="md-tabs__link">
           
   
   
@@ -291,11 +289,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../../llm-systems/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
           
   
   
@@ -538,8 +538,6 @@
       
   
   
-    
-  
   
   
     
@@ -563,23 +561,20 @@
     
     
       
-        
-        
-      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../" class="md-nav__link ">
+            <a href="../../../ai/" class="md-nav__link ">
               
   
   
@@ -597,13 +592,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -620,8 +615,6 @@
                 
   
   
-    
-  
   
   
     
@@ -643,21 +636,18 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
+            <a href="../../../ai/transformer%E5%9F%BA%E7%A1%80/" class="md-nav__link ">
               
   
   
@@ -675,13 +665,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -698,37 +688,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    为什么 Attention 要除以 √dₖ
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../../ai/transformer%E5%9F%BA%E7%A1%80/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AE%A1%E7%AE%97attention%E6%97%B6softmax%E4%B8%AD%E8%A6%81%E9%99%A4%E4%BB%A5dk/" class="md-nav__link">
         
   
   
@@ -744,148 +707,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="目录">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#softmax" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        先搞清楚 softmax 在干嘛
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        为什么会梯度消失——求偏导：
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#qkt-d_k" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        为什么\(qk^T\)的方差是 \(d_k\)？
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="为什么\(qk^T\)的方差是 \(d_k\)？">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        前提假设
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        两个独立随机变量乘积的方差
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#d_k" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        \(d_k\) 个独立项求和的方差
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sqrtd_k-1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        为什么除以 \(\sqrt{d_k}\) 就能把方差拉回 1？
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="为什么除以 \(\sqrt{d_k}\) 就能把方差拉回 1？">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        方差的缩放性质
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        代入
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        直觉总结
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -898,7 +719,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../flashattention/" class="md-nav__link">
+      <a href="../../../ai/transformer%E5%9F%BA%E7%A1%80/flashattention/" class="md-nav__link">
         
   
   
@@ -926,7 +747,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../flashattention-%E7%AE%80%E5%8C%96%E7%89%88/" class="md-nav__link">
+      <a href="../../../ai/transformer%E5%9F%BA%E7%A1%80/flashattention-%E7%AE%80%E5%8C%96%E7%89%88/" class="md-nav__link">
         
   
   
@@ -976,13 +797,10 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
@@ -990,7 +808,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../mlp%E5%9F%BA%E7%A1%80/" class="md-nav__link ">
+            <a href="../../../ai/mlp%E5%9F%BA%E7%A1%80/" class="md-nav__link ">
               
   
   
@@ -1008,7 +826,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -1034,7 +852,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../mlp%E5%9F%BA%E7%A1%80/FFN/" class="md-nav__link">
+      <a href="../../../ai/mlp%E5%9F%BA%E7%A1%80/FFN/" class="md-nav__link">
         
   
   
@@ -1086,13 +904,10 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
@@ -1100,7 +915,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../ds-v3/" class="md-nav__link ">
+            <a href="../../../ai/ds-v3/" class="md-nav__link ">
               
   
   
@@ -1118,7 +933,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_4" id="__nav_3_4_label" tabindex="">
+              <label class="md-nav__link " for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -1144,7 +959,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../ds-v3/deepseek-v3-architecture-and-implementation/" class="md-nav__link">
+      <a href="../../../ai/ds-v3/deepseek-v3-architecture-and-implementation/" class="md-nav__link">
         
   
   
@@ -1172,7 +987,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../ds-v3/mla-matrix-absorption/" class="md-nav__link">
+      <a href="../../../ai/ds-v3/mla-matrix-absorption/" class="md-nav__link">
         
   
   
@@ -1226,13 +1041,10 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
@@ -1240,7 +1052,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../k3/" class="md-nav__link ">
+            <a href="../../../ai/k3/" class="md-nav__link ">
               
   
   
@@ -1258,7 +1070,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_5" id="__nav_3_5_label" tabindex="">
+              <label class="md-nav__link " for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -1284,7 +1096,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../k3/KDA/" class="md-nav__link">
+      <a href="../../../ai/k3/KDA/" class="md-nav__link">
         
   
   
@@ -1312,7 +1124,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../k3/kda-prefill/" class="md-nav__link">
+      <a href="../../../ai/k3/kda-prefill/" class="md-nav__link">
         
   
   
@@ -1340,7 +1152,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../k3/gate-mla/" class="md-nav__link">
+      <a href="../../../ai/k3/gate-mla/" class="md-nav__link">
         
   
   
@@ -1376,7 +1188,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reading-list/" class="md-nav__link">
+      <a href="../../../ai/reading-list/" class="md-nav__link">
         
   
   
@@ -1408,6 +1220,8 @@
       
   
   
+    
+  
   
   
     
@@ -1429,20 +1243,23 @@
     
     
       
+        
+        
+      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../llm-systems/" class="md-nav__link ">
+            <a href="../../" class="md-nav__link ">
               
   
   
@@ -1460,13 +1277,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1504,10 +1321,13 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
@@ -1515,7 +1335,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../llm-systems/pytorch/" class="md-nav__link ">
+            <a href="../../pytorch/" class="md-nav__link ">
               
   
   
@@ -1533,7 +1353,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_4_2" id="__nav_4_2_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -1559,7 +1379,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../llm-systems/pytorch/cuda-memory-management/" class="md-nav__link">
+      <a href="../../pytorch/cuda-memory-management/" class="md-nav__link">
         
   
   
@@ -1587,7 +1407,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../llm-systems/pytorch/torch-compile/" class="md-nav__link">
+      <a href="../../pytorch/torch-compile/" class="md-nav__link">
         
   
   
@@ -1615,7 +1435,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../llm-systems/pytorch/graph-optimization/" class="md-nav__link">
+      <a href="../../pytorch/graph-optimization/" class="md-nav__link">
         
   
   
@@ -1665,10 +1485,13 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
@@ -1676,7 +1499,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../llm-systems/vllm/" class="md-nav__link ">
+            <a href="../../vllm/" class="md-nav__link ">
               
   
   
@@ -1694,7 +1517,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_4_3" id="__nav_4_3_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -1720,7 +1543,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../llm-systems/vllm/kv-layout/" class="md-nav__link">
+      <a href="../../vllm/kv-layout/" class="md-nav__link">
         
   
   
@@ -1753,6 +1576,8 @@
                 
   
   
+    
+  
   
   
     
@@ -1770,18 +1595,21 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../llm-systems/performance/" class="md-nav__link ">
+            <a href="../" class="md-nav__link ">
               
   
   
@@ -1799,13 +1627,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_4_4" id="__nav_4_4_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1822,10 +1650,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../../llm-systems/performance/gpu-utilization/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GPU 利用率指标
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1841,6 +1696,164 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        快速复习
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. “GPU 利用率”至少有四种口径
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 常用指标及正确含义
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-mfu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. MFU：把模型吞吐换算成峰值算力比例
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 如何判断瓶颈
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 推荐的测量顺序
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 推荐的测量顺序">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 先固定实验条件
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 设备级粗筛
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 时间线定位
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-kernel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 单 kernel 下钻
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 一份最小报告模板
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考资料
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1875,10 +1888,13 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
@@ -1886,7 +1902,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../llm-systems/distributed/" class="md-nav__link ">
+            <a href="../../distributed/" class="md-nav__link ">
               
   
   
@@ -1904,7 +1920,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_4_5" id="__nav_4_5_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -1930,7 +1946,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../llm-systems/distributed/parallel-communication/" class="md-nav__link">
+      <a href="../../distributed/parallel-communication/" class="md-nav__link">
         
   
   
@@ -2020,21 +2036,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#softmax" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        先搞清楚 softmax 在干嘛
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        为什么会梯度消失——求偏导：
+        快速复习
       
     </span>
   </a>
@@ -2042,99 +2047,126 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#qkt-d_k" class="md-nav__link">
+  <a href="#1-gpu" class="md-nav__link">
     <span class="md-ellipsis">
       
-        为什么\(qk^T\)的方差是 \(d_k\)？
+        1. “GPU 利用率”至少有四种口径
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="为什么\(qk^T\)的方差是 \(d_k\)？">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 常用指标及正确含义
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-mfu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. MFU：把模型吞吐换算成峰值算力比例
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 如何判断瓶颈
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 推荐的测量顺序
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 推荐的测量顺序">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 先固定实验条件
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 设备级粗筛
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 时间线定位
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-kernel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 单 kernel 下钻
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 一份最小报告模板
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        前提假设
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        两个独立随机变量乘积的方差
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#d_k" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        \(d_k\) 个独立项求和的方差
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sqrtd_k-1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        为什么除以 \(\sqrt{d_k}\) 就能把方差拉回 1？
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="为什么除以 \(\sqrt{d_k}\) 就能把方差拉回 1？">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        方差的缩放性质
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        代入
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        直觉总结
+        参考资料
       
     </span>
   </a>
@@ -2158,112 +2190,226 @@
 
 
 
-<h1 id="attentionsoftmaxsqrtd_k">为什么计算attention时softmax中要除以<span class="arithmatex">\(\sqrt{d_k}\)</span><a class="headerlink" href="#attentionsoftmaxsqrtd_k" title="Permanent link">&para;</a></h1>
-<div class="arithmatex">\[
-Attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt{d_k}})V
-\]</div>
-<p>一句话：防止梯度消失</p>
-<h2 id="softmax">先搞清楚 softmax 在干嘛<a class="headerlink" href="#softmax" title="Permanent link">&para;</a></h2>
-<p>假设某一行的 score 是三个数：<span class="arithmatex">\(s_1, s_2, s_3\)</span>，softmax 把它们变成加起来等于 1 的概率： <span class="arithmatex">\(S(s_1) = \frac{e^{s_1}}{e^{s_1} + e^{s_2} + e^{s_3}}, \quad S(s_2) = \frac{e^{s_2}}{e^{s_1} + e^{s_2} + e^{s_3}}, \quad \cdots\)</span></p>
-<p>为了方便写，把分母记作 <span class="arithmatex">\(D = e^{s_1} + e^{s_2} + e^{s_3}\)</span>，所以 <span class="arithmatex">\(S(s_j) = \frac{e^{s_j}}{D}\)</span>。 </p>
-<h2 id="_1">为什么会梯度消失——求偏导：<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<p>分两种情况</p>
-<p>情况一：对 <span class="arithmatex">\(s_j\)</span> 自己求偏导（<span class="arithmatex">\(i = j\)</span>） <span class="arithmatex">\(\frac{\partial S(s_j)}{\partial s_j} = \frac{\partial}{\partial s_j}\left(\frac{e^{s_j}}{D}\right)\)</span> </p>
-<div class="arithmatex">\[
-\frac{\partial S(s_j)}{\partial s_j} = \frac{e^{s_j} \cdot D - e^{s_j} \cdot e^{s_j}}{D^2} = \frac{e^{s_j}}{D} - \frac{e^{s_j}}{D} \cdot \frac{e^{s_j}}{D} = S(s_j) - S(s_j)^2 \\
-\]</div>
-<div class="arithmatex">\[
-\boxed{\frac{\partial S(s_j)}{\partial s_j} = S(s_j)\big(1 - S(s_j)\big)}
-\]</div>
-<p>情况二：对另一个 <span class="arithmatex">\(s_i\)</span> 求偏导（<span class="arithmatex">\(i \neq j\)</span>） <span class="arithmatex">\(\frac{\partial S(s_j)}{\partial s_i} = \frac{\partial}{\partial s_i}\left(\frac{e^{s_j}}{D}\right)\)</span>  </p>
-<div class="arithmatex">\[
-\frac{\partial S(s_j)}{\partial s_i} = \frac{0 \cdot D - e^{s_j} \cdot e^{s_i}}{D^2} = -\frac{e^{s_j}}{D} \cdot \frac{e^{s_i}}{D}\\
-\]</div>
-<div class="arithmatex">\[
-\boxed{\frac{\partial S(s_j)}{\partial s_i} = -S(s_j) \cdot S(s_i)}\]</div>
-<p>然后看为什么梯度会消失 现在我们有了两个公式： </p>
+<h1 id="gpu">GPU 利用率：指标、口径与排查方法<a class="headerlink" href="#gpu" title="Permanent link">&para;</a></h1>
+<h2 id="_1">快速复习<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <ul>
-<li><span class="arithmatex">\(\text{对自己：} \quad S(s_j)(1 - S(s_j))\)</span></li>
-<li><span class="arithmatex">\(\text{对别人：} \quad -S(s_j) \cdot S(s_i)\)</span></li>
+<li><code>nvidia-smi</code> 的 <code>GPU-Util</code> 主要回答“采样窗口内有没有 kernel 在运行”，不能直接表示 Tensor Core 或全部 SM 已经跑满。</li>
+<li><code>Memory-Util</code> 是显存读写活动时间占比，不是显存容量占用率，也不等同于达到峰值带宽的百分比。</li>
+<li><code>SM Active</code>、occupancy、Tensor pipe active、DRAM throughput 分别描述不同资源，不能互相替代。</li>
+<li>训练/推理是否有效利用 GPU，最终仍要和 <code>tokens/s</code>、TTFT、TPOT、有效 FLOPs 等业务指标一起判断。</li>
+<li>推荐按“业务指标 → 设备遥测 → 时间线 → 单 kernel”逐层下钻，而不是只盯着一个百分比。</li>
 </ul>
-<p>关键就在于这两个公式里都有 <span class="arithmatex">\(S(s_j)\)</span> 这个因子。来看看极端情况： </p>
-<ul>
-<li><strong>当某个 <span class="arithmatex">\(s_j\)</span> 远大于其他时：</strong> <span class="arithmatex">\(S(s_j) \to 1, \quad S(s_i) \to 0 \;\;(i \neq j)\)</span><ul>
-<li>对自己：<span class="arithmatex">\(1 \times (1 - 1) = 0\)</span></li>
-<li>对别人：<span class="arithmatex">\(-1 \times 0 = 0\)</span></li>
-</ul>
-</li>
-<li><strong>当某个 <span class="arithmatex">\(s_j\)</span> 远小于其他时：</strong> <span class="arithmatex">\(S(s_j) \to 0\)</span><ul>
-<li>对自己：<span class="arithmatex">\(0 \times (1 - 0) = 0\)</span></li>
-<li>对别人：<span class="arithmatex">\(-0 \times S(s_i) = 0\)</span></li>
-</ul>
-</li>
-<li><strong>不管哪种极端，梯度全是 0。</strong> 这就是梯度消失。为了不出现上述情况，就需要方差不能太大</li>
-</ul>
-<h2 id="qkt-d_k">为什么<span class="arithmatex">\(qk^T\)</span>的方差是 <span class="arithmatex">\(d_k\)</span>？<a class="headerlink" href="#qkt-d_k" title="Permanent link">&para;</a></h2>
-<h3 id="_2">前提假设<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
-<p>q 和 k 都是维度为 <span class="arithmatex">\(d_k\)</span> 的向量，每个元素 <span class="arithmatex">\(q_i\)</span>、<span class="arithmatex">\(k_i\)</span> 满足：</p>
-<ul>
-<li>均值 <span class="arithmatex">\(E[q_i] = 0\)</span>，<span class="arithmatex">\(E[k_i] = 0\)</span></li>
-<li>方差 <span class="arithmatex">\(\text{Var}(q_i) = 1\)</span>，<span class="arithmatex">\(\text{Var}(k_i) = 1\)</span></li>
-<li>所有元素之间互相独立</li>
-</ul>
-<h3 id="_3">两个独立随机变量乘积的方差<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
-<p>对于 <span class="arithmatex">\(q_i\)</span> 和 <span class="arithmatex">\(k_i\)</span> 独立、均值都为 0 的情况，有一个性质：</p>
-<div class="arithmatex">\[
-E[q_i k_i] = E[q_i] \cdot E[k_i] = 0 \times 0 = 0
-\]</div>
-<div class="arithmatex">\[
-\text{Var}(q_i k_i) = E[q_i^2] \cdot E[k_i^2] = \text{Var}(q_i) \cdot \text{Var}(k_i) = 1 \times 1 = 1
-\]</div>
-<blockquote>
-<p>简单理解：两个均值 0、方差 1 的独立变量相乘，乘积的均值是 0，方差是 1。</p>
-</blockquote>
-<h3 id="d_k"><span class="arithmatex">\(d_k\)</span> 个独立项求和的方差<a class="headerlink" href="#d_k" title="Permanent link">&para;</a></h3>
-<p>独立随机变量之和的方差 = 各自方差之和（方差的<strong>可加性</strong>）：</p>
-<div class="arithmatex">\[
-\text{Var}\!\left(\sum_{i=1}^{d_k} q_i k_i\right) = \sum_{i=1}^{d_k} \text{Var}(q_i k_i) = \sum_{i=1}^{d_k} 1 = d_k
-\]</div>
-<p>所以：</p>
-<div class="arithmatex">\[\boxed{\text{Var}(q \cdot k) = d_k}\]</div>
-<h2 id="sqrtd_k-1">为什么除以 <span class="arithmatex">\(\sqrt{d_k}\)</span> 就能把方差拉回 1？<a class="headerlink" href="#sqrtd_k-1" title="Permanent link">&para;</a></h2>
-<h3 id="_4">方差的缩放性质<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
-<p>有一个基本性质：给随机变量乘一个常数 <span class="arithmatex">\(c\)</span>，方差变成原来的 <span class="arithmatex">\(c^2\)</span> 倍：</p>
-<div class="arithmatex">\[\text{Var}(c \cdot X) = c^2 \cdot \text{Var}(X)\]</div>
-<h3 id="_5">代入<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
-<p>现在把 <span class="arithmatex">\(q \cdot k\)</span> 除以 <span class="arithmatex">\(\sqrt{d_k}\)</span>，等价于乘以 <span class="arithmatex">\(\frac{1}{\sqrt{d_k}}\)</span>：</p>
-<div class="arithmatex">\[\text{Var}\!\left(\frac{q \cdot k}{\sqrt{d_k}}\right) = \left(\frac{1}{\sqrt{d_k}}\right)^2 \cdot \text{Var}(q \cdot k) = \frac{1}{d_k} \cdot d_k = 1\]</div>
-<p>所以：</p>
-<div class="arithmatex">\[\boxed{\text{Var}\!\left(\frac{q \cdot k}{\sqrt{d_k}}\right) = 1}\]</div>
-<hr />
-<h2 id="_6">直觉总结<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<h2 id="1-gpu">1. “GPU 利用率”至少有四种口径<a class="headerlink" href="#1-gpu" title="Permanent link">&para;</a></h2>
+<p>日常讨论中的“利用率”可能指完全不同的量：</p>
+<ol>
+<li><strong>时间利用率</strong>：采样期间 GPU 是否有工作；</li>
+<li><strong>并行度/驻留度</strong>：多少 SM、warp 能同时驻留；</li>
+<li><strong>资源吞吐率</strong>：计算管线或显存带宽达到了峰值的多少；</li>
+<li><strong>有效工作效率</strong>：真正完成了多少模型计算或业务请求。</li>
+</ol>
+<p>因此，看到“GPU 利用率 100%”只能先说明 GPU 很忙，不能立即推出“GPU 算力已经跑满”。一个持续运行、但并行度很低或大部分时间等待显存的 kernel，同样可以让粗粒度 busy 指标接近 100%。</p>
+<h2 id="2">2. 常用指标及正确含义<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
-<th></th>
-<th>方差</th>
-<th>标准差（波动幅度）</th>
+<th>层次</th>
+<th>常见指标</th>
+<th>回答的问题</th>
+<th>容易误读的地方</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>不 scaling</td>
-<td><span class="arithmatex">\(d_k\)</span></td>
-<td><span class="arithmatex">\(\sqrt{d_k}\)</span>，随维度线性增大</td>
+<td>设备 busy</td>
+<td><code>nvidia-smi</code> <code>GPU-Util</code> / NVML <code>utilization.gpu</code></td>
+<td>采样窗口内，有 kernel 执行的时间占比</td>
+<td>只要有 kernel 在执行就算 busy，不代表所有 SM 或计算管线饱和</td>
 </tr>
 <tr>
-<td>scaling 后</td>
-<td><span class="arithmatex">\(1\)</span></td>
-<td><span class="arithmatex">\(1\)</span>，跟维度无关了</td>
+<td>显存活动</td>
+<td><code>Memory-Util</code> / NVML <code>utilization.memory</code></td>
+<td>采样窗口内，全局显存发生读写的时间占比</td>
+<td>不是 <code>memory.used / memory.total</code>，也不是峰值带宽利用率</td>
+</tr>
+<tr>
+<td>显存容量</td>
+<td><code>memory.used</code>、<code>memory.total</code></td>
+<td>分配/保留了多少显存容量</td>
+<td>容量高不等于带宽高；缓存分配器还会让已用容量高于活跃张量容量</td>
+</tr>
+<tr>
+<td>SM 活跃</td>
+<td><code>DCGM_FI_PROF_SM_ACTIVE</code></td>
+<td>每个 SM 至少有一个 active warp 的时间比例，再对 SM 求平均</td>
+<td>active warp 可能正在等待访存，并不一定在发射算术指令</td>
+</tr>
+<tr>
+<td>SM occupancy</td>
+<td><code>DCGM_FI_PROF_SM_OCCUPANCY</code>、Achieved Occupancy</td>
+<td>驻留 warp 数相对硬件上限的比例</td>
+<td>occupancy 高不保证快；计算受限 kernel 达到所需并行度后，再提高 occupancy 可能无收益</td>
+</tr>
+<tr>
+<td>计算管线</td>
+<td><code>PIPE_TENSOR_ACTIVE</code>、FP16/FP32 pipe active</td>
+<td>Tensor Core 或对应算术管线有多忙</td>
+<td>活跃周期比例不等于模型有效 FLOPs，也受数据类型和指令组合影响</td>
+</tr>
+<tr>
+<td>显存吞吐</td>
+<td><code>DRAM_ACTIVE</code>、Nsight Compute DRAM throughput</td>
+<td>显存接口是否活跃，以及吞吐接近峰值的程度</td>
+<td>DCGM activity 和 Nsight 的 <code>% of peak</code> 不是同一口径</td>
+</tr>
+<tr>
+<td>互联</td>
+<td>PCIe/NVLink TX/RX bytes、带宽</td>
+<td>是否有大量主机传输或跨卡通信</td>
+<td>链路总流量还要结合通信时间、拓扑与 overlap 判断</td>
+</tr>
+<tr>
+<td>频率与功耗</td>
+<td>SM clock、power、temperature、throttle reason</td>
+<td>性能是否被功耗、温度或时钟限制</td>
+<td>低功耗也可能只是 workload 没有喂满 GPU</td>
+</tr>
+<tr>
+<td>应用层</td>
+<td>tokens/s、samples/s、TTFT、TPOT/ITL、MFU</td>
+<td>用户实际得到多少吞吐和延迟</td>
+<td>不同 batch、序列长度、精度和 SLA 下不可直接横比</td>
 </tr>
 </tbody>
 </table>
-<p>比如 <span class="arithmatex">\(d_k = 64\)</span>：</p>
+<p>NVML 对 <code>GPU-Util</code> 的定义是采样期间一个或多个 kernel 正在执行的时间比例，对 <code>Memory-Util</code> 的定义是全局显存发生读写的时间比例；采样窗口依产品而异。精确定义可查 <a href="https://docs.nvidia.com/deploy/nvml-api/structnvmlUtilization__t.html">NVML <code>nvmlUtilization_t</code></a>。</p>
+<p>DCGM 的 profiling 指标是时间区间上的硬件计数器平均值。官方文档特别说明：<code>SM_ACTIVE</code> 高只是有效利用 GPU 的必要条件之一，<code>SM_OCCUPANCY</code> 高也不必然带来更高性能。字段定义与采集方法见 <a href="https://docs.nvidia.com/datacenter/dcgm/latest/learn/modules/profiling.html">NVIDIA DCGM Profiling</a>。</p>
+<h2 id="3-mfu">3. MFU：把模型吞吐换算成峰值算力比例<a class="headerlink" href="#3-mfu" title="Permanent link">&para;</a></h2>
+<p>Model FLOPs Utilization（MFU）常写为：</p>
+<div class="arithmatex">\[
+\mathrm{MFU}
+=\frac{F_{\text{model/token}}\times R_{\text{token}}}
+{N_{\text{GPU}}\times P_{\text{peak}}},
+\]</div>
+<p>其中：</p>
 <ul>
-<li>不 scaling：标准差 = 8，score 动不动在 ±24 波动，softmax 直接变成 one-hot</li>
-<li>scaling 后：标准差 = 1，score 在 ±3 左右波动，softmax 输出平滑，梯度健康</li>
+<li><span class="arithmatex">\(F_{\text{model/token}}\)</span>：按某套模型公式估算的每 token FLOPs；</li>
+<li><span class="arithmatex">\(R_{\text{token}}\)</span>：全局 token 吞吐，单位为 token/s；</li>
+<li><span class="arithmatex">\(N_{\text{GPU}}\)</span>：GPU 数量；</li>
+<li><span class="arithmatex">\(P_{\text{peak}}\)</span>：与实际精度、稠密/稀疏模式相匹配的单卡理论峰值 FLOPs/s。</li>
 </ul>
-<p><strong>本质就是：方差可加性让点积方差随维度增长，而方差缩放性质让除以 <span class="arithmatex">\(\sqrt{d_k}\)</span> 恰好抵消这个增长。</strong> 两个性质对撞，刚好抵消，所以 <span class="arithmatex">\(\sqrt{d_k}\)</span> 不是随便选的数字，是数学上精确算出来的。</p>
+<p>MFU 比 <code>GPU-Util</code> 更接近“有多少理论计算能力变成了模型有效计算”，但它不是硬件计数器。使用时必须公开以下口径：</p>
+<ul>
+<li>FLOPs 是否包含 attention、MoE 路由、embedding、loss 与重计算；</li>
+<li>分母使用 BF16、FP16、FP8 还是稀疏 Tensor Core 峰值；</li>
+<li>token/s 是输入、输出还是训练 token，是否包含 padding；</li>
+<li>是否包含数据加载、评估、checkpoint 和跨步空闲时间。</li>
+</ul>
+<p>若这些口径不一致，不同报告的 MFU 不能直接比较。算出超过 100% 通常意味着 FLOPs 模型或峰值分母选错，而不是 GPU 超过了物理峰值。</p>
+<p>对于在线推理，MFU 也不能取代延迟指标。大 batch 可以提高 MFU 和总吞吐，却可能恶化 TTFT 或 TPOT，因此至少要同时报告吞吐、TTFT、TPOT/ITL、并发数、输入/输出长度分布和精度。</p>
+<h2 id="4">4. 如何判断瓶颈<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>现象</th>
+<th>更可能的原因</th>
+<th>下一步证据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GPU-Util</code> 低，时间线上有明显空洞</td>
+<td>CPU 调度、数据加载、同步、kernel launch 或请求不足</td>
+<td>Nsight Systems 查看 CPU、CUDA API、kernel 与 NCCL 时间线</td>
+</tr>
+<tr>
+<td><code>GPU-Util</code> 高，但 SM/Tensor/DRAM 吞吐都低</td>
+<td>小 kernel、依赖链、分支发散、访存延迟或采样口径过粗</td>
+<td>Nsight Compute 查看单 kernel 的 launch、scheduler、warp stall</td>
+</tr>
+<tr>
+<td>SM/Tensor throughput 高，DRAM 相对低</td>
+<td>计算受限</td>
+<td>检查 Tensor Core 精度、矩阵形状、融合和理论 FLOPs</td>
+</tr>
+<tr>
+<td>DRAM throughput 高，计算吞吐相对低</td>
+<td>显存带宽受限</td>
+<td>提高算术强度、融合算子、减少中间张量和 KV Cache 流量</td>
+</tr>
+<tr>
+<td>NVLink/PCIe 流量高，GPU 出现同步空洞</td>
+<td>通信受限或 overlap 不足</td>
+<td>NCCL 时间线、各 rank 流量、拓扑、collective 大小与持续时间</td>
+</tr>
+<tr>
+<td>平均指标尚可，但不同 rank 差异很大</td>
+<td>负载不均或 straggler</td>
+<td>按 rank 记录 tokens、专家负载、通信与 kernel 时间</td>
+</tr>
+<tr>
+<td>高温、低时钟或 throttle</td>
+<td>功耗/散热限制</td>
+<td>频率、功耗上限、温度与 throttle reason</td>
+</tr>
+</tbody>
+</table>
+<p>判断 compute-bound 还是 memory-bound 时，应比较计算吞吐和内存吞吐相对各自峰值的比例，并结合算术强度。Nsight Compute 的 Speed of Light 与 Roofline 分析正是为此设计；指标后缀 <code>.pct_of_peak_sustained_elapsed</code> 表示相对持续峰值的比例，详见 <a href="https://docs.nvidia.com/nsight-compute/ProfilingGuide/index.html">Nsight Compute Profiling Guide</a>。</p>
+<h2 id="5">5. 推荐的测量顺序<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<h3 id="51">5.1 先固定实验条件<a class="headerlink" href="#51" title="Permanent link">&para;</a></h3>
+<ul>
+<li>预热到编译、autotune、CUDA Graph capture 和缓存初始化完成；</li>
+<li>固定 batch、输入/输出长度、精度、并行配置和并发；</li>
+<li>使用足够长的稳态窗口，避免 1 秒采样把短时 burst 平滑掉；</li>
+<li>多次重复并报告分位数，不只记录一次平均值。</li>
+</ul>
+<h3 id="52">5.2 设备级粗筛<a class="headerlink" href="#52" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>nvidia-smi<span class="w"> </span>--query-gpu<span class="o">=</span>timestamp,index,utilization.gpu,utilization.memory,memory.used,memory.total,power.draw,clocks.sm<span class="w"> </span>--format<span class="o">=</span>csv<span class="w"> </span>-l<span class="w"> </span><span class="m">1</span>
+</span></code></pre></div>
+<p>这一步适合发现空闲、显存不足、降频和卡间不均衡，但不足以给 kernel 归因。</p>
+<p>服务器长期监控可用 DCGM。先检查目标 GPU 支持的 profiling 字段，再采集需要的指标：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>dcgmi<span class="w"> </span>profile<span class="w"> </span>--list<span class="w"> </span>--entity-id<span class="w"> </span>gpu:0
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>dcgmi<span class="w"> </span>dmon<span class="w"> </span>--entity-id<span class="w"> </span>gpu:0<span class="w"> </span>--field-id<span class="w"> </span><span class="m">1002</span>,1004,1005<span class="w"> </span>--delay<span class="w"> </span><span class="m">1000</span>
+</span></code></pre></div>
+<p>字段 <code>1002/1004/1005</code> 分别对应 SM、Tensor pipe 和 DRAM 活跃度。不同 GPU、驱动和 DCGM 版本支持的字段可能不同，应以第一条命令的实际输出为准。</p>
+<h3 id="53">5.3 时间线定位<a class="headerlink" href="#53" title="Permanent link">&para;</a></h3>
+<p>用 Nsight Systems 或 PyTorch Profiler 回答：</p>
+<ul>
+<li>CPU 是否及时提交工作；</li>
+<li>kernel 之间是否有空洞；</li>
+<li>memcpy、NCCL 与计算是否 overlap；</li>
+<li>哪些阶段占据端到端延迟。</li>
+</ul>
+<h3 id="54-kernel">5.4 单 kernel 下钻<a class="headerlink" href="#54-kernel" title="Permanent link">&para;</a></h3>
+<p>仅对热点 kernel 使用 Nsight Compute，检查：</p>
+<ul>
+<li>SM 与 DRAM 的 <code>% of peak sustained</code>；</li>
+<li>achieved occupancy 与寄存器/共享内存限制；</li>
+<li>warp stall 原因；</li>
+<li>内存访问合并、cache hit 和算术强度。</li>
+</ul>
+<p>单 kernel profiler 开销较高，不适合直接代替端到端测量。正确顺序通常是先用时间线找到热点，再缩小采样范围。</p>
+<h2 id="6">6. 一份最小报告模板<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<p>为了让结果可复现，至少记录：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>GPU / driver / CUDA:
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>模型、精度、量化方式:
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>并行配置（DP/TP/PP/EP/CP）:
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>batch、并发、输入/输出长度:
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>预热与测量时长:
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>业务：tokens/s，TTFT p50/p99，TPOT p50/p99
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>设备：GPU-Util，显存 used/total，功耗与时钟
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>硬件：SM Active，Tensor Active，DRAM throughput，NVLink/PCIe bytes
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>时间线：compute / communication / idle 占比
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>MFU：公式、FLOPs 口径与峰值分母
+</span></code></pre></div>
+<p>核心原则是：<strong>先用业务指标定义“快”，再用硬件指标解释“为什么快或慢”。</strong></p>
+<h2 id="_2">参考资料<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<ol>
+<li>NVIDIA, <a href="https://docs.nvidia.com/deploy/nvml-api/structnvmlUtilization__t.html">NVML <code>nvmlUtilization_t</code> definition</a>。</li>
+<li>NVIDIA, <a href="https://docs.nvidia.com/datacenter/dcgm/latest/learn/modules/profiling.html">DCGM Profiling</a>。</li>
+<li>NVIDIA, <a href="https://docs.nvidia.com/nsight-compute/ProfilingGuide/index.html">Nsight Compute Profiling Guide</a>。</li>
+<li>NVIDIA, <a href="https://docs.nvidia.com/deeplearning/performance/dl-performance-getting-started/index.html">Getting Started with Deep Learning Performance</a>。</li>
+</ol>
 
 
 

@@ -12,13 +12,13 @@
         <meta name="author" content="LJX">
       
       
-        <link rel="canonical" href="https://lai-jx.github.io/ai/transformer%E5%9F%BA%E7%A1%80/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AE%A1%E7%AE%97attention%E6%97%B6softmax%E4%B8%AD%E8%A6%81%E9%99%A4%E4%BB%A5dk/">
+        <link rel="canonical" href="https://lai-jx.github.io/llm-systems/distributed/parallel-communication/">
       
       
         <link rel="prev" href="../">
       
       
-        <link rel="next" href="../flashattention/">
+        <link rel="next" href="../../../about/">
       
       
         
@@ -29,7 +29,7 @@
     
     
       
-        <title>为什么 Attention 要除以 sqrt(d_k) - LJX 知识库</title>
+        <title>大模型并行方式的通信量计算 - LJX 知识库</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#attentionsoftmaxsqrtd_k" class="md-skip">
+        <a href="#_1" class="md-skip">
           跳转至
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              为什么 Attention 要除以 sqrt(d_k)
+              大模型并行方式的通信量计算
             
           </span>
         </div>
@@ -267,13 +267,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../../" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../../ai/" class="md-tabs__link">
           
   
   
@@ -291,11 +289,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../../llm-systems/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
           
   
   
@@ -538,8 +538,6 @@
       
   
   
-    
-  
   
   
     
@@ -563,23 +561,20 @@
     
     
       
-        
-        
-      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../" class="md-nav__link ">
+            <a href="../../../ai/" class="md-nav__link ">
               
   
   
@@ -597,13 +592,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -620,8 +615,6 @@
                 
   
   
-    
-  
   
   
     
@@ -643,21 +636,18 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
+            <a href="../../../ai/transformer%E5%9F%BA%E7%A1%80/" class="md-nav__link ">
               
   
   
@@ -675,13 +665,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -698,37 +688,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    为什么 Attention 要除以 √dₖ
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../../ai/transformer%E5%9F%BA%E7%A1%80/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AE%A1%E7%AE%97attention%E6%97%B6softmax%E4%B8%AD%E8%A6%81%E9%99%A4%E4%BB%A5dk/" class="md-nav__link">
         
   
   
@@ -744,148 +707,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="目录">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#softmax" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        先搞清楚 softmax 在干嘛
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        为什么会梯度消失——求偏导：
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#qkt-d_k" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        为什么\(qk^T\)的方差是 \(d_k\)？
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="为什么\(qk^T\)的方差是 \(d_k\)？">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        前提假设
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        两个独立随机变量乘积的方差
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#d_k" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        \(d_k\) 个独立项求和的方差
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sqrtd_k-1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        为什么除以 \(\sqrt{d_k}\) 就能把方差拉回 1？
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="为什么除以 \(\sqrt{d_k}\) 就能把方差拉回 1？">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        方差的缩放性质
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        代入
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        直觉总结
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -898,7 +719,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../flashattention/" class="md-nav__link">
+      <a href="../../../ai/transformer%E5%9F%BA%E7%A1%80/flashattention/" class="md-nav__link">
         
   
   
@@ -926,7 +747,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../flashattention-%E7%AE%80%E5%8C%96%E7%89%88/" class="md-nav__link">
+      <a href="../../../ai/transformer%E5%9F%BA%E7%A1%80/flashattention-%E7%AE%80%E5%8C%96%E7%89%88/" class="md-nav__link">
         
   
   
@@ -976,13 +797,10 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
@@ -990,7 +808,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../mlp%E5%9F%BA%E7%A1%80/" class="md-nav__link ">
+            <a href="../../../ai/mlp%E5%9F%BA%E7%A1%80/" class="md-nav__link ">
               
   
   
@@ -1008,7 +826,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -1034,7 +852,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../mlp%E5%9F%BA%E7%A1%80/FFN/" class="md-nav__link">
+      <a href="../../../ai/mlp%E5%9F%BA%E7%A1%80/FFN/" class="md-nav__link">
         
   
   
@@ -1086,13 +904,10 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
@@ -1100,7 +915,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../ds-v3/" class="md-nav__link ">
+            <a href="../../../ai/ds-v3/" class="md-nav__link ">
               
   
   
@@ -1118,7 +933,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_4" id="__nav_3_4_label" tabindex="">
+              <label class="md-nav__link " for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -1144,7 +959,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../ds-v3/deepseek-v3-architecture-and-implementation/" class="md-nav__link">
+      <a href="../../../ai/ds-v3/deepseek-v3-architecture-and-implementation/" class="md-nav__link">
         
   
   
@@ -1172,7 +987,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../ds-v3/mla-matrix-absorption/" class="md-nav__link">
+      <a href="../../../ai/ds-v3/mla-matrix-absorption/" class="md-nav__link">
         
   
   
@@ -1226,13 +1041,10 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
@@ -1240,7 +1052,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../k3/" class="md-nav__link ">
+            <a href="../../../ai/k3/" class="md-nav__link ">
               
   
   
@@ -1258,7 +1070,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_5" id="__nav_3_5_label" tabindex="">
+              <label class="md-nav__link " for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -1284,7 +1096,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../k3/KDA/" class="md-nav__link">
+      <a href="../../../ai/k3/KDA/" class="md-nav__link">
         
   
   
@@ -1312,7 +1124,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../k3/kda-prefill/" class="md-nav__link">
+      <a href="../../../ai/k3/kda-prefill/" class="md-nav__link">
         
   
   
@@ -1340,7 +1152,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../k3/gate-mla/" class="md-nav__link">
+      <a href="../../../ai/k3/gate-mla/" class="md-nav__link">
         
   
   
@@ -1376,7 +1188,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reading-list/" class="md-nav__link">
+      <a href="../../../ai/reading-list/" class="md-nav__link">
         
   
   
@@ -1408,6 +1220,8 @@
       
   
   
+    
+  
   
   
     
@@ -1429,20 +1243,23 @@
     
     
       
+        
+        
+      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../llm-systems/" class="md-nav__link ">
+            <a href="../../" class="md-nav__link ">
               
   
   
@@ -1460,13 +1277,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1504,10 +1321,13 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
@@ -1515,7 +1335,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../llm-systems/pytorch/" class="md-nav__link ">
+            <a href="../../pytorch/" class="md-nav__link ">
               
   
   
@@ -1533,7 +1353,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_4_2" id="__nav_4_2_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -1559,7 +1379,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../llm-systems/pytorch/cuda-memory-management/" class="md-nav__link">
+      <a href="../../pytorch/cuda-memory-management/" class="md-nav__link">
         
   
   
@@ -1587,7 +1407,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../llm-systems/pytorch/torch-compile/" class="md-nav__link">
+      <a href="../../pytorch/torch-compile/" class="md-nav__link">
         
   
   
@@ -1615,7 +1435,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../llm-systems/pytorch/graph-optimization/" class="md-nav__link">
+      <a href="../../pytorch/graph-optimization/" class="md-nav__link">
         
   
   
@@ -1665,10 +1485,13 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
@@ -1676,7 +1499,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../llm-systems/vllm/" class="md-nav__link ">
+            <a href="../../vllm/" class="md-nav__link ">
               
   
   
@@ -1694,7 +1517,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_4_3" id="__nav_4_3_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -1720,7 +1543,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../llm-systems/vllm/kv-layout/" class="md-nav__link">
+      <a href="../../vllm/kv-layout/" class="md-nav__link">
         
   
   
@@ -1770,10 +1593,13 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
@@ -1781,7 +1607,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../llm-systems/performance/" class="md-nav__link ">
+            <a href="../../performance/" class="md-nav__link ">
               
   
   
@@ -1799,7 +1625,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_4_4" id="__nav_4_4_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -1825,7 +1651,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../llm-systems/performance/gpu-utilization/" class="md-nav__link">
+      <a href="../../performance/gpu-utilization/" class="md-nav__link">
         
   
   
@@ -1858,6 +1684,8 @@
                 
   
   
+    
+  
   
   
     
@@ -1875,18 +1703,21 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../llm-systems/distributed/" class="md-nav__link ">
+            <a href="../" class="md-nav__link ">
               
   
   
@@ -1904,13 +1735,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_4_5" id="__nav_4_5_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4_5">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1927,10 +1758,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../../llm-systems/distributed/parallel-communication/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    并行通信量计算
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1946,6 +1804,175 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        快速复习
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 统一符号与统计口径
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ring-collective" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Ring collective 的基础公式
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 各种并行方式通信什么
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 各种并行方式通信什么">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-data-paralleldp-ddp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Data Parallel（DP / DDP）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-tensor-paralleltp-sequence-parallelsp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Tensor Parallel（TP）与 Sequence Parallel（SP）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-pipeline-parallelpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Pipeline Parallel（PP）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-expert-parallelep-moe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 Expert Parallel（EP / MoE）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-context-parallelcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 Context Parallel（CP）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36-fsdp-zero-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6 FSDP / ZeRO-3
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 混合并行怎样合计
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 从通信量到通信时间
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考资料
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2020,94 +2047,55 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#softmax" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        先搞清楚 softmax 在干嘛
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        为什么会梯度消失——求偏导：
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#qkt-d_k" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        为什么\(qk^T\)的方差是 \(d_k\)？
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="为什么\(qk^T\)的方差是 \(d_k\)？">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        前提假设
+        快速复习
       
     </span>
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        两个独立随机变量乘积的方差
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#d_k" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        \(d_k\) 个独立项求和的方差
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#sqrtd_k-1" class="md-nav__link">
+  <a href="#1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        为什么除以 \(\sqrt{d_k}\) 就能把方差拉回 1？
+        1. 统一符号与统计口径
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="为什么除以 \(\sqrt{d_k}\) 就能把方差拉回 1？">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ring-collective" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Ring collective 的基础公式
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 各种并行方式通信什么
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 各种并行方式通信什么">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#31-data-paralleldp-ddp" class="md-nav__link">
     <span class="md-ellipsis">
       
-        方差的缩放性质
+        3.1 Data Parallel（DP / DDP）
       
     </span>
   </a>
@@ -2115,10 +2103,54 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
+  <a href="#32-tensor-paralleltp-sequence-parallelsp" class="md-nav__link">
     <span class="md-ellipsis">
       
-        代入
+        3.2 Tensor Parallel（TP）与 Sequence Parallel（SP）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-pipeline-parallelpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Pipeline Parallel（PP）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-expert-parallelep-moe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 Expert Parallel（EP / MoE）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-context-parallelcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 Context Parallel（CP）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36-fsdp-zero-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6 FSDP / ZeRO-3
       
     </span>
   </a>
@@ -2131,10 +2163,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
+  <a href="#4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        直觉总结
+        4. 混合并行怎样合计
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 从通信量到通信时间
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考资料
       
     </span>
   </a>
@@ -2158,112 +2212,302 @@
 
 
 
-<h1 id="attentionsoftmaxsqrtd_k">为什么计算attention时softmax中要除以<span class="arithmatex">\(\sqrt{d_k}\)</span><a class="headerlink" href="#attentionsoftmaxsqrtd_k" title="Permanent link">&para;</a></h1>
-<div class="arithmatex">\[
-Attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt{d_k}})V
-\]</div>
-<p>一句话：防止梯度消失</p>
-<h2 id="softmax">先搞清楚 softmax 在干嘛<a class="headerlink" href="#softmax" title="Permanent link">&para;</a></h2>
-<p>假设某一行的 score 是三个数：<span class="arithmatex">\(s_1, s_2, s_3\)</span>，softmax 把它们变成加起来等于 1 的概率： <span class="arithmatex">\(S(s_1) = \frac{e^{s_1}}{e^{s_1} + e^{s_2} + e^{s_3}}, \quad S(s_2) = \frac{e^{s_2}}{e^{s_1} + e^{s_2} + e^{s_3}}, \quad \cdots\)</span></p>
-<p>为了方便写，把分母记作 <span class="arithmatex">\(D = e^{s_1} + e^{s_2} + e^{s_3}\)</span>，所以 <span class="arithmatex">\(S(s_j) = \frac{e^{s_j}}{D}\)</span>。 </p>
-<h2 id="_1">为什么会梯度消失——求偏导：<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<p>分两种情况</p>
-<p>情况一：对 <span class="arithmatex">\(s_j\)</span> 自己求偏导（<span class="arithmatex">\(i = j\)</span>） <span class="arithmatex">\(\frac{\partial S(s_j)}{\partial s_j} = \frac{\partial}{\partial s_j}\left(\frac{e^{s_j}}{D}\right)\)</span> </p>
-<div class="arithmatex">\[
-\frac{\partial S(s_j)}{\partial s_j} = \frac{e^{s_j} \cdot D - e^{s_j} \cdot e^{s_j}}{D^2} = \frac{e^{s_j}}{D} - \frac{e^{s_j}}{D} \cdot \frac{e^{s_j}}{D} = S(s_j) - S(s_j)^2 \\
-\]</div>
-<div class="arithmatex">\[
-\boxed{\frac{\partial S(s_j)}{\partial s_j} = S(s_j)\big(1 - S(s_j)\big)}
-\]</div>
-<p>情况二：对另一个 <span class="arithmatex">\(s_i\)</span> 求偏导（<span class="arithmatex">\(i \neq j\)</span>） <span class="arithmatex">\(\frac{\partial S(s_j)}{\partial s_i} = \frac{\partial}{\partial s_i}\left(\frac{e^{s_j}}{D}\right)\)</span>  </p>
-<div class="arithmatex">\[
-\frac{\partial S(s_j)}{\partial s_i} = \frac{0 \cdot D - e^{s_j} \cdot e^{s_i}}{D^2} = -\frac{e^{s_j}}{D} \cdot \frac{e^{s_i}}{D}\\
-\]</div>
-<div class="arithmatex">\[
-\boxed{\frac{\partial S(s_j)}{\partial s_i} = -S(s_j) \cdot S(s_i)}\]</div>
-<p>然后看为什么梯度会消失 现在我们有了两个公式： </p>
+<h1 id="_1">大模型并行方式的通信量计算<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="_2">快速复习<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ul>
-<li><span class="arithmatex">\(\text{对自己：} \quad S(s_j)(1 - S(s_j))\)</span></li>
-<li><span class="arithmatex">\(\text{对别人：} \quad -S(s_j) \cdot S(s_i)\)</span></li>
+<li>先声明统计口径：每 rank 发送量、收发总量、全组聚合量和链路实际流量不是同一个数。</li>
+<li>对 <span class="arithmatex">\(p\)</span> 个 rank、大小为 <span class="arithmatex">\(M\)</span> 的完整张量，ring AllReduce 的每 rank 发送量为 <span class="arithmatex">\(2\frac{p-1}{p}M\)</span>；AllGather 或 ReduceScatter 各为 <span class="arithmatex">\(\frac{p-1}{p}M\)</span>。</li>
+<li>DP 通常通信梯度，TP/SP 通信激活，PP 传相邻 stage 的激活/梯度，EP 搬运 routed token，CP 交换 K/V，FSDP/ZeRO-3 聚合参数并分散梯度。</li>
+<li>只算字节仍不够：小消息常受启动延迟影响，大消息受带宽与拓扑影响，最终还要看通信能否与计算重叠。</li>
 </ul>
-<p>关键就在于这两个公式里都有 <span class="arithmatex">\(S(s_j)\)</span> 这个因子。来看看极端情况： </p>
+<h2 id="1">1. 统一符号与统计口径<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>本文默认：</p>
 <ul>
-<li><strong>当某个 <span class="arithmatex">\(s_j\)</span> 远大于其他时：</strong> <span class="arithmatex">\(S(s_j) \to 1, \quad S(s_i) \to 0 \;\;(i \neq j)\)</span><ul>
-<li>对自己：<span class="arithmatex">\(1 \times (1 - 1) = 0\)</span></li>
-<li>对别人：<span class="arithmatex">\(-1 \times 0 = 0\)</span></li>
+<li><span class="arithmatex">\(p\)</span>：某个通信组的 rank 数，不一定等于总 GPU 数；</li>
+<li><span class="arithmatex">\(M\)</span>：一次 collective 对应的<strong>完整逻辑张量字节数</strong>；</li>
+<li><span class="arithmatex">\(b\)</span>：每个元素的字节数，例如 BF16/FP16 为 2；</li>
+<li>“每 rank 通信量”默认指每个 rank 发送的 payload 字节数（TX）；</li>
+<li>对称 collective 的每 rank 接收量与发送量相同；若统计 TX+RX，应再乘 2。</li>
 </ul>
-</li>
-<li><strong>当某个 <span class="arithmatex">\(s_j\)</span> 远小于其他时：</strong> <span class="arithmatex">\(S(s_j) \to 0\)</span><ul>
-<li>对自己：<span class="arithmatex">\(0 \times (1 - 0) = 0\)</span></li>
-<li>对别人：<span class="arithmatex">\(-0 \times S(s_i) = 0\)</span></li>
-</ul>
-</li>
-<li><strong>不管哪种极端，梯度全是 0。</strong> 这就是梯度消失。为了不出现上述情况，就需要方差不能太大</li>
-</ul>
-<h2 id="qkt-d_k">为什么<span class="arithmatex">\(qk^T\)</span>的方差是 <span class="arithmatex">\(d_k\)</span>？<a class="headerlink" href="#qkt-d_k" title="Permanent link">&para;</a></h2>
-<h3 id="_2">前提假设<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
-<p>q 和 k 都是维度为 <span class="arithmatex">\(d_k\)</span> 的向量，每个元素 <span class="arithmatex">\(q_i\)</span>、<span class="arithmatex">\(k_i\)</span> 满足：</p>
-<ul>
-<li>均值 <span class="arithmatex">\(E[q_i] = 0\)</span>，<span class="arithmatex">\(E[k_i] = 0\)</span></li>
-<li>方差 <span class="arithmatex">\(\text{Var}(q_i) = 1\)</span>，<span class="arithmatex">\(\text{Var}(k_i) = 1\)</span></li>
-<li>所有元素之间互相独立</li>
-</ul>
-<h3 id="_3">两个独立随机变量乘积的方差<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
-<p>对于 <span class="arithmatex">\(q_i\)</span> 和 <span class="arithmatex">\(k_i\)</span> 独立、均值都为 0 的情况，有一个性质：</p>
-<div class="arithmatex">\[
-E[q_i k_i] = E[q_i] \cdot E[k_i] = 0 \times 0 = 0
-\]</div>
-<div class="arithmatex">\[
-\text{Var}(q_i k_i) = E[q_i^2] \cdot E[k_i^2] = \text{Var}(q_i) \cdot \text{Var}(k_i) = 1 \times 1 = 1
-\]</div>
-<blockquote>
-<p>简单理解：两个均值 0、方差 1 的独立变量相乘，乘积的均值是 0，方差是 1。</p>
-</blockquote>
-<h3 id="d_k"><span class="arithmatex">\(d_k\)</span> 个独立项求和的方差<a class="headerlink" href="#d_k" title="Permanent link">&para;</a></h3>
-<p>独立随机变量之和的方差 = 各自方差之和（方差的<strong>可加性</strong>）：</p>
-<div class="arithmatex">\[
-\text{Var}\!\left(\sum_{i=1}^{d_k} q_i k_i\right) = \sum_{i=1}^{d_k} \text{Var}(q_i k_i) = \sum_{i=1}^{d_k} 1 = d_k
-\]</div>
-<p>所以：</p>
-<div class="arithmatex">\[\boxed{\text{Var}(q \cdot k) = d_k}\]</div>
-<h2 id="sqrtd_k-1">为什么除以 <span class="arithmatex">\(\sqrt{d_k}\)</span> 就能把方差拉回 1？<a class="headerlink" href="#sqrtd_k-1" title="Permanent link">&para;</a></h2>
-<h3 id="_4">方差的缩放性质<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
-<p>有一个基本性质：给随机变量乘一个常数 <span class="arithmatex">\(c\)</span>，方差变成原来的 <span class="arithmatex">\(c^2\)</span> 倍：</p>
-<div class="arithmatex">\[\text{Var}(c \cdot X) = c^2 \cdot \text{Var}(X)\]</div>
-<h3 id="_5">代入<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
-<p>现在把 <span class="arithmatex">\(q \cdot k\)</span> 除以 <span class="arithmatex">\(\sqrt{d_k}\)</span>，等价于乘以 <span class="arithmatex">\(\frac{1}{\sqrt{d_k}}\)</span>：</p>
-<div class="arithmatex">\[\text{Var}\!\left(\frac{q \cdot k}{\sqrt{d_k}}\right) = \left(\frac{1}{\sqrt{d_k}}\right)^2 \cdot \text{Var}(q \cdot k) = \frac{1}{d_k} \cdot d_k = 1\]</div>
-<p>所以：</p>
-<div class="arithmatex">\[\boxed{\text{Var}\!\left(\frac{q \cdot k}{\sqrt{d_k}}\right) = 1}\]</div>
-<hr />
-<h2 id="_6">直觉总结<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<p>必须区分以下四种口径：</p>
 <table>
 <thead>
 <tr>
-<th></th>
-<th>方差</th>
-<th>标准差（波动幅度）</th>
+<th>口径</th>
+<th>含义</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>不 scaling</td>
-<td><span class="arithmatex">\(d_k\)</span></td>
-<td><span class="arithmatex">\(\sqrt{d_k}\)</span>，随维度线性增大</td>
+<td>每 rank 发送量</td>
+<td>单个 rank 注入网络的 payload，最适合估算该 rank 的通信时间</td>
 </tr>
 <tr>
-<td>scaling 后</td>
-<td><span class="arithmatex">\(1\)</span></td>
-<td><span class="arithmatex">\(1\)</span>，跟维度无关了</td>
+<td>每 rank 收发量</td>
+<td>TX+RX；对称 collective 通常是发送量的 2 倍</td>
+</tr>
+<tr>
+<td>全组聚合发送量</td>
+<td>所有 rank 的发送量求和</td>
+</tr>
+<tr>
+<td>链路流量</td>
+<td>数据实际经过各条 NVLink、PCIe、IB/RoCE 链路的字节数，受拓扑和路由影响</td>
 </tr>
 </tbody>
 </table>
-<p>比如 <span class="arithmatex">\(d_k = 64\)</span>：</p>
+<p>下文公式给的是理想化 payload，不包含协议头、对齐、padding、重传、控制消息，也不代表某条物理链路上的精确流量。</p>
+<h2 id="2-ring-collective">2. Ring collective 的基础公式<a class="headerlink" href="#2-ring-collective" title="Permanent link">&para;</a></h2>
+<p>NCCL 定义了 AllReduce、AllGather、ReduceScatter、AllToAll 等 collective；其中 ReduceScatter 后接 AllGather 与 AllReduce 等价。操作语义可参考 <a href="https://docs.nvidia.com/deeplearning/nccl/user-guide/docs/usage/collectives.html">NCCL Collective Operations</a>，ring 的校正因子也可与 NVIDIA <a href="https://github.com/NVIDIA/nccl-tests/tree/master/doc">nccl-tests 性能文档</a> 中的 <code>PERFORMANCE.md</code> 对照。在理想 ring 算法下：</p>
+<table>
+<thead>
+<tr>
+<th>原语</th>
+<th><span class="arithmatex">\(M\)</span> 的定义</th>
+<th style="text-align: right;">每 rank 发送量</th>
+<th style="text-align: right;">全组聚合发送量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AllReduce</td>
+<td>每个 rank 输入/输出的完整张量</td>
+<td style="text-align: right;"><span class="arithmatex">\(2\frac{p-1}{p}M\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(2(p-1)M\)</span></td>
+</tr>
+<tr>
+<td>AllGather</td>
+<td>gather 后的完整张量；每 rank 初始持有 <span class="arithmatex">\(M/p\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(\frac{p-1}{p}M\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\((p-1)M\)</span></td>
+</tr>
+<tr>
+<td>ReduceScatter</td>
+<td>reduce 前的完整张量；每 rank 最终持有 <span class="arithmatex">\(M/p\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(\frac{p-1}{p}M\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\((p-1)M\)</span></td>
+</tr>
+<tr>
+<td>AllToAll</td>
+<td>这里改用每 rank 本地发送缓冲区 <span class="arithmatex">\(M_{local}\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(\frac{p-1}{p}M_{local}\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\((p-1)M_{local}\)</span></td>
+</tr>
+<tr>
+<td>Point-to-Point</td>
+<td>单次消息</td>
+<td style="text-align: right;">发送方 <span class="arithmatex">\(M\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(M\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>AllReduce 有两轮 ring：ReduceScatter 和 AllGather 各走 <span class="arithmatex">\(p-1\)</span> 步，每步发送 <span class="arithmatex">\(M/p\)</span>，所以：</p>
+<div class="arithmatex">\[
+V_{\mathrm{AR,rank}}
+=2(p-1)\frac{M}{p}
+=2\frac{p-1}{p}M.
+\]</div>
+<p>若用简单的 <span class="arithmatex">\(\alpha\)</span>-<span class="arithmatex">\(\beta\)</span> 模型，ring AllReduce 的时间近似为：</p>
+<div class="arithmatex">\[
+T_{\mathrm{AR}}
+\approx 2(p-1)\alpha
++2\frac{p-1}{p}\frac{M}{B_{\mathrm{eff}}},
+\]</div>
+<p>其中 <span class="arithmatex">\(\alpha\)</span> 是每步启动/同步延迟，<span class="arithmatex">\(B_{\mathrm{eff}}\)</span> 是有效单向带宽。这个模型解释了为什么 decode 的小 collective 可能“字节不多但仍然很慢”：此时延迟项和同步项占比很高。</p>
+<blockquote>
+<p>NCCL 会根据消息大小、GPU 拓扑和配置选择 ring、tree、CollNet 等算法。上式适合估算 ring 的逻辑量，不是对所有 NCCL 执行计划的精确预测。</p>
+</blockquote>
+<h2 id="3">3. 各种并行方式通信什么<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<h3 id="31-data-paralleldp-ddp">3.1 Data Parallel（DP / DDP）<a class="headerlink" href="#31-data-paralleldp-ddp" title="Permanent link">&para;</a></h3>
+<p>设每次同步的梯度总大小为 <span class="arithmatex">\(G\)</span>，数据并行度为 <span class="arithmatex">\(d\)</span>。DDP 使用一次或多次 bucketed AllReduce；忽略 bucket padding 后，每 rank 每个同步步发送：</p>
+<div class="arithmatex">\[
+V_{\mathrm{DP}}
+=2\frac{d-1}{d}G.
+\]</div>
+<p>梯度累积若只在最后一个 microbatch 同步，通信次数按 optimizer step 计算，而不是按 microbatch 计算。纯推理 DP 是多份独立副本，通常没有逐层模型 collective；请求分发和最终结果汇总属于服务系统通信，不应套用梯度公式。</p>
+<h3 id="32-tensor-paralleltp-sequence-parallelsp">3.2 Tensor Parallel（TP）与 Sequence Parallel（SP）<a class="headerlink" href="#32-tensor-paralleltp-sequence-parallelsp" title="Permanent link">&para;</a></h3>
+<p>设张量并行度为 <span class="arithmatex">\(t\)</span>，未切分激活大小为：</p>
+<div class="arithmatex">\[
+M_{act}=B\times S\times D\times b,
+\]</div>
+<p>其中 <span class="arithmatex">\(B\)</span> 为 microbatch，<span class="arithmatex">\(S\)</span> 为本次处理的 token 数，<span class="arithmatex">\(D\)</span> 为 hidden size。</p>
+<p>经典 Megatron Transformer 层在 attention 输出和 MLP 输出各有一次 TP AllReduce，因此仅前向、每层、每 rank 的发送量约为：</p>
+<div class="arithmatex">\[
+V_{\mathrm{TP,fwd/layer}}
+=2\times 2\frac{t-1}{t}M_{act}
+=4\frac{t-1}{t}M_{act}.
+\]</div>
+<p>训练反向还会在对应列并行线性层的输入梯度上发生两次同规模归约，所以前向加反向约为：</p>
+<div class="arithmatex">\[
+V_{\mathrm{TP,train/layer}}
+\approx 8\frac{t-1}{t}M_{act}.
+\]</div>
+<p>开启 Sequence Parallel 后，一个 AllReduce 常被重新组织为一对 ReduceScatter + AllGather。理想 ring 字节量仍为：</p>
+<div class="arithmatex">\[
+\frac{t-1}{t}M_{act}
++\frac{t-1}{t}M_{act}
+=2\frac{t-1}{t}M_{act},
+\]</div>
+<p>所以 SP 的首要收益是让部分激活沿序列维保持分片并改善显存与 overlap，而不是自动把总通信字节减半。Megatron Core 对 TP/SP 的 forward AllGather、backward ReduceScatter 语义有明确说明，见 <a href="https://docs.nvidia.com/megatron-core/developer-guide/latest/apidocs/core/core.tensor_parallel.layers.html">tensor parallel layers</a>。具体实现若融合 collective、改变布局或使用低精度通信，实际量会变化。</p>
+<p><strong>例子。</strong> TP=8、decode batch=8、<span class="arithmatex">\(S=1\)</span>、<span class="arithmatex">\(D=8192\)</span>、BF16 时：</p>
+<div class="arithmatex">\[
+M_{act}=8\times1\times8192\times2=128\ \mathrm{KiB}.
+\]</div>
+<p>两次 AllReduce 的每 rank 前向发送量为：</p>
+<div class="arithmatex">\[
+4\times\frac{7}{8}\times128\ \mathrm{KiB}
+=448\ \mathrm{KiB/layer}.
+\]</div>
+<p>若有 80 层，则约为 35 MiB/decode step/rank。虽然字节量不算大，但它被拆成许多逐层、依赖严格的小 collective，延迟和同步可能比纯带宽更关键。</p>
+<h3 id="33-pipeline-parallelpp">3.3 Pipeline Parallel（PP）<a class="headerlink" href="#33-pipeline-parallelpp" title="Permanent link">&para;</a></h3>
+<p>设 pipeline 有 <span class="arithmatex">\(q\)</span> 个 stage，相邻 stage 每个 microbatch 传输的激活为 <span class="arithmatex">\(A\)</span> 字节：</p>
 <ul>
-<li>不 scaling：标准差 = 8，score 动不动在 ±24 波动，softmax 直接变成 one-hot</li>
-<li>scaling 后：标准差 = 1，score 在 ±3 左右波动，softmax 输出平滑，梯度健康</li>
+<li>推理前向：每个边界传 <span class="arithmatex">\(A\)</span>，全 pipeline 聚合发送量为 <span class="arithmatex">\((q-1)A\)</span>；</li>
+<li>训练：反向还要传同形状的激活梯度，聚合发送量约为 <span class="arithmatex">\(2(q-1)A\)</span>；</li>
+<li>一个 step 有 <span class="arithmatex">\(m\)</span> 个 microbatch 时，再乘 <span class="arithmatex">\(m\)</span>。</li>
 </ul>
-<p><strong>本质就是：方差可加性让点积方差随维度增长，而方差缩放性质让除以 <span class="arithmatex">\(\sqrt{d_k}\)</span> 恰好抵消这个增长。</strong> 两个性质对撞，刚好抵消，所以 <span class="arithmatex">\(\sqrt{d_k}\)</span> 不是随便选的数字，是数学上精确算出来的。</p>
+<p>PP 是相邻 stage 的 P2P 通信，端点与中间 stage 的发送/接收方向不同，因此用“每个边界的消息量”通常比用平均每 rank 更清楚。实际性能还受 pipeline bubble、1F1B/交错调度以及 P2P 与计算 overlap 影响。Megatron Core 将 PP 的核心通信描述为 stage 间 activation send/receive，见 <a href="https://docs.nvidia.com/megatron-core/developer-guide/latest/user-guide/parallelism-guide.html">Parallelism Strategies Guide</a>。</p>
+<h3 id="34-expert-parallelep-moe">3.4 Expert Parallel（EP / MoE）<a class="headerlink" href="#34-expert-parallelep-moe" title="Permanent link">&para;</a></h3>
+<p>设 EP 组大小为 <span class="arithmatex">\(e\)</span>，每个 rank 初始有 <span class="arithmatex">\(N\)</span> 个 token，hidden size 为 <span class="arithmatex">\(D\)</span>，每 token 路由到 <span class="arithmatex">\(k\)</span> 个专家，通信精度每元素 <span class="arithmatex">\(b\)</span> 字节。路由后的本地 token payload 为：</p>
+<div class="arithmatex">\[
+M_{route}=kNDb.
+\]</div>
+<p>若专家和 token 近似均匀分布，发往其他 rank 的比例约为 <span class="arithmatex">\((e-1)/e\)</span>。MoE 前向通常包含 dispatch 与 combine 两次 AllToAll，因此每 rank 发送量近似：</p>
+<div class="arithmatex">\[
+V_{\mathrm{EP,fwd/layer}}
+\approx2\frac{e-1}{e}M_{route}
+=2\frac{e-1}{e}kNDb.
+\]</div>
+<p>训练反向还要走对应的反向交换，粗略可再乘 2。真实流量必须用每个目的 rank 的 token 数计算，因为以下因素都会偏离均匀假设：</p>
+<ul>
+<li>专家负载不均；</li>
+<li>capacity factor、drop 或 padding；</li>
+<li>token permutation 的索引/scale 元数据；</li>
+<li>shared expert、expert TP；</li>
+<li>FP8/INT8 dispatch 或通信融合。</li>
+</ul>
+<p>因此 EP 最值得同时报告“理论 payload”和“每 rank 实际 routed token / bytes”，否则平均值会掩盖热点 rank。</p>
+<h3 id="35-context-parallelcp">3.5 Context Parallel（CP）<a class="headerlink" href="#35-context-parallelcp" title="Permanent link">&para;</a></h3>
+<p>设上下文并行度为 <span class="arithmatex">\(c\)</span>，一层全序列 K 和 V 的合计 payload 为 <span class="arithmatex">\(M_{KV}\)</span>。每个 rank 初始只持有 <span class="arithmatex">\(M_{KV}/c\)</span>。标准 ring KV exchange 进行 <span class="arithmatex">\(c-1\)</span> 步，因此前向每 rank 发送：</p>
+<div class="arithmatex">\[
+V_{\mathrm{CP,fwd/layer}}
+\approx\frac{c-1}{c}M_{KV}.
+\]</div>
+<p>Megatron Core 的 CP 在 forward 交换完整序列的 KV，在 backward 再次聚合 KV，并对 KV 梯度做 ReduceScatter。若都按同样的 KV payload 估算，训练前向加反向约为：</p>
+<div class="arithmatex">\[
+V_{\mathrm{CP,train/layer}}
+\approx3\frac{c-1}{c}M_{KV}.
+\]</div>
+<p>这是标准实现的数量级公式；causal load balance、分层 CP、AllToAll/Ulysses 路径、MQA/GQA/MLA 都会改变精确 payload。尤其 MQA/GQA/MLA 的 KV 头数或 latent 更小，会直接降低 CP 通信量。实现说明见 <a href="https://docs.nvidia.com/megatron-core/developer-guide/latest/user-guide/features/context_parallel.html">Megatron Core Context Parallel</a>。</p>
+<h3 id="36-fsdp-zero-3">3.6 FSDP / ZeRO-3<a class="headerlink" href="#36-fsdp-zero-3" title="Permanent link">&para;</a></h3>
+<p>设一个 FSDP unit 的完整参数为 <span class="arithmatex">\(W\)</span> 字节，sharding group 大小为 <span class="arithmatex">\(f\)</span>：</p>
+<ul>
+<li>参数 AllGather：每 rank 发送 <span class="arithmatex">\(\frac{f-1}{f}W\)</span>；</li>
+<li>梯度 ReduceScatter：每 rank 发送 <span class="arithmatex">\(\frac{f-1}{f}W\)</span>，若梯度通信 dtype 不同，应按实际梯度字节重算。</li>
+</ul>
+<p>若 forward 后立即 reshard，backward 前需要再次 AllGather 参数，则一次训练迭代约为：</p>
+<div class="arithmatex">\[
+V_{\mathrm{FSDP,reshard}}
+\approx3\frac{f-1}{f}W
+\]</div>
+<p>——forward AllGather、backward AllGather、gradient ReduceScatter 各一次。若保留完整参数直到 backward，则少一次 AllGather，约为：</p>
+<div class="arithmatex">\[
+V_{\mathrm{FSDP,no\ reshard}}
+\approx2\frac{f-1}{f}W.
+\]</div>
+<p>PyTorch 的 FSDP 教程将其描述为 forward 聚合参数、backward ReduceScatter 梯度；forward 后释放完整参数时，backward 还需再次聚合，见 <a href="https://docs.pytorch.org/tutorials/intermediate/FSDP1_tutorial.html">PyTorch FSDP tutorial</a> 与 <a href="https://docs.pytorch.org/docs/stable/fsdp.html">FSDP API</a>。</p>
+<h2 id="4">4. 混合并行怎样合计<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<p>DP、TP、PP、EP、CP 往往使用不同 process group。不要把各并行度直接相乘后套进一个公式，而应按执行图逐项累加：</p>
+<ol>
+<li>列出每层/每 step 的 collective 或 P2P；</li>
+<li>写清其 process group 大小；</li>
+<li>写清通信前的实际 tensor shape、dtype 和是否 top-k 复制；</li>
+<li>代入对应原语公式；</li>
+<li>乘层数、microbatch 数和执行次数；</li>
+<li>最后再分析哪些通信串行、哪些可以 overlap。</li>
+</ol>
+<p>可以使用如下清单：</p>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>组</th>
+<th>原语</th>
+<th>shape / dtype</th>
+<th style="text-align: right;">次数</th>
+<th style="text-align: right;">每 rank TX</th>
+<th>是否在关键路径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>attention TP 聚合</td>
+<td>TP</td>
+<td>AllReduce 或 RS/AG</td>
+<td><span class="arithmatex">\(B\times S\times D\)</span> / BF16</td>
+<td style="text-align: right;">每层 1 次</td>
+<td style="text-align: right;">代入公式</td>
+<td>是/可部分 overlap</td>
+</tr>
+<tr>
+<td>MLP TP 聚合</td>
+<td>TP</td>
+<td>AllReduce 或 RS/AG</td>
+<td><span class="arithmatex">\(B\times S\times D\)</span> / BF16</td>
+<td style="text-align: right;">每层 1 次</td>
+<td style="text-align: right;">代入公式</td>
+<td>是/可部分 overlap</td>
+</tr>
+<tr>
+<td>MoE dispatch/combine</td>
+<td>EP</td>
+<td>AllToAll</td>
+<td>routed tokens / 实际通信 dtype</td>
+<td style="text-align: right;">每 MoE 层 2 次</td>
+<td style="text-align: right;">按 route 统计</td>
+<td>通常是</td>
+</tr>
+<tr>
+<td>stage 交接</td>
+<td>PP</td>
+<td>P2P</td>
+<td>activation / 实际 dtype</td>
+<td style="text-align: right;">每 microbatch</td>
+<td style="text-align: right;"><span class="arithmatex">\(A\)</span></td>
+<td>取决于调度</td>
+</tr>
+<tr>
+<td>梯度同步</td>
+<td>DP/FSDP</td>
+<td>AR 或 RS</td>
+<td>gradient bucket / reduce dtype</td>
+<td style="text-align: right;">每同步步</td>
+<td style="text-align: right;">代入公式</td>
+<td>可与 backward overlap</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5">5. 从通信量到通信时间<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<p>通信量只是第一步。真实性能还取决于：</p>
+<ul>
+<li><strong>消息大小</strong>：小消息由 latency 主导，大消息才接近链路带宽；</li>
+<li><strong>collective 数量</strong>：相同总字节拆成几十个同步点通常更慢；</li>
+<li><strong>拓扑</strong>：NVLink/NVSwitch、PCIe、跨节点 IB/RoCE 的带宽与跳数不同；</li>
+<li><strong>算法</strong>：ring、tree、hierarchical、CollNet 的 step 数和链路利用不同；</li>
+<li><strong>竞争</strong>：TP、EP、CP 或 P/D 传输可能争用同一 NIC/NVLink；</li>
+<li><strong>重叠</strong>：通信若完全被独立计算覆盖，未必进入端到端关键路径；</li>
+<li><strong>不均衡</strong>：collective 的完成时间由最慢 rank 决定。</li>
+</ul>
+<p>验证时至少同时记录：collective 名称、tensor bytes、持续时间、算法/协议、各 rank 起止时间、NVLink/PCIe/NIC 吞吐，以及端到端 throughput/latency。</p>
+<h2 id="_3">参考资料<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<ol>
+<li>NVIDIA, <a href="https://docs.nvidia.com/deeplearning/nccl/user-guide/docs/usage/collectives.html">NCCL Collective Operations</a>。</li>
+<li>NVIDIA, <a href="https://github.com/NVIDIA/nccl-tests/tree/master/doc">nccl-tests 性能文档目录</a>（参见 <code>PERFORMANCE.md</code>）。</li>
+<li>NVIDIA, <a href="https://docs.nvidia.com/megatron-core/developer-guide/latest/user-guide/parallelism-guide.html">Megatron Core Parallelism Strategies Guide</a>。</li>
+<li>NVIDIA, <a href="https://docs.nvidia.com/megatron-core/developer-guide/latest/user-guide/features/context_parallel.html">Megatron Core Context Parallel</a>。</li>
+<li>NVIDIA, <a href="https://docs.nvidia.com/megatron-core/developer-guide/latest/apidocs/core/core.tensor_parallel.layers.html">Megatron Core Tensor Parallel Layers</a>。</li>
+<li>PyTorch, <a href="https://docs.pytorch.org/tutorials/intermediate/FSDP1_tutorial.html">Getting Started with FSDP</a>。</li>
+</ol>
 
 
 

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="970" viewBox="0 0 1440 970" role="img" aria-labelledby="title desc">
+  <title id="title">FlashAttention 分块与在线 Softmax 更新过程</title>
+  <desc id="desc">上半部分展示 Q 和 K 的分块如何产生一个局部分数 tile，并在因果注意力下跳过右上角 tile；下半部分展示旧状态和当前 tile 的最大值、指数和、未归一化输出如何通过缩放因子合并。</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .panel { fill: #ffffff; stroke: #d7e0ea; stroke-width: 2; }
+      .grid { fill: #eef3f8; stroke: #91a1b4; stroke-width: 1.6; }
+      .active { fill: #dbeafe; stroke: #2f6fb2; stroke-width: 2.8; }
+      .skip { fill: #f1f5f9; stroke: #94a3b8; stroke-width: 1.8; stroke-dasharray: 6 5; }
+      .old { fill: #eaf2ff; stroke: #3b6fb6; stroke-width: 2.4; }
+      .local { fill: #f4edff; stroke: #7656b5; stroke-width: 2.4; }
+      .merge { fill: #fff7db; stroke: #b7791f; stroke-width: 2.4; }
+      .new { fill: #e7f7ed; stroke: #2f855a; stroke-width: 2.6; }
+      .formula { fill: #fff; stroke: #d3dce7; stroke-width: 2; }
+      .arrow { fill: none; stroke: #475569; stroke-width: 2.6; marker-end: url(#arrow); }
+      .title { font-family: "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; font-size: 34px; font-weight: 700; fill: #0f172a; }
+      .subtitle { font-family: "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; font-size: 18px; fill: #475569; }
+      .section { font-family: "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; font-size: 23px; font-weight: 700; fill: #243247; }
+      .label { font-family: "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; font-size: 18px; font-weight: 650; fill: #172033; text-anchor: middle; }
+      .small { font-family: "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; font-size: 15px; fill: #475569; text-anchor: middle; }
+      .note { font-family: "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; font-size: 16px; fill: #334155; }
+      .math { font-family: "Cambria Math", "STIX Two Math", Georgia, serif; font-size: 20px; fill: #172033; text-anchor: middle; }
+      .math-small { font-family: "Cambria Math", "STIX Two Math", Georgia, serif; font-size: 17px; fill: #334155; text-anchor: middle; }
+      .mono { font-family: Consolas, "SFMono-Regular", monospace; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1440" height="970"/>
+  <text class="title" x="720" y="50" text-anchor="middle">FlashAttention 的核心循环：每次只看一个 score tile</text>
+  <text class="subtitle" x="720" y="82" text-anchor="middle">对每一行维护三个不变量：最大值 m、指数和 ℓ、未归一化加权和 U</text>
+
+  <!-- Tiling panel -->
+  <rect class="panel" x="35" y="115" width="1370" height="345" rx="24"/>
+  <text class="section" x="65" y="155">① Tiling：Q 行块 × K 列块 → 局部分数块 Sᵢⱼ</text>
+
+  <text class="label" x="160" y="205">Q 分块</text>
+  <rect class="grid" x="95" y="225" width="130" height="45"/>
+  <rect class="active" x="95" y="270" width="130" height="45"/>
+  <rect class="grid" x="95" y="315" width="130" height="45"/>
+  <rect class="grid" x="95" y="360" width="130" height="45"/>
+  <text class="small mono" x="160" y="298">Qᵢ : Bᵣ×d</text>
+
+  <text class="label" x="390" y="205">K 分块</text>
+  <rect class="grid" x="285" y="225" width="70" height="130"/>
+  <rect class="grid" x="355" y="225" width="70" height="130"/>
+  <rect class="active" x="425" y="225" width="70" height="130"/>
+  <rect class="grid" x="495" y="225" width="70" height="130"/>
+  <text class="small mono" x="460" y="382">Kⱼ : B꜀×d</text>
+
+  <path class="arrow" d="M 225 292 C 270 292, 285 292, 310 292"/>
+  <path class="arrow" d="M 565 292 C 600 292, 615 292, 650 292"/>
+
+  <rect class="active" x="650" y="230" width="210" height="125" rx="12"/>
+  <text class="label" x="755" y="270">当前 score tile</text>
+  <text class="math" x="755" y="307">Sᵢⱼ = QᵢKⱼᵀ / √d</text>
+  <text class="small mono" x="755" y="337">Bᵣ×B꜀ · 仅在 SRAM 中</text>
+
+  <path class="arrow" d="M 860 292 L 925 292"/>
+
+  <g transform="translate(925,180)">
+    <text class="label" x="190" y="0">因果 Attention 的 tile 级剪枝</text>
+    <rect class="active" x="40" y="25" width="70" height="55"/>
+    <rect class="skip" x="110" y="25" width="70" height="55"/>
+    <rect class="skip" x="180" y="25" width="70" height="55"/>
+    <rect class="skip" x="250" y="25" width="70" height="55"/>
+    <rect class="grid" x="40" y="80" width="70" height="55"/>
+    <rect class="active" x="110" y="80" width="70" height="55"/>
+    <rect class="skip" x="180" y="80" width="70" height="55"/>
+    <rect class="skip" x="250" y="80" width="70" height="55"/>
+    <rect class="grid" x="40" y="135" width="70" height="55"/>
+    <rect class="grid" x="110" y="135" width="70" height="55"/>
+    <rect class="active" x="180" y="135" width="70" height="55"/>
+    <rect class="skip" x="250" y="135" width="70" height="55"/>
+    <rect class="grid" x="40" y="190" width="70" height="55"/>
+    <rect class="grid" x="110" y="190" width="70" height="55"/>
+    <rect class="grid" x="180" y="190" width="70" height="55"/>
+    <rect class="active" x="250" y="190" width="70" height="55"/>
+    <path d="M 40 25 L 320 245" stroke="#2f6fb2" stroke-width="3" fill="none"/>
+    <text class="small" x="180" y="272">右上角整块位于未来：直接跳过</text>
+  </g>
+
+  <!-- Online merge panel -->
+  <rect class="panel" x="35" y="490" width="1370" height="430" rx="24"/>
+  <text class="section" x="65" y="530">② Online Softmax：新最大值出现时，把旧块“换基准”后再相加</text>
+
+  <rect class="old" x="70" y="575" width="270" height="125" rx="16"/>
+  <text class="label" x="205" y="608">已经处理的列块</text>
+  <text class="math-small" x="205" y="644">状态 (m, ℓ, U)</text>
+  <text class="small" x="205" y="677">U = Σ exp(sₖ−m)vₖ</text>
+
+  <rect class="local" x="70" y="740" width="270" height="125" rx="16"/>
+  <text class="label" x="205" y="773">当前 score tile</text>
+  <text class="math-small" x="205" y="809">局部状态 (m̃, ℓ̃, Ũ)</text>
+  <text class="small" x="205" y="842">由 Sᵢⱼ 与 Vⱼ 在片上算出</text>
+
+  <path class="arrow" d="M 340 638 C 405 638, 420 660, 470 680"/>
+  <path class="arrow" d="M 340 802 C 405 802, 420 760, 470 720"/>
+
+  <rect class="merge" x="470" y="585" width="445" height="270" rx="18"/>
+  <text class="label" x="692" y="620">统一到新的最大值 m′</text>
+  <rect class="formula" x="505" y="642" width="375" height="55" rx="10"/>
+  <text class="math" x="692" y="677">m′ = max(m, m̃)</text>
+  <rect class="formula" x="505" y="712" width="375" height="55" rx="10"/>
+  <text class="math-small" x="692" y="746">α = exp(m−m′),　β = exp(m̃−m′)</text>
+  <rect class="formula" x="505" y="782" width="375" height="55" rx="10"/>
+  <text class="math-small" x="692" y="815">ℓ′ = αℓ + βℓ̃　　U′ = αU + βŨ</text>
+
+  <path class="arrow" d="M 915 720 L 990 720"/>
+
+  <rect class="new" x="990" y="590" width="360" height="260" rx="18"/>
+  <text class="label" x="1170" y="625">合并后的精确状态</text>
+  <text class="math" x="1170" y="678">(m′, ℓ′, U′)</text>
+  <rect class="formula" x="1030" y="710" width="280" height="65" rx="11"/>
+  <text class="math" x="1170" y="751">O = U′ / ℓ′</text>
+  <text class="small" x="1170" y="810">若后面还有 tile，就继续携带状态；</text>
+  <text class="small" x="1170" y="834">最后一个 tile 后才做最终归一化</text>
+
+  <text class="note" x="70" y="895">所有量都按 query 行分别维护；m 与 ℓ 是向量，U 与输出 O 同形。因为 m′ ≥ m、m̃，所以 α、β ∈ (0,1]，指数不会上溢。</text>
+  <text class="small" x="720" y="950">图中用两个块说明合并；重复同一规则即可覆盖整行所有 K/V 块</text>
+</svg>

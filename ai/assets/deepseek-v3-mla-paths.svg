@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900" role="img" aria-labelledby="title desc">
+  <title id="title">DeepSeek-V3 MLA 的显式展开与矩阵吸收路径</title>
+  <desc id="desc">上半部分展示预填充友好的显式 MHA 计算，下半部分展示解码友好的矩阵吸收计算，二者数学等价但缓存布局不同。</desc>
+  <defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#334155"/></marker><style>.title{font:700 28px -apple-system,"Noto Sans SC",sans-serif;fill:#0f172a}.h{font:700 17px -apple-system,"Noto Sans SC",sans-serif;fill:#0f172a}.t{font:14px -apple-system,"Noto Sans SC",sans-serif;fill:#334155}.s{font:12px -apple-system,"Noto Sans SC",sans-serif;fill:#475569}.b{stroke:#334155;stroke-width:1.5;rx:10}.arr{stroke:#334155;stroke-width:1.8;fill:none;marker-end:url(#a)}.cache{stroke:#dc2626;stroke-width:2;stroke-dasharray:7 5}</style></defs>
+  <rect width="1400" height="900" fill="#f8fafc"/><text x="700" y="45" text-anchor="middle" class="title">MLA：同一注意力，两种等价计算顺序</text>
+  <text x="700" y="73" text-anchor="middle" class="t">DeepSeek-V3 配置：nₕ=128，dᶜ_Q=1536，dᶜ_KV=512，d_nope=128，d_rope=64，d_v=128</text>
+
+  <rect x="45" y="100" width="1310" height="340" rx="18" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
+  <text x="70" y="132" class="h">A. 显式展开（naive / prefill 常用的 MHA 形态）</text>
+  <rect x="75" y="165" width="130" height="55" class="b" fill="#dbeafe"/><text x="140" y="198" text-anchor="middle" class="h">hₜ [7168]</text>
+  <path d="M205 192 H255" class="arr"/>
+  <rect x="260" y="150" width="190" height="84" class="b" fill="#e0e7ff"/><text x="355" y="180" text-anchor="middle" class="h">Q 低秩投影</text><text x="355" y="204" text-anchor="middle" class="t">7168→1536→128×192</text>
+  <path d="M450 192 H510" class="arr"/>
+  <rect x="515" y="150" width="200" height="84" class="b" fill="#cffafe"/><text x="615" y="180" text-anchor="middle" class="h">拆分 Q</text><text x="615" y="204" text-anchor="middle" class="t">q_nope[128] + RoPE(q_pe[64])</text>
+
+  <path d="M140 220 V292 H255" class="arr"/>
+  <rect x="260" y="258" width="190" height="72" class="b" fill="#fef3c7"/><text x="355" y="287" text-anchor="middle" class="h">KV 下投影</text><text x="355" y="312" text-anchor="middle" class="t">c_KV[512] + k_pe[64]</text>
+  <path d="M450 294 H510" class="arr"/>
+  <rect x="515" y="252" width="200" height="84" class="b" fill="#fed7aa"/><text x="615" y="282" text-anchor="middle" class="h">KV 上投影</text><text x="615" y="306" text-anchor="middle" class="t">K_nope:128×128</text><text x="615" y="327" text-anchor="middle" class="t">V:128×128</text>
+  <path d="M715 294 H770" class="arr"/>
+  <rect x="775" y="246" width="225" height="96" class="b cache" fill="#fee2e2"/><text x="887" y="276" text-anchor="middle" class="h">显式 K/V Cache</text><text x="887" y="302" text-anchor="middle" class="t">128×(192+128)</text><text x="887" y="325" text-anchor="middle" class="t">40,960 元素 / token / layer</text>
+  <path d="M715 192 H1045 V246" class="arr"/><path d="M1000 294 H1045" class="arr"/>
+  <rect x="1050" y="238" width="255" height="112" class="b" fill="#dcfce7"/><text x="1177" y="272" text-anchor="middle" class="h">标准 MHA</text><text x="1177" y="299" text-anchor="middle" class="t">softmax(QKᵀ)·V</text><text x="1177" y="325" text-anchor="middle" class="s">并行 token 多，GEMM 形状友好</text>
+  <text x="70" y="412" class="s">说明：InfraTech 将此概括为 “MHA 模式”；现代服务框架通常在 prefill 使用这一展开形态或等价的融合 kernel。</text>
+
+  <rect x="45" y="470" width="1310" height="360" rx="18" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/>
+  <text x="70" y="504" class="h">B. 矩阵吸收（absorb / decode 常用，外形类似共享 KV 的 MQA）</text>
+  <rect x="75" y="548" width="130" height="55" class="b" fill="#dbeafe"/><text x="140" y="581" text-anchor="middle" class="h">hₜ [7168]</text>
+  <path d="M205 575 H255" class="arr"/>
+  <rect x="260" y="530" width="215" height="90" class="b" fill="#e0e7ff"/><text x="367" y="560" text-anchor="middle" class="h">Q 与 W_UK 吸收</text><text x="367" y="584" text-anchor="middle" class="t">q_nope · W_UK</text><text x="367" y="605" text-anchor="middle" class="t">128×128 → 128×512</text>
+  <path d="M475 575 H530" class="arr"/>
+  <rect x="535" y="530" width="215" height="90" class="b" fill="#cffafe"/><text x="642" y="560" text-anchor="middle" class="h">位置支路保持独立</text><text x="642" y="584" text-anchor="middle" class="t">RoPE(q_pe[64])</text><text x="642" y="605" text-anchor="middle" class="t">与缓存 k_pe[64] 点积</text>
+
+  <path d="M140 603 V700 H255" class="arr"/>
+  <rect x="260" y="661" width="215" height="82" class="b cache" fill="#fee2e2"/><text x="367" y="691" text-anchor="middle" class="h">压缩 Cache</text><text x="367" y="716" text-anchor="middle" class="t">c_KV[512] + k_pe[64]</text><text x="367" y="736" text-anchor="middle" class="t">576 元素 / token / layer</text>
+  <path d="M475 702 H805" class="arr"/><path d="M750 575 H805" class="arr"/>
+  <rect x="810" y="548" width="245" height="114" class="b" fill="#fef3c7"/><text x="932" y="579" text-anchor="middle" class="h">在 latent 空间做注意力</text><text x="932" y="604" text-anchor="middle" class="t">score = q'·c_KV + q_pe·k_pe</text><text x="932" y="630" text-anchor="middle" class="t">p = softmax(score)</text><text x="932" y="651" text-anchor="middle" class="s">不为历史 token 恢复多头 K/V</text>
+  <path d="M1055 605 H1105" class="arr"/>
+  <rect x="1110" y="548" width="200" height="114" class="b" fill="#dcfce7"/><text x="1210" y="579" text-anchor="middle" class="h">W_UV 后移</text><text x="1210" y="604" text-anchor="middle" class="t">(p·c_KV)·W_UV</text><text x="1210" y="630" text-anchor="middle" class="t">→ W_O → output</text>
+  <rect x="575" y="694" width="660" height="78" rx="12" fill="#ffedd5" stroke="#c2410c"/>
+  <text x="905" y="722" text-anchor="middle" class="h">缓存元素减少 40,960 / 576 ≈ 71.1×</text><text x="905" y="749" text-anchor="middle" class="t">代价：Q 的非位置部分扩为 512 维；decode 时以省带宽为主，收益很大</text>
+  <text x="70" y="807" class="s">“MQA 模式”是工程类比：缓存由所有头共享，但 MLA 仍保留多头 Q 与低秩恢复矩阵，不能简单等同于原始 MQA。</text>
+  <text x="700" y="870" text-anchor="middle" class="s">图为依据 DeepSeek-V3 论文公式 (1)–(11)、官方 inference/model.py 与 InfraTech MLA_MHA/MLA_MQA 图重新绘制。</text>
+</svg>

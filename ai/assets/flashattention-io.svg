@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" role="img" aria-labelledby="title desc">
+  <title id="title">标准 Attention 与 FlashAttention 的显存读写对比</title>
+  <desc id="desc">左侧展示标准 Attention 将完整的分数矩阵 S 和概率矩阵 P 写入 HBM；右侧展示 FlashAttention 只把 Q、K、V 的小块加载到片上 SRAM，在片上完成矩阵乘法、在线 Softmax 和输出累加，不在 HBM 中物化 N 乘 N 中间矩阵。</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#475569"/>
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#dc5a46"/>
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .panel { fill: #ffffff; stroke: #d7e0ea; stroke-width: 2; }
+      .hbm { fill: #eef2f7; stroke: #64748b; stroke-width: 2.5; }
+      .sram { fill: #e7f7ed; stroke: #2f855a; stroke-width: 2.5; }
+      .tensor { fill: #eaf2ff; stroke: #3b6fb6; stroke-width: 2.2; }
+      .large { fill: #fff0ea; stroke: #cf6548; stroke-width: 2.5; }
+      .compute { fill: #f4edff; stroke: #7656b5; stroke-width: 2.2; }
+      .state { fill: #fff7db; stroke: #b7791f; stroke-width: 2.2; }
+      .out { fill: #e6f6ff; stroke: #16729b; stroke-width: 2.5; }
+      .arrow { fill: none; stroke: #475569; stroke-width: 2.5; marker-end: url(#arrow); }
+      .io { fill: none; stroke: #dc5a46; stroke-width: 3; marker-end: url(#arrow-red); }
+      .tile-arrow { fill: none; stroke: #2f855a; stroke-width: 3; marker-end: url(#arrow); }
+      .dash { stroke-dasharray: 8 7; }
+      .title { font-family: "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; font-size: 34px; font-weight: 700; fill: #0f172a; }
+      .subtitle { font-family: "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; font-size: 18px; fill: #475569; }
+      .panel-title { font-family: "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; font-size: 24px; font-weight: 700; fill: #1e293b; }
+      .label { font-family: "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; font-size: 18px; font-weight: 650; fill: #172033; text-anchor: middle; }
+      .small { font-family: "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; font-size: 15px; fill: #475569; text-anchor: middle; }
+      .note { font-family: "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; font-size: 17px; fill: #334155; }
+      .strong { font-weight: 700; fill: #b53f2d; }
+      .good { font-weight: 700; fill: #23734a; }
+      .mono { font-family: Consolas, "SFMono-Regular", monospace; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1440" height="900"/>
+  <text class="title" x="720" y="50" text-anchor="middle">Attention 的瓶颈：算力之外，还有数据搬运</text>
+  <text class="subtitle" x="720" y="82" text-anchor="middle">两边都计算精确的 softmax(QKᵀ / √d)V；区别在 N×N 中间矩阵是否往返 HBM</text>
+
+  <!-- Standard attention -->
+  <rect class="panel" x="35" y="115" width="665" height="735" rx="24"/>
+  <text class="panel-title" x="367" y="155" text-anchor="middle">标准 Attention：三个独立阶段</text>
+  <text class="small" x="367" y="183">每个 kernel 结束后，中间结果通常要落回 HBM</text>
+
+  <rect class="hbm" x="65" y="210" width="605" height="585" rx="20"/>
+  <text class="label" x="120" y="246">HBM</text>
+  <text class="small" x="220" y="246">容量大 · 相对慢</text>
+
+  <rect class="tensor" x="95" y="280" width="120" height="62" rx="12"/>
+  <text class="label mono" x="155" y="308">Q, K</text>
+  <text class="small mono" x="155" y="330">N×d</text>
+
+  <rect class="compute" x="280" y="280" width="165" height="62" rx="12"/>
+  <text class="label" x="362" y="307">GEMM ①</text>
+  <text class="small mono" x="362" y="330">QKᵀ</text>
+
+  <rect class="large" x="505" y="267" width="130" height="88" rx="12"/>
+  <text class="label mono" x="570" y="303">S</text>
+  <text class="small mono" x="570" y="328">N×N</text>
+  <path class="io" d="M 215 311 L 280 311"/>
+  <path class="io" d="M 445 311 L 505 311"/>
+
+  <rect class="compute" x="280" y="414" width="165" height="62" rx="12"/>
+  <text class="label" x="362" y="441">Softmax</text>
+  <text class="small" x="362" y="464">逐行归一化</text>
+
+  <rect class="large" x="505" y="401" width="130" height="88" rx="12"/>
+  <text class="label mono" x="570" y="437">P</text>
+  <text class="small mono" x="570" y="462">N×N</text>
+  <path class="io" d="M 570 355 C 570 380, 445 380, 445 414"/>
+  <path class="io" d="M 445 445 L 505 445"/>
+
+  <rect class="tensor" x="95" y="548" width="120" height="62" rx="12"/>
+  <text class="label mono" x="155" y="576">V</text>
+  <text class="small mono" x="155" y="598">N×d</text>
+
+  <rect class="compute" x="280" y="548" width="165" height="62" rx="12"/>
+  <text class="label" x="362" y="575">GEMM ②</text>
+  <text class="small mono" x="362" y="598">PV</text>
+
+  <rect class="out" x="505" y="548" width="130" height="62" rx="12"/>
+  <text class="label mono" x="570" y="576">O</text>
+  <text class="small mono" x="570" y="598">N×d</text>
+  <path class="io" d="M 570 489 C 570 520, 445 520, 445 548"/>
+  <path class="io" d="M 215 579 L 280 579"/>
+  <path class="io" d="M 445 579 L 505 579"/>
+
+  <rect x="95" y="660" width="540" height="94" rx="14" fill="#fff8f5" stroke="#edc6bb" stroke-width="2"/>
+  <text class="note strong" x="120" y="692">代价：</text>
+  <text class="note" x="180" y="692">S、P 各有 N² 个元素，反复读写 HBM</text>
+  <text class="note" x="120" y="724">中间激活显存随序列长度呈二次增长</text>
+
+  <!-- FlashAttention -->
+  <rect class="panel" x="740" y="115" width="665" height="735" rx="24"/>
+  <text class="panel-title" x="1072" y="155" text-anchor="middle">FlashAttention：分块、融合、在线归一化</text>
+  <text class="small" x="1072" y="183">小块进入片上 SRAM 后，一次完成打分、Softmax 与聚合</text>
+
+  <rect class="hbm" x="770" y="210" width="605" height="170" rx="20"/>
+  <text class="label" x="825" y="246">HBM</text>
+  <text class="small" x="925" y="246">只保存输入、输出和 O(N) 统计量</text>
+
+  <rect class="tensor" x="810" y="280" width="125" height="62" rx="12"/>
+  <text class="label mono" x="872" y="307">Qᵢ</text>
+  <text class="small mono" x="872" y="330">Bᵣ×d</text>
+  <rect class="tensor" x="975" y="280" width="125" height="62" rx="12"/>
+  <text class="label mono" x="1037" y="307">Kⱼ,Vⱼ</text>
+  <text class="small mono" x="1037" y="330">B꜀×d</text>
+  <rect class="out" x="1140" y="280" width="125" height="62" rx="12"/>
+  <text class="label mono" x="1202" y="307">Oᵢ, Lᵢ</text>
+  <text class="small mono" x="1202" y="330">线性大小</text>
+
+  <rect class="sram" x="770" y="420" width="605" height="285" rx="20"/>
+  <text class="label" x="835" y="458">SRAM</text>
+  <text class="small" x="963" y="458">容量小 · 带宽高 · 当前 tile 生命周期内复用</text>
+
+  <rect class="compute" x="815" y="495" width="155" height="70" rx="12"/>
+  <text class="label" x="892" y="523">局部打分</text>
+  <text class="small mono" x="892" y="548">Sᵢⱼ=QᵢKⱼᵀ</text>
+
+  <rect class="state" x="1010" y="485" width="180" height="90" rx="12"/>
+  <text class="label" x="1100" y="514">Online Softmax</text>
+  <text class="small mono" x="1100" y="540">m, ℓ, U</text>
+  <text class="small" x="1100" y="562">逐块修正旧结果</text>
+
+  <rect class="out" x="1230" y="495" width="105" height="70" rx="12"/>
+  <text class="label" x="1282" y="523">累加</text>
+  <text class="small mono" x="1282" y="548">U+=PV</text>
+
+  <path class="arrow" d="M 970 530 L 1010 530"/>
+  <path class="arrow" d="M 1190 530 L 1230 530"/>
+  <path class="tile-arrow dash" d="M 872 342 C 872 390, 855 420, 865 495"/>
+  <path class="tile-arrow dash" d="M 1037 342 C 1037 400, 950 435, 930 495"/>
+  <path class="tile-arrow dash" d="M 1282 565 C 1282 620, 1202 665, 1202 705 C 1202 735, 1202 750, 1202 775"/>
+
+  <rect x="800" y="735" width="535" height="80" rx="14" fill="#effaf3" stroke="#a9d7b9" stroke-width="2"/>
+  <text class="note good" x="825" y="768">关键：</text>
+  <text class="note" x="885" y="768">Sᵢⱼ 只在片上短暂存在，完整 S、P 从不落入 HBM</text>
+  <text class="note" x="825" y="797">输出仍与标准 Attention 等价，并没有稀疏化或近似</text>
+
+  <text class="small" x="720" y="875">红色箭头：大规模 HBM 往返　　绿色虚线：小块搬运　　M 表示可用片上存储容量</text>
+</svg>
