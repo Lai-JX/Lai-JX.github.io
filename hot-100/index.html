@@ -1837,6 +1837,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        复杂度要求
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#python" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1860,7 +1871,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
+  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
         ✅ 可导入的标准库（部分列举）
@@ -1876,7 +1887,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         题单概览
@@ -3180,7 +3191,7 @@
   <a href="#problem-longest-common-subsequence" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1143. 最长公共子序列
+        1143. 最长公共子序列⭐
       
     </span>
   </a>
@@ -3297,6 +3308,62 @@
 <p>数据来源：<a href="https://leetcode.cn/studyplan/top-100-liked/">力扣 LeetCode 热题 100 学习计划</a>；题单如有调整，以力扣页面为准。</p>
 </blockquote>
 <p>本页按官方专题顺序整理 100 道高频题。每道题包含快速复习、详细题解和 Python 实现；快速复习用于回忆核心不变量，详细题解则补充推导、边界条件和复杂度取舍。</p>
+<h2 id="_1">复杂度要求<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>估算总操作次数，尽量控制在 <span class="arithmatex">\(10^7\)</span> 量级以内（Python 更保守），C++ 可以承受更高一些。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">数据规模 <span class="arithmatex">\(n\)</span></th>
+<th>通常可以考虑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;"><span class="arithmatex">\(n\le 15\)</span></td>
+<td><span class="arithmatex">\(O(3^n)\)</span>、状态压缩</td>
+</tr>
+<tr>
+<td style="text-align: right;"><span class="arithmatex">\(n\le 20\)</span></td>
+<td><span class="arithmatex">\(O(2^n)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: right;"><span class="arithmatex">\(n\le 30\sim40\)</span></td>
+<td>折半搜索 <span class="arithmatex">\(O(2^{n/2})\)</span></td>
+</tr>
+<tr>
+<td style="text-align: right;"><span class="arithmatex">\(n\le 100\)</span></td>
+<td><span class="arithmatex">\(O(n^3)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: right;"><span class="arithmatex">\(n\le 500\)</span></td>
+<td><span class="arithmatex">\(O(n^3)\)</span> 可能，取决于语言/时限</td>
+</tr>
+<tr>
+<td style="text-align: right;"><span class="arithmatex">\(n\le 2000\)</span></td>
+<td><span class="arithmatex">\(O(n^2)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: right;"><span class="arithmatex">\(n\le 10^4\)</span></td>
+<td><span class="arithmatex">\(O(n^2)\)</span> 通常危险，考虑 <span class="arithmatex">\(O(n\log n)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: right;"><span class="arithmatex">\(n\le 10^5\)</span></td>
+<td><span class="arithmatex">\(O(n\log n)\)</span>、<span class="arithmatex">\(O(n)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: right;"><span class="arithmatex">\(n\le 2\times10^5\)</span></td>
+<td><span class="arithmatex">\(O(n\log n)\)</span>、<span class="arithmatex">\(O(n)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: right;"><span class="arithmatex">\(n\le 10^6\)</span></td>
+<td>基本考虑 <span class="arithmatex">\(O(n)\)</span>、少量 <span class="arithmatex">\(O(n\log n)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: right;"><span class="arithmatex">\(n\ge10^7\)</span></td>
+<td>通常必须非常接近 <span class="arithmatex">\(O(n)\)</span></td>
+</tr>
+</tbody>
+</table>
 <h2 id="python">Python 面试速查：常用标准库<a class="headerlink" href="#python" title="Permanent link">&para;</a></h2>
 <h3 id="import"><strong>✅ 常用内置模块或函数（无需 import）</strong><a class="headerlink" href="#import" title="Permanent link">&para;</a></h3>
 <ul>
@@ -3306,7 +3373,7 @@
 <li>字符转ASCII：<code>ord()</code></li>
 <li>ASCII转字符：<code>chr()</code></li>
 </ul>
-<h3 id="_1"><strong>✅ 可导入的标准库（部分列举）</strong><a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<h3 id="_2"><strong>✅ 可导入的标准库（部分列举）</strong><a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -3467,7 +3534,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="_2">题单概览<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h2 id="_3">题单概览<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <ul>
 <li>共 <strong>100</strong> 道题，分为 <strong>17</strong> 个专题。</li>
 <li>难度分布：简单 <strong>20</strong>、中等 <strong>68</strong>、困难 <strong>12</strong>。</li>
@@ -3517,11 +3584,11 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/two-sum/submissions/692818214/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_3">快速复习<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h4>
+<h4 id="_4">快速复习<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h4>
 <ol>
 <li>两数之和 - 力扣（LeetCode） 问题的关键在于将已经遍历过的数据及其下标存放起来（dict），后续只需查看target-val的值是否在记录中，是则可以直接获取下标</li>
 </ol>
-<h4 id="_4">详细题解<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h4>
+<h4 id="_5">详细题解<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
 <p>问题的关键在于将已经遍历过的数据及其下标存放起来（dict），后续只需查看target-val的值是否在记录中，是则可以直接获取下标</p>
 <h4 id="python_1">Python 实现<a class="headerlink" href="#python_1" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -3541,9 +3608,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/group-anagrams/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">本地补充实现</span></p>
 </div>
-<h4 id="_5">快速复习<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
+<h4 id="_6">快速复习<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h4>
 <p>把排序后的字符串或 26 维频次数组作为哈希键。</p>
-<h4 id="_6">详细题解<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h4>
+<h4 id="_7">详细题解<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>补充思路：</strong> 用哈希结构把重复扫描变成常数时间查询，重点选择 set、dict 或计数数组。</p>
 </blockquote>
@@ -3567,9 +3634,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/longest-consecutive-sequence/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">Hot 100 补充</span></p>
 </div>
-<h4 id="_7">快速复习<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h4>
+<h4 id="_8">快速复习<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h4>
 <p>把所有数字放入集合；只从没有前驱 <code>x - 1</code> 的数字开始向右扩展，每个数字最多访问一次。</p>
-<h4 id="_8">详细题解<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h4>
+<h4 id="_9">详细题解<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h4>
 <p>若 <code>x - 1</code> 不在集合中，<code>x</code> 一定是一段连续序列的起点。不断检查 <code>x + 1、x + 2...</code>，更新最长长度。跳过非起点可以避免对同一段序列重复扫描，平均时间复杂度为 O(n)。</p>
 <h4 id="python_3">Python 实现<a class="headerlink" href="#python_3" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -3629,9 +3696,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/move-zeroes/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">Hot 100 补充</span></p>
 </div>
-<h4 id="_9">快速复习<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h4>
+<h4 id="_10">快速复习<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h4>
 <p>用慢指针维护下一个非零元素应写入的位置，先压缩非零元素，再把尾部补零。</p>
-<h4 id="_10">详细题解<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h4>
+<h4 id="_11">详细题解<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h4>
 <p>快指针顺序读取数组；遇到非零值就写到 <code>slow</code> 并递增。遍历结束后，<code>[0, slow)</code> 已按原相对顺序保存全部非零元素，将剩余位置写成零即可。</p>
 <h4 id="python_4">Python 实现<a class="headerlink" href="#python_4" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -3652,9 +3719,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/container-with-most-water/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">Hot 100 补充</span></p>
 </div>
-<h4 id="_11">快速复习<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h4>
+<h4 id="_12">快速复习<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h4>
 <p>左右指针初始时指向首尾，计算面积，每次移动较短的一侧（保留短边不动不可能得到更大面积）。</p>
-<h4 id="_12">详细题解<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h4>
+<h4 id="_13">详细题解<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h4>
 <p>面积由宽度和两侧较短高度决定。指针向内移动后宽度必然减小，只有替换较短边才可能提高有效高度，因此每轮移动短边并更新最大值。</p>
 <h4 id="python_5">Python 实现<a class="headerlink" href="#python_5" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -3679,7 +3746,7 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/3sum/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_13">快速复习<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h4>
+<h4 id="_14">快速复习<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h4>
 <p>使用哈希表之类的方法，边界条件判断很复杂，在面试中很难当场写出来，这题目用双指针会比较好</p>
 <ul>
 <li>思路： <ul>
@@ -3701,7 +3768,7 @@
 </ul>
 </li>
 </ul>
-<h4 id="_14">详细题解<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h4>
+<h4 id="_15">详细题解<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h4>
 <p>使用哈希表之类的方法，边界条件判断很复杂，在面试中很难当场写出来，这题目用双指针会比较好</p>
 <ul>
 <li>思路：<ul>
@@ -3766,9 +3833,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/trapping-rain-water/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_15">快速复习<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h4>
+<h4 id="_16">快速复习<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h4>
 <p>单调栈结算横向凹槽：弹出槽底后，用左右边界较小高度计算水高。</p>
-<h4 id="_16">详细题解<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h4>
+<h4 id="_17">详细题解<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h4>
 <ul>
 <li>方法1：求出每列雨水的高度（min(maxleft,maxright)-height[i]）,然后求和</li>
 <li>
@@ -3873,9 +3940,9 @@
 <span class="difficulty difficulty--unknown">Hot 100 补充</span>
 <span class="problem-type">滑动窗口</span></p>
 </div>
-<h4 id="_17">快速复习<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h4>
+<h4 id="_18">快速复习<a class="headerlink" href="#_18" title="Permanent link">&para;</a></h4>
 <p>滑动窗口记录字符最近出现位置；重复时让左边界跳到上次位置之后，<strong>但不能后退</strong>。</p>
-<h4 id="_18">详细题解<a class="headerlink" href="#_18" title="Permanent link">&para;</a></h4>
+<h4 id="_19">详细题解<a class="headerlink" href="#_19" title="Permanent link">&para;</a></h4>
 <p>右指针逐字符扩展窗口。若当前字符在窗口内出现过，将 <code>left</code> 更新为 <code>max(left, last[ch] + 1)</code>；随后记录最新位置并计算窗口长度。</p>
 <h4 id="python_8">Python 实现<a class="headerlink" href="#python_8" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -3900,9 +3967,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/find-all-anagrams-in-a-string/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">本地补充实现</span></p>
 </div>
-<h4 id="_19">快速复习<a class="headerlink" href="#_19" title="Permanent link">&para;</a></h4>
+<h4 id="_20">快速复习<a class="headerlink" href="#_20" title="Permanent link">&para;</a></h4>
 <p>窗口长度固定为 p 的长度，只维护窗口内字符计数，移动时一进一出。</p>
-<h4 id="_20">详细题解<a class="headerlink" href="#_20" title="Permanent link">&para;</a></h4>
+<h4 id="_21">详细题解<a class="headerlink" href="#_21" title="Permanent link">&para;</a></h4>
 <ul>
 <li>虽然这里是固定窗口（p大小固定），但还是需要借鉴滑动窗口的思想，维护（记录）固定窗口内的字符个数，这样时间要求才能满足</li>
 </ul>
@@ -3966,9 +4033,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/subarray-sum-equals-k/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">Hot 100 补充</span></p>
 </div>
-<h4 id="_21">快速复习<a class="headerlink" href="#_21" title="Permanent link">&para;</a></h4>
+<h4 id="_22">快速复习<a class="headerlink" href="#_22" title="Permanent link">&para;</a></h4>
 <p>前缀和 <code>prefix</code> 配合计数表；当前前缀需要寻找之前出现过多少次 <code>prefix - k</code>。</p>
-<h4 id="_22">详细题解<a class="headerlink" href="#_22" title="Permanent link">&para;</a></h4>
+<h4 id="_23">详细题解<a class="headerlink" href="#_23" title="Permanent link">&para;</a></h4>
 <p>若两个前缀和之差为 <code>k</code>，它们之间的子数组和就是 <code>k</code>。扫描时先累加 <code>count[prefix-k]</code>，再记录当前前缀；初始 <code>{0: 1}</code> 用于统计从下标 0 开始的子数组。</p>
 <h4 id="python_10">Python 实现<a class="headerlink" href="#python_10" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -3993,9 +4060,9 @@
 <span class="difficulty difficulty--unknown">代码随想录</span>
 <span class="problem-type">滑动窗口</span></p>
 </div>
-<h4 id="_23">快速复习<a class="headerlink" href="#_23" title="Permanent link">&para;</a></h4>
+<h4 id="_24">快速复习<a class="headerlink" href="#_24" title="Permanent link">&para;</a></h4>
 <p>维护值单调递减的队列；队首过期时若为最大则弹出，队尾不大于当前值时弹出。</p>
-<h4 id="_24">详细题解<a class="headerlink" href="#_24" title="Permanent link">&para;</a></h4>
+<h4 id="_25">详细题解<a class="headerlink" href="#_25" title="Permanent link">&para;</a></h4>
 <p>可使用单调队列（队列内单调递增或单调递减），以保证随时可以获取最大值</p>
 <ol>
 <li>push(value)：如果push的元素value大于<strong>入</strong>口元素的数值，那么就将队列入口的元素弹出，直到push元素的数值小于等于队列入口元素的数值为止</li>
@@ -4030,9 +4097,9 @@
 <span class="difficulty difficulty--unknown">Hot 100 补充</span>
 <span class="problem-type">双指针</span></p>
 </div>
-<h4 id="_25">快速复习<a class="headerlink" href="#_25" title="Permanent link">&para;</a></h4>
+<h4 id="_26">快速复习<a class="headerlink" href="#_26" title="Permanent link">&para;</a></h4>
 <p>右指针扩展直到覆盖全部需求，左指针再尽量收缩；用 <code>missing</code> 记录仍缺少的字符总数。</p>
-<h4 id="_26">详细题解<a class="headerlink" href="#_26" title="Permanent link">&para;</a></h4>
+<h4 id="_27">详细题解<a class="headerlink" href="#_27" title="Permanent link">&para;</a></h4>
 <p>计数表<code>need</code>保存窗口还需要的字符数量。加入一个仍被需要的字符时 <code>missing</code> 减一；当 <code>missing == 0</code> 时持续移动左边界并更新最短答案，直到移走了必需字符。</p>
 <p>之所以只在 <code>need[ch] &gt; 0</code> 时执行 <code>missing -= 1</code>，是因为这表示加入 <code>ch</code> 前窗口确实还缺少该字符；若 <code>need[ch] &lt;= 0</code>，当前字符只是多余字符，不能减少缺失总数。</p>
 <p>移出左端字符时，先执行 <code>need[outgoing] += 1</code>；若此时 <code>need[outgoing] &gt; 0</code>，说明移出后窗口重新缺少一个该字符，因此需要执行 <code>missing += 1</code>。若计数仍不大于零，则移出的只是多余字符，窗口依然满足需求。</p>
@@ -4114,9 +4181,9 @@
 <span class="problem-type">贪心</span>
 <span class="problem-type">动态规划</span></p>
 </div>
-<h4 id="_27">快速复习<a class="headerlink" href="#_27" title="Permanent link">&para;</a></h4>
+<h4 id="_28">快速复习<a class="headerlink" href="#_28" title="Permanent link">&para;</a></h4>
 <p>动态规划转移方程：<span class="arithmatex">\(f(i)=max{f(i−1)+nums[i],nums[i]}\)</span></p>
-<h4 id="_28">详细题解<a class="headerlink" href="#_28" title="Permanent link">&para;</a></h4>
+<h4 id="_29">详细题解<a class="headerlink" href="#_29" title="Permanent link">&para;</a></h4>
 <ul>
 <li>局部最优：<strong>当前“连续和”为负数的时候立刻放弃</strong>，从下一个元素重新计算“连续和”，因为负数加上下一个元素 “连续和”只会越来越小。</li>
 <li>全局最优：选取最大“连续和”</li>
@@ -4143,9 +4210,9 @@
 <span class="difficulty difficulty--unknown">代码随想录</span>
 <span class="problem-type">贪心</span></p>
 </div>
-<h4 id="_29">快速复习<a class="headerlink" href="#_29" title="Permanent link">&para;</a></h4>
+<h4 id="_30">快速复习<a class="headerlink" href="#_30" title="Permanent link">&para;</a></h4>
 <p>每个区间先按照左边界进行排序，再判断最后一个已合并区间的右边界是否与新区间的左边界相接。若相接则右边界更新为二者右边界的最大值</p>
-<h4 id="_30">详细题解<a class="headerlink" href="#_30" title="Permanent link">&para;</a></h4>
+<h4 id="_31">详细题解<a class="headerlink" href="#_31" title="Permanent link">&para;</a></h4>
 <p>和我们刚刚讲过的<a href="https://programmercarl.com/0452.%E7%94%A8%E6%9C%80%E5%B0%91%E6%95%B0%E9%87%8F%E7%9A%84%E7%AE%AD%E5%BC%95%E7%88%86%E6%B0%94%E7%90%83.html"><strong>452. 用最少数量的箭引爆气球 (opens new window)</strong></a>和 <a href="https://programmercarl.com/0435.%E6%97%A0%E9%87%8D%E5%8F%A0%E5%8C%BA%E9%97%B4.html"><strong>435. 无重叠区间 (opens new window)</strong></a>都是一个套路。</p>
 <h4 id="python_14">Python 实现<a class="headerlink" href="#python_14" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -4174,9 +4241,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/rotate-array/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">Hot 100 补充</span></p>
 </div>
-<h4 id="_31">快速复习<a class="headerlink" href="#_31" title="Permanent link">&para;</a></h4>
+<h4 id="_32">快速复习<a class="headerlink" href="#_32" title="Permanent link">&para;</a></h4>
 <p>三次翻转：整体翻转，再分别翻转前 <code>k</code> 个和剩余部分。</p>
-<h4 id="_32">详细题解<a class="headerlink" href="#_32" title="Permanent link">&para;</a></h4>
+<h4 id="_33">详细题解<a class="headerlink" href="#_33" title="Permanent link">&para;</a></h4>
 <p>右移 <code>k</code> 位后，原数组最后 <code>k</code> 个元素应来到前面。整体翻转先把两段顺序交换，再分别翻转两段恢复各自内部顺序；记得令 <code>k %= n</code>。</p>
 <h4 id="python_15">Python 实现<a class="headerlink" href="#python_15" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -4201,9 +4268,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/product-of-array-except-self/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">Hot 100 补充</span></p>
 </div>
-<h4 id="_33">快速复习<a class="headerlink" href="#_33" title="Permanent link">&para;</a></h4>
+<h4 id="_34">快速复习<a class="headerlink" href="#_34" title="Permanent link">&para;</a></h4>
 <p>答案先保存左侧乘积，再从右向左乘上右侧乘积；不使用除法。</p>
-<h4 id="_34">详细题解<a class="headerlink" href="#_34" title="Permanent link">&para;</a></h4>
+<h4 id="_35">详细题解<a class="headerlink" href="#_35" title="Permanent link">&para;</a></h4>
 <p>第一次扫描令 <code>answer[i]</code> 等于 <code>i</code> 左侧所有元素之积。第二次扫描维护右侧累积乘积 <code>suffix</code>，将其乘入答案后再更新 <code>suffix</code>，额外空间不计输出数组为 O(1)。</p>
 <h4 id="python_16">Python 实现<a class="headerlink" href="#python_16" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -4229,24 +4296,24 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/first-missing-positive/description/?envType=study-plan-v2&amp;envId=top-100-liked" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">本地补充实现</span></p>
 </div>
-<h4 id="_35">快速复习<a class="headerlink" href="#_35" title="Permanent link">&para;</a></h4>
+<h4 id="_36">快速复习<a class="headerlink" href="#_36" title="Permanent link">&para;</a></h4>
 <p>答案一定在 <code>[1, n + 1]</code> 中，可以复用原数组完成标记：</p>
 <ul>
 <li><strong>原地置换</strong>：把值 <code>x</code> 放到下标 <code>x - 1</code>，最后找第一个 <code>nums[i] != i + 1</code> 的位置。</li>
 <li><strong>负号标记</strong>：先排除非正数，再用 <code>nums[x - 1]</code> 的正负表示 <code>x</code> 是否出现。</li>
 </ul>
-<h4 id="_36">详细题解<a class="headerlink" href="#_36" title="Permanent link">&para;</a></h4>
+<h4 id="_37">详细题解<a class="headerlink" href="#_37" title="Permanent link">&para;</a></h4>
 <p>设数组长度为 <code>n</code>。如果 <code>1</code> 到 <code>n</code> 中有数没有出现，答案就是其中最小的一个；如果它们全部出现，答案只能是 <code>n + 1</code>。因此，负数、零以及大于 <code>n</code> 的数都不会影响答案。</p>
-<h5 id="_37">方法一：原地置换<a class="headerlink" href="#_37" title="Permanent link">&para;</a></h5>
+<h5 id="_38">方法一：原地置换<a class="headerlink" href="#_38" title="Permanent link">&para;</a></h5>
 <p>把数组本身当作一个哈希表：数字 <code>x</code> 应该放在下标 <code>x - 1</code>。遍历每个位置，只要当前数字属于 <code>[1, n]</code> 且尚未位于正确位置，就不断交换。</p>
 <p>交换条件中的 <code>nums[nums[i] - 1] != nums[i]</code> 用于处理重复数字，否则两个相同的数可能造成死循环。置换完成后，第一个不满足 <code>nums[i] == i + 1</code> 的位置对应的就是答案。</p>
 <p>虽然代码中有嵌套的 <code>while</code>，但每次交换都会让至少一个有效数字回到正确位置，总交换次数不超过 <code>n</code>，所以时间复杂度仍为 <span class="arithmatex">\(O(n)\)</span>。</p>
-<h5 id="_38">方法二：负号标记<a class="headerlink" href="#_38" title="Permanent link">&para;</a></h5>
+<h5 id="_39">方法二：负号标记<a class="headerlink" href="#_39" title="Permanent link">&para;</a></h5>
 <p>先把所有非正数替换为 <code>n + 1</code>，避免它们干扰正负号。然后遍历数组：若当前数字的绝对值 <code>x</code> 在 <code>[1, n]</code> 中，就把 <code>nums[x - 1]</code> 变成负数，表示 <code>x</code> 出现过。</p>
 <p>读取时必须使用 <code>abs(nums[i])</code>，因为该位置可能已经被前面的数字改成负数。最后，第一个仍为正数的位置 <code>i</code> 表示 <code>i + 1</code> 没有出现；若全部为负数，则返回 <code>n + 1</code>。</p>
 <p>两种方法的时间复杂度都是 <span class="arithmatex">\(O(n)\)</span>，额外空间复杂度都是 <span class="arithmatex">\(O(1)\)</span>，并且都会修改原数组。</p>
 <h4 id="python_17">Python 实现<a class="headerlink" href="#python_17" title="Permanent link">&para;</a></h4>
-<h5 id="_39">方法一：原地置换<a class="headerlink" href="#_39" title="Permanent link">&para;</a></h5>
+<h5 id="_40">方法一：原地置换<a class="headerlink" href="#_40" title="Permanent link">&para;</a></h5>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
 </span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">firstMissingPositive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 </span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
@@ -4262,7 +4329,7 @@
 </span><span id="__span-22-13"><a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a>
 </span><span id="__span-22-14"><a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a>        <span class="k">return</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span>
 </span></code></pre></div>
-<h5 id="_40">方法二：负号标记<a class="headerlink" href="#_40" title="Permanent link">&para;</a></h5>
+<h5 id="_41">方法二：负号标记<a class="headerlink" href="#_41" title="Permanent link">&para;</a></h5>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
 </span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">firstMissingPositive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 </span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
@@ -4328,9 +4395,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/set-matrix-zeroes/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">Hot 100 补充</span></p>
 </div>
-<h4 id="_41">快速复习<a class="headerlink" href="#_41" title="Permanent link">&para;</a></h4>
+<h4 id="_42">快速复习<a class="headerlink" href="#_42" title="Permanent link">&para;</a></h4>
 <p>用第一行和第一列充当标记数组，另外记录它们自身最初是否含零。</p>
-<h4 id="_42">详细题解<a class="headerlink" href="#_42" title="Permanent link">&para;</a></h4>
+<h4 id="_43">详细题解<a class="headerlink" href="#_43" title="Permanent link">&para;</a></h4>
 <p>先记录首行、首列是否需要清零；扫描内部元素时，把对应的首行和首列位置标零。再根据标记清理内部，最后处理首行和首列，空间复杂度 O(1)。</p>
 <h4 id="python_18">Python 实现<a class="headerlink" href="#python_18" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -4360,9 +4427,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/spiral-matrix/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">Hot 100 补充</span></p>
 </div>
-<h4 id="_43">快速复习<a class="headerlink" href="#_43" title="Permanent link">&para;</a></h4>
+<h4 id="_44">快速复习<a class="headerlink" href="#_44" title="Permanent link">&para;</a></h4>
 <p>维护上、下、左、右四条边界，每轮依次走上边、右边、下边、左边。</p>
-<h4 id="_44">详细题解<a class="headerlink" href="#_44" title="Permanent link">&para;</a></h4>
+<h4 id="_45">详细题解<a class="headerlink" href="#_45" title="Permanent link">&para;</a></h4>
 <p>遍历完一条边就收缩对应边界。走下边和左边前要检查边界仍然有效，避免单行或单列时重复加入元素。</p>
 <h4 id="python_19">Python 实现<a class="headerlink" href="#python_19" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -4394,9 +4461,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/rotate-image/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">Hot 100 补充</span></p>
 </div>
-<h4 id="_45">快速复习<a class="headerlink" href="#_45" title="Permanent link">&para;</a></h4>
+<h4 id="_46">快速复习<a class="headerlink" href="#_46" title="Permanent link">&para;</a></h4>
 <p>顺时针旋转 90° 等价于先沿主对角线转置，再把每一行翻转。</p>
-<h4 id="_46">详细题解<a class="headerlink" href="#_46" title="Permanent link">&para;</a></h4>
+<h4 id="_47">详细题解<a class="headerlink" href="#_47" title="Permanent link">&para;</a></h4>
 <p>转置会把位置 <code>(i,j)</code> 交换到 <code>(j,i)</code>；随后左右翻转每一行，最终位置变为 <code>(j,n-1-i)</code>，正是顺时针旋转后的坐标。</p>
 <h4 id="python_20">Python 实现<a class="headerlink" href="#python_20" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -4415,9 +4482,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/search-a-2d-matrix-ii/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">Hot 100 补充</span></p>
 </div>
-<h4 id="_47">快速复习<a class="headerlink" href="#_47" title="Permanent link">&para;</a></h4>
+<h4 id="_48">快速复习<a class="headerlink" href="#_48" title="Permanent link">&para;</a></h4>
 <p>从右上角开始：当前值太大向左，太小向下，每步排除一行或一列。</p>
-<h4 id="_48">详细题解<a class="headerlink" href="#_48" title="Permanent link">&para;</a></h4>
+<h4 id="_49">详细题解<a class="headerlink" href="#_49" title="Permanent link">&para;</a></h4>
 <p>右上角同时具有“向左变小、向下变大”的单调性。比较后可确定一个方向绝不可能包含目标，因此最多移动 <code>m+n</code> 次。</p>
 <h4 id="python_21">Python 实现<a class="headerlink" href="#python_21" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -4536,9 +4603,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/intersection-of-two-linked-lists/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">Hot 100 补充</span></p>
 </div>
-<h4 id="_49">快速复习<a class="headerlink" href="#_49" title="Permanent link">&para;</a></h4>
+<h4 id="_50">快速复习<a class="headerlink" href="#_50" title="Permanent link">&para;</a></h4>
 <p>两个指针分别走 A→B 和 B→A，走过相同总长度后会在交点或空节点相遇。</p>
-<h4 id="_50">详细题解<a class="headerlink" href="#_50" title="Permanent link">&para;</a></h4>
+<h4 id="_51">详细题解<a class="headerlink" href="#_51" title="Permanent link">&para;</a></h4>
 <p>两条链表独有部分长度不同，但交换起点后两个指针都走 <code>lenA + lenB</code>。若存在公共尾部，它们会同时进入交点；否则同时变为 <code>None</code>。</p>
 <p>另一种方法：先让长的链表走s步，s是两个链表的长度之差</p>
 <h4 id="python_22">Python 实现<a class="headerlink" href="#python_22" title="Permanent link">&para;</a></h4>
@@ -4571,9 +4638,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/reverse-linked-list/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_51">快速复习<a class="headerlink" href="#_51" title="Permanent link">&para;</a></h4>
+<h4 id="_52">快速复习<a class="headerlink" href="#_52" title="Permanent link">&para;</a></h4>
 <p>pre可以初始化为None，cur初始化为head</p>
-<h4 id="_52">详细题解<a class="headerlink" href="#_52" title="Permanent link">&para;</a></h4>
+<h4 id="_53">详细题解<a class="headerlink" href="#_53" title="Permanent link">&para;</a></h4>
 <ul>
 <li>pre可以初始化为None，cur初始化为head</li>
 </ul>
@@ -4614,9 +4681,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/palindrome-linked-list/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">Hot 100 补充</span></p>
 </div>
-<h4 id="_53">快速复习<a class="headerlink" href="#_53" title="Permanent link">&para;</a></h4>
+<h4 id="_54">快速复习<a class="headerlink" href="#_54" title="Permanent link">&para;</a></h4>
 <p>快慢指针找到后半段，反转后与前半段逐个比较。</p>
-<h4 id="_54">详细题解<a class="headerlink" href="#_54" title="Permanent link">&para;</a></h4>
+<h4 id="_55">详细题解<a class="headerlink" href="#_55" title="Permanent link">&para;</a></h4>
 <p>快指针每次走两步、慢指针走一步，慢指针最终到达后半段起点。原地反转后半段，再从头部和反转后的头部同步比较，时间 O(n)、额外空间 O(1)。</p>
 <h4 id="python_24">Python 实现<a class="headerlink" href="#python_24" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -4645,9 +4712,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/linked-list-cycle/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">Hot 100 补充</span></p>
 </div>
-<h4 id="_55">快速复习<a class="headerlink" href="#_55" title="Permanent link">&para;</a></h4>
+<h4 id="_56">快速复习<a class="headerlink" href="#_56" title="Permanent link">&para;</a></h4>
 <p>Floyd 快慢指针：慢指针一步、快指针两步；有环必相遇，无环快指针先到空。</p>
-<h4 id="_56">详细题解<a class="headerlink" href="#_56" title="Permanent link">&para;</a></h4>
+<h4 id="_57">详细题解<a class="headerlink" href="#_57" title="Permanent link">&para;</a></h4>
 <p>在环内快指针会不断缩短与慢指针的相对距离，因此必然相遇。循环条件同时检查 <code>fast</code> 和 <code>fast.next</code>，避免访问空节点。</p>
 <h4 id="python_25">Python 实现<a class="headerlink" href="#python_25" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -4670,9 +4737,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/linked-list-cycle-ii/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_57">快速复习<a class="headerlink" href="#_57" title="Permanent link">&para;</a></h4>
+<h4 id="_58">快速复习<a class="headerlink" href="#_58" title="Permanent link">&para;</a></h4>
 <p>fast走两步，slow走一步；那么必定会在fast绕一圈后相遇（fast绕一圈）</p>
-<h4 id="_58">详细题解<a class="headerlink" href="#_58" title="Permanent link">&para;</a></h4>
+<h4 id="_59">详细题解<a class="headerlink" href="#_59" title="Permanent link">&para;</a></h4>
 <p><img alt="环形链表2" src="assets/%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A82.png" /></p>
 <ul>
 <li>fast走两步，slow走一步。那么必定会在fast绕一圈后相遇（fast绕一圈）</li>
@@ -4724,9 +4791,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/merge-two-sorted-lists/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">Hot 100 补充</span></p>
 </div>
-<h4 id="_59">快速复习<a class="headerlink" href="#_59" title="Permanent link">&para;</a></h4>
+<h4 id="_60">快速复习<a class="headerlink" href="#_60" title="Permanent link">&para;</a></h4>
 <p>虚拟头节点连接每次较小的节点，最后接上尚未遍历完的链表。</p>
-<h4 id="_60">详细题解<a class="headerlink" href="#_60" title="Permanent link">&para;</a></h4>
+<h4 id="_61">详细题解<a class="headerlink" href="#_61" title="Permanent link">&para;</a></h4>
 <p>两个指针分别指向当前候选节点。比较后把较小节点接到结果尾部并移动对应指针；虚拟头节点消除首次插入的特殊处理。</p>
 <h4 id="python_27">Python 实现<a class="headerlink" href="#python_27" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -4749,9 +4816,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/add-two-numbers/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">Hot 100 补充</span></p>
 </div>
-<h4 id="_61">快速复习<a class="headerlink" href="#_61" title="Permanent link">&para;</a></h4>
+<h4 id="_62">快速复习<a class="headerlink" href="#_62" title="Permanent link">&para;</a></h4>
 <p>同步遍历两条逆序链表，逐位加上进位；链表结束后仍要处理最后的进位。</p>
-<h4 id="_62">详细题解<a class="headerlink" href="#_62" title="Permanent link">&para;</a></h4>
+<h4 id="_63">详细题解<a class="headerlink" href="#_63" title="Permanent link">&para;</a></h4>
 <p>每轮把不存在的节点视为 0，使用 <code>divmod(total, 10)</code> 同时得到新进位和当前位。只要任一链表<strong>未结束</strong>或<strong>进位非零</strong>就继续创建节点。</p>
 <h4 id="python_28">Python 实现<a class="headerlink" href="#python_28" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -4782,11 +4849,11 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/remove-nth-node-from-end-of-list/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_63">快速复习<a class="headerlink" href="#_63" title="Permanent link">&para;</a></h4>
+<h4 id="_64">快速复习<a class="headerlink" href="#_64" title="Permanent link">&para;</a></h4>
 <p>采用双指针 
 - 快指针先走n步，接着快慢指针一起走；当快指针到达最后一个节点时，慢指针指向要删除的节点
 - 采用dummy_head会更好，因为可能删除的是head节点</p>
-<h4 id="_64">详细题解<a class="headerlink" href="#_64" title="Permanent link">&para;</a></h4>
+<h4 id="_65">详细题解<a class="headerlink" href="#_65" title="Permanent link">&para;</a></h4>
 <ul>
 <li>采用双指针<ul>
 <li>快指针先走n步，接着快慢指针一起走。当快指针到达最后一个节点时，慢指针指向要删除的节点</li>
@@ -4832,10 +4899,10 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/swap-nodes-in-pairs/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_65">快速复习<a class="headerlink" href="#_65" title="Permanent link">&para;</a></h4>
+<h4 id="_66">快速复习<a class="headerlink" href="#_66" title="Permanent link">&para;</a></h4>
 <p>先保存 next 再改指针（或按照下图顺序改）；返回 dummy.next；画出三个连续节点。
 <img alt="两两交换" src="assets/%E4%B8%A4%E4%B8%A4%E4%BA%A4%E6%8D%A2.png" /></p>
-<h4 id="_66">详细题解<a class="headerlink" href="#_66" title="Permanent link">&para;</a></h4>
+<h4 id="_67">详细题解<a class="headerlink" href="#_67" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>补充思路：</strong> 链表题的核心是维护节点关系。涉及头节点修改时优先引入虚拟头节点，涉及位置对齐时使用快慢指针。</p>
 </blockquote>
@@ -4888,9 +4955,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/reverse-nodes-in-k-group/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">本地补充实现</span></p>
 </div>
-<h4 id="_67">快速复习<a class="headerlink" href="#_67" title="Permanent link">&para;</a></h4>
+<h4 id="_68">快速复习<a class="headerlink" href="#_68" title="Permanent link">&para;</a></h4>
 <p>先确认剩余节点不少于 k 个，再原地翻转这一段并把前后区间重新连接。</p>
-<h4 id="_68">详细题解<a class="headerlink" href="#_68" title="Permanent link">&para;</a></h4>
+<h4 id="_69">详细题解<a class="headerlink" href="#_69" title="Permanent link">&para;</a></h4>
 <ul>
 <li>封装一个子函数，输入为head和tail，表示k个节点的头和尾，翻转后返回新的头和尾<ul>
 <li>初始化时：<code>cur=head, prev = tail.next</code></li>
@@ -4961,9 +5028,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/copy-list-with-random-pointer/description/?envType=study-plan-v2&amp;envId=top-100-liked" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">本地补充实现</span></p>
 </div>
-<h4 id="_69">快速复习<a class="headerlink" href="#_69" title="Permanent link">&para;</a></h4>
+<h4 id="_70">快速复习<a class="headerlink" href="#_70" title="Permanent link">&para;</a></h4>
 <p>先建立原节点到新节点的映射，再补 next 和 random；也可把复制节点穿插进原链表做到 O(1) 额外空间。</p>
-<h4 id="_70">详细题解<a class="headerlink" href="#_70" title="Permanent link">&para;</a></h4>
+<h4 id="_71">详细题解<a class="headerlink" href="#_71" title="Permanent link">&para;</a></h4>
 <ul>
 <li>深拷贝一般和递归相关</li>
 </ul>
@@ -4997,9 +5064,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/sort-list/description/?envType=study-plan-v2&amp;envId=top-100-liked" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">本地补充实现</span></p>
 </div>
-<h4 id="_71">快速复习<a class="headerlink" href="#_71" title="Permanent link">&para;</a></h4>
+<h4 id="_72">快速复习<a class="headerlink" href="#_72" title="Permanent link">&para;</a></h4>
 <p>链表归并排序：快慢指针找中点，递归排序两半，再线性合并。</p>
-<h4 id="_72">详细题解<a class="headerlink" href="#_72" title="Permanent link">&para;</a></h4>
+<h4 id="_73">详细题解<a class="headerlink" href="#_73" title="Permanent link">&para;</a></h4>
 <ul>
 <li>采用归并排序</li>
 <li>递归前需要提前保存第二个链表的head，同时把第一个链表的尾部的next置为None，以切断链表</li>
@@ -5047,10 +5114,10 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/merge-k-sorted-lists/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">本地补充实现</span></p>
 </div>
-<h4 id="_73">快速复习<a class="headerlink" href="#_73" title="Permanent link">&para;</a></h4>
+<h4 id="_74">快速复习<a class="headerlink" href="#_74" title="Permanent link">&para;</a></h4>
 <p>方法1：分治，归并排序</p>
 <p>方法2：小根堆</p>
-<h4 id="_74">详细题解<a class="headerlink" href="#_74" title="Permanent link">&para;</a></h4>
+<h4 id="_75">详细题解<a class="headerlink" href="#_75" title="Permanent link">&para;</a></h4>
 <ul>
 <li>
 <p>分治的方法：先拆分为两部分，每部分包含k/2个链表，递归得到这两部分的合并结果，然后再合并这两个链表</p>
@@ -5112,9 +5179,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/lru-cache/solutions/259678/lruhuan-cun-ji-zhi-by-leetcode-solution/?envType=study-plan-v2&amp;envId=top-100-liked" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">本地补充实现</span></p>
 </div>
-<h4 id="_75">快速复习<a class="headerlink" href="#_75" title="Permanent link">&para;</a></h4>
+<h4 id="_76">快速复习<a class="headerlink" href="#_76" title="Permanent link">&para;</a></h4>
 <p>哈希表 O(1) 定位节点，双向链表 O(1) 移动和淘汰；最近使用放表头。</p>
-<h4 id="_76">详细题解<a class="headerlink" href="#_76" title="Permanent link">&para;</a></h4>
+<h4 id="_77">详细题解<a class="headerlink" href="#_77" title="Permanent link">&para;</a></h4>
 <p>高频考点，多练</p>
 <h4 id="python_35">Python 实现<a class="headerlink" href="#python_35" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">LRUCacheNode</span><span class="p">:</span>
@@ -5279,12 +5346,12 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/binary-tree-inorder-traversal/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">Hot 100 补充</span></p>
 </div>
-<h4 id="_77">快速复习<a class="headerlink" href="#_77" title="Permanent link">&para;</a></h4>
+<h4 id="_78">快速复习<a class="headerlink" href="#_78" title="Permanent link">&para;</a></h4>
 <ul>
 <li>递归中序：先访问左子树，再访问节点，最后访问右子树</li>
 <li>迭代中序：不断把左链压栈，弹出节点访问，再转向右子树。</li>
 </ul>
-<h4 id="_78">详细题解<a class="headerlink" href="#_78" title="Permanent link">&para;</a></h4>
+<h4 id="_79">详细题解<a class="headerlink" href="#_79" title="Permanent link">&para;</a></h4>
 <p>迭代中序：栈保存尚未访问、但左子树已经准备处理的节点。当当前指针为空时弹栈访问，随后进入右子树，顺序自然是左—根—右。</p>
 <h4 id="python_36">Python 实现<a class="headerlink" href="#python_36" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="c1"># 递归中序</span>
@@ -5325,9 +5392,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/maximum-depth-of-binary-tree/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_79">快速复习<a class="headerlink" href="#_79" title="Permanent link">&para;</a></h4>
+<h4 id="_80">快速复习<a class="headerlink" href="#_80" title="Permanent link">&para;</a></h4>
 <p>后序遍历，每次返回当前深度。</p>
-<h4 id="_80">详细题解<a class="headerlink" href="#_80" title="Permanent link">&para;</a></h4>
+<h4 id="_81">详细题解<a class="headerlink" href="#_81" title="Permanent link">&para;</a></h4>
 <p>当前深度=max(左子树最大深度, 右子树最大深度) + 1</p>
 <h4 id="python_37">Python 实现<a class="headerlink" href="#python_37" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -5348,9 +5415,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/invert-binary-tree/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_81">快速复习<a class="headerlink" href="#_81" title="Permanent link">&para;</a></h4>
+<h4 id="_82">快速复习<a class="headerlink" href="#_82" title="Permanent link">&para;</a></h4>
 <p>本质是遍历节点，采用之前任意一种遍历方式均可以，这里用前序遍历就行</p>
-<h4 id="_82">详细题解<a class="headerlink" href="#_82" title="Permanent link">&para;</a></h4>
+<h4 id="_83">详细题解<a class="headerlink" href="#_83" title="Permanent link">&para;</a></h4>
 <p>本质是遍历节点，采用之前任意一种遍历方式均可以，这里用前序遍历就行</p>
 <h4 id="python_38">Python 实现<a class="headerlink" href="#python_38" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="c1"># Definition for a binary tree node.</span>
@@ -5378,9 +5445,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/symmetric-tree/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_83">快速复习<a class="headerlink" href="#_83" title="Permanent link">&para;</a></h4>
+<h4 id="_84">快速复习<a class="headerlink" href="#_84" title="Permanent link">&para;</a></h4>
 <p>关键在于node1.left和node2.right比，node1.right和node2.left比，每次要对比两次！</p>
-<h4 id="_84">详细题解<a class="headerlink" href="#_84" title="Permanent link">&para;</a></h4>
+<h4 id="_85">详细题解<a class="headerlink" href="#_85" title="Permanent link">&para;</a></h4>
 <p>关键在于node1.left和node2.right比，node1.right和node2.left比，每次要对比两次！</p>
 <h4 id="python_39">Python 实现<a class="headerlink" href="#python_39" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a><span class="c1"># 递归实现</span>
@@ -5423,9 +5490,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/diameter-of-binary-tree/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">Hot 100 补充</span></p>
 </div>
-<h4 id="_85">快速复习<a class="headerlink" href="#_85" title="Permanent link">&para;</a></h4>
+<h4 id="_86">快速复习<a class="headerlink" href="#_86" title="Permanent link">&para;</a></h4>
 <p>后序遍历返回单边最大深度；经过当前节点的直径是左深度加右深度。</p>
-<h4 id="_86">详细题解<a class="headerlink" href="#_86" title="Permanent link">&para;</a></h4>
+<h4 id="_87">详细题解<a class="headerlink" href="#_87" title="Permanent link">&para;</a></h4>
 <p>递归先得到左右子树向下延伸的最大边数，使用 <code>left + right</code> 更新全局答案，再向父节点返回 <code>max(left,right)+1</code>。每个节点只访问一次。</p>
 <h4 id="python_40">Python 实现<a class="headerlink" href="#python_40" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -5452,9 +5519,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/binary-tree-level-order-traversal/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_87">快速复习<a class="headerlink" href="#_87" title="Permanent link">&para;</a></h4>
+<h4 id="_88">快速复习<a class="headerlink" href="#_88" title="Permanent link">&para;</a></h4>
 <p>在遍历时需要注意提前获取每层需要遍历的个数，因为队列长度是实时变化的</p>
-<h4 id="_88">详细题解<a class="headerlink" href="#_88" title="Permanent link">&para;</a></h4>
+<h4 id="_89">详细题解<a class="headerlink" href="#_89" title="Permanent link">&para;</a></h4>
 <p>在遍历时需要注意提前获取每层需要遍历的个数，因为队列长度是实时变化的</p>
 <blockquote>
 <p><strong>补充思路：</strong> 先判断递归函数的返回值代表什么，再确定前序、中序还是后序处理；按层统计时使用队列。</p>
@@ -5506,9 +5573,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/convert-sorted-array-to-binary-search-tree/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_89">快速复习<a class="headerlink" href="#_89" title="Permanent link">&para;</a></h4>
+<h4 id="_90">快速复习<a class="headerlink" href="#_90" title="Permanent link">&para;</a></h4>
 <p>每次选有序区间中点作为根，递归构造左右子区间；中点取法保持一致即可。</p>
-<h4 id="_90">详细题解<a class="headerlink" href="#_90" title="Permanent link">&para;</a></h4>
+<h4 id="_91">详细题解<a class="headerlink" href="#_91" title="Permanent link">&para;</a></h4>
 <ul>
 <li>同样是划分列表给两个子树，因为是有序数组，从中间划分即可</li>
 </ul>
@@ -5533,9 +5600,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/validate-binary-search-tree/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_91">快速复习<a class="headerlink" href="#_91" title="Permanent link">&para;</a></h4>
+<h4 id="_92">快速复习<a class="headerlink" href="#_92" title="Permanent link">&para;</a></h4>
 <p>借助二叉搜索树中序遍历有序的性质</p>
-<h4 id="_92">详细题解<a class="headerlink" href="#_92" title="Permanent link">&para;</a></h4>
+<h4 id="_93">详细题解<a class="headerlink" href="#_93" title="Permanent link">&para;</a></h4>
 <p><strong>二叉搜索树（Binary Search Tree, BST）进行中序遍历（In-order Traversal），其结果一定是有序的（升序）</strong></p>
 <p>如果所有节点值唯一（严格大小/于），那么以下条件<strong>等价</strong></p>
 <ul>
@@ -5571,9 +5638,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/kth-smallest-element-in-a-bst/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">Hot 100 补充</span></p>
 </div>
-<h4 id="_93">快速复习<a class="headerlink" href="#_93" title="Permanent link">&para;</a></h4>
+<h4 id="_94">快速复习<a class="headerlink" href="#_94" title="Permanent link">&para;</a></h4>
 <p>二叉搜索树中序遍历结果递增，访问到第 <code>k</code> 个节点即可返回。</p>
-<h4 id="_94">详细题解<a class="headerlink" href="#_94" title="Permanent link">&para;</a></h4>
+<h4 id="_95">详细题解<a class="headerlink" href="#_95" title="Permanent link">&para;</a></h4>
 <p>递归：中序遍历
 栈：用栈执行迭代中序遍历，弹出一个节点就将 <code>k</code> 减一。因为不需要遍历后续节点，平均只访问到答案为止。</p>
 <h4 id="python_44">Python 实现<a class="headerlink" href="#python_44" title="Permanent link">&para;</a></h4>
@@ -5622,9 +5689,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/binary-tree-right-side-view/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_95">快速复习<a class="headerlink" href="#_95" title="Permanent link">&para;</a></h4>
+<h4 id="_96">快速复习<a class="headerlink" href="#_96" title="Permanent link">&para;</a></h4>
 <p>在层序遍历时，判断是否为一层的最后一个节点，是的话就记录起来</p>
-<h4 id="_96">详细题解<a class="headerlink" href="#_96" title="Permanent link">&para;</a></h4>
+<h4 id="_97">详细题解<a class="headerlink" href="#_97" title="Permanent link">&para;</a></h4>
 <ul>
 <li>在层序遍历时，判断是否为一层的最后一个节点，是的话就记录起来</li>
 </ul>
@@ -5660,7 +5727,7 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/flatten-binary-tree-to-linked-list/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">Hot 100 补充</span></p>
 </div>
-<h4 id="_97">快速复习<a class="headerlink" href="#_97" title="Permanent link">&para;</a></h4>
+<h4 id="_98">快速复习<a class="headerlink" href="#_98" title="Permanent link">&para;</a></h4>
 <ul>
 <li>方法1：按右—左—根的逆前序递归，用 <code>previous</code> 保存已经展开好的链表头。</li>
 <li>方法2：<ul>
@@ -5670,7 +5737,7 @@
 </ul>
 </li>
 </ul>
-<h4 id="_98">详细题解<a class="headerlink" href="#_98" title="Permanent link">&para;</a></h4>
+<h4 id="_99">详细题解<a class="headerlink" href="#_99" title="Permanent link">&para;</a></h4>
 <p>先展开右子树，再展开左子树。回到当前节点时令 <code>node.right = previous</code>、<code>node.left = None</code>，随后把当前节点设为新的 <code>previous</code>，最终得到前序顺序的右链。</p>
 <h4 id="python_46">Python 实现<a class="headerlink" href="#python_46" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -5714,9 +5781,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-inorder-traversal/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">Hot 100 补充</span></p>
 </div>
-<h4 id="_99">快速复习<a class="headerlink" href="#_99" title="Permanent link">&para;</a></h4>
+<h4 id="_100">快速复习<a class="headerlink" href="#_100" title="Permanent link">&para;</a></h4>
 <p>前序首元素确定根；用中序位置划分左右子树，并用哈希表 O(1) 查询位置。</p>
-<h4 id="_100">详细题解<a class="headerlink" href="#_100" title="Permanent link">&para;</a></h4>
+<h4 id="_101">详细题解<a class="headerlink" href="#_101" title="Permanent link">&para;</a></h4>
 <p>采用前序递归，维护前序下标，每次取出根值。在中序区间 <code>[left,right]</code> 中找到根的位置，然后递归构造左区间和右区间；前序下标会按根—左—右自然推进。</p>
 <h4 id="python_47">Python 实现<a class="headerlink" href="#python_47" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -5748,9 +5815,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/path-sum-iii/description/?envType=study-plan-v2&amp;envId=top-100-liked" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_101">快速复习<a class="headerlink" href="#_101" title="Permanent link">&para;</a></h4>
+<h4 id="_102">快速复习<a class="headerlink" href="#_102" title="Permanent link">&para;</a></h4>
 <p>DFS <strong>维护从根到当前节点的前缀和出现次数</strong>；当前前缀减 target 的历史出现次数就是新增路径数。</p>
-<h4 id="_102">详细题解<a class="headerlink" href="#_102" title="Permanent link">&para;</a></h4>
+<h4 id="_103">详细题解<a class="headerlink" href="#_103" title="Permanent link">&para;</a></h4>
 <ul>
 <li>递归返回的是路径数</li>
 </ul>
@@ -5787,9 +5854,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_103">快速复习<a class="headerlink" href="#_103" title="Permanent link">&para;</a></h4>
+<h4 id="_104">快速复习<a class="headerlink" href="#_104" title="Permanent link">&para;</a></h4>
 <p>采用后序遍历的方法，从底向上遍历</p>
-<h4 id="_104">详细题解<a class="headerlink" href="#_104" title="Permanent link">&para;</a></h4>
+<h4 id="_105">详细题解<a class="headerlink" href="#_105" title="Permanent link">&para;</a></h4>
 <p>采用后序遍历的方法，从底向上遍历</p>
 <ul>
 <li>遇到p、q时直接返回对应节点。</li>
@@ -5824,9 +5891,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/binary-tree-maximum-path-sum/description/?envType=study-plan-v2&amp;envId=top-100-liked" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">本地补充实现</span></p>
 </div>
-<h4 id="_105">快速复习<a class="headerlink" href="#_105" title="Permanent link">&para;</a></h4>
+<h4 id="_106">快速复习<a class="headerlink" href="#_106" title="Permanent link">&para;</a></h4>
 <p>递归只向父节点返回单边最大贡献，全局答案可同时接左右两边。</p>
-<h4 id="_106">详细题解<a class="headerlink" href="#_106" title="Permanent link">&para;</a></h4>
+<h4 id="_107">详细题解<a class="headerlink" href="#_107" title="Permanent link">&para;</a></h4>
 <ul>
 <li>只有子节点贡献值大于0，才纳入考虑</li>
 <li>返回的是<strong>节点贡献值</strong></li>
@@ -5902,9 +5969,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/number-of-islands/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">Hot 100 补充</span></p>
 </div>
-<h4 id="_107">快速复习<a class="headerlink" href="#_107" title="Permanent link">&para;</a></h4>
+<h4 id="_108">快速复习<a class="headerlink" href="#_108" title="Permanent link">&para;</a></h4>
 <p>扫描网格，遇到陆地就把整座岛通过 DFS/BFS 淹没，并把答案加一。</p>
-<h4 id="_108">详细题解<a class="headerlink" href="#_108" title="Permanent link">&para;</a></h4>
+<h4 id="_109">详细题解<a class="headerlink" href="#_109" title="Permanent link">&para;</a></h4>
 <p>每次首次遇到 <code>'1'</code> 代表发现一座新岛。深度优先搜索将所有相连陆地改成 <code>'0'</code>，保证同一座岛不会重复计数，复杂度 O(mn)。</p>
 <h4 id="python_51">Python 实现<a class="headerlink" href="#python_51" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -5935,9 +6002,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/rotting-oranges/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">Hot 100 补充</span></p>
 </div>
-<h4 id="_109">快速复习<a class="headerlink" href="#_109" title="Permanent link">&para;</a></h4>
+<h4 id="_110">快速复习<a class="headerlink" href="#_110" title="Permanent link">&para;</a></h4>
 <p>多源 BFS：所有腐烂橘子同时入队，按层向外扩散；记录新鲜橘子数量。</p>
-<h4 id="_110">详细题解<a class="headerlink" href="#_110" title="Permanent link">&para;</a></h4>
+<h4 id="_111">详细题解<a class="headerlink" href="#_111" title="Permanent link">&para;</a></h4>
 <p>把初始腐烂位置全部加入队列，相当于多个起点同时传播，统计最开始的<strong>新鲜橘子数量</strong>。每处理一层表示过去一分钟；感染新鲜橘子时将其数量减一，结束后仍有新鲜橘子则返回 -1。</p>
 <h4 id="python_52">Python 实现<a class="headerlink" href="#python_52" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">deque</span>
@@ -5973,9 +6040,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/course-schedule/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">Hot 100 补充</span></p>
 </div>
-<h4 id="_111">快速复习<a class="headerlink" href="#_111" title="Permanent link">&para;</a></h4>
+<h4 id="_112">快速复习<a class="headerlink" href="#_112" title="Permanent link">&para;</a></h4>
 <p>课程依赖构成有向图；用 Kahn 拓扑排序，不断移除入度为 0 的节点。</p>
-<h4 id="_112">详细题解<a class="headerlink" href="#_112" title="Permanent link">&para;</a></h4>
+<h4 id="_113">详细题解<a class="headerlink" href="#_113" title="Permanent link">&para;</a></h4>
 <p>建立 <code>prerequisite → course</code> 的边并统计入度。队列从所有入度为 0 的课程开始，每学完一门就减少后继入度；最终访问数量等于课程总数说明无环。</p>
 <h4 id="python_53">Python 实现<a class="headerlink" href="#python_53" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">deque</span>
@@ -6008,9 +6075,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/implement-trie-prefix-tree/description/?envType=study-plan-v2&amp;envId=top-100-liked" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">本地补充实现</span></p>
 </div>
-<h4 id="_113">快速复习<a class="headerlink" href="#_113" title="Permanent link">&para;</a></h4>
+<h4 id="_114">快速复习<a class="headerlink" href="#_114" title="Permanent link">&para;</a></h4>
 <p>每个节点保存字符到子节点的映射（children:dict）和结束标记（is_word:bool）；插入、查词、查前缀都沿字符逐层走。</p>
-<h4 id="_114">详细题解<a class="headerlink" href="#_114" title="Permanent link">&para;</a></h4>
+<h4 id="_115">详细题解<a class="headerlink" href="#_115" title="Permanent link">&para;</a></h4>
 <ul>
 <li>用index来标识当前字母</li>
 </ul>
@@ -6132,9 +6199,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/permutations/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_115">快速复习<a class="headerlink" href="#_115" title="Permanent link">&para;</a></h4>
+<h4 id="_116">快速复习<a class="headerlink" href="#_116" title="Permanent link">&para;</a></h4>
 <p>组合用 startIndex，排列用 used；保存结果时复制 path；区分树层和树枝去重。</p>
-<h4 id="_116">详细题解<a class="headerlink" href="#_116" title="Permanent link">&para;</a></h4>
+<h4 id="_117">详细题解<a class="headerlink" href="#_117" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>思路：</strong> 把问题画成决策树：for 循环横向枚举选择，递归纵向进入下一层，返回后撤销选择。
 <div class="language-text highlight"><pre><span></span><code><span id="__span-61-1"><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a># 回溯流程
@@ -6182,9 +6249,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/subsets/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_117">快速复习<a class="headerlink" href="#_117" title="Permanent link">&para;</a></h4>
+<h4 id="_118">快速复习<a class="headerlink" href="#_118" title="Permanent link">&para;</a></h4>
 <p>如果把 子集问题、组合问题、分割问题都抽象为一棵树的话，那么组合问题和分割问题都是收集树的叶子节点，而子集问题是找树的所有节点</p>
-<h4 id="_118">详细题解<a class="headerlink" href="#_118" title="Permanent link">&para;</a></h4>
+<h4 id="_119">详细题解<a class="headerlink" href="#_119" title="Permanent link">&para;</a></h4>
 <p>如果把 子集问题、组合问题、分割问题都抽象为一棵树的话，<strong>那么组合问题和分割问题都是收集树的叶子节点，而子集问题是找树的所有节点！</strong></p>
 <p>组合问题需要去重，可通过startIndex控制</p>
 <h4 id="python_56">Python 实现<a class="headerlink" href="#python_56" title="Permanent link">&para;</a></h4>
@@ -6214,9 +6281,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/letter-combinations-of-a-phone-number/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_119">快速复习<a class="headerlink" href="#_119" title="Permanent link">&para;</a></h4>
+<h4 id="_120">快速复习<a class="headerlink" href="#_120" title="Permanent link">&para;</a></h4>
 <p>和之前类似，只不过for循环的列表是变化的</p>
-<h4 id="_120">详细题解<a class="headerlink" href="#_120" title="Permanent link">&para;</a></h4>
+<h4 id="_121">详细题解<a class="headerlink" href="#_121" title="Permanent link">&para;</a></h4>
 <p>和之前类似，只不过for循环的列表是变化的</p>
 <blockquote>
 <p><strong>补充思路：</strong> 把问题画成决策树：for 循环横向枚举选择，递归纵向进入下一层，返回后撤销选择。</p>
@@ -6257,9 +6324,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/combination-sum/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_121">快速复习<a class="headerlink" href="#_121" title="Permanent link">&para;</a></h4>
+<h4 id="_122">快速复习<a class="headerlink" href="#_122" title="Permanent link">&para;</a></h4>
 <p>区别是：本题没有数量要求，可以无限重复（startIndex可以不加1），但是有总和的限制，所以间接的也是有个数的限制</p>
-<h4 id="_122">详细题解<a class="headerlink" href="#_122" title="Permanent link">&para;</a></h4>
+<h4 id="_123">详细题解<a class="headerlink" href="#_123" title="Permanent link">&para;</a></h4>
 <p>区别是：本题没有数量要求，可以无限重复（startIndex可以不加1），但是有总和的限制，所以间接的也是有个数的限制</p>
 <h4 id="python_58">Python 实现<a class="headerlink" href="#python_58" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-65-1"><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -6285,9 +6352,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/generate-parentheses/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">Hot 100 补充</span></p>
 </div>
-<h4 id="_123">快速复习<a class="headerlink" href="#_123" title="Permanent link">&para;</a></h4>
+<h4 id="_124">快速复习<a class="headerlink" href="#_124" title="Permanent link">&para;</a></h4>
 <p>回溯维护已用左右括号数：左括号少于 <code>n</code> 可放左；右括号少于左括号才可放右。</p>
-<h4 id="_124">详细题解<a class="headerlink" href="#_124" title="Permanent link">&para;</a></h4>
+<h4 id="_125">详细题解<a class="headerlink" href="#_125" title="Permanent link">&para;</a></h4>
 <p><strong>任何合法前缀都满足右括号数量不超过左括号</strong>。递归长度达到 <code>2n</code> 时收集答案，这两个剪枝条件保证只生成合法序列。</p>
 <h4 id="python_59">Python 实现<a class="headerlink" href="#python_59" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-66-1"><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -6317,9 +6384,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/word-search/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">Hot 100 补充</span></p>
 </div>
-<h4 id="_125">快速复习<a class="headerlink" href="#_125" title="Permanent link">&para;</a></h4>
+<h4 id="_126">快速复习<a class="headerlink" href="#_126" title="Permanent link">&para;</a></h4>
 <p>从每个可能起点 DFS，匹配一个字符后临时标记当前位置，向四周继续并在返回时恢复。</p>
-<h4 id="_126">详细题解<a class="headerlink" href="#_126" title="Permanent link">&para;</a></h4>
+<h4 id="_127">详细题解<a class="headerlink" href="#_127" title="Permanent link">&para;</a></h4>
 <p>递归参数保存当前位置和待匹配下标。越界或字符不同立即失败；匹配完成立即成功。临时修改网格可以防止一条路径重复使用同一格，回溯后恢复。</p>
 <h4 id="python_60">Python 实现<a class="headerlink" href="#python_60" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-67-1"><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -6355,9 +6422,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/palindrome-partitioning/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_127">快速复习<a class="headerlink" href="#_127" title="Permanent link">&para;</a></h4>
+<h4 id="_128">快速复习<a class="headerlink" href="#_128" title="Permanent link">&para;</a></h4>
 <p>和组合类似，但只有当前是回文才进行递归 2. 复原IP地址</p>
-<h4 id="_128">详细题解<a class="headerlink" href="#_128" title="Permanent link">&para;</a></h4>
+<h4 id="_129">详细题解<a class="headerlink" href="#_129" title="Permanent link">&para;</a></h4>
 <p>和组合类似，但只有当前是回文才进行递归</p>
 <blockquote>
 <p><strong>补充思路：</strong> 把问题画成决策树：for 循环横向枚举选择，递归纵向进入下一层，返回后撤销选择。</p>
@@ -6394,9 +6461,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/n-queens/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_129">快速复习<a class="headerlink" href="#_129" title="Permanent link">&para;</a></h4>
+<h4 id="_130">快速复习<a class="headerlink" href="#_130" title="Permanent link">&para;</a></h4>
 <p>递归深度就是row控制棋盘的行，每一层里for循环的col控制棋盘的列</p>
-<h4 id="_130">详细题解<a class="headerlink" href="#_130" title="Permanent link">&para;</a></h4>
+<h4 id="_131">详细题解<a class="headerlink" href="#_131" title="Permanent link">&para;</a></h4>
 <p>递归深度就是row控制棋盘的行，每一层里for循环的col控制棋盘的列，一行一列，确定了放置皇后的位置。</p>
 <div class="language-text highlight"><pre><span></span><code>每次都是要从新的一行的起始位置开始搜，所以都是从0开始。
 </code></pre></div>
@@ -6497,10 +6564,10 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/search-insert-position/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">Hot 100 补充</span></p>
 </div>
-<h4 id="_131">快速复习<a class="headerlink" href="#_131" title="Permanent link">&para;</a></h4>
+<h4 id="_132">快速复习<a class="headerlink" href="#_132" title="Permanent link">&para;</a></h4>
 <p>标准左边界二分：寻找第一个大于等于 <code>target</code> 的位置。</p>
 <p>蓝红边界：大于等于 <code>target</code> 为红</p>
-<h4 id="_132">详细题解<a class="headerlink" href="#_132" title="Permanent link">&para;</a></h4>
+<h4 id="_133">详细题解<a class="headerlink" href="#_133" title="Permanent link">&para;</a></h4>
 <p>使用左闭右开区间 <code>[left,right)</code>。中间值小于目标时排除左半边，否则保留中点并收缩右边界；循环结束的 <code>left</code> 同时是命中位置或插入位置。</p>
 <h4 id="python_63">Python 实现<a class="headerlink" href="#python_63" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-70-1"><a id="__codelineno-70-1" name="__codelineno-70-1" href="#__codelineno-70-1"></a><span class="c1"># 左边界二分</span>
@@ -6535,9 +6602,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/search-a-2d-matrix/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">Hot 100 补充</span></p>
 </div>
-<h4 id="_133">快速复习<a class="headerlink" href="#_133" title="Permanent link">&para;</a></h4>
+<h4 id="_134">快速复习<a class="headerlink" href="#_134" title="Permanent link">&para;</a></h4>
 <p>把矩阵视作长度 <code>m*n</code> 的有序数组，使用 <code>row = mid // n</code>、<code>col = mid % n</code> 映射。</p>
-<h4 id="_134">详细题解<a class="headerlink" href="#_134" title="Permanent link">&para;</a></h4>
+<h4 id="_135">详细题解<a class="headerlink" href="#_135" title="Permanent link">&para;</a></h4>
 <p>由于每行有序且下一行首元素大于上一行尾元素，按行展开后整体有序。无需真的展开数组，二分时通过除法和取模读取对应元素。</p>
 <h4 id="python_64">Python 实现<a class="headerlink" href="#python_64" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-71-1"><a id="__codelineno-71-1" name="__codelineno-71-1" href="#__codelineno-71-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -6578,9 +6645,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">Hot 100 补充</span></p>
 </div>
-<h4 id="_135">快速复习<a class="headerlink" href="#_135" title="Permanent link">&para;</a></h4>
+<h4 id="_136">快速复习<a class="headerlink" href="#_136" title="Permanent link">&para;</a></h4>
 <p>分别寻找 <code>target</code> 和 <code>target + 1</code> 的左边界，答案为 <code>[left(target), left(target+1)-1]</code>。</p>
-<h4 id="_136">详细题解<a class="headerlink" href="#_136" title="Permanent link">&para;</a></h4>
+<h4 id="_137">详细题解<a class="headerlink" href="#_137" title="Permanent link">&para;</a></h4>
 <p>通用 <code>lower_bound</code> 返回第一个大于等于给定值的位置。先确认第一个边界确实命中目标，再用第一个大于目标的位置减一得到右边界。</p>
 <h4 id="python_65">Python 实现<a class="headerlink" href="#python_65" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-72-1"><a id="__codelineno-72-1" name="__codelineno-72-1" href="#__codelineno-72-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -6630,9 +6697,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/search-in-rotated-sorted-array/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">本地补充实现</span></p>
 </div>
-<h4 id="_137">快速复习<a class="headerlink" href="#_137" title="Permanent link">&para;</a></h4>
+<h4 id="_138">快速复习<a class="headerlink" href="#_138" title="Permanent link">&para;</a></h4>
 <p>每轮判断哪一半有序，再检查 target 是否落在有序半区；所有比较使用一致的闭区间。</p>
-<h4 id="_138">详细题解<a class="headerlink" href="#_138" title="Permanent link">&para;</a></h4>
+<h4 id="_139">详细题解<a class="headerlink" href="#_139" title="Permanent link">&para;</a></h4>
 <ul>
 <li>在判定左边是否有序时用的是≤，这样才能保证else分支中一定是右边有序。否则当left=mid时会有问题。如数组为[3,1]</li>
 </ul>
@@ -6663,9 +6730,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/find-minimum-in-rotated-sorted-array/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">Hot 100 补充</span></p>
 </div>
-<h4 id="_139">快速复习<a class="headerlink" href="#_139" title="Permanent link">&para;</a></h4>
+<h4 id="_140">快速复习<a class="headerlink" href="#_140" title="Permanent link">&para;</a></h4>
 <p>比较中点与右端点：中点更大说明最小值在右侧，否则最小值在含中点的左侧。</p>
-<h4 id="_140">详细题解<a class="headerlink" href="#_140" title="Permanent link">&para;</a></h4>
+<h4 id="_141">详细题解<a class="headerlink" href="#_141" title="Permanent link">&para;</a></h4>
 <p>保持最小值位于闭区间 <code>[left,right]</code>。当 <code>nums[mid] &gt; nums[right]</code> 时中点仍在左侧递增段，令 <code>left=mid+1</code>；否则令 <code>right=mid</code>。</p>
 <h4 id="python_67">Python 实现<a class="headerlink" href="#python_67" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-74-1"><a id="__codelineno-74-1" name="__codelineno-74-1" href="#__codelineno-74-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -6689,9 +6756,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/median-of-two-sorted-arrays/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">本地补充实现</span></p>
 </div>
-<h4 id="_141">快速复习<a class="headerlink" href="#_141" title="Permanent link">&para;</a></h4>
+<h4 id="_142">快速复习<a class="headerlink" href="#_142" title="Permanent link">&para;</a></h4>
 <p>把中位数转成寻找第 k 小；每轮排除一个数组中不可能包含答案的前 k/2 个元素。</p>
-<h4 id="_142">详细题解<a class="headerlink" href="#_142" title="Permanent link">&para;</a></h4>
+<h4 id="_143">详细题解<a class="headerlink" href="#_143" title="Permanent link">&para;</a></h4>
 <ul>
 <li>抓住寻找第k个元素的方法（比较或索引时采用的是闭区间）</li>
 <li>每次增加 k//2-1</li>
@@ -6779,9 +6846,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/valid-parentheses/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_143">快速复习<a class="headerlink" href="#_143" title="Permanent link">&para;</a></h4>
+<h4 id="_144">快速复习<a class="headerlink" href="#_144" title="Permanent link">&para;</a></h4>
 <p>可以用一个dict辅助实现</p>
-<h4 id="_144">详细题解<a class="headerlink" href="#_144" title="Permanent link">&para;</a></h4>
+<h4 id="_145">详细题解<a class="headerlink" href="#_145" title="Permanent link">&para;</a></h4>
 <p>可以用一个dict辅助实现</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-76-1"><a id="__codelineno-76-1" name="__codelineno-76-1" href="#__codelineno-76-1"></a><span class="n">s_map</span> <span class="o">=</span> <span class="p">{</span>
 </span><span id="__span-76-2"><a id="__codelineno-76-2" name="__codelineno-76-2" href="#__codelineno-76-2"></a>    <span class="s1">'('</span><span class="p">:</span> <span class="s1">')'</span><span class="p">,</span>
@@ -6822,9 +6889,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/min-stack/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">本地补充实现</span></p>
 </div>
-<h4 id="_145">快速复习<a class="headerlink" href="#_145" title="Permanent link">&para;</a></h4>
+<h4 id="_146">快速复习<a class="headerlink" href="#_146" title="Permanent link">&para;</a></h4>
 <p>数据栈与最小值栈同步进出；辅助栈顶始终是当前所有元素的最小值。</p>
-<h4 id="_146">详细题解<a class="headerlink" href="#_146" title="Permanent link">&para;</a></h4>
+<h4 id="_147">详细题解<a class="headerlink" href="#_147" title="Permanent link">&para;</a></h4>
 <ul>
 <li>因此我们可以使用一个辅助栈，与元素栈同步插入与删除，用于存储与每个元素最为栈顶的栈的最小值</li>
 </ul>
@@ -6858,9 +6925,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/decode-string/description/?envType=study-plan-v2&amp;envId=top-100-liked" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">本地补充实现</span></p>
 </div>
-<h4 id="_147">快速复习<a class="headerlink" href="#_147" title="Permanent link">&para;</a></h4>
+<h4 id="_148">快速复习<a class="headerlink" href="#_148" title="Permanent link">&para;</a></h4>
 <p>遇到 <code>[</code> 时保存外层字符串和重复次数，遇到 <code>]</code> 时弹栈并完成一层拼接。</p>
-<h4 id="_148">详细题解<a class="headerlink" href="#_148" title="Permanent link">&para;</a></h4>
+<h4 id="_149">详细题解<a class="headerlink" href="#_149" title="Permanent link">&para;</a></h4>
 <ul>
 <li>每次入栈的元素：<code>(当前生成的字符串，下一个模式串的个数)</code></li>
 </ul>
@@ -6896,9 +6963,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/daily-temperatures/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_149">快速复习<a class="headerlink" href="#_149" title="Permanent link">&para;</a></h4>
+<h4 id="_150">快速复习<a class="headerlink" href="#_150" title="Permanent link">&para;</a></h4>
 <p>栈中存下标，保证栈中元素递减：如果大于栈中下标对应的元素，则一直出栈；最后加入当前下标。</p>
-<h4 id="_150">详细题解<a class="headerlink" href="#_150" title="Permanent link">&para;</a></h4>
+<h4 id="_151">详细题解<a class="headerlink" href="#_151" title="Permanent link">&para;</a></h4>
 <p>栈中存下标，保证栈中元素递减：如果大于栈中下标对应的元素，则一直出栈；最后加入当前下标。</p>
 <p><img alt="每日温度" src="assets/%E6%AF%8F%E6%97%A5%E6%B8%A9%E5%BA%A6.png" /></p>
 <h4 id="python_72">Python 实现<a class="headerlink" href="#python_72" title="Permanent link">&para;</a></h4>
@@ -6923,9 +6990,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/largest-rectangle-in-histogram/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_151">快速复习<a class="headerlink" href="#_151" title="Permanent link">&para;</a></h4>
+<h4 id="_152">快速复习<a class="headerlink" href="#_152" title="Permanent link">&para;</a></h4>
 <p>和 接雨水 类似，需要在头尾加上0，避免遗漏边界情况</p>
-<h4 id="_152">详细题解<a class="headerlink" href="#_152" title="Permanent link">&para;</a></h4>
+<h4 id="_153">详细题解<a class="headerlink" href="#_153" title="Permanent link">&para;</a></h4>
 <p>和<a href="#problem-trapping-rain-water"><strong>接雨水</strong></a>类似，需要在头尾加上 0，避免遗漏边界情况。</p>
 <ul>
 <li>接雨水是为了形成凹槽，所以单调栈要递减</li>
@@ -7110,9 +7177,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/kth-largest-element-in-an-array/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">Hot 100 补充</span></p>
 </div>
-<h4 id="_153">快速复习<a class="headerlink" href="#_153" title="Permanent link">&para;</a></h4>
+<h4 id="_154">快速复习<a class="headerlink" href="#_154" title="Permanent link">&para;</a></h4>
 <p>维护大小为 <code>k</code> 的小顶堆；堆顶始终是当前见过的第 k 大候选。</p>
-<h4 id="_154">详细题解<a class="headerlink" href="#_154" title="Permanent link">&para;</a></h4>
+<h4 id="_155">详细题解<a class="headerlink" href="#_155" title="Permanent link">&para;</a></h4>
 <p>逐个入堆，堆大小超过 <code>k</code> 时弹出最小值。扫描结束后堆中保留最大的 <code>k</code> 个元素，堆顶就是第 <code>k</code> 大，复杂度 O(n log k)。</p>
 <h4 id="python_74">Python 实现<a class="headerlink" href="#python_74" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-84-1"><a id="__codelineno-84-1" name="__codelineno-84-1" href="#__codelineno-84-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">heapq</span>
@@ -7136,9 +7203,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/top-k-frequent-elements/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_155">快速复习<a class="headerlink" href="#_155" title="Permanent link">&para;</a></h4>
+<h4 id="_156">快速复习<a class="headerlink" href="#_156" title="Permanent link">&para;</a></h4>
 <p>先计数，再维护大小为 k 的小根堆；堆顶始终是当前候选中频率最低者。</p>
-<h4 id="_156">详细题解<a class="headerlink" href="#_156" title="Permanent link">&para;</a></h4>
+<h4 id="_157">详细题解<a class="headerlink" href="#_157" title="Permanent link">&para;</a></h4>
 <p>题目本身不难，可以学习一下小根堆的用法</p>
 <ul>
 <li>新增题目</li>
@@ -7173,9 +7240,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/find-median-from-data-stream/?envType=study-plan-v2&amp;envId=top-100-liked" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">本地补充实现</span></p>
 </div>
-<h4 id="_157">快速复习<a class="headerlink" href="#_157" title="Permanent link">&para;</a></h4>
+<h4 id="_158">快速复习<a class="headerlink" href="#_158" title="Permanent link">&para;</a></h4>
 <p>最大堆保存较小一半，最小堆保存较大一半，并维持数量差不超过 1。</p>
-<h4 id="_158">详细题解<a class="headerlink" href="#_158" title="Permanent link">&para;</a></h4>
+<h4 id="_159">详细题解<a class="headerlink" href="#_159" title="Permanent link">&para;</a></h4>
 <ul>
 <li>用两个优先队列</li>
 </ul>
@@ -7254,7 +7321,7 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_159">快速复习<a class="headerlink" href="#_159" title="Permanent link">&para;</a></h4>
+<h4 id="_160">快速复习<a class="headerlink" href="#_160" title="Permanent link">&para;</a></h4>
 <p>方法1：贪心</p>
 <p>记录历史低点，逐步算当前卖最多能赚多少</p>
 <p>方法2：动态规划
@@ -7263,7 +7330,7 @@
     - dp[i][0] = max(dp[i-1][0], -prices[i])：保持原本持有或重新买入 
 - dp[i][1] 表示第i天不持有股票所得最多现金 
     - dp[i][1] = max(dp[i-1][1], dp[i-1][0]+prices[i])：保持原本不持有或卖出 </p>
-<h4 id="_160">详细题解<a class="headerlink" href="#_160" title="Permanent link">&para;</a></h4>
+<h4 id="_161">详细题解<a class="headerlink" href="#_161" title="Permanent link">&para;</a></h4>
 <p>只买卖一次</p>
 <div class="language-text highlight"><pre><span></span><code>- dp[i][0] 表示第i天持有股票所得最多现金
     - `dp[i][0] = max(dp[i-1][0], -prices[i])`：保持原本持有或重新买入
@@ -7290,12 +7357,12 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/jump-game/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_161">快速复习<a class="headerlink" href="#_161" title="Permanent link">&para;</a></h4>
+<h4 id="_162">快速复习<a class="headerlink" href="#_162" title="Permanent link">&para;</a></h4>
 <ul>
 <li>局部最优：每次取最大跳跃步数（取最大覆盖范围） </li>
 <li>全局最优：最后得到整体最大覆盖范围，看是否能到终点</li>
 </ul>
-<h4 id="_162">详细题解<a class="headerlink" href="#_162" title="Permanent link">&para;</a></h4>
+<h4 id="_163">详细题解<a class="headerlink" href="#_163" title="Permanent link">&para;</a></h4>
 <p>略</p>
 <h4 id="python_78">Python 实现<a class="headerlink" href="#python_78" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-88-1"><a id="__codelineno-88-1" name="__codelineno-88-1" href="#__codelineno-88-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -7319,9 +7386,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/jump-game-ii/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_163">快速复习<a class="headerlink" href="#_163" title="Permanent link">&para;</a></h4>
+<h4 id="_164">快速复习<a class="headerlink" href="#_164" title="Permanent link">&para;</a></h4>
 <p>这里需要统计两个覆盖范围，当前这一步的最大覆盖和下一步最大覆盖</p>
-<h4 id="_164">详细题解<a class="headerlink" href="#_164" title="Permanent link">&para;</a></h4>
+<h4 id="_165">详细题解<a class="headerlink" href="#_165" title="Permanent link">&para;</a></h4>
 <p>遍历时不断更新下一步的最大覆盖，直至当前步的覆盖范围完成，随后更新当前步的最大覆盖</p>
 <h4 id="python_79">Python 实现<a class="headerlink" href="#python_79" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-89-1"><a id="__codelineno-89-1" name="__codelineno-89-1" href="#__codelineno-89-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -7349,9 +7416,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/partition-labels/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_165">快速复习<a class="headerlink" href="#_165" title="Permanent link">&para;</a></h4>
+<h4 id="_166">快速复习<a class="headerlink" href="#_166" title="Permanent link">&para;</a></h4>
 <p>预处理每个字符最后位置，扫描时维护当前片段最远边界，到达边界即可切分。</p>
-<h4 id="_166">详细题解<a class="headerlink" href="#_166" title="Permanent link">&para;</a></h4>
+<h4 id="_167">详细题解<a class="headerlink" href="#_167" title="Permanent link">&para;</a></h4>
 <p><img alt="划分字母区间" src="assets/%E5%88%92%E5%88%86%E5%AD%97%E6%AF%8D%E5%8C%BA%E9%97%B4.png" />
 在遍历的过程中相当于是要找每一个字母的边界，<strong>如果找到之前遍历过的所有字母的最远边界，说明这个边界就是分割点了</strong></p>
 <h4 id="python_80">Python 实现<a class="headerlink" href="#python_80" title="Permanent link">&para;</a></h4>
@@ -7455,9 +7522,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/climbing-stairs/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_167">快速复习<a class="headerlink" href="#_167" title="Permanent link">&para;</a></h4>
+<h4 id="_168">快速复习<a class="headerlink" href="#_168" title="Permanent link">&para;</a></h4>
 <p>使用动态规划而不是递归，不然会超时</p>
-<h4 id="_168">详细题解<a class="headerlink" href="#_168" title="Permanent link">&para;</a></h4>
+<h4 id="_169">详细题解<a class="headerlink" href="#_169" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>补充思路：</strong> 依次明确 dp 含义、递推关系、初始化、遍历顺序和返回位置，再考虑空间压缩。</p>
 </blockquote>
@@ -7484,9 +7551,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/pascals-triangle/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">Hot 100 补充</span></p>
 </div>
-<h4 id="_169">快速复习<a class="headerlink" href="#_169" title="Permanent link">&para;</a></h4>
+<h4 id="_170">快速复习<a class="headerlink" href="#_170" title="Permanent link">&para;</a></h4>
 <p>每行首尾为 1，中间元素等于上一行相邻两个元素之和。</p>
-<h4 id="_170">详细题解<a class="headerlink" href="#_170" title="Permanent link">&para;</a></h4>
+<h4 id="_171">详细题解<a class="headerlink" href="#_171" title="Permanent link">&para;</a></h4>
 <p>从空结果开始逐行构造。第 <code>row</code> 行长度为 <code>row+1</code>，只需填写下标 <code>1..row-1</code> 的内部元素，然后加入结果。</p>
 <h4 id="python_82">Python 实现<a class="headerlink" href="#python_82" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-92-1"><a id="__codelineno-92-1" name="__codelineno-92-1" href="#__codelineno-92-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -7509,9 +7576,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/house-robber/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_171">快速复习<a class="headerlink" href="#_171" title="Permanent link">&para;</a></h4>
+<h4 id="_172">快速复习<a class="headerlink" href="#_172" title="Permanent link">&para;</a></h4>
 <p><code>dp[i] = max(dp[i - 2] + nums[i], dp[i - 1])</code></p>
-<h4 id="_172">详细题解<a class="headerlink" href="#_172" title="Permanent link">&para;</a></h4>
+<h4 id="_173">详细题解<a class="headerlink" href="#_173" title="Permanent link">&para;</a></h4>
 <p><strong>dp[i]：考虑下标i（包括i）以内的房屋，最多可以偷窃的金额为dp[i]</strong></p>
 <p><code>dp[i] = max(dp[i - 2] + nums[i], dp[i - 1])</code></p>
 <ul>
@@ -7563,9 +7630,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/perfect-squares/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_173">快速复习<a class="headerlink" href="#_173" title="Permanent link">&para;</a></h4>
+<h4 id="_174">快速复习<a class="headerlink" href="#_174" title="Permanent link">&para;</a></h4>
 <p>完全背包问题</p>
-<h4 id="_174">详细题解<a class="headerlink" href="#_174" title="Permanent link">&para;</a></h4>
+<h4 id="_175">详细题解<a class="headerlink" href="#_175" title="Permanent link">&para;</a></h4>
 <p>背包问题：</p>
 <ul>
 <li>二维递归公式：<code>dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - weight[i]] + value[i])</code></li>
@@ -7600,9 +7667,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/coin-change/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_175">快速复习<a class="headerlink" href="#_175" title="Permanent link">&para;</a></h4>
+<h4 id="_176">快速复习<a class="headerlink" href="#_176" title="Permanent link">&para;</a></h4>
 <p>完全背包问题</p>
-<h4 id="_176">详细题解<a class="headerlink" href="#_176" title="Permanent link">&para;</a></h4>
+<h4 id="_177">详细题解<a class="headerlink" href="#_177" title="Permanent link">&para;</a></h4>
 <p>完全背包问题</p>
 <h4 id="python_85">Python 实现<a class="headerlink" href="#python_85" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-96-1"><a id="__codelineno-96-1" name="__codelineno-96-1" href="#__codelineno-96-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -7627,9 +7694,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/word-break/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_177">快速复习<a class="headerlink" href="#_177" title="Permanent link">&para;</a></h4>
+<h4 id="_178">快速复习<a class="headerlink" href="#_178" title="Permanent link">&para;</a></h4>
 <p>dp[i] : 字符串长度为i的话，dp[i]为true，表示可以拆分为一个或多个在字典中出现的单词</p>
-<h4 id="_178">详细题解<a class="headerlink" href="#_178" title="Permanent link">&para;</a></h4>
+<h4 id="_179">详细题解<a class="headerlink" href="#_179" title="Permanent link">&para;</a></h4>
 <p><strong>dp[i] : 字符串长度为i的话，dp[i]为true，表示可以拆分为一个或多个在字典中出现的单词</strong>。</p>
 <p><code>dp[j] = dp[j] or (dp[j - word] and s[j-len(word):j] == word)</code></p>
 <h4 id="python_86">Python 实现<a class="headerlink" href="#python_86" title="Permanent link">&para;</a></h4>
@@ -7655,11 +7722,11 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/longest-increasing-subsequence/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_179">快速复习<a class="headerlink" href="#_179" title="Permanent link">&para;</a></h4>
+<h4 id="_180">快速复习<a class="headerlink" href="#_180" title="Permanent link">&para;</a></h4>
 <p>dp[i]表示i之前包括i的以nums[i]结尾的最长递增子序列的长度 </p>
 <p>位置i的最长升序子序列等于j从0到i-1各个位置的最长升序子序列 + 1 的最大值；（每个i都要遍历自身之前的数） </p>
 <p>所以：<code>if (nums[i] &gt; nums[j]) dp[i] = max(dp[i], dp[j] + 1)</code></p>
-<h4 id="_180">详细题解<a class="headerlink" href="#_180" title="Permanent link">&para;</a></h4>
+<h4 id="_181">详细题解<a class="headerlink" href="#_181" title="Permanent link">&para;</a></h4>
 <p><strong>dp[i]表示i之前包括i的以nums[i]结尾的最长递增子序列的长度</strong></p>
 <div class="language-text highlight"><pre><span></span><code>位置i的最长升序子序列等于j从0到i-1各个位置的最长升序子序列 + 1 的最大值。（每个i都要遍历自身之前的数）
 
@@ -7689,9 +7756,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/maximum-product-subarray/description/?envType=study-plan-v2&amp;envId=top-100-liked" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">本地补充实现</span></p>
 </div>
-<h4 id="_181">快速复习<a class="headerlink" href="#_181" title="Permanent link">&para;</a></h4>
+<h4 id="_182">快速复习<a class="headerlink" href="#_182" title="Permanent link">&para;</a></h4>
 <p>负数会交换最大与最小的角色，因此同时维护以当前位置结尾的最大积和最小积。</p>
-<h4 id="_182">详细题解<a class="headerlink" href="#_182" title="Permanent link">&para;</a></h4>
+<h4 id="_183">详细题解<a class="headerlink" href="#_183" title="Permanent link">&para;</a></h4>
 <ul>
 <li>用两个dp（最大和最小，因为可能有负数）</li>
 <li>和最大子数组和类似，不过这里需要考虑负数的情况</li>
@@ -7718,9 +7785,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/partition-equal-subset-sum/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_183">快速复习<a class="headerlink" href="#_183" title="Permanent link">&para;</a></h4>
+<h4 id="_184">快速复习<a class="headerlink" href="#_184" title="Permanent link">&para;</a></h4>
 <p>总和必须为偶数；把问题转为容量 sum/2 的 0-1 背包，容量倒序遍历。</p>
-<h4 id="_184">详细题解<a class="headerlink" href="#_184" title="Permanent link">&para;</a></h4>
+<h4 id="_185">详细题解<a class="headerlink" href="#_185" title="Permanent link">&para;</a></h4>
 <p>只要找到集合里能够出现 sum / 2 的子集总和，就算是可以分割成两个相同元素和子集了。</p>
 <h4 id="python_89">Python 实现<a class="headerlink" href="#python_89" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-100-1"><a id="__codelineno-100-1" name="__codelineno-100-1" href="#__codelineno-100-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -7744,10 +7811,10 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/longest-valid-parentheses/description/?envType=study-plan-v2&amp;envId=top-100-liked" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">本地补充实现</span></p>
 </div>
-<h4 id="_185">快速复习<a class="headerlink" href="#_185" title="Permanent link">&para;</a></h4>
+<h4 id="_186">快速复习<a class="headerlink" href="#_186" title="Permanent link">&para;</a></h4>
 <p>可以采用动态规划或栈，这里用栈比较容易理解。</p>
 <p>关键：以「最后一个没有被匹配的右括号的下标」作为哨兵</p>
-<h4 id="_186">详细题解<a class="headerlink" href="#_186" title="Permanent link">&para;</a></h4>
+<h4 id="_187">详细题解<a class="headerlink" href="#_187" title="Permanent link">&para;</a></h4>
 <ul>
 <li>使用栈来操作</li>
 <li>始终保持栈底元素为当前已经遍历过的元素中「最后一个没有被匹配的右括号的下标」<ul>
@@ -7830,9 +7897,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/unique-paths/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_187">快速复习<a class="headerlink" href="#_187" title="Permanent link">&para;</a></h4>
+<h4 id="_188">快速复习<a class="headerlink" href="#_188" title="Permanent link">&para;</a></h4>
 <p>略</p>
-<h4 id="_188">详细题解<a class="headerlink" href="#_188" title="Permanent link">&para;</a></h4>
+<h4 id="_189">详细题解<a class="headerlink" href="#_189" title="Permanent link">&para;</a></h4>
 <p><code>dp[i][j] = dp[i-1][j] + dp[i][j-1]</code></p>
 <h4 id="python_91">Python 实现<a class="headerlink" href="#python_91" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-102-1"><a id="__codelineno-102-1" name="__codelineno-102-1" href="#__codelineno-102-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -7857,9 +7924,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/minimum-path-sum/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">Hot 100 补充</span></p>
 </div>
-<h4 id="_189">快速复习<a class="headerlink" href="#_189" title="Permanent link">&para;</a></h4>
+<h4 id="_190">快速复习<a class="headerlink" href="#_190" title="Permanent link">&para;</a></h4>
 <p>略</p>
-<h4 id="_190">详细题解<a class="headerlink" href="#_190" title="Permanent link">&para;</a></h4>
+<h4 id="_191">详细题解<a class="headerlink" href="#_191" title="Permanent link">&para;</a></h4>
 <p><code>dp[i][j] = min(dp[i-1][j], dp[i][j-1]) + grid[i][j]</code></p>
 <h4 id="python_92">Python 实现<a class="headerlink" href="#python_92" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-103-1"><a id="__codelineno-103-1" name="__codelineno-103-1" href="#__codelineno-103-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -7887,9 +7954,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/longest-palindromic-substring/description/?envType=study-plan-v2&amp;envId=top-100-liked" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_191">快速复习<a class="headerlink" href="#_191" title="Permanent link">&para;</a></h4>
+<h4 id="_192">快速复习<a class="headerlink" href="#_192" title="Permanent link">&para;</a></h4>
 <p>dp[i][j]：字符串s在[i, j]范围内是不是回文</p>
-<h4 id="_192">详细题解<a class="headerlink" href="#_192" title="Permanent link">&para;</a></h4>
+<h4 id="_193">详细题解<a class="headerlink" href="#_193" title="Permanent link">&para;</a></h4>
 <p><strong>dp[i][j]：字符串s在[i, j]范围内是不是回文</strong>。</p>
 <ul>
 <li><code>dp[i][j] = dp[i+1][j-1] and s[i] == s[j]</code></li>
@@ -7921,7 +7988,7 @@
 </span><span id="__span-104-23"><a id="__codelineno-104-23" name="__codelineno-104-23" href="#__codelineno-104-23"></a>        <span class="k">return</span> <span class="n">max_ans</span>
 </span></code></pre></div>
 <hr />
-<h3 id="problem-longest-common-subsequence">1143. 最长公共子序列<a class="headerlink" href="#problem-longest-common-subsequence" title="Permanent link">&para;</a></h3>
+<h3 id="problem-longest-common-subsequence">1143. 最长公共子序列⭐<a class="headerlink" href="#problem-longest-common-subsequence" title="Permanent link">&para;</a></h3>
 <blockquote>
 <p>原专题章节未发布，本页保留完整题解。</p>
 </blockquote>
@@ -7930,9 +7997,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/longest-common-subsequence/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_193">快速复习<a class="headerlink" href="#_193" title="Permanent link">&para;</a></h4>
+<h4 id="_194">快速复习<a class="headerlink" href="#_194" title="Permanent link">&para;</a></h4>
 <p>这里要求的是序列，所以如果nums1[i-1]与nums2[i-1]不相等时也要更新，取二者较大值</p>
-<h4 id="_194">详细题解<a class="headerlink" href="#_194" title="Permanent link">&para;</a></h4>
+<h4 id="_195">详细题解<a class="headerlink" href="#_195" title="Permanent link">&para;</a></h4>
 <p>这里要求的是序列，所以如果nums1[i-1]与nums2[i-1]不相等时也要更新，取二者较大值
 <strong>dp[i][j]：长度为i的串1与长度为j的串2 的最长公共子序列</strong>。</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-105-1"><a id="__codelineno-105-1" name="__codelineno-105-1" href="#__codelineno-105-1"></a><span class="k">if</span> <span class="n">nums1</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">nums2</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
@@ -7969,9 +8036,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/edit-distance/description/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_195">快速复习<a class="headerlink" href="#_195" title="Permanent link">&para;</a></h4>
+<h4 id="_196">快速复习<a class="headerlink" href="#_196" title="Permanent link">&para;</a></h4>
 <p>dp[i][j] 表示长度分别为i和j两个前缀的最少操作；末字符不同时从删、增、替换三种来源取最小值加一。</p>
-<h4 id="_196">详细题解<a class="headerlink" href="#_196" title="Permanent link">&para;</a></h4>
+<h4 id="_197">详细题解<a class="headerlink" href="#_197" title="Permanent link">&para;</a></h4>
 <p>之前的题目都只有删除操作，这里多了插入和替换操作，替换操作倒是容易实现，但插入却不行，总不能动态变化dp数组长度吧。</p>
 <p>实际上对word1插入相当于对word2删除：题目要求对word1操作多次使其变为word2，但其实这些操作都是可逆的，例如对word1替换相当于对word2替换，对word1删除相当于对word2插入，对word1插入相当于对word2删除。因此在遇到需要对word1插入时，我们可以将其转化为对word2删除，从而规避掉插入操作。</p>
 <p>注意边界情况：如<code>dp[i][0] = i</code>，表示对word1删除i次就变为空串，这样就和word2一样了</p>
@@ -8044,9 +8111,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/single-number/description/?envType=study-plan-v2&amp;envId=top-100-liked" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">本地补充实现</span></p>
 </div>
-<h4 id="_197">快速复习<a class="headerlink" href="#_197" title="Permanent link">&para;</a></h4>
+<h4 id="_198">快速复习<a class="headerlink" href="#_198" title="Permanent link">&para;</a></h4>
 <p>相同数异或为 0，0 与任意数异或不变；把所有元素异或后只剩唯一值。</p>
-<h4 id="_198">详细题解<a class="headerlink" href="#_198" title="Permanent link">&para;</a></h4>
+<h4 id="_199">详细题解<a class="headerlink" href="#_199" title="Permanent link">&para;</a></h4>
 <ul>
 <li>基于异或的交换律和结合律</li>
 </ul>
@@ -8068,9 +8135,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/majority-element/solutions/146074/duo-shu-yuan-su-by-leetcode-solution/?envType=study-plan-v2&amp;envId=top-100-liked" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">本地补充实现</span></p>
 </div>
-<h4 id="_199">快速复习<a class="headerlink" href="#_199" title="Permanent link">&para;</a></h4>
+<h4 id="_200">快速复习<a class="headerlink" href="#_200" title="Permanent link">&para;</a></h4>
 <p>Boyer-Moore 抵消法：不同元素两两抵消，超过一半的候选最终不会被完全抵消。</p>
-<h4 id="_200">详细题解<a class="headerlink" href="#_200" title="Permanent link">&para;</a></h4>
+<h4 id="_201">详细题解<a class="headerlink" href="#_201" title="Permanent link">&para;</a></h4>
 <p>Boyer-Moore 投票把当前候选人的票数记为 <code>count</code>。遇到相同元素就加一，遇到不同元素就减一；当票数归零时，说明此前元素已经两两抵消，可以从当前位置重新选择候选人。题目保证多数元素存在，因此最后留下的候选人就是答案。</p>
 <h4 id="python_97">Python 实现<a class="headerlink" href="#python_97" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-109-1"><a id="__codelineno-109-1" name="__codelineno-109-1" href="#__codelineno-109-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -8092,12 +8159,12 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/sort-colors/" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">Hot 100 补充</span></p>
 </div>
-<h4 id="_201">快速复习<a class="headerlink" href="#_201" title="Permanent link">&para;</a></h4>
+<h4 id="_202">快速复习<a class="headerlink" href="#_202" title="Permanent link">&para;</a></h4>
 <p>方法一：
 先记录每个数的个数，后续直接填充
 方法二：
 荷兰国旗三指针：<code>left</code> 后放 0，<code>right</code> 前放 2，<code>current</code> 扫描未知区域。</p>
-<h4 id="_202">详细题解<a class="headerlink" href="#_202" title="Permanent link">&para;</a></h4>
+<h4 id="_203">详细题解<a class="headerlink" href="#_203" title="Permanent link">&para;</a></h4>
 <p>方法二：
 遇到 0 与左边界交换并同时推进 <code>left/current</code>；遇到 2 与右边界交换，只收缩 <code>right</code>，因为换来的元素尚未检查；遇到 1 直接前进。</p>
 <h4 id="python_98">Python 实现<a class="headerlink" href="#python_98" title="Permanent link">&para;</a></h4>
@@ -8147,9 +8214,9 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/next-permutation/description/?envType=study-plan-v2&amp;envId=top-100-liked" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">代码随想录</span></p>
 </div>
-<h4 id="_203">快速复习<a class="headerlink" href="#_203" title="Permanent link">&para;</a></h4>
+<h4 id="_204">快速复习<a class="headerlink" href="#_204" title="Permanent link">&para;</a></h4>
 <p>从右找下降转折点，交换右侧最小的大值，再反转后缀得到刚好更大的排列。</p>
-<h4 id="_204">详细题解<a class="headerlink" href="#_204" title="Permanent link">&para;</a></h4>
+<h4 id="_205">详细题解<a class="headerlink" href="#_205" title="Permanent link">&para;</a></h4>
 <p><img alt="下一个排列" src="assets/%E4%B8%8B%E4%B8%80%E4%B8%AA%E6%8E%92%E5%88%97.png" /></p>
 <h4 id="python_99">Python 实现<a class="headerlink" href="#python_99" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-111-1"><a id="__codelineno-111-1" name="__codelineno-111-1" href="#__codelineno-111-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
@@ -8185,10 +8252,10 @@
 <a class="md-button md-button--primary" href="https://leetcode.cn/problems/find-the-duplicate-number/description/?envType=study-plan-v2&amp;envId=top-100-liked" rel="noopener" target="_blank">打开原题 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
 <span class="difficulty difficulty--unknown">本地补充实现</span></p>
 </div>
-<h4 id="_205">快速复习<a class="headerlink" href="#_205" title="Permanent link">&para;</a></h4>
+<h4 id="_206">快速复习<a class="headerlink" href="#_206" title="Permanent link">&para;</a></h4>
 <p>方法1：讲数字置为负数来标记
 方法2：把下标当作节点，下标到数值看作链表指针，重复值对应环入口，用 Floyd 快慢指针定位（<a href="https://leetcode.cn/problems/linked-list-cycle/">环形链表</a>）。</p>
-<h4 id="_206">详细题解<a class="headerlink" href="#_206" title="Permanent link">&para;</a></h4>
+<h4 id="_207">详细题解<a class="headerlink" href="#_207" title="Permanent link">&para;</a></h4>
 <p>负数标记法利用数值对应的下标记录元素是否出现过，但会修改原数组。Floyd 方法则把 <code>i -&gt; nums[i]</code> 看成链表中的指针：重复数字会让这张映射图形成环，先用快慢指针找到环内相遇点，再让一个指针从起点出发，两者同步前进，最终相遇的位置就是环入口，也就是重复数。</p>
 <h4 id="python_100">Python 实现<a class="headerlink" href="#python_100" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-112-1"><a id="__codelineno-112-1" name="__codelineno-112-1" href="#__codelineno-112-1"></a><span class="c1"># 方法1：</span>

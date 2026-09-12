@@ -3468,6 +3468,112 @@ SG(x)=\operatorname{mex}\{SG(y)\mid x\to y\}
 <li>连续域推导出的答案，是否需要映射回整数或离散候选点？</li>
 </ol>
 <p>数学工具的价值不在于让代码显得短，而在于把原问题变成结构清楚、边界可控、复杂度可证明的新问题。</p>
+<h1 id="_10">笔试遇到的小知识点<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h1>
+<ol>
+<li>独立随机变量方差性质：<span class="arithmatex">\(D(aX+bY)=a^2D(X) +b^2D(Y)\)</span></li>
+<li>PCA 基于方差进行降维，对尺度敏感，大量纲会主导协方差。投影值等于数据点向量与单位特征向量的内积</li>
+<li>皮尔逊相关系数：它会先对数据做中心化（减去各自均值），消除用户评分尺度差异（比如有人习惯打高分、有人习惯打低分），只衡量变化趋势的相关性，适合用户评分尺度差异明显的场景。</li>
+<li>困惑度是平均负对数似然的指数，越低表示更可预测。</li>
+<li>任意实矩阵均可 SVD，奇异值非负。在奇异值分解（SVD）中，对角矩阵 Σ 上非零奇异值的个数正好等于原矩阵 A 的秩 rank(A)</li>
+<li>混合精度训练中使用 FP16 存储梯度，其表示范围较小。在反向传播时，许多很小的梯度会下溢（变成 0），因此需要使用 loss scaling 将损失放大，使得梯度落在 FP16 的安全表示范围内。</li>
+<li>贝叶斯公式：<span class="arithmatex">\(P(A|B)=\frac{P(AB)}{P(B)}=\frac{P(B|A)p(A)}{p(B)}\)</span>.  <span class="arithmatex">\(P(B)=P(AB)P(\hat A B)\)</span></li>
+<li>线性子空间的定义要求对向量加法和标量乘法封闭。取标量为 0 进行数乘，可知任何线性子空间必然包含零向量。</li>
+<li>Lagrange 与 Newton 插值：给定相同的 n+1 个互异数据点，次数不超过 n 且通过全部节点的插值多项式唯一（因此二者的结果一致）。Newton 形式更便于增量加入节点</li>
+</ol>
+<h2 id="_11">线性代数<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
+<ul>
+<li>矩阵的秩：通过将矩阵化为行阶梯式，有多少个非全0的行，秩就是多少</li>
+<li>向量组线性相关：某个向量可以由其余向量组成<ul>
+<li>线性相关：有“大哥”可以由“小弟”（基向量）组成</li>
+<li>线性无关：全是“小弟”，没有“大哥”</li>
+<li>小弟数=向量组的秩，所以说不满秩的时候就是线性相关的</li>
+<li>某个向量加入向量组前后，向量组的秩不变，说明加入的向量是“大哥”，该向量可以由原本的向量组线性表示</li>
+</ul>
+</li>
+<li>向量组的极大无关组：求秩后，每行第一个非0数所在的列，对应的向量</li>
+<li>
+<p>判断方程组解的情况：</p>
+<ol>
+<li>求秩</li>
+<li>判断有无反常情况（如0=1），若有则无解；若没有，则
+    秩（有效式子数）= 未知数个数：有一组解
+    秩（有效式子数）&lt; 未知数个数：有无穷多组解</li>
+<li>对于齐次方程组（等式右边全为0）：一定有解（零解）</li>
+<li>对于非齐次方程组</li>
+</ol>
+</li>
+<li>
+<p>行最简型：1. 得到行阶梯矩阵；2. 使每行首个非0数为1；3. 使每个首个非0数所在列里，其余数都是0</p>
+</li>
+<li>
+<p>行最简型的作用：</p>
+<ul>
+<li>用极大无关组表示向量</li>
+<li>求方程组通解</li>
+<li>求矩阵的逆矩阵</li>
+</ul>
+</li>
+<li>
+<p>求行列式：将矩阵转化为下三角全为0的矩阵，然后行列式为对角线元素相乘</p>
+<ul>
+<li>某行（列）的公因子可以提到||外</li>
+<li>某行（列）= 本身 - k*其他行（列）</li>
+<li>交换行（列）与行（列），||前乘(-1)</li>
+</ul>
+</li>
+<li>行列式的作用<ul>
+<li>行列式非0时可逆</li>
+<li>求矩阵的特征值: <span class="arithmatex">\(|A-\lambda E|=0\)</span></li>
+</ul>
+</li>
+<li>特征值和特征向量<ul>
+<li>求对角矩阵和可逆矩阵：<span class="arithmatex">\(P^{-1}AP=\Lambda\)</span> (P由特征向量的基组成，<span class="arithmatex">\(\Lambda\)</span> 由特征值组成)</li>
+<li>求对角矩阵和正交矩阵：<span class="arithmatex">\(Q^{T}AQ=\Lambda\)</span> (Q由特征向量的基组成（同时保证单位且正交），<span class="arithmatex">\(\Lambda\)</span> 由特征值组成)</li>
+<li>求二次型的标准型和正交变换</li>
+</ul>
+</li>
+</ul>
+<div class="arithmatex">\[
+\det(A) \neq 0 \iff A \text{可逆} \iff A \text{满秩}(r=n) \iff \text{列向量线性无关} \iff Ax=0 \text{只有零解}
+\]</div>
+<h2 id="_12">概率论与数理统计<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h2>
+<ul>
+<li>全概览公式与贝叶斯公式：<ul>
+<li><span class="arithmatex">\(P(B)=P(AB)P(\hat A B)\)</span></li>
+<li><span class="arithmatex">\(P(A|B)=\frac{P(AB)}{P(B)}=\frac{P(B|A)p(A)}{p(B)}\)</span>.</li>
+</ul>
+</li>
+<li><span class="arithmatex">\(D(X)=E(X^2)-(EX)^2\)</span></li>
+<li>离散型</li>
+<li>连续性<ul>
+<li>概率密度函数<span class="arithmatex">\(f(x)\)</span>：<span class="arithmatex">\(\int_{a}^{b}f(x)dx=P\{X在a到b之间\}\)</span></li>
+<li>分布函数（概率密度函数的积分）：<span class="arithmatex">\(F(x)=P\{X\le x\}=\int_{-\inf}^{x}f(X)dX\)</span><ul>
+<li>分段连续函数、等于特定数值的概率为0</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>协方差<ul>
+<li>公式一：<span class="arithmatex">\(\operatorname{Cov}(X,Y) = E(XY) - EX \cdot EY\)</span></li>
+<li>公式二：<span class="arithmatex">\(\operatorname{Cov}(X,Y) = 0 \Rightarrow X \text{与} Y \text{不相关；} \operatorname{Cov}(X,Y) \neq 0 \Rightarrow X \text{与} Y \text{相关}\)</span></li>
+<li>公式三：相关系数 <span class="arithmatex">\(\rho_{XY} = \frac{\operatorname{Cov}(X,Y)}{\sqrt{DX}\sqrt{DY}}\)</span></li>
+</ul>
+</li>
+<li>中心极限定理<ul>
+<li><strong>已知个体，求大数量的整体</strong>：设个体期望为a，标准差为b，n个个体形成的整体为X，则X近似服从<span class="arithmatex">\(N(\mu,\sigma^2), \mu=na,\sigma=\sqrt{n}b\)</span></li>
+<li><span class="arithmatex">\(P\{X在A与B之间\}=\phi(\frac{B-\mu}{\sigma})-\phi(\frac{A-\mu}{\sigma})\)</span></li>
+<li><span class="arithmatex">\(\phi(+\inf)=1, \phi(-\inf)=0, \phi(0)=0.5, \phi(-X)=1-\phi(X)\)</span></li>
+<li><strong>某事在大数量次数下，发生次数的概率</strong>：设某事发生概率为p，进行n次，n次里发生次数为X，则X近似服从<span class="arithmatex">\(N(\mu,\sigma^2), \mu=np,\sigma=\sqrt{np(1-p)}\)</span></li>
+</ul>
+</li>
+<li>矩估计：期望等于均值下的概率</li>
+<li>
+<p>最大似然估计：<span class="arithmatex">\(L(\theta) = f(x_1) \cdot f(x_2) \cdot \dots \cdot f(x_n)\)</span></p>
+<p><span class="arithmatex">\(\Leftrightarrow \frac{d[\ln L(\theta)]}{d\theta} = 0 \Rightarrow \theta = ? \Rightarrow \hat{\theta} = ?\)</span>
++ 区间估计：需要查表
++ 假设建议：和显著性水平相关，同样需要查表</p>
+</li>
+</ul>
 
 
 
