@@ -559,6 +559,8 @@
       
         
       
+        
+      
     
     
     
@@ -1669,6 +1671,114 @@
     
   
     Kimi K3 的 Gated MLA：从公式、维度到矩阵吸收
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ds-v4/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DeepSeek-V4
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_6" id="__nav_3_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    DeepSeek-V4
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ds-v4/deepseek-v41/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    V4.1-Flash 架构与推理优化
   
 
     
@@ -3072,7 +3182,7 @@ k_j^R\in\mathbb{R}^{1\times d_R}
 <p>关键的不对称性是：历史信息始终保留在共享 latent 空间；只有当前 Query 和 softmax 后的当前 context 按头变换。<code>c_t</code> 和位置 Key 必须先追加到 Cache，当前 token 才能在 causal attention 中看到自己。</p>
 <hr />
 <h2 id="7-mla">7. 工程实例：吸收式 MLA 与张量并行<a class="headerlink" href="#7-mla" title="Permanent link">&para;</a></h2>
-<p><img alt="吸收式 MLA 的正确工程计算流与张量并行切分" src="../../assets/mla-absorbed.svg" /></p>
+<p><img alt="吸收式 MLA 的正确工程计算流与张量并行切分" src="../../assets/ds-v3/mla-absorbed.svg" /></p>
 <p><em>图：吸收式 MLA 工程计算流。Query 在 <code>q_b_proj</code> 上投影之后才执行 reshape/split；绿色节点表示 Cache，紫色虚线节点表示 TP 分片路径。</em></p>
 <p>这张图把前面的数学推导落到了实际推理程序中。可以按以下五步阅读。</p>
 <p>在前文符号基础上，本节补充 batch 和张量并行相关记号：</p>

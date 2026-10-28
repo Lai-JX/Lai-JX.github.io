@@ -559,6 +559,8 @@
       
         
       
+        
+      
     
     
     
@@ -1885,6 +1887,114 @@
     
   
     Kimi K3 的 Gated MLA：从公式、维度到矩阵吸收
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ds-v4/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DeepSeek-V4
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_6" id="__nav_3_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    DeepSeek-V4
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ds-v4/deepseek-v41/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    V4.1-Flash 架构与推理优化
   
 
     
@@ -3256,7 +3366,7 @@
 <li><strong>辅助损失无关的负载均衡与 MTP 属于训练设计</strong>；参考推理代码只消费其结果，没有实现完整训练算法。</li>
 </ol>
 <p>下图是技术报告 Figure 2 的总体架构图。左侧给出重复的 Transformer Block；右上展开 DeepSeekMoE，右下展开 MLA。MLA 图中带斜线阴影的向量表示推理时需要缓存的内容，即压缩后的 <span class="arithmatex">\(c_t^{KV}\)</span> 与 decoupled RoPE key <span class="arithmatex">\(k_t^R\)</span>。</p>
-<p><img alt="DeepSeek-V3 论文总体架构：Transformer Block、DeepSeekMoE 与 MLA" src="../../assets/deepseek-v3-paper-architecture.png" /></p>
+<p><img alt="DeepSeek-V3 论文总体架构：Transformer Block、DeepSeekMoE 与 MLA" src="../../assets/ds-v3/deepseek-v3-paper-architecture.png" /></p>
 <blockquote>
 <p>图源：<a href="https://arxiv.org/html/2412.19437">DeepSeek-V3 Technical Report, Figure 2</a>。</p>
 </blockquote>
@@ -3496,9 +3606,9 @@ d_q=d_k=d_{nope}+d_{rope}=128+64=192, \qquad d_v=128
 \]</div>
 <h3 id="42">4.2 主干数据流<a class="headerlink" href="#42" title="Permanent link">&para;</a></h3>
 <p>先从整体结构看，DeepSeek-V3 的主干由 61 个 Pre-Norm Transformer Block 组成：每层包含 MLA，前 3 层使用 Dense SwiGLU，后 58 层切换为 DeepSeekMoE；MTP 则位于主干之外。</p>
-<p><img alt="DeepSeek-V3 整体架构" src="../../assets/deepseek-v3-overall-architecture.svg" /></p>
+<p><img alt="DeepSeek-V3 整体架构" src="../../assets/ds-v3/deepseek-v3-overall-architecture.svg" /></p>
 <p>下面的源码执行流进一步按官方 <a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/model.py"><code>model.py</code></a> 的实际顺序展开：顶部是严格从左到右的主模型前向，下方只展开一个 Block。虚线表示“展开关系”，不表示张量流动；Block 内蓝色箭头表示两次 residual bypass。</p>
-<p><img alt="DeepSeek-V3 源码执行流与单个 Transformer Block" src="../../assets/deepseek-v3-code-flow.svg" /></p>
+<p><img alt="DeepSeek-V3 源码执行流与单个 Transformer Block" src="../../assets/ds-v3/deepseek-v3-code-flow.svg" /></p>
 <p>模型前向可概括为：</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>token ids [B,S]
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  → vocab-parallel embedding [B,S,7168]
@@ -3532,7 +3642,7 @@ c_t^{KV}=W^{DKV}h_t,\qquad c_t^{KV}\in\mathbb{R}^{512}
 <div class="arithmatex">\[
 512+64=576\ \text{elements/token/layer}
 \]</div>
-<p><img alt="MLA 与 KV Cache 数据流" src="../../assets/deepseek-v3-mla-cache-flow.svg" /></p>
+<p><img alt="MLA 与 KV Cache 数据流" src="../../assets/ds-v3/deepseek-v3-mla-cache-flow.svg" /></p>
 <h3 id="52-query">5.2 Query 路径<a class="headerlink" href="#52-query" title="Permanent link">&para;</a></h3>
 <p>在 671B 配置中，<a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/model.py#L412-L437"><code>MLA.__init__</code></a> 创建：</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>x [B,S,7168]
@@ -3626,7 +3736,7 @@ o_i=W_i^{UV}z_i
 </span></code></pre></div>
 <p>源码对应 <a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/model.py#L481-L495"><code>model.py:481–495</code></a>。naive 与 absorb 数学等价，但浮点运算顺序不同，结果只应在数值误差范围内接近。</p>
 <p>下图将两种路径放在同一张图中：naive 路径先恢复逐 Head 的完整 K/V，再执行标准 MHA 形式；absorb 路径则把恢复矩阵移动到 Attention 两侧，直接在 512 维 latent 空间完成打分与聚合。</p>
-<p><img alt="MLA naive 与 absorb 两条等价计算路径" src="../../assets/deepseek-v3-mla-paths.svg" /></p>
+<p><img alt="MLA naive 与 absorb 两条等价计算路径" src="../../assets/ds-v3/deepseek-v3-mla-paths.svg" /></p>
 <h3 id="57-cache">5.7 Cache 节省量与并行语义<a class="headerlink" href="#57-cache" title="Permanent link">&para;</a></h3>
 <p>为了统一比较口径，先假设两种方案都使用 DeepSeek-V3 的 128 个 attention heads，并按 BF16 存储 KV cache。</p>
 <h4 id="mha-head-kv">MHA：每个 Head 独立缓存完整 K/V<a class="headerlink" href="#mha-head-kv" title="Permanent link">&para;</a></h4>
@@ -3923,7 +4033,7 @@ y=\sum_r x_rW_r^T
 <li>遇到 EOS 或长度上限后停止。</li>
 </ol>
 <p>下图把完整推理过程中的张量 Shape、MLA cache 读写以及 tensor/expert parallel 通信标在同一条数据流上。其中蓝色表示张量流，红色表示持久 cache，紫色表示 Rank 间 collective communication。</p>
-<p><img alt="DeepSeek-V3 推理张量 Shape、Cache 与通信流" src="../../assets/deepseek-v3-inference-flow.svg" /></p>
+<p><img alt="DeepSeek-V3 推理张量 Shape、Cache 与通信流" src="../../assets/ds-v3/deepseek-v3-inference-flow.svg" /></p>
 <p><a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/model.py#L772-L798"><code>Transformer.forward</code></a> 在 <code>seqlen &gt; 1</code> 时构造 causal mask；decode 单 token 时依靠 cache 的有效前缀天然保证因果性。</p>
 <p>批量生成把不同长度 prompt 放入一个以 <code>-1</code> 填充的 tensor，并从最短 prompt 位置开始推进；每个位置若仍属于原 prompt，就保留原 token，否则采样。这个实现适合功能演示，不包含 continuous batching、paged cache、prefix cache、chunked prefill 或 fused sampling。</p>
 <h2 id="12">12. 如何运行参考实现<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>

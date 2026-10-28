@@ -559,6 +559,8 @@
       
         
       
+        
+      
     
     
     
@@ -1514,6 +1516,114 @@
     
   
     Kimi K3 的 Gated MLA：从公式、维度到矩阵吸收
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ds-v4/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DeepSeek-V4
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_6" id="__nav_3_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    DeepSeek-V4
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ds-v4/deepseek-v41/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    V4.1-Flash 架构与推理优化
   
 
     
@@ -2547,7 +2657,7 @@ O=PV\in\mathbb R^{N\times d}.
 8192^2\times 2\ \text{bytes}=128\ \text{MiB}.
 \]</div>
 <p>而且问题不只是“能否放下”，还有“需要搬几次”。FlashAttention 论文以 A100 为例：HBM 容量为 40–80 GB、带宽约 1.5–2.0 TB/s；每个 SM 的片上 SRAM 只有 192 KB，但估算带宽约 19 TB/s。片上存储小很多，却快约一个数量级。因此 Attention 常常不是算不动，而是大量时间花在 HBM 与计算单元之间搬运中间结果。</p>
-<p><img alt="标准 Attention 与 FlashAttention 的 IO 对比" src="../../assets/flashattention-io.svg" /></p>
+<p><img alt="标准 Attention 与 FlashAttention 的 IO 对比" src="../../assets/transformer%E5%9F%BA%E7%A1%80/flashattention-io.svg" /></p>
 <p>从图中可以看出，普通的“算子融合”还不够。完整的 <span class="arithmatex">\(S\)</span> 放不进 SRAM；而 Softmax 的一个位置又依赖整行的分母，所以不能简单地把独立 kernel 拼在一起。必须回答两个问题：</p>
 <ul>
 <li>只看到一部分 score 时，怎样得到整行 Softmax？</li>
@@ -2641,7 +2751,7 @@ U=\sum_{k\in\text{old}}e^{s_k-m}v_k,\qquad
 </tbody>
 </table>
 <p>实际并行计算时，每个 <span class="arithmatex">\(Q\)</span> tile 含多行，因此 <span class="arithmatex">\(m,\ell\)</span> 是长度为 <span class="arithmatex">\(B_r\)</span> 的向量，<span class="arithmatex">\(U\)</span> 是 <span class="arithmatex">\(B_r\times d\)</span> 的矩阵。</p>
-<p><img alt="FlashAttention 的分块与 Online Softmax" src="../../assets/flashattention-online-softmax.svg" /></p>
+<p><img alt="FlashAttention 的分块与 Online Softmax" src="../../assets/transformer%E5%9F%BA%E7%A1%80/flashattention-online-softmax.svg" /></p>
 <h3 id="24">2.4 一个可核算的小例子<a class="headerlink" href="#24" title="Permanent link">&para;</a></h3>
 <p>设一行 score 被分成两块：</p>
 <div class="arithmatex">\[

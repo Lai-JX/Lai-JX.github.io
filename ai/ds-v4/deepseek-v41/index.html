@@ -1,0 +1,4294 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="算法复习、AI 原理与持续整理的技术笔记">
+      
+      
+        <meta name="author" content="LJX">
+      
+      
+        <link rel="canonical" href="https://lai-jx.github.io/ai/ds-v4/deepseek-v41/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../../reading-list/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>DeepSeek-V4.1-Flash 架构与推理优化 - LJX 知识库</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#deepseek-v41-flash" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="LJX 知识库" class="md-header__button md-logo" aria-label="LJX 知识库" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19.07 14.88 2.05 2.05L15.06 23H13v-2.06zm1.97-1.75c.14 0 .27.06.38.17l1.28 1.28c.22.21.22.56 0 .77l-1 1-2.05-2.05 1-1c.11-.11.25-.17.39-.17M17 4v6l-2-2-2 2V4H9v16h2v2H7c-1.05 0-2-.95-2-2v-1H3v-2h2v-4H3v-2h2V7H3V5h2V4a2 2 0 0 1 2-2h12c1.05 0 2 .95 2 2v6l-2 2V4zM5 5v2h2V5zm0 6v2h2v-2zm0 6v2h2v-2z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LJX 知识库
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              DeepSeek-V4.1-Flash 架构与推理优化
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-orange"  aria-label="切换至深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换至深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="orange"  aria-label="切换至浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换至浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Lai-JX/Lai-JX.github.io" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Lai-JX/Lai-JX.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../hot-100/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Hot 100
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  AI 原理
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../llm-systems/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  LLM 系统
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="LJX 知识库" class="md-nav__button md-logo" aria-label="LJX 知识库" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19.07 14.88 2.05 2.05L15.06 23H13v-2.06zm1.97-1.75c.14 0 .27.06.38.17l1.28 1.28c.22.21.22.56 0 .77l-1 1-2.05-2.05 1-1c.11-.11.25-.17.39-.17M17 4v6l-2-2-2 2V4H9v16h2v2H7c-1.05 0-2-.95-2-2v-1H3v-2h2v-4H3v-2h2V7H3V5h2V4a2 2 0 0 1 2-2h12c1.05 0 2 .95 2 2v6l-2 2V4zM5 5v2h2V5zm0 6v2h2v-2zm0 6v2h2v-2z"/></svg>
+
+    </a>
+    LJX 知识库
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Lai-JX/Lai-JX.github.io" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Lai-JX/Lai-JX.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../hot-100/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hot 100
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Hot 100
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../hot-100/add_new/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    新增题目
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../hot-100/math/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数学基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI 原理
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    AI 原理
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../transformer%E5%9F%BA%E7%A1%80/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transformer 基础
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Transformer 基础
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../transformer%E5%9F%BA%E7%A1%80/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AE%A1%E7%AE%97attention%E6%97%B6softmax%E4%B8%AD%E8%A6%81%E9%99%A4%E4%BB%A5dk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    为什么 Attention 要除以 √dₖ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../transformer%E5%9F%BA%E7%A1%80/flashattention/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FlashAttention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../transformer%E5%9F%BA%E7%A1%80/flashattention-%E7%AE%80%E5%8C%96%E7%89%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FlashAttention 简化版
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../mlp%E5%9F%BA%E7%A1%80/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MLP 基础
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    MLP 基础
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlp%E5%9F%BA%E7%A1%80/FFN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    现代 LLM 的 FFN：从 SwiGLU 到 MoE
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ds-v3/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DeepSeek-V3
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_4" id="__nav_3_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    DeepSeek-V3
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ds-v3/deepseek-v3-architecture-and-implementation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DeepSeek-V3 架构与实现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ds-v3/mla-matrix-absorption/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MLA 的矩阵吸收算法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../k3/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    K3
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_5" id="__nav_3_5_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    K3
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../k3/KDA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kimi Linear：从 Attention 到 KDA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../k3/kda-prefill/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KDA Prefill：Chunkwise 与 FlashKDA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../k3/gate-mla/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kimi K3 的 Gated MLA：从公式、维度到矩阵吸收
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DeepSeek-V4
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_6" id="__nav_3_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    DeepSeek-V4
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    V4.1-Flash 架构与推理优化
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    V4.1-Flash 架构与推理优化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        阅读约定
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 先看整张架构图
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ced-causal-encoder-decoder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. CED：为什么叫 Causal Encoder-Decoder？
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-transformer-prefill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 普通 Transformer 为什么 Prefill 贵？
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-ced-decoder-global-kv-encoder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. CED 最核心的设计：Decoder Global KV 从 Encoder 输出直接生成
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-decoder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 但这里立刻出现一个问题：Decoder 的“深层信息”怎么办？
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-csa2-global-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. CSA2：真正的 Global Attention 长什么样？
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. CSA2：真正的 Global Attention 长什么样？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kv-entry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第一维：每个 KV entry 本身变小
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-encoder-token-main-kv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 第二维：Encoder 每两个 token 再压成一个 Main KV
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-layer-global-kv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 第三维：不同 Layer 不再各自保存 Global KV
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-sparse-indexer1m-token-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Sparse Indexer：1M token 不可能全做 Attention
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-decoder-hierarchical-sparse-indexer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Decoder 还进一步用了 Hierarchical Sparse Indexer
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-attentionswa-global-top-k" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 最终 Attention：SWA 和 Global Top-K 是一起算的
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-q-low-rank" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Q 本身也是 Low-Rank 的
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-deepseekmoe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 每层后面还是 DeepSeekMoE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-single-pass-mhc-residual-stream" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Single-Pass mHC：它甚至不是普通的一条 residual stream
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-engram196b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. Engram：196B 参数为什么不会把推理算爆？
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-prefill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16. 一次 Prefill 的执行路径
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#17-decoder-swa-bounded-replay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17. Decoder SWA Bounded Replay
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#18-decode-token-40" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        18. Decode 阶段：每个新 token 都跑 40 层
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#19-decode-token" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19. 具体追踪一个 Decode token
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="19. 具体追踪一个 Decode token">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#layer-0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer 0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layer-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer 1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layer-2full-csa2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer 2：Full CSA2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layer-37" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer 3~7
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layer-8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer 8
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#20-layer-20ced" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        20. Layer 20：CED 的关键切换
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#21-layer-20decoder-global-retrieval" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21. Layer 20：Decoder Global Retrieval 的第一阶段检索器
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22-layer-2123reuse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        22. Layer 21~23：Reuse
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#23-layer-24reindex" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        23. Layer 24：Reindex
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#24-decode-attention-context-length" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        24. Decode Attention 的计算量为何对 Context Length 不敏感？
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#25-kv-cache-890-bytestoken" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25. KV Cache 如何压到约 890 bytes/token？
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="25. KV Cache 如何压到约 890 bytes/token？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mla-like-latent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MLA-like latent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sequence-compression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sequence compression
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-layer-reuse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-layer reuse
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sparse-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sparse index
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fp4-main-kv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FP4 Main KV
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#26-prefix-cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26. Prefix Cache 命中时如何处理？
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#27-dsparkdecode-1-token" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27. DSpark：Decode 不一定一次只生成 1 token
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#28" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        28. 多模态输入路径
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#29" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29. 一次完整推理流程
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#30-v41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        30. 从推理系统设计角度总结 V4.1
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reading-list/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    好文收藏
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../llm-systems/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LLM 系统
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    LLM 系统
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../llm-systems/pytorch/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PyTorch 运行时与编译
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    PyTorch 运行时与编译
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../llm-systems/pytorch/cuda-memory-management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CUDA 显存管理机制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../llm-systems/pytorch/torch-compile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    torch.compile 原理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../llm-systems/pytorch/graph-optimization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    计算图优化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../llm-systems/vllm/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    vLLM
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    vLLM
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../llm-systems/vllm/kv-layout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KV Cache 布局与传输
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../llm-systems/performance/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    性能分析
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    性能分析
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../llm-systems/performance/gpu-utilization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GPU 利用率指标
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../llm-systems/distributed/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分布式与并行
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分布式与并行
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../llm-systems/distributed/parallel-communication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    并行通信量计算
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        阅读约定
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 先看整张架构图
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ced-causal-encoder-decoder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. CED：为什么叫 Causal Encoder-Decoder？
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-transformer-prefill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 普通 Transformer 为什么 Prefill 贵？
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-ced-decoder-global-kv-encoder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. CED 最核心的设计：Decoder Global KV 从 Encoder 输出直接生成
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-decoder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 但这里立刻出现一个问题：Decoder 的“深层信息”怎么办？
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-csa2-global-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. CSA2：真正的 Global Attention 长什么样？
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. CSA2：真正的 Global Attention 长什么样？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kv-entry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第一维：每个 KV entry 本身变小
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-encoder-token-main-kv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 第二维：Encoder 每两个 token 再压成一个 Main KV
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-layer-global-kv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 第三维：不同 Layer 不再各自保存 Global KV
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-sparse-indexer1m-token-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Sparse Indexer：1M token 不可能全做 Attention
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-decoder-hierarchical-sparse-indexer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Decoder 还进一步用了 Hierarchical Sparse Indexer
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-attentionswa-global-top-k" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 最终 Attention：SWA 和 Global Top-K 是一起算的
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-q-low-rank" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Q 本身也是 Low-Rank 的
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-deepseekmoe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 每层后面还是 DeepSeekMoE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-single-pass-mhc-residual-stream" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Single-Pass mHC：它甚至不是普通的一条 residual stream
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-engram196b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. Engram：196B 参数为什么不会把推理算爆？
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-prefill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16. 一次 Prefill 的执行路径
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#17-decoder-swa-bounded-replay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17. Decoder SWA Bounded Replay
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#18-decode-token-40" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        18. Decode 阶段：每个新 token 都跑 40 层
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#19-decode-token" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19. 具体追踪一个 Decode token
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="19. 具体追踪一个 Decode token">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#layer-0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer 0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layer-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer 1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layer-2full-csa2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer 2：Full CSA2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layer-37" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer 3~7
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layer-8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer 8
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#20-layer-20ced" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        20. Layer 20：CED 的关键切换
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#21-layer-20decoder-global-retrieval" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21. Layer 20：Decoder Global Retrieval 的第一阶段检索器
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22-layer-2123reuse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        22. Layer 21~23：Reuse
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#23-layer-24reindex" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        23. Layer 24：Reindex
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#24-decode-attention-context-length" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        24. Decode Attention 的计算量为何对 Context Length 不敏感？
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#25-kv-cache-890-bytestoken" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25. KV Cache 如何压到约 890 bytes/token？
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="25. KV Cache 如何压到约 890 bytes/token？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mla-like-latent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MLA-like latent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sequence-compression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sequence compression
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-layer-reuse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-layer reuse
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sparse-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sparse index
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fp4-main-kv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FP4 Main KV
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#26-prefix-cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26. Prefix Cache 命中时如何处理？
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#27-dsparkdecode-1-token" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27. DSpark：Decode 不一定一次只生成 1 token
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#28" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        28. 多模态输入路径
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#29" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29. 一次完整推理流程
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#30-v41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        30. 从推理系统设计角度总结 V4.1
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="deepseek-v41-flash">DeepSeek-V4.1-Flash 架构与推理优化<a class="headerlink" href="#deepseek-v41-flash" title="Permanent link">&para;</a></h1>
+<p>本文以官方技术报告、模型 <code>config.json</code> 和 <code>inference/model.py</code> 为主要依据，梳理 DeepSeek-V4.1-Flash 的架构、Prefill/Decode 路径、KV Cache 压缩方式及推理系统取舍。</p>
+<p>先抓住一个总纲：</p>
+<blockquote>
+<p><strong>DeepSeek-V4.1-Flash 的核心不是单独某一种 Attention，而是围绕长上下文 Agent 推理，把 Prefill、Decode、KV Cache 三件事联合设计。</strong></p>
+<p>最关键的三个结构是：</p>
+<div class="arithmatex">\[
+\boxed{\text{CED：降低 Prefill}}
+\qquad
+\boxed{\text{CSA2：降低 Global KV + Attention}}
+\qquad
+\boxed{\text{SWA：保留逐层更新的局部状态}}
+\]</div>
+</blockquote>
+<p>官方模型是 <strong>40 层 causal Transformer，前 20 层称 causal encoder，后 20 层称 decoder</strong>；backbone 约 552B 参数，Engram 额外约 196B，Prefill 每 token 激活约 8B 参数，Decode 约 16B，并支持最长 1M context。(<a href="https://arxiv.org/html/2609.19969" title="DeepSeek-V4.1-Flash: Pushing the Limits of KV Cache Compression">arXiv</a>)</p>
+<h2 id="_1">阅读约定<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li><span class="arithmatex">\(N\)</span>：输入序列长度；<span class="arithmatex">\(L=40\)</span>：backbone 总层数；<span class="arithmatex">\(w=128\)</span>：SWA 窗口长度；<span class="arithmatex">\(K=512\)</span>：Global KV 的 Top-K 选择数。</li>
+<li><strong>Global KV</strong>：可跨层复用、面向中远距离检索的压缩 KV；<strong>SWA KV</strong>：每层独立维护、面向最近 token 的局部 KV。</li>
+<li>文中的 FLOPs、参数量和 Cache 大小均为结构级近似，用于比较不同路径的增长趋势；具体数值以对应版本的官方配置和实现为准。</li>
+</ul>
+<hr />
+<h2 id="1">1. 先看整张架构图<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p><img alt="DeepSeek-V4.1-Flash 整体架构图" src="../../assets/ds-v4/deepseekv41-arch.png" /></p>
+<blockquote>
+<p>图中标出了 Causal Encoder、Decoder、CSA2 的 Full/Reuse/Reindex、SWA、Engram、CED、Candidate Pool 和 DSpark 的相对位置；下方文字图进一步展开层编号和数据流。</p>
+</blockquote>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Token Embedding
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>      │
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>      ▼
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>┌──────────────────────────────────────┐
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│        Causal Encoder：Layer 0~19    │
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│                                      │
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│ L0       SWA                         │
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│ L1       SWA + Engram                │
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│                                      │
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│ L2       CSA2 ratio=2, Full          │
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>│ L3~7     CSA2 ratio=2, Reuse         │
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>│                                      │
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>│ L8       CSA2 ratio=2, Full          │
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>│ L9~13    CSA2 ratio=2, Reuse         │
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>│                                      │
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>│ L14      CSA2 ratio=2, Full + Engram │
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>│ L15~19   CSA2 ratio=2, Reuse         │
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>└──────────────────────────────────────┘
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>                    │
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>                    │ H20
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>                    │
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>       ┌────────────┴────────────┐
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>       │                         │
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>       │ 生成 Decoder Global KV │
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>       │                         │
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>       ▼                         ▼
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>┌──────────────────────────────────────┐
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>│          Decoder：Layer 20~39        │
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>│                                      │
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>│ L20  CSA2 ratio=1, Full              │
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>│      全局 index + Candidate Pool     │
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>│                                      │
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>│ L21~23  Reuse                        │
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>│ L24     Reindex                      │
+</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>│ L25~27  Reuse                        │
+</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>│ L28     Reindex                      │
+</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>│ L29~31  Reuse                        │
+</span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>│ L32     Reindex                      │
+</span><span id="__span-0-39"><a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>│ L33~35  Reuse                        │
+</span><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>│ L36     Reindex                      │
+</span><span id="__span-0-41"><a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>│ L37~39  Reuse                        │
+</span><span id="__span-0-42"><a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>│                                      │
+</span><span id="__span-0-43"><a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>│ 每一层：自己的 Q + 自己的 SWA KV    │
+</span><span id="__span-0-44"><a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>└──────────────────────────────────────┘
+</span><span id="__span-0-45"><a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a>                    │
+</span><span id="__span-0-46"><a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a>                    ▼
+</span><span id="__span-0-47"><a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a>               LM Head
+</span><span id="__span-0-48"><a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a>                    │
+</span><span id="__span-0-49"><a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a>                    ▼
+</span><span id="__span-0-50"><a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a>                  token
+</span><span id="__span-0-51"><a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a>
+</span><span id="__span-0-52"><a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a>          ┌─────────────────┐
+</span><span id="__span-0-53"><a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a>          │ DSpark drafter  │
+</span><span id="__span-0-54"><a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a>          │ speculative     │
+</span><span id="__span-0-55"><a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a>          │ decoding        │
+</span><span id="__span-0-56"><a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a>          └─────────────────┘
+</span></code></pre></div>
+<p>这个层分布不是推测，而是能直接从官方 config 读出来：KV source layer 是 <code>{2,8,14,20}</code>，index source 是 <code>{2,8,14,20,24,28,32,36}</code>；前 2 层没有 global compression，Encoder 的 ratio=2，Decoder 的 ratio=1；SWA window=128，global index Top-K=512。(<a href="https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/blob/main/config.json" title="config.json · deepseek-ai/DeepSeek-V4.1-Flash at main">Hugging Face</a>)</p>
+<hr />
+<h2 id="2-ced-causal-encoder-decoder">2. CED：为什么叫 Causal Encoder-Decoder？<a class="headerlink" href="#2-ced-causal-encoder-decoder" title="Permanent link">&para;</a></h2>
+<p>这里特别容易误解。</p>
+<p>它<strong>不是 T5 / Transformer Encoder-Decoder 那种结构</strong>：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>bidirectional encoder
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>        ↓
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>cross attention decoder
+</span></code></pre></div>
+<p>V4.1 的前 20 层仍然是：</p>
+<div class="arithmatex">\[
+\boxed{\text{causal}}
+\]</div>
+<p>也就是说位置 <span class="arithmatex">\(t\)</span> 的 encoder hidden state 只能看到：</p>
+<div class="arithmatex">\[
+x_{\le t}
+\]</div>
+<p>不会看到未来 token。</p>
+<p>所以本质仍然是一个自回归语言模型，只不过 DeepSeek 把 40 层人为分成：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Lower 20 layers  → Causal Encoder
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>Upper 20 layers  → Decoder
+</span></code></pre></div>
+<p>这样划分的目的主要是<strong>省 Prefill</strong>。(<a href="https://arxiv.org/html/2609.19969" title="DeepSeek-V4.1-Flash: Pushing the Limits of KV Cache Compression">arXiv</a>)</p>
+<hr />
+<h2 id="3-transformer-prefill">3. 普通 Transformer 为什么 Prefill 贵？<a class="headerlink" href="#3-transformer-prefill" title="Permanent link">&para;</a></h2>
+<p>传统 40 层 Transformer，对一个长度为 <span class="arithmatex">\(N\)</span> 的 prompt：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>N tokens
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>  ↓
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>Layer 0
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>  ↓
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>Layer 1
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>  ↓
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>...
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>  ↓
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>Layer 39
+</span></code></pre></div>
+<p>所有 <span class="arithmatex">\(N\)</span> 个 token 都要完整经过 <span class="arithmatex">\(L=40\)</span> 层：</p>
+<div class="arithmatex">\[
+C_\text{prefill}\propto N\cdot L=40N
+\]</div>
+<p>而 Agent 场景特别吃亏。</p>
+<p>比如：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>用户 prompt
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>→ 模型思考
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>→ tool call
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>→ 返回 5000 tokens tool output
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>→ 再 prefill
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>→ tool call
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>→ 再返回...
+</span></code></pre></div>
+<p>输入长度越来越长，而且不停 Prefill。</p>
+<p>所以 V4.1 问了一个问题：</p>
+<blockquote>
+<p><strong>后 20 层的历史 KV，真的必须把每个历史 token 再跑一遍后 20 层才能得到吗？</strong></p>
+</blockquote>
+<p>答案是：不一定。</p>
+<hr />
+<h2 id="4-ced-decoder-global-kv-encoder">4. CED 最核心的设计：Decoder Global KV 从 Encoder 输出直接生成<a class="headerlink" href="#4-ced-decoder-global-kv-encoder" title="Permanent link">&para;</a></h2>
+<p>标准 Transformer：</p>
+<div class="arithmatex">\[
+H_{19}\rightarrow H_{20}\rightarrow H_{21}\rightarrow\cdots
+\]</div>
+<p>而第 <span class="arithmatex">\(l\)</span> 层 KV 通常来自：</p>
+<div class="arithmatex">\[
+KV_l=H_lW_l^{KV}
+\]</div>
+<p>因此，要获得 Layer 35 的 KV，你必须先：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>H19 → L20 → L21 → ... → H35
+</span></code></pre></div>
+<p>V4.1 改成：</p>
+<div class="arithmatex">\[
+C_l=H_{20}W_l^{KV}
+\]</div>
+<p>也就是：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>                    ┌→ Decoder global KV
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>                    │
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>H20 ────────────────┼→ Decoder global KV
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>                    │
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>                    ├→ Decoder global KV
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>                    │
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>                    └→ ...
+</span></code></pre></div>
+<p>不需要把所有历史 token 再经过 Decoder 才能得到 Global KV。(<a href="https://arxiv.org/html/2609.19969" title="DeepSeek-V4.1-Flash: Pushing the Limits of KV Cache Compression">arXiv</a>)</p>
+<p>再结合 CSA2 的跨层共享，实际 V4.1 decoder 中甚至只有 <strong>Layer 20 是 KV source</strong>：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Encoder output H20
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>       │
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>       ▼
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>Layer20 global Main KV
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>       │
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>       ├──── L21
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>       ├──── L22
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>       ├──── L23
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>       ├──── ...
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>       └──── L39
+</span></code></pre></div>
+<p>所以 Decoder 20 层共用这一份主要 global memory。</p>
+<hr />
+<h2 id="5-decoder">5. 但这里立刻出现一个问题：Decoder 的“深层信息”怎么办？<a class="headerlink" href="#5-decoder" title="Permanent link">&para;</a></h2>
+<p>假如完全这么做：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>H20 ──→ Global KV
+</span></code></pre></div>
+<p>那么 Layer 35 看到的历史 token global KV 也只是基于 H20 产生的。</p>
+<p>它没有：</p>
+<div class="arithmatex">\[
+H_{35}(historical\ token)
+\]</div>
+<p>这种深层表示。</p>
+<p>这就是为什么 <strong>SWA 在 V4.1 里特别重要</strong>。</p>
+<p>V4.1 没有把 local KV 也共享。</p>
+<p>对于每一层：</p>
+<div class="arithmatex">\[
+KV_l^{SWA}
+=
+H_l W_l^{KV,\text{local}}
+\]</div>
+<p>因此 Layer 35 仍然拥有：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>最近 128 tokens
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>       ↓
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>真正经过了 Layer0...Layer35
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>       ↓
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>Layer35 自己的 fresh local KV
+</span></code></pre></div>
+<p>而远距离历史：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>10K / 100K / 1M tokens ago
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>       ↓
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>共享、压缩、稀疏读取的 Global KV
+</span></code></pre></div>
+<p>因此，三者的关系可以概括为：</p>
+<div class="arithmatex">\[
+\boxed{
+\text{Global KV = 便宜的长期记忆}
+}
+\]</div>
+<div class="arithmatex">\[
+\boxed{
+\text{SWA KV = 昂贵但“新鲜”的局部深层状态}
+}
+\]</div>
+<p>这正是 CED 能成立的重要基础。官方也明确强调：global KV 来自 encoder final hidden，而 SWA KV 仍由<strong>每一层自己的 hidden state</strong>产生。(<a href="https://arxiv.org/html/2609.19969" title="DeepSeek-V4.1-Flash: Pushing the Limits of KV Cache Compression">arXiv</a>)</p>
+<hr />
+<h2 id="6-csa2-global-attention">6. CSA2：真正的 Global Attention 长什么样？<a class="headerlink" href="#6-csa2-global-attention" title="Permanent link">&para;</a></h2>
+<p>这里最好不要简单把 V4.1 说成“MLA”。</p>
+<p>它继承了 MLA 的核心思想——<strong>用低维 latent KV 代替传统多头 K/V</strong>——但完整结构叫：</p>
+<div class="arithmatex">\[
+\boxed{\text{Compressed Sparse Attention 2, CSA2}}
+\]</div>
+<p>它同时压缩三个维度：</p>
+<div class="arithmatex">\[
+\text{KV Size}
+=
+\underbrace{\text{entry size}}_{\text{MLA-like latent}}
+\times
+\underbrace{\text{sequence entries}}_{\text{token compression}}
+\times
+\underbrace{\text{number of cached layers}}_{\text{cross-layer reuse}}
+\]</div>
+<p>也就是说：</p>
+<h3 id="kv-entry">第一维：每个 KV entry 本身变小<a class="headerlink" href="#kv-entry" title="Permanent link">&para;</a></h3>
+<p>传统 MHA：</p>
+<div class="arithmatex">\[
+[K_1,V_1,K_2,V_2,\ldots,K_h,V_h]
+\]</div>
+<p>CSA2 保存的是 compact latent。</p>
+<p>官方 config 中：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>64 Q heads
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>head_dim = 512
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>但 global KV latent：
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>约一个共享 512-d entry
+</span></code></pre></div>
+<p>所以这是 MLA 风格的 latent KV。</p>
+<hr />
+<h2 id="7-encoder-token-main-kv">7. 第二维：Encoder 每两个 token 再压成一个 Main KV<a class="headerlink" href="#7-encoder-token-main-kv" title="Permanent link">&para;</a></h2>
+<p>Encoder layer 2~19：</p>
+<div class="arithmatex">\[
+compress\_ratio=2
+\]</div>
+<p>也就是：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>token 0 ─┐
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>         ├→ Main KV #0
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>token 1 ─┘
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>token 2 ─┐
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>         ├→ Main KV #1
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>token 3 ─┘
+</span></code></pre></div>
+<p>并不是简单平均。</p>
+<p>官方 Compressor 代码明确是对连续 <code>compress_ratio</code> 个 token 用一个<strong>learned softmax gate</strong>做 pooling。(<a href="https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/blob/main/inference/model.py" title="inference/model.py · deepseek-ai/DeepSeek-V4.1-Flash at main">Hugging Face</a>)</p>
+<p>因此：</p>
+<div class="arithmatex">\[
+N\text{ tokens}
+\rightarrow
+N/2\text{ global KV entries}
+\]</div>
+<p>Decoder 则：</p>
+<div class="arithmatex">\[
+compress\_ratio=1
+\]</div>
+<p>一个 token 对应一个 global entry。(<a href="https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/blob/main/config.json" title="config.json · deepseek-ai/DeepSeek-V4.1-Flash at main">Hugging Face</a>)</p>
+<hr />
+<h2 id="8-layer-global-kv">8. 第三维：不同 Layer 不再各自保存 Global KV<a class="headerlink" href="#8-layer-global-kv" title="Permanent link">&para;</a></h2>
+<p>这是 CSA2 相较早期 CSA 非常核心的地方。</p>
+<p>它有三种 mode。</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Main KV</th>
+<th>Indexer</th>
+<th>Top-K</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Full</strong></td>
+<td>新算</td>
+<td>新算</td>
+<td>新选</td>
+</tr>
+<tr>
+<td><strong>Reindex</strong></td>
+<td>复用</td>
+<td>新算 Q</td>
+<td>重新选 Top-K</td>
+</tr>
+<tr>
+<td><strong>Reuse</strong></td>
+<td>复用</td>
+<td>不算</td>
+<td>Top-K 也复用</td>
+</tr>
+</tbody>
+</table>
+<p>所以比如 Encoder：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>L2   Full
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>│
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>├─ L3 reuse
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>├─ L4 reuse
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>├─ L5 reuse
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>├─ L6 reuse
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>├─ L7 reuse
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>│
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>L8   Full
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>├─ L9~13 reuse
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>│
+</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>L14  Full
+</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>└─ L15~19 reuse
+</span></code></pre></div>
+<p>原本 18 层可能意味着：</p>
+<div class="arithmatex">\[
+18份\ Global\ KV
+\]</div>
+<p>现在只有：</p>
+<div class="arithmatex">\[
+3份
+\]</div>
+<p>Decoder 更激进：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>L20 Full   ← 唯一 Main KV source
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a> ↓
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>整个 L20~39 共用
+</span></code></pre></div>
+<p>因此 Decoder 的 global KV 是高度共享的。(<a href="https://arxiv.org/html/2609.19969" title="DeepSeek-V4.1-Flash: Pushing the Limits of KV Cache Compression">arXiv</a>)</p>
+<p>注意即使是 Reuse layer，它仍然会计算：</p>
+<div class="arithmatex">\[
+Q_l
+\]</div>
+<p>以及：</p>
+<div class="arithmatex">\[
+KV_l^{SWA}
+\]</div>
+<p>复用的只是 global memory 和/或 sparse selection，不是整层 Attention 输出。</p>
+<hr />
+<h2 id="9-sparse-indexer1m-token-attention">9. Sparse Indexer：1M token 不可能全做 Attention<a class="headerlink" href="#9-sparse-indexer1m-token-attention" title="Permanent link">&para;</a></h2>
+<p>即使 KV Cache 压小了，如果每个 Decode token 都去算：</p>
+<div class="arithmatex">\[
+QK^T,\quad K\in\mathbb R^{1M\times d}
+\]</div>
+<p>计算量还是随 context 线性增长。</p>
+<p>所以 CSA2 先有一个便宜的 Indexer：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>                   1M Global KV
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>                        │
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>Q → lightweight Indexer│
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>                        ▼
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>                    Top 512
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>                        │
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>                        ▼
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>                Main Attention
+</span></code></pre></div>
+<p>配置明确是：</p>
+<div class="arithmatex">\[
+K=512
+\]</div>
+<p>所以最终 global sparse attention 一般只读大约 512 个 Main KV entry。(<a href="https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/blob/main/config.json" title="config.json · deepseek-ai/DeepSeek-V4.1-Flash at main">Hugging Face</a>)</p>
+<hr />
+<h2 id="10-decoder-hierarchical-sparse-indexer">10. Decoder 还进一步用了 Hierarchical Sparse Indexer<a class="headerlink" href="#10-decoder-hierarchical-sparse-indexer" title="Permanent link">&para;</a></h2>
+<p>如果每一层 Indexer 都扫描 1M token：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>L20 scan 1M
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>L24 scan 1M
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>L28 scan 1M
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>L32 scan 1M
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>L36 scan 1M
+</span></code></pre></div>
+<p>还是很贵。</p>
+<p>于是 Layer 20 先干一件事情：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>         1M positions
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>              │
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>        Layer20 Indexer
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>              │
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>       block-wise scoring
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>              │
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>       Top 2048 blocks
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>              │
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>         8 positions/block
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>              │
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>              ▼
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>      16384 Candidate Pool
+</span></code></pre></div>
+<p>因为：</p>
+<div class="arithmatex">\[
+2048\times8=16384
+\]</div>
+<p>然后：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>L24 Indexer ─┐
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>L28 Indexer ─┼→ 只搜索这 16384 个候选
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>L32 Indexer ─┤
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>L36 Indexer ─┘
+</span></code></pre></div>
+<p>再分别选自己的：</p>
+<div class="arithmatex">\[
+Top512
+\]</div>
+<p>因此 L24/L28/L32/L36 的 Indexer cost 不再随 1M context 线性增长，而基本由 candidate pool size 决定。(<a href="https://arxiv.org/html/2609.19969" title="DeepSeek-V4.1-Flash: Pushing the Limits of KV Cache Compression">arXiv</a>)</p>
+<hr />
+<h2 id="11-attentionswa-global-top-k">11. 最终 Attention：SWA 和 Global Top-K 是一起算的<a class="headerlink" href="#11-attentionswa-global-top-k" title="Permanent link">&para;</a></h2>
+<p>由此可见，SWA 与 Global Top-K 并不是两次独立的 Attention。</p>
+<p>每一层获得：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>Local:
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>最近最多 128 个 SWA KV
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>Global:
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>Indexer 选出的最多 512 个 Main KV
+</span></code></pre></div>
+<p>官方 inference code 真的是：</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="n">kv</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">window_kv</span><span class="p">,</span> <span class="n">compress_kv</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="n">topk_idxs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">window_idxs</span><span class="p">,</span> <span class="n">compress_idxs</span><span class="p">],</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="n">o</span> <span class="o">=</span> <span class="n">sparse_attn</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">kv</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">topk_idxs</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</span></code></pre></div>
+<p>也就是说，并不是：</p>
+<div class="arithmatex">\[
+Attention_{local}+Attention_{global}
+\]</div>
+<p>而是类似：</p>
+<div class="arithmatex">\[
+Attention
+\left(
+Q,
+[
+KV_\text{local};
+KV_\text{global}
+]
+\right)
+\]</div>
+<p>一起进入 sparse attention。(<a href="https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/blob/main/inference/model.py" title="inference/model.py · deepseek-ai/DeepSeek-V4.1-Flash at main">Hugging Face</a>)</p>
+<p>所以对于一个 Decode token，粗略可以想成：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>                      Q_l
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>                       │
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>           ┌───────────┴───────────┐
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>           │                       │
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>       last 128                 Global
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>       SWA KV                  Top-512
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>           │                       │
+</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>           └──────────┬────────────┘
+</span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>                      │
+</span><span id="__span-21-10"><a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>                 concatenate
+</span><span id="__span-21-11"><a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a>                      │
+</span><span id="__span-21-12"><a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a>                  Attention
+</span><span id="__span-21-13"><a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a>                      │
+</span><span id="__span-21-14"><a id="__codelineno-21-14" name="__codelineno-21-14" href="#__codelineno-21-14"></a>                    output
+</span></code></pre></div>
+<p>这就是：</p>
+<div class="arithmatex">\[
+\boxed{\text{局部必看 + 全局检索}}
+\]</div>
+<hr />
+<h2 id="12-q-low-rank">12. Q 本身也是 Low-Rank 的<a class="headerlink" href="#12-q-low-rank" title="Permanent link">&para;</a></h2>
+<p>V4.1 仍然沿用了类似 MLA 的 low-rank query projection。</p>
+<p>官方 config：</p>
+<div class="arithmatex">\[
+d_\text{model}=5120
+\]</div>
+<div class="arithmatex">\[
+q\_lora\_rank=1280
+\]</div>
+<div class="arithmatex">\[
+64\ heads,\quad head\_dim=512
+\]</div>
+<p>所以不是直接：</p>
+<div class="arithmatex">\[
+5120\rightarrow64\times512
+\]</div>
+<p>而是：</p>
+<div class="arithmatex">\[
+H
+\xrightarrow{W^{Q_A}}
+1280
+\xrightarrow{W^{Q_B}}
+64\times512
+\]</div>
+<p>官方代码就是：</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="n">qr</span> <span class="o">=</span> <span class="n">q_norm</span><span class="p">(</span><span class="n">wq_a</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="n">q</span>  <span class="o">=</span> <span class="n">wq_b</span><span class="p">(</span><span class="n">qr</span><span class="p">)</span>
+</span></code></pre></div>
+<p>然后 reshape 到 multi-head。(<a href="https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/blob/main/config.json" title="config.json · deepseek-ai/DeepSeek-V4.1-Flash at main">Hugging Face</a>)</p>
+<p>Output projection 也用了 grouped low-rank projection，config 中：</p>
+<div class="arithmatex">\[
+o\_lora\_rank=1024,\qquad o\_groups=8
+\]</div>
+<p>所以 Attention 的 Q/O 两边都在压低投影成本。</p>
+<hr />
+<h2 id="13-deepseekmoe">13. 每层后面还是 DeepSeekMoE<a class="headerlink" href="#13-deepseekmoe" title="Permanent link">&para;</a></h2>
+<p>Attention 完以后进入 MoE FFN。</p>
+<p>V4.1 每个 backbone MoE 层有：</p>
+<div class="arithmatex">\[
+384\ routed\ experts
+\]</div>
+<p>每个 token 选：</p>
+<div class="arithmatex">\[
+Top6
+\]</div>
+<p>同时还有：</p>
+<div class="arithmatex">\[
+1\ shared\ expert
+\]</div>
+<p>所以一个 token 实际上走：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>                  token
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>                    │
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>                   Gate
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>                    │
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>       ┌────────────┴────────────┐
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>       │                         │
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>   Top-6 / 384             Shared Expert
+</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>       │                         │
+</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>       └────────────┬────────────┘
+</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>                    │
+</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>                   sum
+</span></code></pre></div>
+<p>expert 内部仍然是 SwiGLU FFN。官方实现也直接写明是“Top-k routed experts plus one shared expert”。(<a href="https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/blob/main/config.json" title="config.json · deepseek-ai/DeepSeek-V4.1-Flash at main">Hugging Face</a>)</p>
+<p>所以 552B backbone 很大，但每个 token 并不会激活 552B。</p>
+<hr />
+<h2 id="14-single-pass-mhc-residual-stream">14. Single-Pass mHC：它甚至不是普通的一条 residual stream<a class="headerlink" href="#14-single-pass-mhc-residual-stream" title="Permanent link">&para;</a></h2>
+<p>这是 V4 系列比较特殊的部分。</p>
+<p>普通 Transformer：</p>
+<div class="arithmatex">\[
+x_{l+1}=x_l+F(x_l)
+\]</div>
+<p>mHC（Manifold-Constrained Hyper-Connections）不是维护一条 residual，而是维护<strong>多条 residual stream</strong>。</p>
+<p>V4.1 config：</p>
+<div class="arithmatex">\[
+hc\_mult=4
+\]</div>
+<p>所以可以粗略理解：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>Residual Stream
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a> ├─ X1
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a> ├─ X2
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a> ├─ X3
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a> └─ X4
+</span></code></pre></div>
+<p>进入 Attention / FFN 前先通过学习出的系数进行 mixing：</p>
+<div class="arithmatex">\[
+\hat X_l=A_{l-1}X_l
+\]</div>
+<p>输出以后再通过 <span class="arithmatex">\(B,C\)</span> 混回 residual streams。</p>
+<p>Single-Pass 的改进主要不是“增强模型能力”，而是<strong>把 mixing coefficient 从本 block 移成 previous block 产生</strong>，打断 kernel dependency：</p>
+<div class="arithmatex">\[
+X_{l+1}
+=
+B_lX_l+C_lF_l(A_{l-1}X_l)
+\]</div>
+<p>于是 residual update、input mixing、系数预测能塞进 Mega-mHC fused kernel，官方给出的结果是相比原实现将 activation memory traffic 大约减半。(<a href="https://arxiv.org/html/2609.19969" title="DeepSeek-V4.1-Flash: Pushing the Limits of KV Cache Compression">arXiv</a>)</p>
+<p>从 Infra 视角，这个设计很值得关注：它实际上是在为了 kernel fusion 改网络数据依赖。</p>
+<hr />
+<h2 id="15-engram196b">15. Engram：196B 参数为什么不会把推理算爆？<a class="headerlink" href="#15-engram196b" title="Permanent link">&para;</a></h2>
+<p>V4.1 有一个很大的：</p>
+<div class="arithmatex">\[
+196B
+\]</div>
+<p>Engram memory。</p>
+<p>但是它不是另一套 196B Transformer。</p>
+<p>它更像一种：</p>
+<div class="arithmatex">\[
+\boxed{\text{sparse conditional parameter memory}}
+\]</div>
+<p>位置在：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>Layer 1
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>Layer 14
+</span></code></pre></div>
+<p>它基于 token n-gram：</p>
+<div class="arithmatex">\[
+n\in\{2,3,4\}
+\]</div>
+<p>通过 hashing 查 embedding table：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>token n-gram
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>     ↓
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a> hash
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>     ↓
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>巨大 embedding table
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>     ↓
+</span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>retrieve 少量 entry
+</span><span id="__span-26-8"><a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a>     ↓
+</span><span id="__span-26-9"><a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a>融合到 hidden state
+</span></code></pre></div>
+<p>因此它把：</p>
+<blockquote>
+<p>“记忆大量固定模式/知识”</p>
+</blockquote>
+<p>和：</p>
+<blockquote>
+<p>“用 Transformer 做复杂计算”</p>
+</blockquote>
+<p>分开。</p>
+<p>196B 参数主要是巨大的稀疏 lookup memory，并不是每 token 全部 matmul。官方还专门设计了 host memory + RDMA background prefetch，因为地址是确定的，可以提前知道需要查哪几个 embedding。(<a href="https://arxiv.org/html/2609.19969" title="DeepSeek-V4.1-Flash: Pushing the Limits of KV Cache Compression">arXiv</a>)</p>
+<p>这个思路和 MoE 又不同：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>MoE:
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>从 384 个大 FFN 中动态选 6 个
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>Engram:
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>通过 n-gram hash
+</span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a>从巨大的 embedding memory 中直接 lookup 少量参数
+</span></code></pre></div>
+<hr />
+<h2 id="16-prefill">16. 一次 Prefill 的执行路径<a class="headerlink" href="#16-prefill" title="Permanent link">&para;</a></h2>
+<p>假设 prompt 长度：</p>
+<div class="arithmatex">\[
+N=100K
+\]</div>
+<p>传统 40 层：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>100K tokens × 40 layers
+</span></code></pre></div>
+<p>而 V4.1：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>                100K prompt
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>                     │
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>                     ▼
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>            Encoder Layer 0~19
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>                     │
+</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>                 全部执行
+</span><span id="__span-29-7"><a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a>                     │
+</span><span id="__span-29-8"><a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a>                     ▼
+</span><span id="__span-29-9"><a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a>                    H20
+</span><span id="__span-29-10"><a id="__codelineno-29-10" name="__codelineno-29-10" href="#__codelineno-29-10"></a>                     │
+</span><span id="__span-29-11"><a id="__codelineno-29-11" name="__codelineno-29-11" href="#__codelineno-29-11"></a>         ┌───────────┴─────────────┐
+</span><span id="__span-29-12"><a id="__codelineno-29-12" name="__codelineno-29-12" href="#__codelineno-29-12"></a>         │                         │
+</span><span id="__span-29-13"><a id="__codelineno-29-13" name="__codelineno-29-13" href="#__codelineno-29-13"></a>  Encoder Global KV        Decoder Global KV
+</span><span id="__span-29-14"><a id="__codelineno-29-14" name="__codelineno-29-14" href="#__codelineno-29-14"></a>         │                 直接由 H20 生成
+</span><span id="__span-29-15"><a id="__codelineno-29-15" name="__codelineno-29-15" href="#__codelineno-29-15"></a>         │                         │
+</span><span id="__span-29-16"><a id="__codelineno-29-16" name="__codelineno-29-16" href="#__codelineno-29-16"></a>         └───────────┬─────────────┘
+</span><span id="__span-29-17"><a id="__codelineno-29-17" name="__codelineno-29-17" href="#__codelineno-29-17"></a>                     │
+</span><span id="__span-29-18"><a id="__codelineno-29-18" name="__codelineno-29-18" href="#__codelineno-29-18"></a>              Global cache ready
+</span></code></pre></div>
+<p>关键在于：</p>
+<blockquote>
+<p><strong>绝大多数 prompt token 不需要跑完整 Decoder 20 层。</strong></p>
+</blockquote>
+<p>但是还有一个问题：</p>
+<p>Decoder 的 SWA 是逐层 fresh 的。</p>
+<p>因此第一步 decode 时，L39 需要：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>L39 最近 128 token 的 SWA KV
+</span></code></pre></div>
+<p>这些 KV 不可能直接由 H20 投影得到。</p>
+<p>怎么办？</p>
+<hr />
+<h2 id="17-decoder-swa-bounded-replay">17. Decoder SWA Bounded Replay<a class="headerlink" href="#17-decoder-swa-bounded-replay" title="Permanent link">&para;</a></h2>
+<p>答案是：</p>
+<div class="arithmatex">\[
+\boxed{\text{只把 prompt 最后 128 token 再跑 Decoder}}
+\]</div>
+<p>因此 Prefill 实际流程：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>              N tokens
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>                 │
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>        ┌────────▼────────┐
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>        │ Encoder 20层    │
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>        │ 全 N tokens     │
+</span><span id="__span-31-6"><a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>        └────────┬────────┘
+</span><span id="__span-31-7"><a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a>                 │ H20
+</span><span id="__span-31-8"><a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a>                 │
+</span><span id="__span-31-9"><a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a>        Global KV 已经 ready
+</span><span id="__span-31-10"><a id="__codelineno-31-10" name="__codelineno-31-10" href="#__codelineno-31-10"></a>                 │
+</span><span id="__span-31-11"><a id="__codelineno-31-11" name="__codelineno-31-11" href="#__codelineno-31-11"></a>                 │ 只取最后128个
+</span><span id="__span-31-12"><a id="__codelineno-31-12" name="__codelineno-31-12" href="#__codelineno-31-12"></a>                 ▼
+</span><span id="__span-31-13"><a id="__codelineno-31-13" name="__codelineno-31-13" href="#__codelineno-31-13"></a>        ┌─────────────────┐
+</span><span id="__span-31-14"><a id="__codelineno-31-14" name="__codelineno-31-14" href="#__codelineno-31-14"></a>        │ Decoder 20层    │
+</span><span id="__span-31-15"><a id="__codelineno-31-15" name="__codelineno-31-15" href="#__codelineno-31-15"></a>        │ only 128 tokens │
+</span><span id="__span-31-16"><a id="__codelineno-31-16" name="__codelineno-31-16" href="#__codelineno-31-16"></a>        └─────────────────┘
+</span><span id="__span-31-17"><a id="__codelineno-31-17" name="__codelineno-31-17" href="#__codelineno-31-17"></a>                 │
+</span><span id="__span-31-18"><a id="__codelineno-31-18" name="__codelineno-31-18" href="#__codelineno-31-18"></a>                 ▼
+</span><span id="__span-31-19"><a id="__codelineno-31-19" name="__codelineno-31-19" href="#__codelineno-31-19"></a>       Decoder SWA KV ready
+</span></code></pre></div>
+<p>所以复杂度从传统：</p>
+<div class="arithmatex">\[
+O(NL)
+\]</div>
+<p>变成：</p>
+<div class="arithmatex">\[
+O
+\left(
+N\frac L2+
+w\frac L2
+\right)
+\]</div>
+<p>由于：</p>
+<div class="arithmatex">\[
+N\gg128
+\]</div>
+<p>所以：</p>
+<div class="arithmatex">\[
+\approx O(NL/2)
+\]</div>
+<p>这就是所谓：</p>
+<div class="arithmatex">\[
+\boxed{
+\text{Prefill: }\sim 8\text{B active params/token}
+\quad\text{vs}\quad
+\text{Decode: }\sim 16\text{B active params/token}
+}
+\]</div>
+<p>这是“Prefill 激活参数量约 8B、Decode 激活参数量约 16B”的结构原因；它不是对端到端延迟的直接估计。官方报告也给出了对应的复杂度分析。(<a href="https://arxiv.org/html/2609.19969" title="DeepSeek-V4.1-Flash: Pushing the Limits of KV Cache Compression">arXiv</a>)</p>
+<hr />
+<h2 id="18-decode-token-40">18. Decode 阶段：每个新 token 都跑 40 层<a class="headerlink" href="#18-decode-token-40" title="Permanent link">&para;</a></h2>
+<p>现在开始生成 token <span class="arithmatex">\(t\)</span>。</p>
+<p>首先：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>x_t
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a> ↓
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>L0
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a> ↓
+</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a>L1
+</span><span id="__span-32-6"><a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a> ↓
+</span><span id="__span-32-7"><a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a>...
+</span><span id="__span-32-8"><a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a> ↓
+</span><span id="__span-32-9"><a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a>L19
+</span><span id="__span-32-10"><a id="__codelineno-32-10" name="__codelineno-32-10" href="#__codelineno-32-10"></a> ↓
+</span><span id="__span-32-11"><a id="__codelineno-32-11" name="__codelineno-32-11" href="#__codelineno-32-11"></a>L20
+</span><span id="__span-32-12"><a id="__codelineno-32-12" name="__codelineno-32-12" href="#__codelineno-32-12"></a> ↓
+</span><span id="__span-32-13"><a id="__codelineno-32-13" name="__codelineno-32-13" href="#__codelineno-32-13"></a>...
+</span><span id="__span-32-14"><a id="__codelineno-32-14" name="__codelineno-32-14" href="#__codelineno-32-14"></a> ↓
+</span><span id="__span-32-15"><a id="__codelineno-32-15" name="__codelineno-32-15" href="#__codelineno-32-15"></a>L39
+</span><span id="__span-32-16"><a id="__codelineno-32-16" name="__codelineno-32-16" href="#__codelineno-32-16"></a> ↓
+</span><span id="__span-32-17"><a id="__codelineno-32-17" name="__codelineno-32-17" href="#__codelineno-32-17"></a>logits
+</span></code></pre></div>
+<p><strong>Decode 时一个 token 会经过完整 40 层。</strong></p>
+<p>因为当前 token 需要真正获得：</p>
+<div class="arithmatex">\[
+H_0^t,H_1^t,\ldots,H_{39}^t
+\]</div>
+<p>因此 Decode 激活约 16B 参数/token，而不是 Prefill 的 8B。(<a href="https://arxiv.org/html/2609.19969" title="DeepSeek-V4.1-Flash: Pushing the Limits of KV Cache Compression">arXiv</a>)</p>
+<hr />
+<h2 id="19-decode-token">19. 具体追踪一个 Decode token<a class="headerlink" href="#19-decode-token" title="Permanent link">&para;</a></h2>
+<p>这部分最能把整个架构串起来。</p>
+<p>假设现在生成 token <span class="arithmatex">\(t\)</span>。</p>
+<h3 id="layer-0">Layer 0<a class="headerlink" href="#layer-0" title="Permanent link">&para;</a></h3>
+<p>只做：</p>
+<div class="arithmatex">\[
+SWA(128)
+\]</div>
+<p>没有 Global CSA2。</p>
+<p>然后 MoE。</p>
+<hr />
+<h3 id="layer-1">Layer 1<a class="headerlink" href="#layer-1" title="Permanent link">&para;</a></h3>
+<p>仍然：</p>
+<div class="arithmatex">\[
+SWA(128)
+\]</div>
+<p>然后还会访问：</p>
+<div class="arithmatex">\[
+Engram_1
+\]</div>
+<p>再 MoE。</p>
+<hr />
+<h3 id="layer-2full-csa2">Layer 2：Full CSA2<a class="headerlink" href="#layer-2full-csa2" title="Permanent link">&para;</a></h3>
+<p>当前 hidden：</p>
+<div class="arithmatex">\[
+H_2^t
+\]</div>
+<p>首先生成：</p>
+<div class="arithmatex">\[
+Q_2^t
+\]</div>
+<p>还生成这一层自己的：</p>
+<div class="arithmatex">\[
+KV_{SWA,2}^t
+\]</div>
+<p>加入 SWA ring buffer：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>[t-127 ... t]
+</span></code></pre></div>
+<p>与此同时 Layer2 是：</p>
+<div class="arithmatex">\[
+compress\ ratio=2
+\]</div>
+<p>所以每积累两个 token，会形成一个新的 compressed Main KV entry。官方 compressor 在 decode 时甚至会把未凑满的一组暂存在 state 中，只有每两个 token 才产出一个 latent。(<a href="https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/blob/main/inference/model.py" title="inference/model.py · deepseek-ai/DeepSeek-V4.1-Flash at main">Hugging Face</a>)</p>
+<p>然后 Layer2 indexer：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>compressed Global KV
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>        ↓
+</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>     score
+</span><span id="__span-34-4"><a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a>        ↓
+</span><span id="__span-34-5"><a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a>     Top512
+</span></code></pre></div>
+<p>最后 Attention：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>128 SWA + 512 global selected KV
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>               ↓
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>            Attention
+</span></code></pre></div>
+<hr />
+<h3 id="layer-37">Layer 3~7<a class="headerlink" href="#layer-37" title="Permanent link">&para;</a></h3>
+<p>这些是 Reuse：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>Global Main KV       ← reuse L2
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>Top512 indices       ← reuse L2
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>
+</span><span id="__span-36-4"><a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a>Q_l                  ← fresh
+</span><span id="__span-36-5"><a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a>SWA KV_l             ← fresh
+</span></code></pre></div>
+<p>这个区别非常重要：</p>
+<div class="arithmatex">\[
+\boxed{
+\text{Reuse}\ne\text{整层复用}
+}
+\]</div>
+<p>它仍然是新的 Transformer Layer，只是重复使用 global memory 和 retrieval result。</p>
+<hr />
+<h3 id="layer-8">Layer 8<a class="headerlink" href="#layer-8" title="Permanent link">&para;</a></h3>
+<p>重新 Full：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>新的 Main KV representation
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>新的 Indexer
+</span><span id="__span-37-3"><a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a>新的 Top512
+</span></code></pre></div>
+<p>再供 L9~13 使用。</p>
+<p>Layer14 同理。</p>
+<hr />
+<h2 id="20-layer-20ced">20. Layer 20：CED 的关键切换<a class="headerlink" href="#20-layer-20ced" title="Permanent link">&para;</a></h2>
+<p>经过 Encoder L0~19 后，当前 token 得到：</p>
+<div class="arithmatex">\[
+H_{20}^{t}
+\]</div>
+<p>这个东西非常重要，因为它不仅是 Decoder 的输入，同时是：</p>
+<div class="arithmatex">\[
+\boxed{\text{Decoder shared Global KV 的 source}}
+\]</div>
+<p>Layer20：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>H20_t
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a> │
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a> ├─→ Q20
+</span><span id="__span-38-4"><a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a> │
+</span><span id="__span-38-5"><a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a> ├─→ SWA KV20
+</span><span id="__span-38-6"><a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a> │
+</span><span id="__span-38-7"><a id="__codelineno-38-7" name="__codelineno-38-7" href="#__codelineno-38-7"></a> └─→ Decoder Main KV_t
+</span></code></pre></div>
+<p>由于 decoder：</p>
+<div class="arithmatex">\[
+compress\ ratio=1
+\]</div>
+<p>因此每生成一个 token 都增加一个 Main KV entry。</p>
+<p>而这份 Main KV 会给：</p>
+<div class="arithmatex">\[
+L20,L21,\ldots,L39
+\]</div>
+<p>共同使用。(<a href="https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/blob/main/config.json" title="config.json · deepseek-ai/DeepSeek-V4.1-Flash at main">Hugging Face</a>)</p>
+<hr />
+<h2 id="21-layer-20decoder-global-retrieval">21. Layer 20：Decoder Global Retrieval 的第一阶段检索器<a class="headerlink" href="#21-layer-20decoder-global-retrieval" title="Permanent link">&para;</a></h2>
+<p>Layer20 对所有可见 global Main KV 做 indexing：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>                  entire context
+</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>                       │
+</span><span id="__span-39-3"><a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a>             Layer20 indexer
+</span><span id="__span-39-4"><a id="__codelineno-39-4" name="__codelineno-39-4" href="#__codelineno-39-4"></a>                /            \
+</span><span id="__span-39-5"><a id="__codelineno-39-5" name="__codelineno-39-5" href="#__codelineno-39-5"></a>            Top512          block TopK
+</span><span id="__span-39-6"><a id="__codelineno-39-6" name="__codelineno-39-6" href="#__codelineno-39-6"></a>              │                │
+</span><span id="__span-39-7"><a id="__codelineno-39-7" name="__codelineno-39-7" href="#__codelineno-39-7"></a>      自己做Attention      2048 × 8
+</span><span id="__span-39-8"><a id="__codelineno-39-8" name="__codelineno-39-8" href="#__codelineno-39-8"></a>                               │
+</span><span id="__span-39-9"><a id="__codelineno-39-9" name="__codelineno-39-9" href="#__codelineno-39-9"></a>                               ▼
+</span><span id="__span-39-10"><a id="__codelineno-39-10" name="__codelineno-39-10" href="#__codelineno-39-10"></a>                       16384 candidates
+</span></code></pre></div>
+<p>因此它同时产生：</p>
+<div class="arithmatex">\[
+Top512_{L20}
+\]</div>
+<p>和：</p>
+<div class="arithmatex">\[
+CandidatePool_{16384}
+\]</div>
+<hr />
+<h2 id="22-layer-2123reuse">22. Layer 21~23：Reuse<a class="headerlink" href="#22-layer-2123reuse" title="Permanent link">&para;</a></h2>
+<p>非常便宜：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>L20 Main KV      reuse
+</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>L20 Top512       reuse
+</span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a>
+</span><span id="__span-40-4"><a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a>自己的 Q        fresh
+</span><span id="__span-40-5"><a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a>自己的 SWA      fresh
+</span></code></pre></div>
+<hr />
+<h2 id="23-layer-24reindex">23. Layer 24：Reindex<a class="headerlink" href="#23-layer-24reindex" title="Permanent link">&para;</a></h2>
+<p>Layer24 不重新造 global KV。</p>
+<p>它有：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>Main KV ← L20
+</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>candidate pool ← L20
+</span></code></pre></div>
+<p>但是它认为：</p>
+<blockquote>
+<p>Layer24 的 Q 已经比 L20 深了不少，我可能想看不同的历史 token。</p>
+</blockquote>
+<p>所以：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>Q24
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a> ↓
+</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a>只 score 16384 candidates
+</span><span id="__span-42-4"><a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a> ↓
+</span><span id="__span-42-5"><a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a>新的 Top512
+</span></code></pre></div>
+<p>于是：</p>
+<div class="arithmatex">\[
+Top512_{24}\ne Top512_{20}
+\]</div>
+<p>之后 L25~27 又复用它。</p>
+<p>然后：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>L28 Reindex
+</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>L32 Reindex
+</span><span id="__span-43-3"><a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a>L36 Reindex
+</span></code></pre></div>
+<p>这就在：</p>
+<blockquote>
+<p>“每层都重新检索，太贵”</p>
+</blockquote>
+<p>和：</p>
+<blockquote>
+<p>“所有层完全看一样的历史，表达力差”</p>
+</blockquote>
+<p>之间做了折中。</p>
+<hr />
+<h2 id="24-decode-attention-context-length">24. Decode Attention 的计算量为何对 Context Length 不敏感？<a class="headerlink" href="#24-decode-attention-context-length" title="Permanent link">&para;</a></h2>
+<p>到了 1M context，Main Attention 实际参与计算的 Global KV 仍然大致是：</p>
+<div class="arithmatex">\[
+K=512
+\]</div>
+<p>再加上局部窗口：</p>
+<div class="arithmatex">\[
+w=128
+\]</div>
+<p>因此核心 Attention 的读取规模近似为：</p>
+<div class="arithmatex">\[
+O(K+w)=O(512+128)
+\]</div>
+<p>不是：</p>
+<div class="arithmatex">\[
+O(1M)
+\]</div>
+<p>只有 Layer20 Full indexer 仍然需要看全局；之后几个 Reindex 只看约 16K candidate。因此官方报告称从 4K 增大到 1M、context 扩大 256 倍时，single-token decode FLOPs 只增加约 &frac14;，而不是同比增加。(<a href="https://arxiv.org/html/2609.19969" title="DeepSeek-V4.1-Flash: Pushing the Limits of KV Cache Compression">arXiv</a>)</p>
+<hr />
+<h2 id="25-kv-cache-890-bytestoken">25. KV Cache 如何压到约 890 bytes/token？<a class="headerlink" href="#25-kv-cache-890-bytestoken" title="Permanent link">&para;</a></h2>
+<p>这不是单个技巧造成的，而是几层乘法。</p>
+<p>首先：</p>
+<h3 id="mla-like-latent">MLA-like latent<a class="headerlink" href="#mla-like-latent" title="Permanent link">&para;</a></h3>
+<p>每个 token 不保存所有 head 的传统 K/V。</p>
+<p>↓</p>
+<h3 id="sequence-compression">Sequence compression<a class="headerlink" href="#sequence-compression" title="Permanent link">&para;</a></h3>
+<p>Encoder：</p>
+<div class="arithmatex">\[
+2 token\rightarrow1 Main KV
+\]</div>
+<p>↓</p>
+<h3 id="cross-layer-reuse">Cross-layer reuse<a class="headerlink" href="#cross-layer-reuse" title="Permanent link">&para;</a></h3>
+<p>不是 40 层都保存一份 global KV。</p>
+<p>↓</p>
+<h3 id="sparse-index">Sparse index<a class="headerlink" href="#sparse-index" title="Permanent link">&para;</a></h3>
+<p>Attention 只真正读少量 selected KV。</p>
+<p>↓</p>
+<h3 id="fp4-main-kv">FP4 Main KV<a class="headerlink" href="#fp4-main-kv" title="Permanent link">&para;</a></h3>
+<p>Main KV Cache 用 FP4 存。</p>
+<p>官方使用接近 NVFP4 的方案：</p>
+<div class="arithmatex">\[
+E2M1 + E4M3\ scale/16\ channels
+\]</div>
+<p>最终 global KV footprint：</p>
+<div class="arithmatex">\[
+\boxed{890\ bytes/token}
+\]</div>
+<p>约为 DeepSeek-V4-Flash 的 &frac14;。(<a href="https://arxiv.org/html/2609.19969" title="DeepSeek-V4.1-Flash: Pushing the Limits of KV Cache Compression">arXiv</a>)</p>
+<p>注意：</p>
+<div class="arithmatex">\[
+\boxed{\text{Main KV = FP4}}
+\]</div>
+<p>但是：</p>
+<div class="arithmatex">\[
+\boxed{\text{SWA KV = FP8}}
+\]</div>
+<p>官方 inference code 也能看到 SWA cache 保持 FP8，因为局部 KV 对量化精度更敏感。(<a href="https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/blob/main/inference/model.py" title="inference/model.py · deepseek-ai/DeepSeek-V4.1-Flash at main">Hugging Face</a>)</p>
+<hr />
+<h2 id="26-prefix-cache">26. Prefix Cache 命中时如何处理？<a class="headerlink" href="#26-prefix-cache" title="Permanent link">&para;</a></h2>
+<p>这其实对于 Agent Infra 特别有意思。</p>
+<p>假如：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>Turn 1:
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>100K history
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>        ↓
+</span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a>cache
+</span><span id="__span-44-5"><a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a>
+</span><span id="__span-44-6"><a id="__codelineno-44-6" name="__codelineno-44-6" href="#__codelineno-44-6"></a>Turn 2:
+</span><span id="__span-44-7"><a id="__codelineno-44-7" name="__codelineno-44-7" href="#__codelineno-44-7"></a>100K cached history + 2K new tool output
+</span></code></pre></div>
+<p>Global KV 可以长期保存。</p>
+<p>但是 V4.1 <strong>不再把 SWA KV 长期持久化到 SSD</strong>。</p>
+<p>因为 SWA 只需要最后 128 token，而且它生命周期非常短。</p>
+<p>所以：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>Persistent Cache:
+</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>Global KV     ✓ 长期存
+</span><span id="__span-45-3"><a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a>
+</span><span id="__span-45-4"><a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a>SWA KV:
+</span><span id="__span-45-5"><a id="__codelineno-45-5" name="__codelineno-45-5" href="#__codelineno-45-5"></a>SSD           ✗
+</span><span id="__span-45-6"><a id="__codelineno-45-6" name="__codelineno-45-6" href="#__codelineno-45-6"></a>Host DRAM     ✓ 短 TTL
+</span></code></pre></div>
+<p>如果 SWA DRAM cache 也 miss 了：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>cached prefix
+</span><span id="__span-46-2"><a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>.......................[last 128]
+</span><span id="__span-46-3"><a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a>                              │
+</span><span id="__span-46-4"><a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a>                              ▼
+</span><span id="__span-46-5"><a id="__codelineno-46-5" name="__codelineno-46-5" href="#__codelineno-46-5"></a>                          replay
+</span><span id="__span-46-6"><a id="__codelineno-46-6" name="__codelineno-46-6" href="#__codelineno-46-6"></a>                              │
+</span><span id="__span-46-7"><a id="__codelineno-46-7" name="__codelineno-46-7" href="#__codelineno-46-7"></a>                        恢复 SWA KV
+</span></code></pre></div>
+<p>而不是把整个 prefix 重算。(<a href="https://arxiv.org/html/2609.19969" title="DeepSeek-V4.1-Flash: Pushing the Limits of KV Cache Compression">arXiv</a>)</p>
+<p>这就是 <strong>SWA Bounded Replay</strong>。</p>
+<p>它让 persistent KV footprint 又降低到 V4 的约：</p>
+<div class="arithmatex">\[
+\boxed{1/8}
+\]</div>
+<hr />
+<h2 id="27-dsparkdecode-1-token">27. DSpark：Decode 不一定一次只生成 1 token<a class="headerlink" href="#27-dsparkdecode-1-token" title="Permanent link">&para;</a></h2>
+<p>以上描述的是 target model 的基本自回归路径。</p>
+<p>实际 serving 还会用：</p>
+<div class="arithmatex">\[
+\boxed{\text{DSpark speculative decoding}}
+\]</div>
+<p>它有额外的 3 个轻量 Transformer blocks，SWA window 同样是 128。</p>
+<p>一次 forward 会并行预测：</p>
+<div class="arithmatex">\[
+5\ draft\ positions
+\]</div>
+<p>可以简单想：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>Target Model hidden states
+</span><span id="__span-47-2"><a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a>         │
+</span><span id="__span-47-3"><a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a>         ▼
+</span><span id="__span-47-4"><a id="__codelineno-47-4" name="__codelineno-47-4" href="#__codelineno-47-4"></a>      DSpark
+</span><span id="__span-47-5"><a id="__codelineno-47-5" name="__codelineno-47-5" href="#__codelineno-47-5"></a>         │
+</span><span id="__span-47-6"><a id="__codelineno-47-6" name="__codelineno-47-6" href="#__codelineno-47-6"></a> ┌───────┼──────────────┐
+</span><span id="__span-47-7"><a id="__codelineno-47-7" name="__codelineno-47-7" href="#__codelineno-47-7"></a> ▼       ▼       ▼      ▼ ...
+</span><span id="__span-47-8"><a id="__codelineno-47-8" name="__codelineno-47-8" href="#__codelineno-47-8"></a> t+1     t+2     t+3    t+4 t+5
+</span></code></pre></div>
+<p>然后用 confidence head 估计这些 draft 被 target model 接受的概率，再动态决定一次验证几个 token。(<a href="https://arxiv.org/html/2609.19969" title="DeepSeek-V4.1-Flash: Pushing the Limits of KV Cache Compression">arXiv</a>)</p>
+<p>所以真实 serving 更接近：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>Target model
+</span><span id="__span-48-2"><a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a>     │
+</span><span id="__span-48-3"><a id="__codelineno-48-3" name="__codelineno-48-3" href="#__codelineno-48-3"></a>     ├── hidden L37
+</span><span id="__span-48-4"><a id="__codelineno-48-4" name="__codelineno-48-4" href="#__codelineno-48-4"></a>     ├── hidden L38
+</span><span id="__span-48-5"><a id="__codelineno-48-5" name="__codelineno-48-5" href="#__codelineno-48-5"></a>     └── hidden L39
+</span><span id="__span-48-6"><a id="__codelineno-48-6" name="__codelineno-48-6" href="#__codelineno-48-6"></a>             │
+</span><span id="__span-48-7"><a id="__codelineno-48-7" name="__codelineno-48-7" href="#__codelineno-48-7"></a>             ▼
+</span><span id="__span-48-8"><a id="__codelineno-48-8" name="__codelineno-48-8" href="#__codelineno-48-8"></a>          DSpark
+</span><span id="__span-48-9"><a id="__codelineno-48-9" name="__codelineno-48-9" href="#__codelineno-48-9"></a>             │
+</span><span id="__span-48-10"><a id="__codelineno-48-10" name="__codelineno-48-10" href="#__codelineno-48-10"></a>       draft &lt;= 5 tokens
+</span><span id="__span-48-11"><a id="__codelineno-48-11" name="__codelineno-48-11" href="#__codelineno-48-11"></a>             │
+</span><span id="__span-48-12"><a id="__codelineno-48-12" name="__codelineno-48-12" href="#__codelineno-48-12"></a>             ▼
+</span><span id="__span-48-13"><a id="__codelineno-48-13" name="__codelineno-48-13" href="#__codelineno-48-13"></a>       Target verification
+</span><span id="__span-48-14"><a id="__codelineno-48-14" name="__codelineno-48-14" href="#__codelineno-48-14"></a>             │
+</span><span id="__span-48-15"><a id="__codelineno-48-15" name="__codelineno-48-15" href="#__codelineno-48-15"></a>       accept prefix
+</span><span id="__span-48-16"><a id="__codelineno-48-16" name="__codelineno-48-16" href="#__codelineno-48-16"></a>             │
+</span><span id="__span-48-17"><a id="__codelineno-48-17" name="__codelineno-48-17" href="#__codelineno-48-17"></a>             ▼
+</span><span id="__span-48-18"><a id="__codelineno-48-18" name="__codelineno-48-18" href="#__codelineno-48-18"></a>          continue
+</span></code></pre></div>
+<p>它代替了早期 DeepSeek 中类似 MTP 的角色。</p>
+<hr />
+<h2 id="28">28. 多模态输入路径<a class="headerlink" href="#28" title="Permanent link">&para;</a></h2>
+<p>如果输入图片：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>Image
+</span><span id="__span-49-2"><a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a>  ↓
+</span><span id="__span-49-3"><a id="__codelineno-49-3" name="__codelineno-49-3" href="#__codelineno-49-3"></a>DeepSeek-ViT
+</span><span id="__span-49-4"><a id="__codelineno-49-4" name="__codelineno-49-4" href="#__codelineno-49-4"></a>  ↓
+</span><span id="__span-49-5"><a id="__codelineno-49-5" name="__codelineno-49-5" href="#__codelineno-49-5"></a>spatial features
+</span><span id="__span-49-6"><a id="__codelineno-49-6" name="__codelineno-49-6" href="#__codelineno-49-6"></a>  ↓
+</span><span id="__span-49-7"><a id="__codelineno-49-7" name="__codelineno-49-7" href="#__codelineno-49-7"></a>3×3 Pixel Unshuffle
+</span><span id="__span-49-8"><a id="__codelineno-49-8" name="__codelineno-49-8" href="#__codelineno-49-8"></a>  ↓
+</span><span id="__span-49-9"><a id="__codelineno-49-9" name="__codelineno-49-9" href="#__codelineno-49-9"></a>token 数减少 9 倍
+</span><span id="__span-49-10"><a id="__codelineno-49-10" name="__codelineno-49-10" href="#__codelineno-49-10"></a>  ↓
+</span><span id="__span-49-11"><a id="__codelineno-49-11" name="__codelineno-49-11" href="#__codelineno-49-11"></a>2-layer MLP projector
+</span><span id="__span-49-12"><a id="__codelineno-49-12" name="__codelineno-49-12" href="#__codelineno-49-12"></a>  ↓
+</span><span id="__span-49-13"><a id="__codelineno-49-13" name="__codelineno-49-13" href="#__codelineno-49-13"></a>5120-d visual embedding
+</span><span id="__span-49-14"><a id="__codelineno-49-14" name="__codelineno-49-14" href="#__codelineno-49-14"></a>  ↓
+</span><span id="__span-49-15"><a id="__codelineno-49-15" name="__codelineno-49-15" href="#__codelineno-49-15"></a>与 Text Embedding 插在同一个序列
+</span><span id="__span-49-16"><a id="__codelineno-49-16" name="__codelineno-49-16" href="#__codelineno-49-16"></a>  ↓
+</span><span id="__span-49-17"><a id="__codelineno-49-17" name="__codelineno-49-17" href="#__codelineno-49-17"></a>40-layer language backbone
+</span></code></pre></div>
+<p>Vision Encoder 是 32 层、hidden size 1024、16 heads，使用 2D-RoPE；3×3 downsample 把视觉 token 数减少 9 倍。(<a href="https://arxiv.org/html/2609.19969" title="DeepSeek-V4.1-Flash: Pushing the Limits of KV Cache Compression">arXiv</a>)</p>
+<p>所以 V4.1 并不是“外挂 VLM adapter”，而是原生 multimodal pretraining 的统一 backbone。</p>
+<hr />
+<h2 id="29">29. 一次完整推理流程<a class="headerlink" href="#29" title="Permanent link">&para;</a></h2>
+<p>下面这张图概括了最重要的执行路径：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>                          PROMPT
+</span><span id="__span-50-2"><a id="__codelineno-50-2" name="__codelineno-50-2" href="#__codelineno-50-2"></a>                            │
+</span><span id="__span-50-3"><a id="__codelineno-50-3" name="__codelineno-50-3" href="#__codelineno-50-3"></a>                  ┌─────────┴─────────┐
+</span><span id="__span-50-4"><a id="__codelineno-50-4" name="__codelineno-50-4" href="#__codelineno-50-4"></a>                  │                   │
+</span><span id="__span-50-5"><a id="__codelineno-50-5" name="__codelineno-50-5" href="#__codelineno-50-5"></a>                Text                Image
+</span><span id="__span-50-6"><a id="__codelineno-50-6" name="__codelineno-50-6" href="#__codelineno-50-6"></a>                  │                   │
+</span><span id="__span-50-7"><a id="__codelineno-50-7" name="__codelineno-50-7" href="#__codelineno-50-7"></a>              Embedding          DeepSeek-ViT
+</span><span id="__span-50-8"><a id="__codelineno-50-8" name="__codelineno-50-8" href="#__codelineno-50-8"></a>                  │                   │
+</span><span id="__span-50-9"><a id="__codelineno-50-9" name="__codelineno-50-9" href="#__codelineno-50-9"></a>                  │            Pixel-Unshuffle
+</span><span id="__span-50-10"><a id="__codelineno-50-10" name="__codelineno-50-10" href="#__codelineno-50-10"></a>                  │                   │
+</span><span id="__span-50-11"><a id="__codelineno-50-11" name="__codelineno-50-11" href="#__codelineno-50-11"></a>                  └─────────┬─────────┘
+</span><span id="__span-50-12"><a id="__codelineno-50-12" name="__codelineno-50-12" href="#__codelineno-50-12"></a>                            ▼
+</span><span id="__span-50-13"><a id="__codelineno-50-13" name="__codelineno-50-13" href="#__codelineno-50-13"></a>                    Unified Sequence
+</span><span id="__span-50-14"><a id="__codelineno-50-14" name="__codelineno-50-14" href="#__codelineno-50-14"></a>                            │
+</span><span id="__span-50-15"><a id="__codelineno-50-15" name="__codelineno-50-15" href="#__codelineno-50-15"></a>           ╔════════ PREFILL ════════╗
+</span><span id="__span-50-16"><a id="__codelineno-50-16" name="__codelineno-50-16" href="#__codelineno-50-16"></a>                            │
+</span><span id="__span-50-17"><a id="__codelineno-50-17" name="__codelineno-50-17" href="#__codelineno-50-17"></a>                 Encoder L0~19
+</span><span id="__span-50-18"><a id="__codelineno-50-18" name="__codelineno-50-18" href="#__codelineno-50-18"></a>                 全 prompt 执行
+</span><span id="__span-50-19"><a id="__codelineno-50-19" name="__codelineno-50-19" href="#__codelineno-50-19"></a>                            │
+</span><span id="__span-50-20"><a id="__codelineno-50-20" name="__codelineno-50-20" href="#__codelineno-50-20"></a>                           H20
+</span><span id="__span-50-21"><a id="__codelineno-50-21" name="__codelineno-50-21" href="#__codelineno-50-21"></a>                ┌───────────┴───────────┐
+</span><span id="__span-50-22"><a id="__codelineno-50-22" name="__codelineno-50-22" href="#__codelineno-50-22"></a>                │                       │
+</span><span id="__span-50-23"><a id="__codelineno-50-23" name="__codelineno-50-23" href="#__codelineno-50-23"></a>       Encoder Global KV       Decoder Global KV
+</span><span id="__span-50-24"><a id="__codelineno-50-24" name="__codelineno-50-24" href="#__codelineno-50-24"></a>                │                       │
+</span><span id="__span-50-25"><a id="__codelineno-50-25" name="__codelineno-50-25" href="#__codelineno-50-25"></a>                └───────────┬───────────┘
+</span><span id="__span-50-26"><a id="__codelineno-50-26" name="__codelineno-50-26" href="#__codelineno-50-26"></a>                            │
+</span><span id="__span-50-27"><a id="__codelineno-50-27" name="__codelineno-50-27" href="#__codelineno-50-27"></a>                   last 128 tokens
+</span><span id="__span-50-28"><a id="__codelineno-50-28" name="__codelineno-50-28" href="#__codelineno-50-28"></a>                            │
+</span><span id="__span-50-29"><a id="__codelineno-50-29" name="__codelineno-50-29" href="#__codelineno-50-29"></a>                  Decoder L20~39
+</span><span id="__span-50-30"><a id="__codelineno-50-30" name="__codelineno-50-30" href="#__codelineno-50-30"></a>                   Bounded Replay
+</span><span id="__span-50-31"><a id="__codelineno-50-31" name="__codelineno-50-31" href="#__codelineno-50-31"></a>                            │
+</span><span id="__span-50-32"><a id="__codelineno-50-32" name="__codelineno-50-32" href="#__codelineno-50-32"></a>                            ▼
+</span><span id="__span-50-33"><a id="__codelineno-50-33" name="__codelineno-50-33" href="#__codelineno-50-33"></a>                    SWA state ready
+</span><span id="__span-50-34"><a id="__codelineno-50-34" name="__codelineno-50-34" href="#__codelineno-50-34"></a>           ╚═══════════════════════════╝
+</span><span id="__span-50-35"><a id="__codelineno-50-35" name="__codelineno-50-35" href="#__codelineno-50-35"></a>
+</span><span id="__span-50-36"><a id="__codelineno-50-36" name="__codelineno-50-36" href="#__codelineno-50-36"></a>                            │
+</span><span id="__span-50-37"><a id="__codelineno-50-37" name="__codelineno-50-37" href="#__codelineno-50-37"></a>           ╔════════ DECODE ══════════╗
+</span><span id="__span-50-38"><a id="__codelineno-50-38" name="__codelineno-50-38" href="#__codelineno-50-38"></a>                            │
+</span><span id="__span-50-39"><a id="__codelineno-50-39" name="__codelineno-50-39" href="#__codelineno-50-39"></a>                       new token
+</span><span id="__span-50-40"><a id="__codelineno-50-40" name="__codelineno-50-40" href="#__codelineno-50-40"></a>                            │
+</span><span id="__span-50-41"><a id="__codelineno-50-41" name="__codelineno-50-41" href="#__codelineno-50-41"></a>                   Encoder L0~19
+</span><span id="__span-50-42"><a id="__codelineno-50-42" name="__codelineno-50-42" href="#__codelineno-50-42"></a>                            │
+</span><span id="__span-50-43"><a id="__codelineno-50-43" name="__codelineno-50-43" href="#__codelineno-50-43"></a>              ┌─────────────┴─────────────┐
+</span><span id="__span-50-44"><a id="__codelineno-50-44" name="__codelineno-50-44" href="#__codelineno-50-44"></a>              │                           │
+</span><span id="__span-50-45"><a id="__codelineno-50-45" name="__codelineno-50-45" href="#__codelineno-50-45"></a>         Local SWA                   Global CSA2
+</span><span id="__span-50-46"><a id="__codelineno-50-46" name="__codelineno-50-46" href="#__codelineno-50-46"></a>         fresh/layer                 sparse/shared
+</span><span id="__span-50-47"><a id="__codelineno-50-47" name="__codelineno-50-47" href="#__codelineno-50-47"></a>              │                           │
+</span><span id="__span-50-48"><a id="__codelineno-50-48" name="__codelineno-50-48" href="#__codelineno-50-48"></a>              └─────────────┬─────────────┘
+</span><span id="__span-50-49"><a id="__codelineno-50-49" name="__codelineno-50-49" href="#__codelineno-50-49"></a>                            │
+</span><span id="__span-50-50"><a id="__codelineno-50-50" name="__codelineno-50-50" href="#__codelineno-50-50"></a>                    Decoder L20~39
+</span><span id="__span-50-51"><a id="__codelineno-50-51" name="__codelineno-50-51" href="#__codelineno-50-51"></a>                            │
+</span><span id="__span-50-52"><a id="__codelineno-50-52" name="__codelineno-50-52" href="#__codelineno-50-52"></a>                  ┌─────────┴─────────┐
+</span><span id="__span-50-53"><a id="__codelineno-50-53" name="__codelineno-50-53" href="#__codelineno-50-53"></a>                  │                   │
+</span><span id="__span-50-54"><a id="__codelineno-50-54" name="__codelineno-50-54" href="#__codelineno-50-54"></a>               SWA128             Global Top512
+</span><span id="__span-50-55"><a id="__codelineno-50-55" name="__codelineno-50-55" href="#__codelineno-50-55"></a>                  │                   │
+</span><span id="__span-50-56"><a id="__codelineno-50-56" name="__codelineno-50-56" href="#__codelineno-50-56"></a>                  └──── concatenate ──┘
+</span><span id="__span-50-57"><a id="__codelineno-50-57" name="__codelineno-50-57" href="#__codelineno-50-57"></a>                            │
+</span><span id="__span-50-58"><a id="__codelineno-50-58" name="__codelineno-50-58" href="#__codelineno-50-58"></a>                      Attention
+</span><span id="__span-50-59"><a id="__codelineno-50-59" name="__codelineno-50-59" href="#__codelineno-50-59"></a>                            │
+</span><span id="__span-50-60"><a id="__codelineno-50-60" name="__codelineno-50-60" href="#__codelineno-50-60"></a>                          MoE
+</span><span id="__span-50-61"><a id="__codelineno-50-61" name="__codelineno-50-61" href="#__codelineno-50-61"></a>                            │
+</span><span id="__span-50-62"><a id="__codelineno-50-62" name="__codelineno-50-62" href="#__codelineno-50-62"></a>                         logits
+</span><span id="__span-50-63"><a id="__codelineno-50-63" name="__codelineno-50-63" href="#__codelineno-50-63"></a>                            │
+</span><span id="__span-50-64"><a id="__codelineno-50-64" name="__codelineno-50-64" href="#__codelineno-50-64"></a>                         DSpark
+</span><span id="__span-50-65"><a id="__codelineno-50-65" name="__codelineno-50-65" href="#__codelineno-50-65"></a>                            │
+</span><span id="__span-50-66"><a id="__codelineno-50-66" name="__codelineno-50-66" href="#__codelineno-50-66"></a>                     draft + verify
+</span><span id="__span-50-67"><a id="__codelineno-50-67" name="__codelineno-50-67" href="#__codelineno-50-67"></a>           ╚═══════════════════════════╝
+</span></code></pre></div>
+<hr />
+<h2 id="30-v41">30. 从推理系统设计角度总结 V4.1<a class="headerlink" href="#30-v41" title="Permanent link">&para;</a></h2>
+<p>V4.1 不是单纯把某个 kernel 做快，而是在不同时间尺度的信息上使用不同存储/计算策略：</p>
+<table>
+<thead>
+<tr>
+<th>信息类型</th>
+<th style="text-align: right;">典型范围</th>
+<th>V4.1 的处理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>极近局部信息</strong></td>
+<td style="text-align: right;">128 token</td>
+<td>每层 fresh SWA</td>
+</tr>
+<tr>
+<td><strong>中远程语义信息</strong></td>
+<td style="text-align: right;">数 K～1M</td>
+<td>CSA2 sparse retrieval</td>
+</tr>
+<tr>
+<td><strong>跨层重复信息</strong></td>
+<td style="text-align: right;">多层</td>
+<td>Global KV / Top-K reuse</td>
+</tr>
+<tr>
+<td><strong>固定模式/知识</strong></td>
+<td style="text-align: right;">超长期参数记忆</td>
+<td>Engram</td>
+</tr>
+<tr>
+<td><strong>历史 Prompt</strong></td>
+<td style="text-align: right;">多轮 session</td>
+<td>Persistent Global KV</td>
+</tr>
+<tr>
+<td><strong>短期 SWA 状态</strong></td>
+<td style="text-align: right;">当前 session</td>
+<td>DRAM / Bounded Replay</td>
+</tr>
+<tr>
+<td><strong>未来几个 token</strong></td>
+<td style="text-align: right;">1～5 token</td>
+<td>DSpark speculation</td>
+</tr>
+</tbody>
+</table>
+<p>因此可以把它概括成一句：</p>
+<div class="arithmatex">\[
+\boxed{
+\text{V4.1 Flash 本质上是在把“所有 token、所有层、所有历史都同等计算”彻底打碎}
+}
+\]</div>
+<p>它分别问：</p>
+<ul>
+<li><strong>Prompt 历史真的需要跑 40 层吗？</strong> → CED：不用，绝大部分只跑 20 层。</li>
+<li><strong>每层真的都需要自己的 Global KV 吗？</strong> → CSA2：不用，跨层共享。</li>
+<li><strong>每层真的都需要重新选历史 token 吗？</strong> → Reuse/Reindex。</li>
+<li><strong>1M 个历史 token 都值得 Attention 吗？</strong> → Top-512。</li>
+<li><strong>每个 Indexer 都值得搜 1M 吗？</strong> → Hierarchical 16K candidate。</li>
+<li><strong>局部 token 也能跟着 Global 一起共享吗？</strong> → 不行，所以保留 fresh SWA。</li>
+<li><strong>SWA 值得长期存在 SSD 吗？</strong> → 不值得，Bounded Replay。</li>
+<li><strong>知识都值得放 Transformer FFN 里计算吗？</strong> → 不一定，Engram。</li>
+<li><strong>Decode 真要一次一个 token 吗？</strong> → DSpark 一次 draft 多个。</li>
+</ul>
+<p>从推理系统角度看，V4.1 不再把 KV Cache 视为一个统一对象，而是按照生命周期、语义粒度、数值精度和存储层级进行分层管理。(<a href="https://arxiv.org/html/2609.19969" title="DeepSeek-V4.1-Flash: Pushing the Limits of KV Cache Compression">arXiv</a>)</p>
+<p>后续如果需要继续深入，可以沿着一次 Decode 的 Tensor Shape 和 KV Cache 大小展开，从 <code>hidden=5120 → q_lora=1280 → 64×512 Q → SWA128 + CSA2 Top512 → grouped O projection</code> 逐步计算显存与 FLOPs。</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 LJX
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/Lai-JX" target="_blank" rel="noopener" title="Lai-JX on GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.tracking", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
